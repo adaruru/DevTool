@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tool", "Tool\Tool.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbTool", "DbTool\DbTool.csproj", "{4831AF42-D2FC-42B7-BCE9-861AFACB9ECF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncryptTool", "EncryptTool\EncryptTool.csproj", "{603D3FFF-3A11-4740-983C-8BBB86AB5316}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{4831AF42-D2FC-42B7-BCE9-861AFACB9ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4831AF42-D2FC-42B7-BCE9-861AFACB9ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4831AF42-D2FC-42B7-BCE9-861AFACB9ECF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{603D3FFF-3A11-4740-983C-8BBB86AB5316}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{603D3FFF-3A11-4740-983C-8BBB86AB5316}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{603D3FFF-3A11-4740-983C-8BBB86AB5316}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{603D3FFF-3A11-4740-983C-8BBB86AB5316}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
