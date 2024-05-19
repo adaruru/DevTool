@@ -1,4 +1,4 @@
-namespace Tool
+namespace DbTool
 {
     internal static class Program
     {
@@ -11,10 +11,7 @@ namespace Tool
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            
-            //建置必須註解一個
-            //Application.Run(new DbTool());          
-            Application.Run(new EncryptTool());
+            Application.Run(new Tool.DbToolForm());
         }
     }
 }

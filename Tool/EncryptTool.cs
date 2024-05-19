@@ -36,5 +36,25 @@ namespace Tool
         {
 
         }
+
+        private void encryptTabClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void encryptClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void decodeBtnClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
