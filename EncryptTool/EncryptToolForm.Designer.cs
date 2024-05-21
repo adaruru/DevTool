@@ -29,7 +29,7 @@ partial class EncryptToolForm
     {
         tabControl1 = new TabControl();
         encryptTab = new TabPage();
-        decodeBtn = new Button();
+        decryptBtn = new Button();
         encryptBtn = new Button();
         afterBox = new TextBox();
         beforeBox = new TextBox();
@@ -57,7 +57,7 @@ partial class EncryptToolForm
         // 
         // encryptTab
         // 
-        encryptTab.Controls.Add(decodeBtn);
+        encryptTab.Controls.Add(decryptBtn);
         encryptTab.Controls.Add(encryptBtn);
         encryptTab.Controls.Add(afterBox);
         encryptTab.Controls.Add(beforeBox);
@@ -72,15 +72,15 @@ partial class EncryptToolForm
         encryptTab.UseVisualStyleBackColor = true;
         encryptTab.Click += encryptTabClick;
         // 
-        // decodeBtn
+        // decryptBtn
         // 
-        decodeBtn.Location = new Point(574, 138);
-        decodeBtn.Name = "decodeBtn";
-        decodeBtn.Size = new Size(112, 34);
-        decodeBtn.TabIndex = 8;
-        decodeBtn.Text = "解密";
-        decodeBtn.UseVisualStyleBackColor = true;
-        decodeBtn.Click += decodeBtnClick;
+        decryptBtn.Location = new Point(574, 138);
+        decryptBtn.Name = "decryptBtn";
+        decryptBtn.Size = new Size(112, 34);
+        decryptBtn.TabIndex = 8;
+        decryptBtn.Text = "解密";
+        decryptBtn.UseVisualStyleBackColor = true;
+        decryptBtn.Click += decryptBtnClick;
         // 
         // encryptBtn
         // 
@@ -125,7 +125,7 @@ partial class EncryptToolForm
         beforeLabel.Size = new Size(64, 23);
         beforeLabel.TabIndex = 0;
         beforeLabel.Text = "加密前";
-        beforeLabel.Click += label1_Click_1;
+        beforeLabel.Click += beforeLabelClick;
         // 
         // settingTab
         // 
@@ -149,16 +149,20 @@ partial class EncryptToolForm
         encryptWayLabel.Size = new Size(82, 23);
         encryptWayLabel.TabIndex = 6;
         encryptWayLabel.Text = "加密方式";
+
         // 
         // encryptWay
         // 
         encryptWay.FormattingEnabled = true;
-        encryptWay.Items.AddRange(new object[] { "AES（Advanced Encryption Standard）", "DES（Data Encryption Standard）", "3DES（Triple DES）", "Blowfish", "Twofish", "RC4", "RSA（Rivest-Shamir-Adleman）", "ECC（Elliptic Curve Cryptography）", "DSA（Digital Signature Algorithm）", "PGP（Pretty Good Privacy）", "S/MIME（Secure/Multipurpose Internet Mail Extensions）" });
+        var encryptionMethods = GetEncryptionMethods();
+        encryptWay.DisplayMember = "Value";
+        encryptWay.ValueMember = "Key";
+        encryptWay.DataSource = new BindingSource(encryptionMethods, null);
         encryptWay.Location = new Point(116, 16);
         encryptWay.Name = "encryptWay";
         encryptWay.Size = new Size(383, 31);
         encryptWay.TabIndex = 5;
-        encryptWay.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+        encryptWay.SelectedIndexChanged += SelectedEncryptChanged;
         // 
         // setting1Box
         // 
@@ -202,9 +206,19 @@ partial class EncryptToolForm
     private TextBox beforeBox;
     private TextBox afterBox;
     private Button encryptBtn;
-    private Button decodeBtn;
+    private Button decryptBtn;
     private Label setting1;
     private TextBox setting1Box;
     private ComboBox encryptWay;
     private Label encryptWayLabel;
+
+    private Dictionary<int, string> GetEncryptionMethods()
+    {
+        var encryptionMethods = new Dictionary<int, string>();
+        encryptionMethods = Enum.GetValues(typeof(EncryptWayEnum))
+              .Cast<EncryptWayEnum>()
+              .ToDictionary(e => (int)e, e => e.ToString());
+        return encryptionMethods;
+    }
+
 }

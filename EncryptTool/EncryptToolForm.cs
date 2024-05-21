@@ -1,36 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-public partial class EncryptToolForm : Form
+﻿public partial class EncryptToolForm : Form
 {
     public EncryptToolForm()
     {
         InitializeComponent();
     }
 
-    private void label1_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    private void connStrBox_TextChanged(object sender, EventArgs e)
-    {
-
-    }
-
-    private void tabPage1_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    private void label1_Click_1(object sender, EventArgs e)
+    private void beforeLabelClick(object sender, EventArgs e)
     {
 
     }
@@ -45,13 +20,17 @@ public partial class EncryptToolForm : Form
 
     }
 
-    private void decodeBtnClick(object sender, EventArgs e)
+    private void decryptBtnClick(object sender, EventArgs e)
     {
 
     }
 
-    private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+    private void SelectedEncryptChanged(object sender, EventArgs e)
     {
-
+        if (encryptWay.SelectedValue is int selectedValue)
+        {
+            var selectedEncryption = (EncryptWayEnum)selectedValue;
+            MessageBox.Show($"Selected encryption method: {selectedEncryption} selectedValue"+ selectedValue);
+        }
     }
 }
