@@ -27,8 +27,7 @@ public class MD5
         using (var md5 = new MD5CryptoServiceProvider())
         {
             var hash = md5.ComputeHash(stream);
-            return BitConverter.ToString(hash)
-                .ToLowerInvariant();
+            return BitConverter.ToString(hash).ToLowerInvariant();
         }
     }
 
@@ -40,8 +39,7 @@ public class MD5
         using (var md5 = new MD5CryptoServiceProvider())
         {
             var hash = md5.ComputeHash(stream);
-            return BitConverter.ToString(hash)
-                .ToLowerInvariant();
+            return BitConverter.ToString(hash).ToLowerInvariant();
         }
     }
 }
