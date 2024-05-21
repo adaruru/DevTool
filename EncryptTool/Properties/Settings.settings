@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EncryptTool.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DESKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">jG6$q)n%</Value>
+    </Setting>
+    <Setting Name="DESIv" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0(uS6B'U</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
