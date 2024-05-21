@@ -1,4 +1,4 @@
-﻿using Properties = 
+﻿using Properties = EncryptTool.Properties;
 
 public partial class EncryptToolForm : Form
 {
@@ -77,9 +77,11 @@ public partial class EncryptToolForm : Form
 
     }
 
-    private void setting1Box_TextChanged(object sender, EventArgs e)
+    private void DESKeyBoxTextChanged(object sender, EventArgs e)
     {
-
+        string newDESKey = DESKeyBox.Text;
+        Properties.Settings.Default.DESKey = newDESKey;
+        Properties.Settings.Default.Save();
     }
 
     private void DESIvBox_TextChanged(object sender, EventArgs e)
