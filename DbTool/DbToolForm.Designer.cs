@@ -28,391 +28,391 @@ partial class DbToolForm
     /// </summary>
     private void InitializeComponent()
     {
-        this.demoCommBtn = new System.Windows.Forms.Button();
-        this.downloadSchemaBtn = new System.Windows.Forms.Button();
-        this.connStrBox = new System.Windows.Forms.TextBox();
-        this.label1 = new System.Windows.Forms.Label();
-        this.dbTestBtn = new System.Windows.Forms.Button();
-        this.tabControl1 = new System.Windows.Forms.TabControl();
-        this.connTool = new System.Windows.Forms.TabPage();
-        this.modelTool = new System.Windows.Forms.TabPage();
-        this.isSummary = new System.Windows.Forms.CheckBox();
-        this.isKey = new System.Windows.Forms.CheckBox();
-        this.IsRequired = new System.Windows.Forms.CheckBox();
-        this.IsDisplay = new System.Windows.Forms.CheckBox();
-        this.modelGenBtn = new System.Windows.Forms.Button();
-        this.schmaTool = new System.Windows.Forms.TabPage();
-        this.ImportDescription = new System.Windows.Forms.Button();
-        this.IsScaleShow = new System.Windows.Forms.CheckBox();
-        this.IsPrecisionShow = new System.Windows.Forms.CheckBox();
-        this.IsLengthShow = new System.Windows.Forms.CheckBox();
-        this.IsNotNullShow = new System.Windows.Forms.CheckBox();
-        this.IsPrimaryKeyShow = new System.Windows.Forms.CheckBox();
-        this.IsIdentityShow = new System.Windows.Forms.CheckBox();
-        this.IsDefaultValueShow = new System.Windows.Forms.CheckBox();
-        this.IsDataTypeShow = new System.Windows.Forms.CheckBox();
-        this.IsSortShow = new System.Windows.Forms.CheckBox();
-        this.IsColumnDescriptionShow = new System.Windows.Forms.CheckBox();
-        this.IsTableDescriptionShow = new System.Windows.Forms.CheckBox();
-        this.downloadTemplateBtn = new System.Windows.Forms.Button();
-        this.errorTextLbl = new System.Windows.Forms.TextBox();
-        this.tabControl1.SuspendLayout();
-        this.connTool.SuspendLayout();
-        this.modelTool.SuspendLayout();
-        this.schmaTool.SuspendLayout();
-        this.SuspendLayout();
+        demoCommBtn = new System.Windows.Forms.Button();
+        downloadSchemaBtn = new System.Windows.Forms.Button();
+        connStrBox = new System.Windows.Forms.TextBox();
+        label1 = new System.Windows.Forms.Label();
+        dbTestBtn = new System.Windows.Forms.Button();
+        tabControl1 = new System.Windows.Forms.TabControl();
+        connTool = new System.Windows.Forms.TabPage();
+        modelTool = new System.Windows.Forms.TabPage();
+        isSummary = new System.Windows.Forms.CheckBox();
+        isKey = new System.Windows.Forms.CheckBox();
+        IsRequired = new System.Windows.Forms.CheckBox();
+        IsDisplay = new System.Windows.Forms.CheckBox();
+        modelGenBtn = new System.Windows.Forms.Button();
+        schmaTool = new System.Windows.Forms.TabPage();
+        ImportDescription = new System.Windows.Forms.Button();
+        IsScaleShow = new System.Windows.Forms.CheckBox();
+        IsPrecisionShow = new System.Windows.Forms.CheckBox();
+        IsLengthShow = new System.Windows.Forms.CheckBox();
+        IsNotNullShow = new System.Windows.Forms.CheckBox();
+        IsPrimaryKeyShow = new System.Windows.Forms.CheckBox();
+        IsIdentityShow = new System.Windows.Forms.CheckBox();
+        IsDefaultValueShow = new System.Windows.Forms.CheckBox();
+        IsDataTypeShow = new System.Windows.Forms.CheckBox();
+        IsSortShow = new System.Windows.Forms.CheckBox();
+        IsColumnDescriptionShow = new System.Windows.Forms.CheckBox();
+        IsTableDescriptionShow = new System.Windows.Forms.CheckBox();
+        downloadTemplateBtn = new System.Windows.Forms.Button();
+        errorTextLbl = new System.Windows.Forms.TextBox();
+        tabControl1.SuspendLayout();
+        connTool.SuspendLayout();
+        modelTool.SuspendLayout();
+        schmaTool.SuspendLayout();
+        SuspendLayout();
         // 
         // demoCommBtn
         // 
-        this.demoCommBtn.Location = new System.Drawing.Point(232, 168);
-        this.demoCommBtn.Name = "demoCommBtn";
-        this.demoCommBtn.Size = new System.Drawing.Size(112, 34);
-        this.demoCommBtn.TabIndex = 0;
-        this.demoCommBtn.Text = "顯示範例";
-        this.demoCommBtn.UseVisualStyleBackColor = true;
-        this.demoCommBtn.Click += new System.EventHandler(this.demoCommBtnEvent);
+        demoCommBtn.Location = new System.Drawing.Point(232, 168);
+        demoCommBtn.Name = "demoCommBtn";
+        demoCommBtn.Size = new System.Drawing.Size(112, 34);
+        demoCommBtn.TabIndex = 0;
+        demoCommBtn.Text = "顯示範例";
+        demoCommBtn.UseVisualStyleBackColor = true;
+        demoCommBtn.Click += new System.EventHandler(demoCommBtnEvent);
         // 
         // downloadSchemaBtn
         // 
-        this.downloadSchemaBtn.Location = new System.Drawing.Point(18, 123);
-        this.downloadSchemaBtn.Name = "downloadSchemaBtn";
-        this.downloadSchemaBtn.Size = new System.Drawing.Size(156, 34);
-        this.downloadSchemaBtn.TabIndex = 1;
-        this.downloadSchemaBtn.Text = "下載資料庫規格";
-        this.downloadSchemaBtn.UseVisualStyleBackColor = true;
-        this.downloadSchemaBtn.Click += new System.EventHandler(this.downloadSchemaEvent);
+        downloadSchemaBtn.Location = new System.Drawing.Point(18, 123);
+        downloadSchemaBtn.Name = "downloadSchemaBtn";
+        downloadSchemaBtn.Size = new System.Drawing.Size(156, 34);
+        downloadSchemaBtn.TabIndex = 1;
+        downloadSchemaBtn.Text = "下載資料庫規格";
+        downloadSchemaBtn.UseVisualStyleBackColor = true;
+        downloadSchemaBtn.Click += new System.EventHandler(downloadSchemaEvent);
         // 
         // connStrBox
         // 
-        this.connStrBox.Location = new System.Drawing.Point(96, 12);
-        this.connStrBox.Multiline = true;
-        this.connStrBox.Name = "connStrBox";
-        this.connStrBox.Size = new System.Drawing.Size(530, 135);
-        this.connStrBox.TabIndex = 2;
-        this.connStrBox.TextChanged += new System.EventHandler(this.connStrBoxEvent);
+        connStrBox.Location = new System.Drawing.Point(96, 12);
+        connStrBox.Multiline = true;
+        connStrBox.Name = "connStrBox";
+        connStrBox.Size = new System.Drawing.Size(530, 135);
+        connStrBox.TabIndex = 2;
+        connStrBox.TextChanged += new System.EventHandler(connStrBoxEvent);
         connStrBox.Text = Properties.Settings.Default.ConnString;
         // 
         // label1
         // 
-        this.label1.AutoSize = true;
-        this.label1.Location = new System.Drawing.Point(8, 12);
-        this.label1.Name = "label1";
-        this.label1.Size = new System.Drawing.Size(82, 23);
-        this.label1.TabIndex = 3;
-        this.label1.Text = "連線字串";
-        this.label1.Click += new System.EventHandler(this.label1_Click);
+        label1.AutoSize = true;
+        label1.Location = new System.Drawing.Point(8, 12);
+        label1.Name = "label1";
+        label1.Size = new System.Drawing.Size(82, 23);
+        label1.TabIndex = 3;
+        label1.Text = "連線字串";
+        label1.Click += new System.EventHandler(label1_Click);
         // 
         // dbTestBtn
         // 
-        this.dbTestBtn.Location = new System.Drawing.Point(96, 168);
-        this.dbTestBtn.Name = "dbTestBtn";
-        this.dbTestBtn.Size = new System.Drawing.Size(112, 34);
-        this.dbTestBtn.TabIndex = 6;
-        this.dbTestBtn.Text = "連線測試";
-        this.dbTestBtn.UseVisualStyleBackColor = true;
-        this.dbTestBtn.Click += new System.EventHandler(this.dbTestEvent);
+        dbTestBtn.Location = new System.Drawing.Point(96, 168);
+        dbTestBtn.Name = "dbTestBtn";
+        dbTestBtn.Size = new System.Drawing.Size(112, 34);
+        dbTestBtn.TabIndex = 6;
+        dbTestBtn.Text = "連線測試";
+        dbTestBtn.UseVisualStyleBackColor = true;
+        dbTestBtn.Click += new System.EventHandler(dbTestEvent);
         // 
         // tabControl1
         // 
-        this.tabControl1.Controls.Add(this.connTool);
-        this.tabControl1.Controls.Add(this.modelTool);
-        this.tabControl1.Controls.Add(this.schmaTool);
-        this.tabControl1.Location = new System.Drawing.Point(0, 3);
-        this.tabControl1.Name = "tabControl1";
-        this.tabControl1.SelectedIndex = 0;
-        this.tabControl1.Size = new System.Drawing.Size(655, 295);
-        this.tabControl1.TabIndex = 7;
-        this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+        tabControl1.Controls.Add(connTool);
+        tabControl1.Controls.Add(modelTool);
+        tabControl1.Controls.Add(schmaTool);
+        tabControl1.Location = new System.Drawing.Point(0, 3);
+        tabControl1.Name = "tabControl1";
+        tabControl1.SelectedIndex = 0;
+        tabControl1.Size = new System.Drawing.Size(655, 295);
+        tabControl1.TabIndex = 7;
+        tabControl1.SelectedIndexChanged += new System.EventHandler(tabControl1_SelectedIndexChanged);
         // 
         // connTool
         // 
-        this.connTool.Controls.Add(this.label1);
-        this.connTool.Controls.Add(this.dbTestBtn);
-        this.connTool.Controls.Add(this.connStrBox);
-        this.connTool.Controls.Add(this.demoCommBtn);
-        this.connTool.Location = new System.Drawing.Point(4, 32);
-        this.connTool.Name = "connTool";
-        this.connTool.Padding = new System.Windows.Forms.Padding(3);
-        this.connTool.Size = new System.Drawing.Size(647, 259);
-        this.connTool.TabIndex = 0;
-        this.connTool.Text = "資料庫連線";
-        this.connTool.UseVisualStyleBackColor = true;
+        connTool.Controls.Add(label1);
+        connTool.Controls.Add(dbTestBtn);
+        connTool.Controls.Add(connStrBox);
+        connTool.Controls.Add(demoCommBtn);
+        connTool.Location = new System.Drawing.Point(4, 32);
+        connTool.Name = "connTool";
+        connTool.Padding = new System.Windows.Forms.Padding(3);
+        connTool.Size = new System.Drawing.Size(647, 259);
+        connTool.TabIndex = 0;
+        connTool.Text = "資料庫連線";
+        connTool.UseVisualStyleBackColor = true;
         // 
         // modelTool
         // 
-        this.modelTool.Controls.Add(this.isSummary);
-        this.modelTool.Controls.Add(this.isKey);
-        this.modelTool.Controls.Add(this.IsRequired);
-        this.modelTool.Controls.Add(this.IsDisplay);
-        this.modelTool.Controls.Add(this.modelGenBtn);
-        this.modelTool.Location = new System.Drawing.Point(4, 32);
-        this.modelTool.Name = "modelTool";
-        this.modelTool.Padding = new System.Windows.Forms.Padding(3);
-        this.modelTool.Size = new System.Drawing.Size(647, 259);
-        this.modelTool.TabIndex = 1;
-        this.modelTool.Text = "model產檔";
-        this.modelTool.UseVisualStyleBackColor = true;
+        modelTool.Controls.Add(isSummary);
+        modelTool.Controls.Add(isKey);
+        modelTool.Controls.Add(IsRequired);
+        modelTool.Controls.Add(IsDisplay);
+        modelTool.Controls.Add(modelGenBtn);
+        modelTool.Location = new System.Drawing.Point(4, 32);
+        modelTool.Name = "modelTool";
+        modelTool.Padding = new System.Windows.Forms.Padding(3);
+        modelTool.Size = new System.Drawing.Size(647, 259);
+        modelTool.TabIndex = 1;
+        modelTool.Text = "model產檔";
+        modelTool.UseVisualStyleBackColor = true;
         // 
         // isSummary
         // 
-        this.isSummary.AutoSize = true;
-        this.isSummary.Checked = true;
-        this.isSummary.CheckState = System.Windows.Forms.CheckState.Checked;
-        this.isSummary.Location = new System.Drawing.Point(8, 29);
-        this.isSummary.Name = "isSummary";
-        this.isSummary.Size = new System.Drawing.Size(117, 27);
-        this.isSummary.TabIndex = 11;
-        this.isSummary.Text = "Summary";
-        this.isSummary.UseVisualStyleBackColor = true;
-        this.isSummary.CheckedChanged += new System.EventHandler(this.isSummary_CheckedChanged);
+        isSummary.AutoSize = true;
+        isSummary.Checked = true;
+        isSummary.CheckState = System.Windows.Forms.CheckState.Checked;
+        isSummary.Location = new System.Drawing.Point(8, 29);
+        isSummary.Name = "isSummary";
+        isSummary.Size = new System.Drawing.Size(117, 27);
+        isSummary.TabIndex = 11;
+        isSummary.Text = "Summary";
+        isSummary.UseVisualStyleBackColor = true;
+        isSummary.CheckedChanged += new System.EventHandler(isSummary_CheckedChanged);
         // 
         // isKey
         // 
-        this.isKey.AutoSize = true;
-        this.isKey.Location = new System.Drawing.Point(364, 29);
-        this.isKey.Name = "isKey";
-        this.isKey.Size = new System.Drawing.Size(66, 27);
-        this.isKey.TabIndex = 10;
-        this.isKey.Text = "Key";
-        this.isKey.UseVisualStyleBackColor = true;
-        this.isKey.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_2);
+        isKey.AutoSize = true;
+        isKey.Location = new System.Drawing.Point(364, 29);
+        isKey.Name = "isKey";
+        isKey.Size = new System.Drawing.Size(66, 27);
+        isKey.TabIndex = 10;
+        isKey.Text = "Key";
+        isKey.UseVisualStyleBackColor = true;
+        isKey.CheckedChanged += new System.EventHandler(checkBox1_CheckedChanged_2);
         // 
         // IsRequired
         // 
-        this.IsRequired.AutoSize = true;
-        this.IsRequired.Location = new System.Drawing.Point(245, 29);
-        this.IsRequired.Name = "IsRequired";
-        this.IsRequired.Size = new System.Drawing.Size(113, 27);
-        this.IsRequired.TabIndex = 9;
-        this.IsRequired.Text = "Required";
-        this.IsRequired.UseVisualStyleBackColor = true;
-        this.IsRequired.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+        IsRequired.AutoSize = true;
+        IsRequired.Location = new System.Drawing.Point(245, 29);
+        IsRequired.Name = "IsRequired";
+        IsRequired.Size = new System.Drawing.Size(113, 27);
+        IsRequired.TabIndex = 9;
+        IsRequired.Text = "Required";
+        IsRequired.UseVisualStyleBackColor = true;
+        IsRequired.CheckedChanged += new System.EventHandler(checkBox2_CheckedChanged);
         // 
         // IsDisplay
         // 
-        this.IsDisplay.AutoSize = true;
-        this.IsDisplay.Location = new System.Drawing.Point(131, 29);
-        this.IsDisplay.Name = "IsDisplay";
-        this.IsDisplay.Size = new System.Drawing.Size(98, 27);
-        this.IsDisplay.TabIndex = 8;
-        this.IsDisplay.Text = "Display";
-        this.IsDisplay.UseVisualStyleBackColor = true;
-        this.IsDisplay.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_1);
+        IsDisplay.AutoSize = true;
+        IsDisplay.Location = new System.Drawing.Point(131, 29);
+        IsDisplay.Name = "IsDisplay";
+        IsDisplay.Size = new System.Drawing.Size(98, 27);
+        IsDisplay.TabIndex = 8;
+        IsDisplay.Text = "Display";
+        IsDisplay.UseVisualStyleBackColor = true;
+        IsDisplay.CheckedChanged += new System.EventHandler(checkBox1_CheckedChanged_1);
         // 
         // modelGenBtn
         // 
-        this.modelGenBtn.Location = new System.Drawing.Point(8, 72);
-        this.modelGenBtn.Name = "modelGenBtn";
-        this.modelGenBtn.Size = new System.Drawing.Size(151, 31);
-        this.modelGenBtn.TabIndex = 7;
-        this.modelGenBtn.Text = "所有model產檔";
-        this.modelGenBtn.UseVisualStyleBackColor = true;
-        this.modelGenBtn.Click += new System.EventHandler(this.modelGenEvent);
+        modelGenBtn.Location = new System.Drawing.Point(8, 72);
+        modelGenBtn.Name = "modelGenBtn";
+        modelGenBtn.Size = new System.Drawing.Size(151, 31);
+        modelGenBtn.TabIndex = 7;
+        modelGenBtn.Text = "所有model產檔";
+        modelGenBtn.UseVisualStyleBackColor = true;
+        modelGenBtn.Click += new System.EventHandler(modelGenEvent);
         // 
         // schmaTool
         // 
-        this.schmaTool.Controls.Add(this.ImportDescription);
-        this.schmaTool.Controls.Add(this.IsScaleShow);
-        this.schmaTool.Controls.Add(this.IsPrecisionShow);
-        this.schmaTool.Controls.Add(this.IsLengthShow);
-        this.schmaTool.Controls.Add(this.IsNotNullShow);
-        this.schmaTool.Controls.Add(this.IsPrimaryKeyShow);
-        this.schmaTool.Controls.Add(this.IsIdentityShow);
-        this.schmaTool.Controls.Add(this.IsDefaultValueShow);
-        this.schmaTool.Controls.Add(this.IsDataTypeShow);
-        this.schmaTool.Controls.Add(this.IsSortShow);
-        this.schmaTool.Controls.Add(this.IsColumnDescriptionShow);
-        this.schmaTool.Controls.Add(this.IsTableDescriptionShow);
-        this.schmaTool.Controls.Add(this.downloadTemplateBtn);
-        this.schmaTool.Controls.Add(this.downloadSchemaBtn);
-        this.schmaTool.Location = new System.Drawing.Point(4, 32);
-        this.schmaTool.Name = "schmaTool";
-        this.schmaTool.Padding = new System.Windows.Forms.Padding(3);
-        this.schmaTool.Size = new System.Drawing.Size(647, 259);
-        this.schmaTool.TabIndex = 2;
-        this.schmaTool.Text = "資料庫規格";
-        this.schmaTool.UseVisualStyleBackColor = true;
+        schmaTool.Controls.Add(ImportDescription);
+        schmaTool.Controls.Add(IsScaleShow);
+        schmaTool.Controls.Add(IsPrecisionShow);
+        schmaTool.Controls.Add(IsLengthShow);
+        schmaTool.Controls.Add(IsNotNullShow);
+        schmaTool.Controls.Add(IsPrimaryKeyShow);
+        schmaTool.Controls.Add(IsIdentityShow);
+        schmaTool.Controls.Add(IsDefaultValueShow);
+        schmaTool.Controls.Add(IsDataTypeShow);
+        schmaTool.Controls.Add(IsSortShow);
+        schmaTool.Controls.Add(IsColumnDescriptionShow);
+        schmaTool.Controls.Add(IsTableDescriptionShow);
+        schmaTool.Controls.Add(downloadTemplateBtn);
+        schmaTool.Controls.Add(downloadSchemaBtn);
+        schmaTool.Location = new System.Drawing.Point(4, 32);
+        schmaTool.Name = "schmaTool";
+        schmaTool.Padding = new System.Windows.Forms.Padding(3);
+        schmaTool.Size = new System.Drawing.Size(647, 259);
+        schmaTool.TabIndex = 2;
+        schmaTool.Text = "資料庫規格";
+        schmaTool.UseVisualStyleBackColor = true;
         // 
         // ImportDescription
         // 
-        this.ImportDescription.Location = new System.Drawing.Point(18, 203);
-        this.ImportDescription.Name = "ImportDescription";
-        this.ImportDescription.Size = new System.Drawing.Size(112, 34);
-        this.ImportDescription.TabIndex = 14;
-        this.ImportDescription.Text = "匯入描述";
-        this.ImportDescription.UseVisualStyleBackColor = true;
-        this.ImportDescription.Click += new System.EventHandler(this.ImportDescriptionEvent);
+        ImportDescription.Location = new System.Drawing.Point(18, 203);
+        ImportDescription.Name = "ImportDescription";
+        ImportDescription.Size = new System.Drawing.Size(112, 34);
+        ImportDescription.TabIndex = 14;
+        ImportDescription.Text = "匯入描述";
+        ImportDescription.UseVisualStyleBackColor = true;
+        ImportDescription.Click += new System.EventHandler(ImportDescriptionEvent);
         // 
         // IsScaleShow
         // 
-        this.IsScaleShow.AutoSize = true;
-        this.IsScaleShow.Location = new System.Drawing.Point(287, 85);
-        this.IsScaleShow.Name = "IsScaleShow";
-        this.IsScaleShow.Size = new System.Drawing.Size(90, 27);
-        this.IsScaleShow.TabIndex = 13;
-        this.IsScaleShow.Text = "小位數";
-        this.IsScaleShow.UseVisualStyleBackColor = true;
-        this.IsScaleShow.CheckedChanged += new System.EventHandler(this.IsScaleShow_CheckedChanged);
+        IsScaleShow.AutoSize = true;
+        IsScaleShow.Location = new System.Drawing.Point(287, 85);
+        IsScaleShow.Name = "IsScaleShow";
+        IsScaleShow.Size = new System.Drawing.Size(90, 27);
+        IsScaleShow.TabIndex = 13;
+        IsScaleShow.Text = "小位數";
+        IsScaleShow.UseVisualStyleBackColor = true;
+        IsScaleShow.CheckedChanged += new System.EventHandler(IsScaleShow_CheckedChanged);
         // 
         // IsPrecisionShow
         // 
-        this.IsPrecisionShow.AutoSize = true;
-        this.IsPrecisionShow.Location = new System.Drawing.Point(202, 85);
-        this.IsPrecisionShow.Name = "IsPrecisionShow";
-        this.IsPrecisionShow.Size = new System.Drawing.Size(72, 27);
-        this.IsPrecisionShow.TabIndex = 12;
-        this.IsPrecisionShow.Text = "精度";
-        this.IsPrecisionShow.UseVisualStyleBackColor = true;
+        IsPrecisionShow.AutoSize = true;
+        IsPrecisionShow.Location = new System.Drawing.Point(202, 85);
+        IsPrecisionShow.Name = "IsPrecisionShow";
+        IsPrecisionShow.Size = new System.Drawing.Size(72, 27);
+        IsPrecisionShow.TabIndex = 12;
+        IsPrecisionShow.Text = "精度";
+        IsPrecisionShow.UseVisualStyleBackColor = true;
         // 
         // IsLengthShow
         // 
-        this.IsLengthShow.AutoSize = true;
-        this.IsLengthShow.Location = new System.Drawing.Point(97, 85);
-        this.IsLengthShow.Name = "IsLengthShow";
-        this.IsLengthShow.Size = new System.Drawing.Size(72, 27);
-        this.IsLengthShow.TabIndex = 11;
-        this.IsLengthShow.Text = "長度";
-        this.IsLengthShow.UseVisualStyleBackColor = true;
-        this.IsLengthShow.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+        IsLengthShow.AutoSize = true;
+        IsLengthShow.Location = new System.Drawing.Point(97, 85);
+        IsLengthShow.Name = "IsLengthShow";
+        IsLengthShow.Size = new System.Drawing.Size(72, 27);
+        IsLengthShow.TabIndex = 11;
+        IsLengthShow.Text = "長度";
+        IsLengthShow.UseVisualStyleBackColor = true;
+        IsLengthShow.CheckedChanged += new System.EventHandler(checkBox3_CheckedChanged);
         // 
         // IsNotNullShow
         // 
-        this.IsNotNullShow.AutoSize = true;
-        this.IsNotNullShow.Checked = true;
-        this.IsNotNullShow.CheckState = System.Windows.Forms.CheckState.Checked;
-        this.IsNotNullShow.Location = new System.Drawing.Point(19, 85);
-        this.IsNotNullShow.Name = "IsNotNullShow";
-        this.IsNotNullShow.Size = new System.Drawing.Size(72, 27);
-        this.IsNotNullShow.TabIndex = 10;
-        this.IsNotNullShow.Text = "必填";
-        this.IsNotNullShow.UseVisualStyleBackColor = true;
+        IsNotNullShow.AutoSize = true;
+        IsNotNullShow.Checked = true;
+        IsNotNullShow.CheckState = System.Windows.Forms.CheckState.Checked;
+        IsNotNullShow.Location = new System.Drawing.Point(19, 85);
+        IsNotNullShow.Name = "IsNotNullShow";
+        IsNotNullShow.Size = new System.Drawing.Size(72, 27);
+        IsNotNullShow.TabIndex = 10;
+        IsNotNullShow.Text = "必填";
+        IsNotNullShow.UseVisualStyleBackColor = true;
         // 
         // IsPrimaryKeyShow
         // 
-        this.IsPrimaryKeyShow.AutoSize = true;
-        this.IsPrimaryKeyShow.Checked = true;
-        this.IsPrimaryKeyShow.CheckState = System.Windows.Forms.CheckState.Checked;
-        this.IsPrimaryKeyShow.Location = new System.Drawing.Point(383, 52);
-        this.IsPrimaryKeyShow.Name = "IsPrimaryKeyShow";
-        this.IsPrimaryKeyShow.Size = new System.Drawing.Size(72, 27);
-        this.IsPrimaryKeyShow.TabIndex = 9;
-        this.IsPrimaryKeyShow.Text = "主鍵";
-        this.IsPrimaryKeyShow.UseVisualStyleBackColor = true;
+        IsPrimaryKeyShow.AutoSize = true;
+        IsPrimaryKeyShow.Checked = true;
+        IsPrimaryKeyShow.CheckState = System.Windows.Forms.CheckState.Checked;
+        IsPrimaryKeyShow.Location = new System.Drawing.Point(383, 52);
+        IsPrimaryKeyShow.Name = "IsPrimaryKeyShow";
+        IsPrimaryKeyShow.Size = new System.Drawing.Size(72, 27);
+        IsPrimaryKeyShow.TabIndex = 9;
+        IsPrimaryKeyShow.Text = "主鍵";
+        IsPrimaryKeyShow.UseVisualStyleBackColor = true;
         // 
         // IsIdentityShow
         // 
-        this.IsIdentityShow.AutoSize = true;
-        this.IsIdentityShow.Checked = true;
-        this.IsIdentityShow.CheckState = System.Windows.Forms.CheckState.Checked;
-        this.IsIdentityShow.Location = new System.Drawing.Point(287, 52);
-        this.IsIdentityShow.Name = "IsIdentityShow";
-        this.IsIdentityShow.Size = new System.Drawing.Size(72, 27);
-        this.IsIdentityShow.TabIndex = 8;
-        this.IsIdentityShow.Text = "識別";
-        this.IsIdentityShow.UseVisualStyleBackColor = true;
+        IsIdentityShow.AutoSize = true;
+        IsIdentityShow.Checked = true;
+        IsIdentityShow.CheckState = System.Windows.Forms.CheckState.Checked;
+        IsIdentityShow.Location = new System.Drawing.Point(287, 52);
+        IsIdentityShow.Name = "IsIdentityShow";
+        IsIdentityShow.Size = new System.Drawing.Size(72, 27);
+        IsIdentityShow.TabIndex = 8;
+        IsIdentityShow.Text = "識別";
+        IsIdentityShow.UseVisualStyleBackColor = true;
         // 
         // IsDefaultValueShow
         // 
-        this.IsDefaultValueShow.AutoSize = true;
-        this.IsDefaultValueShow.Checked = true;
-        this.IsDefaultValueShow.CheckState = System.Windows.Forms.CheckState.Checked;
-        this.IsDefaultValueShow.Location = new System.Drawing.Point(202, 52);
-        this.IsDefaultValueShow.Name = "IsDefaultValueShow";
-        this.IsDefaultValueShow.Size = new System.Drawing.Size(90, 27);
-        this.IsDefaultValueShow.TabIndex = 7;
-        this.IsDefaultValueShow.Text = "預設值";
-        this.IsDefaultValueShow.UseVisualStyleBackColor = true;
+        IsDefaultValueShow.AutoSize = true;
+        IsDefaultValueShow.Checked = true;
+        IsDefaultValueShow.CheckState = System.Windows.Forms.CheckState.Checked;
+        IsDefaultValueShow.Location = new System.Drawing.Point(202, 52);
+        IsDefaultValueShow.Name = "IsDefaultValueShow";
+        IsDefaultValueShow.Size = new System.Drawing.Size(90, 27);
+        IsDefaultValueShow.TabIndex = 7;
+        IsDefaultValueShow.Text = "預設值";
+        IsDefaultValueShow.UseVisualStyleBackColor = true;
         // 
         // IsDataTypeShow
         // 
-        this.IsDataTypeShow.AutoSize = true;
-        this.IsDataTypeShow.Checked = true;
-        this.IsDataTypeShow.CheckState = System.Windows.Forms.CheckState.Checked;
-        this.IsDataTypeShow.Location = new System.Drawing.Point(97, 52);
-        this.IsDataTypeShow.Name = "IsDataTypeShow";
-        this.IsDataTypeShow.Size = new System.Drawing.Size(108, 27);
-        this.IsDataTypeShow.TabIndex = 6;
-        this.IsDataTypeShow.Text = "資料型別";
-        this.IsDataTypeShow.UseVisualStyleBackColor = true;
+        IsDataTypeShow.AutoSize = true;
+        IsDataTypeShow.Checked = true;
+        IsDataTypeShow.CheckState = System.Windows.Forms.CheckState.Checked;
+        IsDataTypeShow.Location = new System.Drawing.Point(97, 52);
+        IsDataTypeShow.Name = "IsDataTypeShow";
+        IsDataTypeShow.Size = new System.Drawing.Size(108, 27);
+        IsDataTypeShow.TabIndex = 6;
+        IsDataTypeShow.Text = "資料型別";
+        IsDataTypeShow.UseVisualStyleBackColor = true;
         // 
         // IsSortShow
         // 
-        this.IsSortShow.AutoSize = true;
-        this.IsSortShow.Checked = true;
-        this.IsSortShow.CheckState = System.Windows.Forms.CheckState.Checked;
-        this.IsSortShow.Location = new System.Drawing.Point(19, 52);
-        this.IsSortShow.Name = "IsSortShow";
-        this.IsSortShow.Size = new System.Drawing.Size(72, 27);
-        this.IsSortShow.TabIndex = 5;
-        this.IsSortShow.Text = "排序";
-        this.IsSortShow.UseVisualStyleBackColor = true;
+        IsSortShow.AutoSize = true;
+        IsSortShow.Checked = true;
+        IsSortShow.CheckState = System.Windows.Forms.CheckState.Checked;
+        IsSortShow.Location = new System.Drawing.Point(19, 52);
+        IsSortShow.Name = "IsSortShow";
+        IsSortShow.Size = new System.Drawing.Size(72, 27);
+        IsSortShow.TabIndex = 5;
+        IsSortShow.Text = "排序";
+        IsSortShow.UseVisualStyleBackColor = true;
         // 
         // IsColumnDescriptionShow
         // 
-        this.IsColumnDescriptionShow.AutoSize = true;
-        this.IsColumnDescriptionShow.Checked = true;
-        this.IsColumnDescriptionShow.CheckState = System.Windows.Forms.CheckState.Checked;
-        this.IsColumnDescriptionShow.Location = new System.Drawing.Point(383, 85);
-        this.IsColumnDescriptionShow.Name = "IsColumnDescriptionShow";
-        this.IsColumnDescriptionShow.Size = new System.Drawing.Size(90, 27);
-        this.IsColumnDescriptionShow.TabIndex = 4;
-        this.IsColumnDescriptionShow.Text = "欄描述";
-        this.IsColumnDescriptionShow.UseVisualStyleBackColor = true;
+        IsColumnDescriptionShow.AutoSize = true;
+        IsColumnDescriptionShow.Checked = true;
+        IsColumnDescriptionShow.CheckState = System.Windows.Forms.CheckState.Checked;
+        IsColumnDescriptionShow.Location = new System.Drawing.Point(383, 85);
+        IsColumnDescriptionShow.Name = "IsColumnDescriptionShow";
+        IsColumnDescriptionShow.Size = new System.Drawing.Size(90, 27);
+        IsColumnDescriptionShow.TabIndex = 4;
+        IsColumnDescriptionShow.Text = "欄描述";
+        IsColumnDescriptionShow.UseVisualStyleBackColor = true;
         // 
         // IsTableDescriptionShow
         // 
-        this.IsTableDescriptionShow.AutoSize = true;
-        this.IsTableDescriptionShow.Checked = true;
-        this.IsTableDescriptionShow.CheckState = System.Windows.Forms.CheckState.Checked;
-        this.IsTableDescriptionShow.Location = new System.Drawing.Point(19, 19);
-        this.IsTableDescriptionShow.Name = "IsTableDescriptionShow";
-        this.IsTableDescriptionShow.Size = new System.Drawing.Size(90, 27);
-        this.IsTableDescriptionShow.TabIndex = 3;
-        this.IsTableDescriptionShow.Text = "表描述";
-        this.IsTableDescriptionShow.UseVisualStyleBackColor = true;
-        this.IsTableDescriptionShow.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+        IsTableDescriptionShow.AutoSize = true;
+        IsTableDescriptionShow.Checked = true;
+        IsTableDescriptionShow.CheckState = System.Windows.Forms.CheckState.Checked;
+        IsTableDescriptionShow.Location = new System.Drawing.Point(19, 19);
+        IsTableDescriptionShow.Name = "IsTableDescriptionShow";
+        IsTableDescriptionShow.Size = new System.Drawing.Size(90, 27);
+        IsTableDescriptionShow.TabIndex = 3;
+        IsTableDescriptionShow.Text = "表描述";
+        IsTableDescriptionShow.UseVisualStyleBackColor = true;
+        IsTableDescriptionShow.CheckedChanged += new System.EventHandler(checkBox1_CheckedChanged);
         // 
         // downloadTemplateBtn
         // 
-        this.downloadTemplateBtn.Location = new System.Drawing.Point(18, 163);
-        this.downloadTemplateBtn.Name = "downloadTemplateBtn";
-        this.downloadTemplateBtn.Size = new System.Drawing.Size(166, 34);
-        this.downloadTemplateBtn.TabIndex = 2;
-        this.downloadTemplateBtn.Text = "下載匯入描述範本";
-        this.downloadTemplateBtn.UseVisualStyleBackColor = true;
-        this.downloadTemplateBtn.Click += new System.EventHandler(this.downloadSchemaEvent);
+        downloadTemplateBtn.Location = new System.Drawing.Point(18, 163);
+        downloadTemplateBtn.Name = "downloadTemplateBtn";
+        downloadTemplateBtn.Size = new System.Drawing.Size(166, 34);
+        downloadTemplateBtn.TabIndex = 2;
+        downloadTemplateBtn.Text = "下載匯入描述範本";
+        downloadTemplateBtn.UseVisualStyleBackColor = true;
+        downloadTemplateBtn.Click += new System.EventHandler(downloadSchemaEvent);
         // 
         // errorTextLbl
         // 
-        this.errorTextLbl.BackColor = System.Drawing.SystemColors.Control;
-        this.errorTextLbl.BorderStyle = System.Windows.Forms.BorderStyle.None;
-        this.errorTextLbl.Location = new System.Drawing.Point(4, 300);
-        this.errorTextLbl.Multiline = true;
-        this.errorTextLbl.Name = "errorTextLbl";
-        this.errorTextLbl.ReadOnly = true;
-        this.errorTextLbl.Size = new System.Drawing.Size(638, 73);
-        this.errorTextLbl.TabIndex = 8;
-        this.errorTextLbl.Click += new System.EventHandler(this.errorTextEvent);
+        errorTextLbl.BackColor = System.Drawing.SystemColors.Control;
+        errorTextLbl.BorderStyle = System.Windows.Forms.BorderStyle.None;
+        errorTextLbl.Location = new System.Drawing.Point(4, 300);
+        errorTextLbl.Multiline = true;
+        errorTextLbl.Name = "errorTextLbl";
+        errorTextLbl.ReadOnly = true;
+        errorTextLbl.Size = new System.Drawing.Size(638, 73);
+        errorTextLbl.TabIndex = 8;
+        errorTextLbl.Click += new System.EventHandler(errorTextEvent);
         // 
         // DbTool
         // 
-        this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 23F);
-        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        this.ClientSize = new System.Drawing.Size(654, 386);
-        this.Controls.Add(this.errorTextLbl);
-        this.Controls.Add(this.tabControl1);
-        this.Name = "DbTool";
-        this.Text = "資料庫工具";
-        this.Load += new System.EventHandler(this.Form1_Load);
-        this.tabControl1.ResumeLayout(false);
-        this.connTool.ResumeLayout(false);
-        this.connTool.PerformLayout();
-        this.modelTool.ResumeLayout(false);
-        this.modelTool.PerformLayout();
-        this.schmaTool.ResumeLayout(false);
-        this.schmaTool.PerformLayout();
-        this.ResumeLayout(false);
-        this.PerformLayout();
+        AutoScaleDimensions = new System.Drawing.SizeF(11F, 23F);
+        AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        ClientSize = new System.Drawing.Size(654, 386);
+        Controls.Add(errorTextLbl);
+        Controls.Add(tabControl1);
+        Name = "DbTool";
+        Text = "資料庫工具";
+        Load += new System.EventHandler(Form1_Load);
+        tabControl1.ResumeLayout(false);
+        connTool.ResumeLayout(false);
+        connTool.PerformLayout();
+        modelTool.ResumeLayout(false);
+        modelTool.PerformLayout();
+        schmaTool.ResumeLayout(false);
+        schmaTool.PerformLayout();
+        ResumeLayout(false);
+        PerformLayout();
 
     }
     #endregion

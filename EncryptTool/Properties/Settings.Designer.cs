@@ -25,7 +25,7 @@ namespace EncryptTool.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("jG6$q)n%")]
+        [global::System.Configuration.DefaultSettingValueAttribute("123123")]
         public string DESKey {
             get {
                 return ((string)(this["DESKey"]));
@@ -37,7 +37,7 @@ namespace EncryptTool.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0(uS6B\'U")]
+        [global::System.Configuration.DefaultSettingValueAttribute("123123")]
         public string DESIv {
             get {
                 return ((string)(this["DESIv"]));

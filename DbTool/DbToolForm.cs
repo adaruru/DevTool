@@ -3,6 +3,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Reflection;
+using Properties = DbTool.Properties;
+
 
 public partial class DbToolForm : Form
 {
@@ -16,8 +18,6 @@ public partial class DbToolForm : Form
     public string SchemaName = "";
     private void demoCommBtnEvent(object sender, EventArgs e)
     {
-        //Data Source=192.168.100.221;Initial Catalog=CPMSDB;persist security info=True;user id=hncb;password=hncb;MultipleActiveResultSets=True;TrustServerCertificate=True;
-        //Data Source=MSI;Initial Catalog=MvcCoreTraining_Amanda;user id=sa;password=ruru;
         connStrBox.Text = "Data Source=MSI;Initial Catalog=MvcCoreTraining_Amanda;user id=sa;password=ruru;";
     }
 
@@ -336,6 +336,9 @@ ORDER BY st.name --table name
 
     private void connStrBoxEvent(object sender, EventArgs e)
     {
+        string conn = connStrBox.Text;
+        Properties.Settings.Default.ConnString = conn;
+        Properties.Settings.Default.Save();
     }
 
     private void label2_Click(object sender, EventArgs e)

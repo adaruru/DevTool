@@ -25,7 +25,7 @@ namespace DbTool.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=MSI;Initial Catalog=MvcCoreTraining_Amanda;user id=sa;password=ruru")]
         public string ConnString {
             get {
                 return ((string)(this["ConnString"]));
