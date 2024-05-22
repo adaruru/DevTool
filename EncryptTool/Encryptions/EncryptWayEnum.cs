@@ -1,7 +1,7 @@
 ﻿public enum EncryptWayEnum
 {
     AES = 0,
-    DES = 1,
+    DES_Unsafe = 1,
     ThreeDES = 2,
     Blowfish = 3,
     Twofish = 4,
