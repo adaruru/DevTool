@@ -78,6 +78,8 @@ public partial class EncryptToolForm : Form
     {
         //處理所有預設值
         encryptWay.SelectedIndex = Convert.ToInt32(Properties.Settings.Default.encryptWay);
+        DESIvBox.Text = Properties.Settings.Default.DESIv;
+        DESKeyBox.Text = Properties.Settings.Default.DESKey;
     }
 
     private void DESKeyBoxTextChanged(object sender, EventArgs e)

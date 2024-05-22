@@ -1,7 +1,4 @@
-﻿using System.Security.Cryptography.Xml;
-using Properties = EncryptTool.Properties;
-
-partial class EncryptToolForm
+﻿partial class EncryptToolForm
 {
     /// <summary>
     /// Required designer variable.
@@ -165,7 +162,6 @@ partial class EncryptToolForm
         DESIvBox.Name = "DESIvBox";
         DESIvBox.Size = new Size(314, 30);
         DESIvBox.TabIndex = 8;
-        DESIvBox.Text = Properties.Settings.Default.DESIv;
         DESIvBox.TextChanged += DESIvBox_TextChanged;
         // 
         // DESIvLabel
@@ -210,7 +206,6 @@ partial class EncryptToolForm
         DESKeyBox.Name = "DESKeyBox";
         DESKeyBox.Size = new Size(314, 30);
         DESKeyBox.TabIndex = 4;
-        DESKeyBox.Text = Properties.Settings.Default.DESKey;
         DESKeyBox.TextChanged += DESKeyBoxTextChanged;
         // 
         // DESKeyLabel
