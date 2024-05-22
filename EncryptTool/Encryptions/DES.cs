@@ -49,13 +49,13 @@ public class DES
             des.IV = iv;
 
             byte[] dataByteArray = Convert.FromBase64String(Encrypt);
-            using (MemoryStream ms = new MemoryStream())
+            using (MemoryStream memoryStream = new MemoryStream())
             {
-                using (CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(), CryptoStreamMode.Write))
+                using (CryptoStream cs = new CryptoStream(memoryStream, des.CreateDecryptor(), CryptoStreamMode.Write))
                 {
                     cs.Write(dataByteArray, 0, dataByteArray.Length);
                     cs.FlushFinalBlock();
-                    return Encoding.UTF8.GetString(ms.ToArray());
+                    return Encoding.UTF8.GetString(memoryStream.ToArray());
                 }
             }
         }
