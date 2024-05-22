@@ -5,6 +5,7 @@ public partial class EncryptToolForm : Form
     public EncryptToolForm()
     {
         InitializeComponent();
+        //this.Load += EncryptToolForm_Load; // 註冊載入事件處理程序
     }
 
     private void beforeLabelClick(object sender, EventArgs e)
@@ -68,13 +69,15 @@ public partial class EncryptToolForm : Form
         if (encryptWay.SelectedValue is int selectedValue)
         {
             var selectedEncryption = (EncryptWayEnum)selectedValue;
-            MessageBox.Show($"Selected encryption method: {selectedEncryption} selectedValue" + selectedValue);
+            Properties.Settings.Default.encryptWay = selectedValue.ToString();
+            Properties.Settings.Default.Save();
         }
     }
 
     private void EncryptToolForm_Load(object sender, EventArgs e)
     {
-
+        //處理所有預設值
+        encryptWay.SelectedIndex = Convert.ToInt32(Properties.Settings.Default.encryptWay);
     }
 
     private void DESKeyBoxTextChanged(object sender, EventArgs e)
