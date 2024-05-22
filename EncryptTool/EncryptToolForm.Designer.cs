@@ -1,4 +1,5 @@
-﻿using Properties = EncryptTool.Properties;
+﻿using System.Security.Cryptography.Xml;
+using Properties = EncryptTool.Properties;
 
 partial class EncryptToolForm
 {
@@ -189,7 +190,9 @@ partial class EncryptToolForm
         // 
         // encryptWay
         // 
+        encryptWay.DataSource = new BindingSource(GetEncryptionMethods(), null);
         encryptWay.DisplayMember = "Value";
+        encryptWay.ValueMember = "Key";
         encryptWay.FormattingEnabled = true;
         encryptWay.Location = new Point(95, 13);
         encryptWay.Margin = new Padding(2);
