@@ -366,6 +366,25 @@ ORDER BY st.name --table name
     {
         //處理所有預設值
         connStrBox.Text = Properties.Settings.Default.ConnString;
+
+        isSummary.Checked = true;
+        IsDisplay.Checked = false;
+        IsRequired.Checked = false;
+        isKey.Checked = false;
+
+        IsTableDescriptionShow.Checked = true; //表描述
+
+        IsSortShow.Checked = true; //排序
+        IsDataTypeShow.Checked = true; //資料型別
+        IsDefaultValueShow.Checked = true; //預設值
+        IsIdentityShow.Checked = true; //識別
+        IsPrimaryKeyShow.Checked = true;//主鍵
+
+        IsNotNullShow.Checked = true; //必填
+        IsLengthShow.Checked = false; //長度
+        IsPrecisionShow.Checked = false; //精度
+        IsScaleShow.Checked = false; //小位數
+        IsColumnDescriptionShow.Checked = true; //欄描述
     }
 
 

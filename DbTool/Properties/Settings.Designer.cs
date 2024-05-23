@@ -34,5 +34,185 @@ namespace DbTool.Properties {
                 this["ConnString"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool isSummary {
+            get {
+                return ((bool)(this["isSummary"]));
+            }
+            set {
+                this["isSummary"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsDisplay {
+            get {
+                return ((bool)(this["IsDisplay"]));
+            }
+            set {
+                this["IsDisplay"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsRequired {
+            get {
+                return ((bool)(this["IsRequired"]));
+            }
+            set {
+                this["IsRequired"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isKey {
+            get {
+                return ((bool)(this["isKey"]));
+            }
+            set {
+                this["isKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsTableDescriptionShow {
+            get {
+                return ((bool)(this["IsTableDescriptionShow"]));
+            }
+            set {
+                this["IsTableDescriptionShow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsSortShow {
+            get {
+                return ((bool)(this["IsSortShow"]));
+            }
+            set {
+                this["IsSortShow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsDataTypeShow {
+            get {
+                return ((bool)(this["IsDataTypeShow"]));
+            }
+            set {
+                this["IsDataTypeShow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsDefaultValueShow {
+            get {
+                return ((bool)(this["IsDefaultValueShow"]));
+            }
+            set {
+                this["IsDefaultValueShow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsIdentityShow {
+            get {
+                return ((bool)(this["IsIdentityShow"]));
+            }
+            set {
+                this["IsIdentityShow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsPrimaryKeyShow {
+            get {
+                return ((bool)(this["IsPrimaryKeyShow"]));
+            }
+            set {
+                this["IsPrimaryKeyShow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsNotNullShow {
+            get {
+                return ((bool)(this["IsNotNullShow"]));
+            }
+            set {
+                this["IsNotNullShow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsLengthShow {
+            get {
+                return ((bool)(this["IsLengthShow"]));
+            }
+            set {
+                this["IsLengthShow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsPrecisionShow {
+            get {
+                return ((bool)(this["IsPrecisionShow"]));
+            }
+            set {
+                this["IsPrecisionShow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsScaleShow {
+            get {
+                return ((bool)(this["IsScaleShow"]));
+            }
+            set {
+                this["IsScaleShow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsColumnDescriptionShow {
+            get {
+                return ((bool)(this["IsColumnDescriptionShow"]));
+            }
+            set {
+                this["IsColumnDescriptionShow"] = value;
+            }
+        }
     }
 }

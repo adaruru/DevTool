@@ -168,8 +168,6 @@ partial class DbToolForm
         // isSummary
         // 
         isSummary.AutoSize = true;
-        isSummary.Checked = true;
-        isSummary.CheckState = CheckState.Checked;
         isSummary.Location = new Point(7, 24);
         isSummary.Margin = new Padding(2);
         isSummary.Name = "isSummary";
@@ -301,7 +299,6 @@ partial class DbToolForm
         // 
         IsNotNullShow.AutoSize = true;
         IsNotNullShow.Checked = true;
-        IsNotNullShow.CheckState = CheckState.Checked;
         IsNotNullShow.Location = new Point(16, 70);
         IsNotNullShow.Margin = new Padding(2);
         IsNotNullShow.Name = "IsNotNullShow";
@@ -314,7 +311,6 @@ partial class DbToolForm
         // 
         IsPrimaryKeyShow.AutoSize = true;
         IsPrimaryKeyShow.Checked = true;
-        IsPrimaryKeyShow.CheckState = CheckState.Checked;
         IsPrimaryKeyShow.Location = new Point(313, 43);
         IsPrimaryKeyShow.Margin = new Padding(2);
         IsPrimaryKeyShow.Name = "IsPrimaryKeyShow";
@@ -327,7 +323,6 @@ partial class DbToolForm
         // 
         IsIdentityShow.AutoSize = true;
         IsIdentityShow.Checked = true;
-        IsIdentityShow.CheckState = CheckState.Checked;
         IsIdentityShow.Location = new Point(235, 43);
         IsIdentityShow.Margin = new Padding(2);
         IsIdentityShow.Name = "IsIdentityShow";
@@ -340,7 +335,6 @@ partial class DbToolForm
         // 
         IsDefaultValueShow.AutoSize = true;
         IsDefaultValueShow.Checked = true;
-        IsDefaultValueShow.CheckState = CheckState.Checked;
         IsDefaultValueShow.Location = new Point(165, 43);
         IsDefaultValueShow.Margin = new Padding(2);
         IsDefaultValueShow.Name = "IsDefaultValueShow";
@@ -353,7 +347,6 @@ partial class DbToolForm
         // 
         IsDataTypeShow.AutoSize = true;
         IsDataTypeShow.Checked = true;
-        IsDataTypeShow.CheckState = CheckState.Checked;
         IsDataTypeShow.Location = new Point(79, 43);
         IsDataTypeShow.Margin = new Padding(2);
         IsDataTypeShow.Name = "IsDataTypeShow";
@@ -366,7 +359,6 @@ partial class DbToolForm
         // 
         IsSortShow.AutoSize = true;
         IsSortShow.Checked = true;
-        IsSortShow.CheckState = CheckState.Checked;
         IsSortShow.Location = new Point(16, 43);
         IsSortShow.Margin = new Padding(2);
         IsSortShow.Name = "IsSortShow";
@@ -378,8 +370,6 @@ partial class DbToolForm
         // IsColumnDescriptionShow
         // 
         IsColumnDescriptionShow.AutoSize = true;
-        IsColumnDescriptionShow.Checked = true;
-        IsColumnDescriptionShow.CheckState = CheckState.Checked;
         IsColumnDescriptionShow.Location = new Point(313, 70);
         IsColumnDescriptionShow.Margin = new Padding(2);
         IsColumnDescriptionShow.Name = "IsColumnDescriptionShow";
@@ -391,8 +381,6 @@ partial class DbToolForm
         // IsTableDescriptionShow
         // 
         IsTableDescriptionShow.AutoSize = true;
-        IsTableDescriptionShow.Checked = true;
-        IsTableDescriptionShow.CheckState = CheckState.Checked;
         IsTableDescriptionShow.Location = new Point(16, 16);
         IsTableDescriptionShow.Margin = new Padding(2);
         IsTableDescriptionShow.Name = "IsTableDescriptionShow";
