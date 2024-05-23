@@ -1,3 +1,4 @@
+using DbTool.Properties;
 using OfficeOpenXml;
 using System.Data;
 using System.Data.SqlClient;
@@ -365,27 +366,28 @@ ORDER BY st.name --table name
     private void LoadSettings()
     {
         //處理所有預設值
-        connStrBox.Text = Properties.Settings.Default.ConnString;
+        connStrBox.Text = Settings.Default.ConnString;
 
-        isSummary.Checked = true;
-        IsDisplay.Checked = false;
-        IsRequired.Checked = false;
-        isKey.Checked = false;
+        isSummary.Checked = Settings.Default.isSummary; // true 表描述
+        IsDisplay.Checked = Settings.Default.IsDisplay; // false 預設
+        IsRequired.Checked = Settings.Default.IsRequired; // false 預設
+        isKey.Checked = Settings.Default.isKey; // false 預設
 
-        IsTableDescriptionShow.Checked = true; //表描述
+        IsTableDescriptionShow.Checked = Settings.Default.IsTableDescriptionShow; // true 表描述
 
-        IsSortShow.Checked = true; //排序
-        IsDataTypeShow.Checked = true; //資料型別
-        IsDefaultValueShow.Checked = true; //預設值
-        IsIdentityShow.Checked = true; //識別
-        IsPrimaryKeyShow.Checked = true;//主鍵
+        IsSortShow.Checked = Settings.Default.IsSortShow; // true 排序
+        IsDataTypeShow.Checked = Settings.Default.IsDataTypeShow; // true 資料型別
+        IsDefaultValueShow.Checked = Settings.Default.IsDefaultValueShow; // true 預設值
+        IsIdentityShow.Checked = Settings.Default.IsIdentityShow; // true 識別
+        IsPrimaryKeyShow.Checked = Settings.Default.IsPrimaryKeyShow; // true 主鍵
 
-        IsNotNullShow.Checked = true; //必填
-        IsLengthShow.Checked = false; //長度
-        IsPrecisionShow.Checked = false; //精度
-        IsScaleShow.Checked = false; //小位數
-        IsColumnDescriptionShow.Checked = true; //欄描述
+        IsNotNullShow.Checked = Settings.Default.IsNotNullShow; // true 必填
+        IsLengthShow.Checked = Settings.Default.IsLengthShow; // false 長度
+        IsPrecisionShow.Checked = Settings.Default.IsPrecisionShow; // false 精度
+        IsScaleShow.Checked = Settings.Default.IsScaleShow; // false 小位數
+        IsColumnDescriptionShow.Checked = Settings.Default.IsColumnDescriptionShow; // true 欄描述
     }
+
 
 
     private void errorTextEvent(object sender, EventArgs e)
