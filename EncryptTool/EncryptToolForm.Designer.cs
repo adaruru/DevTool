@@ -35,6 +35,7 @@
         afterLabel = new Label();
         beforeLabel = new Label();
         settingTab = new TabPage();
+        resetBtn = new Button();
         DESIvBox = new TextBox();
         DESIvLabel = new Label();
         encryptWayLabel = new Label();
@@ -139,6 +140,7 @@
         // 
         // settingTab
         // 
+        settingTab.Controls.Add(resetBtn);
         settingTab.Controls.Add(DESIvBox);
         settingTab.Controls.Add(DESIvLabel);
         settingTab.Controls.Add(encryptWayLabel);
@@ -153,6 +155,17 @@
         settingTab.TabIndex = 1;
         settingTab.Text = "加密設定";
         settingTab.UseVisualStyleBackColor = true;
+        // 
+        // resetBtn
+        // 
+        resetBtn.BackColor = SystemColors.Control;
+        resetBtn.Location = new Point(23, 186);
+        resetBtn.Name = "resetBtn";
+        resetBtn.Size = new Size(110, 32);
+        resetBtn.TabIndex = 11;
+        resetBtn.Text = "重置設定";
+        resetBtn.UseVisualStyleBackColor = false;
+        resetBtn.Click += resetBtn_Click;
         // 
         // DESIvBox
         // 
@@ -277,4 +290,5 @@
     private TextBox errorTextLbl;
     private TextBox DESIvBox;
     private Label DESIvLabel;
+    private Button resetBtn;
 }

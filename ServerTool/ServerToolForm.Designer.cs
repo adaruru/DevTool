@@ -1,5 +1,4 @@
-﻿
-partial class ServerToolForm
+﻿partial class ServerToolForm
 {
     /// <summary>
     /// Required designer variable.

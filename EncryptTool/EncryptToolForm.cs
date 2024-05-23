@@ -76,10 +76,7 @@ public partial class EncryptToolForm : Form
 
     private void EncryptToolForm_Load(object sender, EventArgs e)
     {
-        //處理所有預設值
-        encryptWay.SelectedIndex = Convert.ToInt32(Properties.Settings.Default.encryptWay);
-        DESIvBox.Text = Properties.Settings.Default.DESIv;
-        DESKeyBox.Text = Properties.Settings.Default.DESKey;
+        LoadSettings();
     }
 
     private void DESKeyBoxTextChanged(object sender, EventArgs e)
@@ -94,5 +91,23 @@ public partial class EncryptToolForm : Form
         string newDESIv = DESIvBox.Text;
         Properties.Settings.Default.DESIv = newDESIv;
         Properties.Settings.Default.Save();
+    }
+
+    private void resetBtn_Click(object sender, EventArgs e)
+    {
+        var result = MessageBox.Show("你確定要重置所有設定嗎", "確認重置", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+        if (result == DialogResult.Yes)
+        {
+            Properties.Settings.Default.Reset();
+            Properties.Settings.Default.Save();
+            LoadSettings();
+        }
+    }
+    private void LoadSettings()
+    {
+        //處理所有預設值
+        encryptWay.SelectedIndex = Convert.ToInt32(Properties.Settings.Default.encryptWay);
+        DESIvBox.Text = Properties.Settings.Default.DESIv;
+        DESKeyBox.Text = Properties.Settings.Default.DESKey;
     }
 }

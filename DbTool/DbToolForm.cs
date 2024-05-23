@@ -346,10 +346,28 @@ ORDER BY st.name --table name
 
     }
 
-    private void Form1_Load(object sender, EventArgs e)
+    private void DbToolForm_Load(object sender, EventArgs e)
     {
-
+        LoadSettings();
     }
+
+    private void resetBtn_Click(object sender, EventArgs e)
+    {
+        var result = MessageBox.Show("你確定要重置所有設定嗎", "確認重置", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+        if (result == DialogResult.Yes)
+        {
+            Properties.Settings.Default.Reset();
+            Properties.Settings.Default.Save();
+            LoadSettings();
+        }
+    }
+
+    private void LoadSettings()
+    {
+        //處理所有預設值
+        connStrBox.Text = Properties.Settings.Default.ConnString;
+    }
+
 
     private void errorTextEvent(object sender, EventArgs e)
     {
