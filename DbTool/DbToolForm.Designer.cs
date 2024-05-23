@@ -55,18 +55,20 @@ partial class DbToolForm
         IsColumnDescriptionShow = new CheckBox();
         IsTableDescriptionShow = new CheckBox();
         downloadTemplateBtn = new Button();
+        settingTab = new TabPage();
+        resetBtn = new Button();
         errorTextLbl = new TextBox();
-        tabPage1 = new TabPage();
         tabControl1.SuspendLayout();
         connTool.SuspendLayout();
         modelTool.SuspendLayout();
         schmaTool.SuspendLayout();
+        settingTab.SuspendLayout();
         SuspendLayout();
         // 
         // demoCommBtn
         // 
         demoCommBtn.Location = new Point(190, 139);
-        demoCommBtn.Margin = new Padding(2, 2, 2, 2);
+        demoCommBtn.Margin = new Padding(2);
         demoCommBtn.Name = "demoCommBtn";
         demoCommBtn.Size = new Size(92, 28);
         demoCommBtn.TabIndex = 0;
@@ -77,7 +79,7 @@ partial class DbToolForm
         // downloadSchemaBtn
         // 
         downloadSchemaBtn.Location = new Point(15, 102);
-        downloadSchemaBtn.Margin = new Padding(2, 2, 2, 2);
+        downloadSchemaBtn.Margin = new Padding(2);
         downloadSchemaBtn.Name = "downloadSchemaBtn";
         downloadSchemaBtn.Size = new Size(128, 28);
         downloadSchemaBtn.TabIndex = 1;
@@ -88,7 +90,7 @@ partial class DbToolForm
         // connStrBox
         // 
         connStrBox.Location = new Point(79, 10);
-        connStrBox.Margin = new Padding(2, 2, 2, 2);
+        connStrBox.Margin = new Padding(2);
         connStrBox.Multiline = true;
         connStrBox.Name = "connStrBox";
         connStrBox.Size = new Size(434, 112);
@@ -110,7 +112,7 @@ partial class DbToolForm
         // dbTestBtn
         // 
         dbTestBtn.Location = new Point(79, 139);
-        dbTestBtn.Margin = new Padding(2, 2, 2, 2);
+        dbTestBtn.Margin = new Padding(2);
         dbTestBtn.Name = "dbTestBtn";
         dbTestBtn.Size = new Size(92, 28);
         dbTestBtn.TabIndex = 6;
@@ -123,9 +125,9 @@ partial class DbToolForm
         tabControl1.Controls.Add(connTool);
         tabControl1.Controls.Add(modelTool);
         tabControl1.Controls.Add(schmaTool);
-        tabControl1.Controls.Add(tabPage1);
+        tabControl1.Controls.Add(settingTab);
         tabControl1.Location = new Point(0, 2);
-        tabControl1.Margin = new Padding(2, 2, 2, 2);
+        tabControl1.Margin = new Padding(2);
         tabControl1.Name = "tabControl1";
         tabControl1.SelectedIndex = 0;
         tabControl1.Size = new Size(536, 244);
@@ -139,9 +141,9 @@ partial class DbToolForm
         connTool.Controls.Add(connStrBox);
         connTool.Controls.Add(demoCommBtn);
         connTool.Location = new Point(4, 28);
-        connTool.Margin = new Padding(2, 2, 2, 2);
+        connTool.Margin = new Padding(2);
         connTool.Name = "connTool";
-        connTool.Padding = new Padding(2, 2, 2, 2);
+        connTool.Padding = new Padding(2);
         connTool.Size = new Size(528, 212);
         connTool.TabIndex = 0;
         connTool.Text = "資料庫連線";
@@ -155,9 +157,9 @@ partial class DbToolForm
         modelTool.Controls.Add(IsDisplay);
         modelTool.Controls.Add(modelGenBtn);
         modelTool.Location = new Point(4, 28);
-        modelTool.Margin = new Padding(2, 2, 2, 2);
+        modelTool.Margin = new Padding(2);
         modelTool.Name = "modelTool";
-        modelTool.Padding = new Padding(2, 2, 2, 2);
+        modelTool.Padding = new Padding(2);
         modelTool.Size = new Size(528, 212);
         modelTool.TabIndex = 1;
         modelTool.Text = "model產檔";
@@ -169,7 +171,7 @@ partial class DbToolForm
         isSummary.Checked = true;
         isSummary.CheckState = CheckState.Checked;
         isSummary.Location = new Point(7, 24);
-        isSummary.Margin = new Padding(2, 2, 2, 2);
+        isSummary.Margin = new Padding(2);
         isSummary.Name = "isSummary";
         isSummary.Size = new Size(99, 23);
         isSummary.TabIndex = 11;
@@ -181,7 +183,7 @@ partial class DbToolForm
         // 
         isKey.AutoSize = true;
         isKey.Location = new Point(298, 24);
-        isKey.Margin = new Padding(2, 2, 2, 2);
+        isKey.Margin = new Padding(2);
         isKey.Name = "isKey";
         isKey.Size = new Size(56, 23);
         isKey.TabIndex = 10;
@@ -193,7 +195,7 @@ partial class DbToolForm
         // 
         IsRequired.AutoSize = true;
         IsRequired.Location = new Point(200, 24);
-        IsRequired.Margin = new Padding(2, 2, 2, 2);
+        IsRequired.Margin = new Padding(2);
         IsRequired.Name = "IsRequired";
         IsRequired.Size = new Size(96, 23);
         IsRequired.TabIndex = 9;
@@ -205,7 +207,7 @@ partial class DbToolForm
         // 
         IsDisplay.AutoSize = true;
         IsDisplay.Location = new Point(107, 24);
-        IsDisplay.Margin = new Padding(2, 2, 2, 2);
+        IsDisplay.Margin = new Padding(2);
         IsDisplay.Name = "IsDisplay";
         IsDisplay.Size = new Size(82, 23);
         IsDisplay.TabIndex = 8;
@@ -216,7 +218,7 @@ partial class DbToolForm
         // modelGenBtn
         // 
         modelGenBtn.Location = new Point(7, 59);
-        modelGenBtn.Margin = new Padding(2, 2, 2, 2);
+        modelGenBtn.Margin = new Padding(2);
         modelGenBtn.Name = "modelGenBtn";
         modelGenBtn.Size = new Size(124, 26);
         modelGenBtn.TabIndex = 7;
@@ -241,9 +243,9 @@ partial class DbToolForm
         schmaTool.Controls.Add(downloadTemplateBtn);
         schmaTool.Controls.Add(downloadSchemaBtn);
         schmaTool.Location = new Point(4, 28);
-        schmaTool.Margin = new Padding(2, 2, 2, 2);
+        schmaTool.Margin = new Padding(2);
         schmaTool.Name = "schmaTool";
-        schmaTool.Padding = new Padding(2, 2, 2, 2);
+        schmaTool.Padding = new Padding(2);
         schmaTool.Size = new Size(528, 212);
         schmaTool.TabIndex = 2;
         schmaTool.Text = "資料庫規格";
@@ -252,7 +254,7 @@ partial class DbToolForm
         // ImportDescription
         // 
         ImportDescription.Location = new Point(15, 168);
-        ImportDescription.Margin = new Padding(2, 2, 2, 2);
+        ImportDescription.Margin = new Padding(2);
         ImportDescription.Name = "ImportDescription";
         ImportDescription.Size = new Size(92, 28);
         ImportDescription.TabIndex = 14;
@@ -264,7 +266,7 @@ partial class DbToolForm
         // 
         IsScaleShow.AutoSize = true;
         IsScaleShow.Location = new Point(235, 70);
-        IsScaleShow.Margin = new Padding(2, 2, 2, 2);
+        IsScaleShow.Margin = new Padding(2);
         IsScaleShow.Name = "IsScaleShow";
         IsScaleShow.Size = new Size(76, 23);
         IsScaleShow.TabIndex = 13;
@@ -276,7 +278,7 @@ partial class DbToolForm
         // 
         IsPrecisionShow.AutoSize = true;
         IsPrecisionShow.Location = new Point(165, 70);
-        IsPrecisionShow.Margin = new Padding(2, 2, 2, 2);
+        IsPrecisionShow.Margin = new Padding(2);
         IsPrecisionShow.Name = "IsPrecisionShow";
         IsPrecisionShow.Size = new Size(61, 23);
         IsPrecisionShow.TabIndex = 12;
@@ -287,7 +289,7 @@ partial class DbToolForm
         // 
         IsLengthShow.AutoSize = true;
         IsLengthShow.Location = new Point(79, 70);
-        IsLengthShow.Margin = new Padding(2, 2, 2, 2);
+        IsLengthShow.Margin = new Padding(2);
         IsLengthShow.Name = "IsLengthShow";
         IsLengthShow.Size = new Size(61, 23);
         IsLengthShow.TabIndex = 11;
@@ -301,7 +303,7 @@ partial class DbToolForm
         IsNotNullShow.Checked = true;
         IsNotNullShow.CheckState = CheckState.Checked;
         IsNotNullShow.Location = new Point(16, 70);
-        IsNotNullShow.Margin = new Padding(2, 2, 2, 2);
+        IsNotNullShow.Margin = new Padding(2);
         IsNotNullShow.Name = "IsNotNullShow";
         IsNotNullShow.Size = new Size(61, 23);
         IsNotNullShow.TabIndex = 10;
@@ -314,7 +316,7 @@ partial class DbToolForm
         IsPrimaryKeyShow.Checked = true;
         IsPrimaryKeyShow.CheckState = CheckState.Checked;
         IsPrimaryKeyShow.Location = new Point(313, 43);
-        IsPrimaryKeyShow.Margin = new Padding(2, 2, 2, 2);
+        IsPrimaryKeyShow.Margin = new Padding(2);
         IsPrimaryKeyShow.Name = "IsPrimaryKeyShow";
         IsPrimaryKeyShow.Size = new Size(61, 23);
         IsPrimaryKeyShow.TabIndex = 9;
@@ -327,7 +329,7 @@ partial class DbToolForm
         IsIdentityShow.Checked = true;
         IsIdentityShow.CheckState = CheckState.Checked;
         IsIdentityShow.Location = new Point(235, 43);
-        IsIdentityShow.Margin = new Padding(2, 2, 2, 2);
+        IsIdentityShow.Margin = new Padding(2);
         IsIdentityShow.Name = "IsIdentityShow";
         IsIdentityShow.Size = new Size(61, 23);
         IsIdentityShow.TabIndex = 8;
@@ -340,7 +342,7 @@ partial class DbToolForm
         IsDefaultValueShow.Checked = true;
         IsDefaultValueShow.CheckState = CheckState.Checked;
         IsDefaultValueShow.Location = new Point(165, 43);
-        IsDefaultValueShow.Margin = new Padding(2, 2, 2, 2);
+        IsDefaultValueShow.Margin = new Padding(2);
         IsDefaultValueShow.Name = "IsDefaultValueShow";
         IsDefaultValueShow.Size = new Size(76, 23);
         IsDefaultValueShow.TabIndex = 7;
@@ -353,7 +355,7 @@ partial class DbToolForm
         IsDataTypeShow.Checked = true;
         IsDataTypeShow.CheckState = CheckState.Checked;
         IsDataTypeShow.Location = new Point(79, 43);
-        IsDataTypeShow.Margin = new Padding(2, 2, 2, 2);
+        IsDataTypeShow.Margin = new Padding(2);
         IsDataTypeShow.Name = "IsDataTypeShow";
         IsDataTypeShow.Size = new Size(91, 23);
         IsDataTypeShow.TabIndex = 6;
@@ -366,7 +368,7 @@ partial class DbToolForm
         IsSortShow.Checked = true;
         IsSortShow.CheckState = CheckState.Checked;
         IsSortShow.Location = new Point(16, 43);
-        IsSortShow.Margin = new Padding(2, 2, 2, 2);
+        IsSortShow.Margin = new Padding(2);
         IsSortShow.Name = "IsSortShow";
         IsSortShow.Size = new Size(61, 23);
         IsSortShow.TabIndex = 5;
@@ -379,7 +381,7 @@ partial class DbToolForm
         IsColumnDescriptionShow.Checked = true;
         IsColumnDescriptionShow.CheckState = CheckState.Checked;
         IsColumnDescriptionShow.Location = new Point(313, 70);
-        IsColumnDescriptionShow.Margin = new Padding(2, 2, 2, 2);
+        IsColumnDescriptionShow.Margin = new Padding(2);
         IsColumnDescriptionShow.Name = "IsColumnDescriptionShow";
         IsColumnDescriptionShow.Size = new Size(76, 23);
         IsColumnDescriptionShow.TabIndex = 4;
@@ -392,7 +394,7 @@ partial class DbToolForm
         IsTableDescriptionShow.Checked = true;
         IsTableDescriptionShow.CheckState = CheckState.Checked;
         IsTableDescriptionShow.Location = new Point(16, 16);
-        IsTableDescriptionShow.Margin = new Padding(2, 2, 2, 2);
+        IsTableDescriptionShow.Margin = new Padding(2);
         IsTableDescriptionShow.Name = "IsTableDescriptionShow";
         IsTableDescriptionShow.Size = new Size(76, 23);
         IsTableDescriptionShow.TabIndex = 3;
@@ -403,7 +405,7 @@ partial class DbToolForm
         // downloadTemplateBtn
         // 
         downloadTemplateBtn.Location = new Point(15, 135);
-        downloadTemplateBtn.Margin = new Padding(2, 2, 2, 2);
+        downloadTemplateBtn.Margin = new Padding(2);
         downloadTemplateBtn.Name = "downloadTemplateBtn";
         downloadTemplateBtn.Size = new Size(136, 28);
         downloadTemplateBtn.TabIndex = 2;
@@ -411,28 +413,40 @@ partial class DbToolForm
         downloadTemplateBtn.UseVisualStyleBackColor = true;
         downloadTemplateBtn.Click += downloadSchemaEvent;
         // 
+        // settingTab
+        // 
+        settingTab.Controls.Add(resetBtn);
+        settingTab.Location = new Point(4, 28);
+        settingTab.Name = "settingTab";
+        settingTab.Padding = new Padding(3);
+        settingTab.Size = new Size(528, 212);
+        settingTab.TabIndex = 3;
+        settingTab.Text = "設定";
+        settingTab.UseVisualStyleBackColor = true;
+        // 
+        // resetBtn
+        // 
+        resetBtn.Location = new Point(16, 19);
+        resetBtn.Margin = new Padding(2);
+        resetBtn.Name = "resetBtn";
+        resetBtn.Size = new Size(92, 28);
+        resetBtn.TabIndex = 15;
+        resetBtn.Text = "重置設定";
+        resetBtn.UseVisualStyleBackColor = true;
+        resetBtn.Click += resetBtn_Click;
+        // 
         // errorTextLbl
         // 
         errorTextLbl.BackColor = SystemColors.Control;
         errorTextLbl.BorderStyle = BorderStyle.None;
         errorTextLbl.Location = new Point(3, 248);
-        errorTextLbl.Margin = new Padding(2, 2, 2, 2);
+        errorTextLbl.Margin = new Padding(2);
         errorTextLbl.Multiline = true;
         errorTextLbl.Name = "errorTextLbl";
         errorTextLbl.ReadOnly = true;
         errorTextLbl.Size = new Size(522, 60);
         errorTextLbl.TabIndex = 8;
         errorTextLbl.Click += errorTextEvent;
-        // 
-        // tabPage1
-        // 
-        tabPage1.Location = new Point(4, 28);
-        tabPage1.Name = "tabPage1";
-        tabPage1.Padding = new Padding(3);
-        tabPage1.Size = new Size(528, 212);
-        tabPage1.TabIndex = 3;
-        tabPage1.Text = "tabPage1";
-        tabPage1.UseVisualStyleBackColor = true;
         // 
         // DbToolForm
         // 
@@ -441,7 +455,7 @@ partial class DbToolForm
         ClientSize = new Size(535, 319);
         Controls.Add(errorTextLbl);
         Controls.Add(tabControl1);
-        Margin = new Padding(2, 2, 2, 2);
+        Margin = new Padding(2);
         Name = "DbToolForm";
         Text = "資料庫工具";
         Load += DbToolForm_Load;
@@ -452,6 +466,7 @@ partial class DbToolForm
         modelTool.PerformLayout();
         schmaTool.ResumeLayout(false);
         schmaTool.PerformLayout();
+        settingTab.ResumeLayout(false);
         ResumeLayout(false);
         PerformLayout();
     }
@@ -488,5 +503,6 @@ partial class DbToolForm
     private CheckBox IsRequired;
     private CheckBox isKey;
     private CheckBox isSummary;
-    private TabPage tabPage1;
+    private TabPage settingTab;
+    private Button resetBtn;
 }
