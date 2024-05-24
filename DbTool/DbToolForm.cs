@@ -17,6 +17,7 @@ public partial class DbToolForm : Form
     public Schema SchemaDescription = new Schema();
     public ConnService Conn;
     public string SchemaName = "";
+
     private void demoCommBtnEvent(object sender, EventArgs e)
     {
         connStrBox.Text = "Data Source=MSI;Initial Catalog=MvcCoreTraining_Amanda;user id=sa;password=ruru;";
@@ -417,21 +418,6 @@ ORDER BY st.name --table name
         }
     }
 
-    private void checkBox1_CheckedChanged(object sender, EventArgs e)
-    {
-
-    }
-
-    private void checkBox3_CheckedChanged(object sender, EventArgs e)
-    {
-
-    }
-
-    private void IsScaleShow_CheckedChanged(object sender, EventArgs e)
-    {
-
-    }
-
     private void ImportDescriptionEvent(object sender, EventArgs e)
     {
         try
@@ -636,6 +622,7 @@ END;";
     }
     private void modelGenEvent(object sender, EventArgs e)
     {
+        errorTextLbl.Text = $"產製中請稍後";
         try
         {
             SetColumn();
@@ -667,9 +654,13 @@ public class {Schema?.Tables[i].TableName}
 /// {Schema?.Tables[i].Columns[j].ColumnDescription}
 /// </summary>";
                     };
-                    if ((Schema?.Tables[i].TableName + "id").ToLower() ==
+                    string tableName = Schema?.Tables[i].TableName;
+                    string columnName = Schema?.Tables[i].Columns[j].ColumnName;
+                    string modifiedTableName = tableName?.TrimEnd('s', 'S') ?? string.Empty;
+
+                    if ((modifiedTableName + "id").ToLower() ==
                         (Schema?.Tables[i].Columns[j].ColumnName).ToLower()
-                             && isKey.Checked)
+                        && isKey.Checked)
                     {
                         content += @"
 [Key]";
@@ -715,23 +706,93 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
     {
     }
 
-    private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
+    private void isSummaryChanged(object sender, EventArgs e)
     {
-
+        Settings.Default.isSummary = isSummary.Checked;
+        Settings.Default.Save();
     }
 
-    private void checkBox2_CheckedChanged(object sender, EventArgs e)
+    private void IsDisplayChanged(object sender, EventArgs e)
     {
-
+        Settings.Default.IsDisplay = IsDisplay.Checked;
+        Settings.Default.Save();
     }
 
-    private void checkBox1_CheckedChanged_2(object sender, EventArgs e)
+    private void IsRequiredChanged(object sender, EventArgs e)
     {
-
+        Settings.Default.IsRequired = IsRequired.Checked;
+        Settings.Default.Save();
     }
 
-    private void isSummary_CheckedChanged(object sender, EventArgs e)
+    private void isKeyChanged(object sender, EventArgs e)
     {
+        Settings.Default.isKey = isKey.Checked;
+        Settings.Default.Save();
+    }
 
+    private void IsTableDescriptionShowChanged(object sender, EventArgs e)
+    {
+        Settings.Default.IsTableDescriptionShow = IsTableDescriptionShow.Checked;
+        Settings.Default.Save();
+    }
+
+    private void IsSortShowChanged(object sender, EventArgs e)
+    {
+        Settings.Default.IsSortShow = IsSortShow.Checked;
+        Settings.Default.Save();
+    }
+
+    private void IsDataTypeShowChanged(object sender, EventArgs e)
+    {
+        Settings.Default.IsDataTypeShow = IsDataTypeShow.Checked;
+        Settings.Default.Save();
+    }
+
+    private void IsDefaultValueShowChanged(object sender, EventArgs e)
+    {
+        Settings.Default.IsDefaultValueShow = IsDefaultValueShow.Checked;
+        Settings.Default.Save();
+    }
+
+    private void IsIdentityShowChanged(object sender, EventArgs e)
+    {
+        Settings.Default.IsIdentityShow = IsIdentityShow.Checked;
+        Settings.Default.Save();
+    }
+
+    private void IsPrimaryKeyShowChanged(object sender, EventArgs e)
+    {
+        Settings.Default.IsPrimaryKeyShow = IsPrimaryKeyShow.Checked;
+        Settings.Default.Save();
+    }
+
+    private void IsNotNullShowChanged(object sender, EventArgs e)
+    {
+        Settings.Default.IsNotNullShow = IsNotNullShow.Checked;
+        Settings.Default.Save();
+    }
+
+    private void IsLengthShowChanged(object sender, EventArgs e)
+    {
+        Settings.Default.IsLengthShow = IsLengthShow.Checked;
+        Settings.Default.Save();
+    }
+
+    private void IsPrecisionShowChanged(object sender, EventArgs e)
+    {
+        Settings.Default.IsPrecisionShow = IsPrecisionShow.Checked;
+        Settings.Default.Save();
+    }
+
+    private void IsScaleShowChanged(object sender, EventArgs e)
+    {
+        Settings.Default.IsScaleShow = IsScaleShow.Checked;
+        Settings.Default.Save();
+    }
+
+    private void IsColumnDescriptionShowChanged(object sender, EventArgs e)
+    {
+        Settings.Default.IsColumnDescriptionShow = IsColumnDescriptionShow.Checked;
+        Settings.Default.Save();
     }
 }

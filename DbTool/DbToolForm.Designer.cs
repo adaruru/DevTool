@@ -175,7 +175,7 @@ partial class DbToolForm
         isSummary.TabIndex = 11;
         isSummary.Text = "Summary";
         isSummary.UseVisualStyleBackColor = true;
-        isSummary.CheckedChanged += isSummary_CheckedChanged;
+        isSummary.CheckedChanged += isSummaryChanged;
         // 
         // isKey
         // 
@@ -187,7 +187,7 @@ partial class DbToolForm
         isKey.TabIndex = 10;
         isKey.Text = "Key";
         isKey.UseVisualStyleBackColor = true;
-        isKey.CheckedChanged += checkBox1_CheckedChanged_2;
+        isKey.CheckedChanged += isKeyChanged;
         // 
         // IsRequired
         // 
@@ -199,7 +199,7 @@ partial class DbToolForm
         IsRequired.TabIndex = 9;
         IsRequired.Text = "Required";
         IsRequired.UseVisualStyleBackColor = true;
-        IsRequired.CheckedChanged += checkBox2_CheckedChanged;
+        IsRequired.CheckedChanged += IsRequiredChanged;
         // 
         // IsDisplay
         // 
@@ -211,7 +211,7 @@ partial class DbToolForm
         IsDisplay.TabIndex = 8;
         IsDisplay.Text = "Display";
         IsDisplay.UseVisualStyleBackColor = true;
-        IsDisplay.CheckedChanged += checkBox1_CheckedChanged_1;
+        IsDisplay.CheckedChanged += IsDisplayChanged;
         // 
         // modelGenBtn
         // 
@@ -270,7 +270,7 @@ partial class DbToolForm
         IsScaleShow.TabIndex = 13;
         IsScaleShow.Text = "小位數";
         IsScaleShow.UseVisualStyleBackColor = true;
-        IsScaleShow.CheckedChanged += IsScaleShow_CheckedChanged;
+        IsScaleShow.CheckedChanged += IsScaleShowChanged;
         // 
         // IsPrecisionShow
         // 
@@ -282,6 +282,7 @@ partial class DbToolForm
         IsPrecisionShow.TabIndex = 12;
         IsPrecisionShow.Text = "精度";
         IsPrecisionShow.UseVisualStyleBackColor = true;
+        IsPrecisionShow.CheckedChanged += IsPrecisionShowChanged;
         // 
         // IsLengthShow
         // 
@@ -293,7 +294,7 @@ partial class DbToolForm
         IsLengthShow.TabIndex = 11;
         IsLengthShow.Text = "長度";
         IsLengthShow.UseVisualStyleBackColor = true;
-        IsLengthShow.CheckedChanged += checkBox3_CheckedChanged;
+        IsLengthShow.CheckedChanged += IsLengthShowChanged;
         // 
         // IsNotNullShow
         // 
@@ -306,6 +307,7 @@ partial class DbToolForm
         IsNotNullShow.TabIndex = 10;
         IsNotNullShow.Text = "必填";
         IsNotNullShow.UseVisualStyleBackColor = true;
+        IsNotNullShow.CheckedChanged += IsNotNullShowChanged;
         // 
         // IsPrimaryKeyShow
         // 
@@ -318,6 +320,7 @@ partial class DbToolForm
         IsPrimaryKeyShow.TabIndex = 9;
         IsPrimaryKeyShow.Text = "主鍵";
         IsPrimaryKeyShow.UseVisualStyleBackColor = true;
+        IsPrimaryKeyShow.CheckedChanged += IsPrimaryKeyShowChanged;
         // 
         // IsIdentityShow
         // 
@@ -330,6 +333,7 @@ partial class DbToolForm
         IsIdentityShow.TabIndex = 8;
         IsIdentityShow.Text = "識別";
         IsIdentityShow.UseVisualStyleBackColor = true;
+        IsIdentityShow.CheckedChanged += IsIdentityShowChanged;
         // 
         // IsDefaultValueShow
         // 
@@ -342,6 +346,7 @@ partial class DbToolForm
         IsDefaultValueShow.TabIndex = 7;
         IsDefaultValueShow.Text = "預設值";
         IsDefaultValueShow.UseVisualStyleBackColor = true;
+        IsDefaultValueShow.CheckedChanged += IsDefaultValueShowChanged;
         // 
         // IsDataTypeShow
         // 
@@ -354,6 +359,7 @@ partial class DbToolForm
         IsDataTypeShow.TabIndex = 6;
         IsDataTypeShow.Text = "資料型別";
         IsDataTypeShow.UseVisualStyleBackColor = true;
+        IsDataTypeShow.CheckedChanged += IsDataTypeShowChanged;
         // 
         // IsSortShow
         // 
@@ -366,6 +372,7 @@ partial class DbToolForm
         IsSortShow.TabIndex = 5;
         IsSortShow.Text = "排序";
         IsSortShow.UseVisualStyleBackColor = true;
+        IsSortShow.CheckedChanged += IsSortShowChanged;
         // 
         // IsColumnDescriptionShow
         // 
@@ -377,6 +384,7 @@ partial class DbToolForm
         IsColumnDescriptionShow.TabIndex = 4;
         IsColumnDescriptionShow.Text = "欄描述";
         IsColumnDescriptionShow.UseVisualStyleBackColor = true;
+        IsColumnDescriptionShow.CheckedChanged += IsColumnDescriptionShowChanged;
         // 
         // IsTableDescriptionShow
         // 
@@ -388,7 +396,7 @@ partial class DbToolForm
         IsTableDescriptionShow.TabIndex = 3;
         IsTableDescriptionShow.Text = "表描述";
         IsTableDescriptionShow.UseVisualStyleBackColor = true;
-        IsTableDescriptionShow.CheckedChanged += checkBox1_CheckedChanged;
+        IsTableDescriptionShow.CheckedChanged += IsTableDescriptionShowChanged;
         // 
         // downloadTemplateBtn
         // 

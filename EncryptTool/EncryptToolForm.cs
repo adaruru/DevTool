@@ -88,8 +88,7 @@ public partial class EncryptToolForm : Form
 
     private void DESIvBox_TextChanged(object sender, EventArgs e)
     {
-        string newDESIv = DESIvBox.Text;
-        Properties.Settings.Default.DESIv = newDESIv;
+        Properties.Settings.Default.DESIv = DESIvBox.Text;
         Properties.Settings.Default.Save();
     }
 
