@@ -31,7 +31,7 @@ partial class DbToolForm
         demoCommBtn = new Button();
         downloadSchemaBtn = new Button();
         connStrBox = new TextBox();
-        label1 = new Label();
+        connStrLabel = new Label();
         dbTestBtn = new Button();
         tabControl1 = new TabControl();
         connTool = new TabPage();
@@ -98,16 +98,15 @@ partial class DbToolForm
         connStrBox.Text = "Data Source=MSI;Initial Catalog=MvcCoreTraining_Amanda;user id=sa;password=ruru";
         connStrBox.TextChanged += connStrBoxEvent;
         // 
-        // label1
+        // connStrLabel
         // 
-        label1.AutoSize = true;
-        label1.Location = new Point(7, 10);
-        label1.Margin = new Padding(2, 0, 2, 0);
-        label1.Name = "label1";
-        label1.Size = new Size(69, 19);
-        label1.TabIndex = 3;
-        label1.Text = "連線字串";
-        label1.Click += label1_Click;
+        connStrLabel.AutoSize = true;
+        connStrLabel.Location = new Point(7, 10);
+        connStrLabel.Margin = new Padding(2, 0, 2, 0);
+        connStrLabel.Name = "connStrLabel";
+        connStrLabel.Size = new Size(69, 19);
+        connStrLabel.TabIndex = 3;
+        connStrLabel.Text = "連線字串";
         // 
         // dbTestBtn
         // 
@@ -136,7 +135,7 @@ partial class DbToolForm
         // 
         // connTool
         // 
-        connTool.Controls.Add(label1);
+        connTool.Controls.Add(connStrLabel);
         connTool.Controls.Add(dbTestBtn);
         connTool.Controls.Add(connStrBox);
         connTool.Controls.Add(demoCommBtn);
@@ -300,6 +299,7 @@ partial class DbToolForm
         // 
         IsNotNullShow.AutoSize = true;
         IsNotNullShow.Checked = true;
+        IsNotNullShow.CheckState = CheckState.Checked;
         IsNotNullShow.Location = new Point(16, 70);
         IsNotNullShow.Margin = new Padding(2);
         IsNotNullShow.Name = "IsNotNullShow";
@@ -313,6 +313,7 @@ partial class DbToolForm
         // 
         IsPrimaryKeyShow.AutoSize = true;
         IsPrimaryKeyShow.Checked = true;
+        IsPrimaryKeyShow.CheckState = CheckState.Checked;
         IsPrimaryKeyShow.Location = new Point(313, 43);
         IsPrimaryKeyShow.Margin = new Padding(2);
         IsPrimaryKeyShow.Name = "IsPrimaryKeyShow";
@@ -326,6 +327,7 @@ partial class DbToolForm
         // 
         IsIdentityShow.AutoSize = true;
         IsIdentityShow.Checked = true;
+        IsIdentityShow.CheckState = CheckState.Checked;
         IsIdentityShow.Location = new Point(235, 43);
         IsIdentityShow.Margin = new Padding(2);
         IsIdentityShow.Name = "IsIdentityShow";
@@ -339,6 +341,7 @@ partial class DbToolForm
         // 
         IsDefaultValueShow.AutoSize = true;
         IsDefaultValueShow.Checked = true;
+        IsDefaultValueShow.CheckState = CheckState.Checked;
         IsDefaultValueShow.Location = new Point(165, 43);
         IsDefaultValueShow.Margin = new Padding(2);
         IsDefaultValueShow.Name = "IsDefaultValueShow";
@@ -352,6 +355,7 @@ partial class DbToolForm
         // 
         IsDataTypeShow.AutoSize = true;
         IsDataTypeShow.Checked = true;
+        IsDataTypeShow.CheckState = CheckState.Checked;
         IsDataTypeShow.Location = new Point(79, 43);
         IsDataTypeShow.Margin = new Padding(2);
         IsDataTypeShow.Name = "IsDataTypeShow";
@@ -365,6 +369,7 @@ partial class DbToolForm
         // 
         IsSortShow.AutoSize = true;
         IsSortShow.Checked = true;
+        IsSortShow.CheckState = CheckState.Checked;
         IsSortShow.Location = new Point(16, 43);
         IsSortShow.Margin = new Padding(2);
         IsSortShow.Name = "IsSortShow";
@@ -403,7 +408,7 @@ partial class DbToolForm
         downloadTemplateBtn.Location = new Point(15, 135);
         downloadTemplateBtn.Margin = new Padding(2);
         downloadTemplateBtn.Name = "downloadTemplateBtn";
-        downloadTemplateBtn.Size = new Size(136, 28);
+        downloadTemplateBtn.Size = new Size(155, 28);
         downloadTemplateBtn.TabIndex = 2;
         downloadTemplateBtn.Text = "下載匯入描述範本";
         downloadTemplateBtn.UseVisualStyleBackColor = true;
@@ -470,7 +475,7 @@ partial class DbToolForm
 
     #region tool component
     private TextBox connStrBox;
-    private Label label1;
+    private Label connStrLabel;
     private Button demoCommBtn;
     private Button downloadSchemaBtn;
     private Button dbTestBtn;

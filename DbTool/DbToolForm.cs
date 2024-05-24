@@ -23,6 +23,8 @@ public partial class DbToolForm : Form
         connStrBox.Text = "Data Source=MSI;Initial Catalog=MvcCoreTraining_Amanda;user id=sa;password=ruru;";
     }
 
+
+    /// 保留資源範本 單純下載 測試用
     private void downloadTemplateEvent(object sender, EventArgs e)
     {
         string resourceName = "DbTool.Template.Schema.xlsx";
@@ -38,8 +40,6 @@ public partial class DbToolForm : Form
         {
             resourceStream.CopyTo(fileStream);
         }
-
-
         Process.Start(new ProcessStartInfo
         {
             FileName = destinationPath,
@@ -47,20 +47,30 @@ public partial class DbToolForm : Form
         });
     }
 
+    /// <summary>
+    /// 下載範例與下載
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void downloadSchemaEvent(object sender, EventArgs e)
     {
         try
         {
             errorTextLbl.Text = "檔案產製中請稍後";
-            if (Conn == null)
+            if (string.IsNullOrEmpty(connStrBox.Text))
             {
                 throw new Exception("請輸入連線字串");
             }
+            Conn = new ConnService(connStrBox.Text);
+
             SetTable();
             SetColumn();
             Button clickedButton = sender as Button;
             var isTemplate = clickedButton != null && clickedButton == downloadTemplateBtn;
-            var control = GetControl(isTemplate);
+
+            var control = GetControl(isTemplate);//控制範本或規格 Excel 顯示欄位
+
+            //範本或規格 Excel 檔案名稱
             string destinationPath = isTemplate ?
                 Path.Combine(Directory.GetCurrentDirectory(), "ImportDescription.xlsx") :
                 Path.Combine(Directory.GetCurrentDirectory(), $"{SchemaName}{DateTime.Now.ToString("yyyyMMddHHmmss")}Schema.xlsx");
@@ -296,7 +306,7 @@ ORDER BY st.name --table name
     {
         if (isTemplate)
         {
-            var control = new ColumnControl()
+            var control = new ColumnControl() //下載匯入欄描述 必須固定描述欄的位置
             {
                 IsTableDescriptionShow = true,
                 IsColumnDescriptionShow = true,
@@ -314,7 +324,7 @@ ORDER BY st.name --table name
         }
         else
         {
-            var control = new ColumnControl()
+            var control = new ColumnControl() //下載資料庫規格 依照使用者設定
             {
                 IsTableDescriptionShow = IsTableDescriptionShow.Checked,
                 IsColumnDescriptionShow = IsColumnDescriptionShow.Checked,
@@ -331,9 +341,6 @@ ORDER BY st.name --table name
             return control;
         }
 
-    }
-    private void label1_Click(object sender, EventArgs e)
-    {
     }
 
     private void connStrBoxEvent(object sender, EventArgs e)
@@ -393,15 +400,14 @@ ORDER BY st.name --table name
 
     private void errorTextEvent(object sender, EventArgs e)
     {
-
+        errorTextLbl.Text = "";
     }
 
     private void dbTestEvent(object sender, EventArgs e)
     {
         try
         {
-            var str = connStrBox.Text;
-            Conn = new ConnService(str);
+            Conn = new ConnService(connStrBox.Text);
 
             var query = "select DB_NAME()";
             var result = Conn.GetValueStr(query);
