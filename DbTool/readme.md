@@ -2,9 +2,7 @@
 
  [_toc_]
 
-## 工具下載
-
-https://github.com/adaruru/DevTool/blob/main/ToolDownload/DbTool.1.exe
+[工具下載DbTool.exe](https://github.com/adaruru/DevTool/releases/download/1.1/DbTool.exe)
 
 ## 用途
 
