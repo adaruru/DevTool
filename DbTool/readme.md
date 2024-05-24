@@ -2,9 +2,15 @@
 
 [toc]
 
+## 工具下載
+
+https://github.com/adaruru/DevTool/blob/main/ToolDownload/DbTool.1.exe
+
 ## 用途
 
 僅支援 MS SQL，輸入連線字串之後可進行資料庫規格下載(產置excel檔案)，匯入資料庫欄位描述、資料表描述，與下載 Model.cs 方便開發使用
+
+## 使用說明
 
 ### 資料庫測試連線
 
