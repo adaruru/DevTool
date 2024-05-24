@@ -190,7 +190,7 @@ public partial class DbToolForm : Form
         }
         catch (Exception es)
         {
-            errorTextLbl.Text = es.Message;
+            errorTextLbl.Text = $"出現其他異常錯誤:{es.Message}";
         }
     }
 
@@ -420,7 +420,7 @@ ORDER BY st.name --table name
         }
         catch (Exception es)
         {
-            errorTextLbl.Text = es.Message;
+            errorTextLbl.Text = $"出現其他異常錯誤:{es.Message}";
         }
     }
 
@@ -499,7 +499,7 @@ ORDER BY st.name --table name
         }
         catch (Exception es)
         {
-            errorTextLbl.Text = es.Message;
+            errorTextLbl.Text = $"出現其他異常錯誤:{es.Message}";
         }
     }
 
@@ -609,8 +609,8 @@ END;";
             }
         }
         catch (Exception es)
-        {
-            errorTextLbl.Text = es.Message;
+        { 
+            errorTextLbl.Text = $"出現其他異常錯誤:{es.Message}";
         }
     }
 
@@ -623,7 +623,7 @@ END;";
         }
         catch (Exception es)
         {
-            errorTextLbl.Text = es.Message;
+            errorTextLbl.Text = $"出現其他異常錯誤:{es.Message}";
         }
     }
     private void modelGenEvent(object sender, EventArgs e)
@@ -703,7 +703,7 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
         }
         catch (Exception es)
         {
-            errorTextLbl.Text = es.Message;
+            errorTextLbl.Text = $"出現其他異常錯誤:{es.Message}";
         }
 
     }

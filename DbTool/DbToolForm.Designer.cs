@@ -447,7 +447,7 @@ partial class DbToolForm
         errorTextLbl.ReadOnly = true;
         errorTextLbl.Size = new Size(522, 60);
         errorTextLbl.TabIndex = 8;
-        errorTextLbl.Click += errorTextEvent;
+        errorTextLbl.DoubleClick += errorTextEvent;
         // 
         // DbToolForm
         // 
