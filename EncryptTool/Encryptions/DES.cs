@@ -72,8 +72,6 @@ public class DES
         try
         {
             DESCryptoServiceProvider des = new DESCryptoServiceProvider();
-            //byte[] key = Encoding.ASCII.GetBytes("jG6$q)n%");
-            //byte[] iv = Encoding.ASCII.GetBytes("0(uS6B'U");
             byte[] dataByteArray = Encoding.UTF8.GetBytes(Source);
 
             des.Key = Key;

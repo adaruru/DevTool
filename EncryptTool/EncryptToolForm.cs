@@ -1,4 +1,6 @@
-﻿using Properties = EncryptTool.Properties;
+﻿using System.Security.Cryptography;
+using System.Text;
+using Properties = EncryptTool.Properties;
 
 public partial class EncryptToolForm : Form
 {
@@ -27,12 +29,16 @@ public partial class EncryptToolForm : Form
         }
         else
         {
-            switch (encryptWay.SelectedIndex)
+            byte[] key = Encoding.ASCII.GetBytes(KeyBox.Text);
+            byte[] iv = Encoding.ASCII.GetBytes(IvBox.Text);
+
+            switch (encryptWayBox.SelectedIndex)
             {
                 case 0:
+                    afterBox.Text = AES.Encrypt(raw, key, iv);
                     break;
                 case 1:
-                    afterBox.Text = DES.Encrypt(raw, DESKeyBox.Text, DESIvBox.Text);
+                    afterBox.Text = DES.Encrypt(raw, key, iv);
                     break;
                 default:
                     errorTextLbl.Text = "未實作加密內容";
@@ -50,12 +56,14 @@ public partial class EncryptToolForm : Form
         }
         else
         {
-            switch (encryptWay.SelectedIndex)
+            byte[] key = Encoding.ASCII.GetBytes(KeyBox.Text);
+            byte[] iv = Encoding.ASCII.GetBytes(IvBox.Text);
+            switch (encryptWayBox.SelectedIndex)
             {
                 case 0:
                     break;
                 case 1:
-                    beforeBox.Text = DES.Decrypt(raw, DESKeyBox.Text, DESIvBox.Text);
+                    beforeBox.Text = DES.Decrypt(raw, key, iv);
                     break;
                 default:
                     errorTextLbl.Text = "未實作加密內容";
@@ -66,7 +74,7 @@ public partial class EncryptToolForm : Form
 
     private void SelectedEncryptChanged(object sender, EventArgs e)
     {
-        if (encryptWay.SelectedValue is int selectedValue)
+        if (encryptWayBox.SelectedValue is int selectedValue)
         {
             var selectedEncryption = (EncryptWayEnum)selectedValue;
             Properties.Settings.Default.encryptWay = selectedValue.ToString();
@@ -76,19 +84,27 @@ public partial class EncryptToolForm : Form
 
     private void EncryptToolForm_Load(object sender, EventArgs e)
     {
+        encryptWayBox.ValueMember = "Key";
+        encryptWayBox.DataSource = new BindingSource(GetEnumDictionary<EncryptWayEnum>(), null);
+        if (encryptWayBox.SelectedIndex == 0)
+        {
+            CipherModeBox.ValueMember = "Key";
+            CipherModeBox.DataSource = new BindingSource(GetEnumDictionary<CipherMode>(), null);
+        }
+
         LoadSettings();
     }
 
     private void DESKeyBoxTextChanged(object sender, EventArgs e)
     {
-        string newDESKey = DESKeyBox.Text;
+        string newDESKey = KeyBox.Text;
         Properties.Settings.Default.DESKey = newDESKey;
         Properties.Settings.Default.Save();
     }
 
     private void DESIvBox_TextChanged(object sender, EventArgs e)
     {
-        Properties.Settings.Default.DESIv = DESIvBox.Text;
+        Properties.Settings.Default.DESIv = IvBox.Text;
         Properties.Settings.Default.Save();
     }
 
@@ -105,8 +121,8 @@ public partial class EncryptToolForm : Form
     private void LoadSettings()
     {
         //處理所有預設值
-        encryptWay.SelectedIndex = Convert.ToInt32(Properties.Settings.Default.encryptWay);
-        DESIvBox.Text = Properties.Settings.Default.DESIv;
-        DESKeyBox.Text = Properties.Settings.Default.DESKey;
+        encryptWayBox.SelectedIndex = Convert.ToInt32(Properties.Settings.Default.encryptWay);
+        IvBox.Text = Properties.Settings.Default.DESIv;
+        KeyBox.Text = Properties.Settings.Default.DESKey;
     }
 }

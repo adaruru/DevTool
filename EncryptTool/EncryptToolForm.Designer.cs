@@ -1,4 +1,6 @@
-﻿partial class EncryptToolForm
+﻿using System.Security.Cryptography;
+
+partial class EncryptToolForm
 {
     /// <summary>
     /// Required designer variable.
@@ -35,14 +37,16 @@
         afterLabel = new Label();
         beforeLabel = new Label();
         settingTab = new TabPage();
+        CipherModeBox = new ComboBox();
         resetBtn = new Button();
-        DESIvBox = new TextBox();
-        DESIvLabel = new Label();
+        IvBox = new TextBox();
+        IvLabel = new Label();
         encryptWayLabel = new Label();
-        encryptWay = new ComboBox();
-        DESKeyBox = new TextBox();
-        DESKeyLabel = new Label();
+        encryptWayBox = new ComboBox();
+        KeyBox = new TextBox();
+        KeyLabel = new Label();
         errorTextLbl = new TextBox();
+        CipherModeLabel = new Label();
         tabControl1.SuspendLayout();
         encryptTab.SuspendLayout();
         settingTab.SuspendLayout();
@@ -140,13 +144,15 @@
         // 
         // settingTab
         // 
+        settingTab.Controls.Add(CipherModeLabel);
+        settingTab.Controls.Add(CipherModeBox);
         settingTab.Controls.Add(resetBtn);
-        settingTab.Controls.Add(DESIvBox);
-        settingTab.Controls.Add(DESIvLabel);
+        settingTab.Controls.Add(IvBox);
+        settingTab.Controls.Add(IvLabel);
         settingTab.Controls.Add(encryptWayLabel);
-        settingTab.Controls.Add(encryptWay);
-        settingTab.Controls.Add(DESKeyBox);
-        settingTab.Controls.Add(DESKeyLabel);
+        settingTab.Controls.Add(encryptWayBox);
+        settingTab.Controls.Add(KeyBox);
+        settingTab.Controls.Add(KeyLabel);
         settingTab.Location = new Point(4, 28);
         settingTab.Margin = new Padding(2);
         settingTab.Name = "settingTab";
@@ -155,6 +161,17 @@
         settingTab.TabIndex = 1;
         settingTab.Text = "加密設定";
         settingTab.UseVisualStyleBackColor = true;
+        // 
+        // CipherModeBox
+        // 
+        CipherModeBox.DisplayMember = "Value";
+        CipherModeBox.FormattingEnabled = true;
+        CipherModeBox.Location = new Point(346, 13);
+        CipherModeBox.Margin = new Padding(2);
+        CipherModeBox.Name = "CipherModeBox";
+        CipherModeBox.Size = new Size(143, 27);
+        CipherModeBox.TabIndex = 12;
+        CipherModeBox.ValueMember = "Key";
         // 
         // resetBtn
         // 
@@ -167,25 +184,25 @@
         resetBtn.UseVisualStyleBackColor = false;
         resetBtn.Click += resetBtn_Click;
         // 
-        // DESIvBox
+        // IvBox
         // 
-        DESIvBox.Location = new Point(95, 97);
-        DESIvBox.Margin = new Padding(2);
-        DESIvBox.Multiline = true;
-        DESIvBox.Name = "DESIvBox";
-        DESIvBox.Size = new Size(314, 30);
-        DESIvBox.TabIndex = 8;
-        DESIvBox.TextChanged += DESIvBox_TextChanged;
+        IvBox.Location = new Point(95, 140);
+        IvBox.Margin = new Padding(2);
+        IvBox.Multiline = true;
+        IvBox.Name = "DESIvBox";
+        IvBox.Size = new Size(314, 30);
+        IvBox.TabIndex = 8;
+        IvBox.TextChanged += DESIvBox_TextChanged;
         // 
-        // DESIvLabel
+        // IvLabel
         // 
-        DESIvLabel.AutoSize = true;
-        DESIvLabel.Location = new Point(23, 100);
-        DESIvLabel.Margin = new Padding(2, 0, 2, 0);
-        DESIvLabel.Name = "DESIvLabel";
-        DESIvLabel.Size = new Size(49, 19);
-        DESIvLabel.TabIndex = 7;
-        DESIvLabel.Text = "DESIv";
+        IvLabel.AutoSize = true;
+        IvLabel.Location = new Point(23, 140);
+        IvLabel.Margin = new Padding(2, 0, 2, 0);
+        IvLabel.Name = "IvLabel";
+        IvLabel.Size = new Size(49, 19);
+        IvLabel.TabIndex = 7;
+        IvLabel.Text = "Iv 初始向量";
         // 
         // encryptWayLabel
         // 
@@ -197,39 +214,37 @@
         encryptWayLabel.TabIndex = 6;
         encryptWayLabel.Text = "加密方式";
         // 
-        // encryptWay
+        // encryptWayBox
         // 
-        encryptWay.DataSource = new BindingSource(GetEncryptionMethods(), null);
-        encryptWay.DisplayMember = "Value";
-        encryptWay.ValueMember = "Key";
-        encryptWay.FormattingEnabled = true;
-        encryptWay.Location = new Point(95, 13);
-        encryptWay.Margin = new Padding(2);
-        encryptWay.Name = "encryptWay";
-        encryptWay.Size = new Size(314, 27);
-        encryptWay.TabIndex = 5;
-        encryptWay.ValueMember = "Key";
-        encryptWay.SelectedIndexChanged += SelectedEncryptChanged;
+        encryptWayBox.DisplayMember = "Value";
+        encryptWayBox.FormattingEnabled = true;
+        encryptWayBox.Location = new Point(95, 13);
+        encryptWayBox.Margin = new Padding(2);
+        encryptWayBox.Name = "encryptWayBox";
+        encryptWayBox.Size = new Size(151, 27);
+        encryptWayBox.TabIndex = 5;
+        encryptWayBox.ValueMember = "Key";
+        encryptWayBox.SelectedIndexChanged += SelectedEncryptChanged;
         // 
         // DESKeyBox
         // 
-        DESKeyBox.Location = new Point(95, 52);
-        DESKeyBox.Margin = new Padding(2);
-        DESKeyBox.Multiline = true;
-        DESKeyBox.Name = "DESKeyBox";
-        DESKeyBox.Size = new Size(314, 30);
-        DESKeyBox.TabIndex = 4;
-        DESKeyBox.TextChanged += DESKeyBoxTextChanged;
+        KeyBox.Location = new Point(95, 89);
+        KeyBox.Margin = new Padding(2);
+        KeyBox.Multiline = true;
+        KeyBox.Name = "DESKeyBox";
+        KeyBox.Size = new Size(314, 30);
+        KeyBox.TabIndex = 4;
+        KeyBox.TextChanged += DESKeyBoxTextChanged;
         // 
         // DESKeyLabel
         // 
-        DESKeyLabel.AutoSize = true;
-        DESKeyLabel.Location = new Point(23, 55);
-        DESKeyLabel.Margin = new Padding(2, 0, 2, 0);
-        DESKeyLabel.Name = "DESKeyLabel";
-        DESKeyLabel.Size = new Size(62, 19);
-        DESKeyLabel.TabIndex = 1;
-        DESKeyLabel.Text = "DESKey";
+        KeyLabel.AutoSize = true;
+        KeyLabel.Location = new Point(23, 92);
+        KeyLabel.Margin = new Padding(2, 0, 2, 0);
+        KeyLabel.Name = "DESKeyLabel";
+        KeyLabel.Size = new Size(62, 19);
+        KeyLabel.TabIndex = 1;
+        KeyLabel.Text = "Key 密鑰";
         // 
         // errorTextLbl
         // 
@@ -242,6 +257,16 @@
         errorTextLbl.ReadOnly = true;
         errorTextLbl.Size = new Size(750, 68);
         errorTextLbl.TabIndex = 10;
+        // 
+        // CipherModeLabel
+        // 
+        CipherModeLabel.AutoSize = true;
+        CipherModeLabel.Location = new Point(270, 16);
+        CipherModeLabel.Margin = new Padding(2, 0, 2, 0);
+        CipherModeLabel.Name = "CipherModeLabel";
+        CipherModeLabel.Size = new Size(62, 19);
+        CipherModeLabel.TabIndex = 13;
+        CipherModeLabel.Text = "AES加密模式";
         // 
         // EncryptToolForm
         // 
@@ -273,22 +298,25 @@
     private TextBox afterBox;
     private Button encryptBtn;
     private Button decryptBtn;
-    private Label DESKeyLabel;
-    private TextBox DESKeyBox;
-    private ComboBox encryptWay;
+    private Label KeyLabel;
+    private TextBox KeyBox;
+    private ComboBox encryptWayBox;
     private Label encryptWayLabel;
 
-    private Dictionary<int, string> GetEncryptionMethods()
+
+    private Dictionary<int, string> GetEnumDictionary<T>() where T : Enum
     {
-        var encryptionMethods = new Dictionary<int, string>();
-        encryptionMethods = Enum.GetValues(typeof(EncryptWayEnum))
-              .Cast<EncryptWayEnum>()
-              .ToDictionary(e => (int)e, e => e.ToString());
-        return encryptionMethods;
+        var enumDictionary = new Dictionary<int, string>();
+        enumDictionary = Enum.GetValues(typeof(T))
+              .Cast<T>()
+              .ToDictionary(e => Convert.ToInt32(e), e => e.ToString());
+        return enumDictionary;
     }
 
     private TextBox errorTextLbl;
-    private TextBox DESIvBox;
-    private Label DESIvLabel;
+    private TextBox IvBox;
+    private Label IvLabel;
     private Button resetBtn;
+    private ComboBox CipherModeBox;
+    private Label CipherModeLabel;
 }

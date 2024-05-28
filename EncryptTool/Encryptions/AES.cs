@@ -84,17 +84,18 @@ public class AES
             aes.IV = iv;
             var encrypt = "";
             using (var ms = new MemoryStream())
-            using (var cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
             {
-                cs.Write(dataByteArray, 0, dataByteArray.Length);
-                cs.FlushFinalBlock();
-                encrypt = Convert.ToBase64String(ms.ToArray());
+                using (var cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
+                {
+                    cs.Write(dataByteArray, 0, dataByteArray.Length);
+                    cs.FlushFinalBlock();
+                    encrypt = Convert.ToBase64String(ms.ToArray());
+                    return encrypt;
+                }
             }
-            return encrypt;
         }
         catch (Exception)
         {
-
             throw;
         }
 
