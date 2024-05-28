@@ -37,6 +37,7 @@ partial class EncryptToolForm
         afterLabel = new Label();
         beforeLabel = new Label();
         settingTab = new TabPage();
+        CipherModeLabel = new Label();
         CipherModeBox = new ComboBox();
         resetBtn = new Button();
         IvBox = new TextBox();
@@ -46,7 +47,6 @@ partial class EncryptToolForm
         KeyBox = new TextBox();
         KeyLabel = new Label();
         errorTextLbl = new TextBox();
-        CipherModeLabel = new Label();
         tabControl1.SuspendLayout();
         encryptTab.SuspendLayout();
         settingTab.SuspendLayout();
@@ -162,11 +162,21 @@ partial class EncryptToolForm
         settingTab.Text = "加密設定";
         settingTab.UseVisualStyleBackColor = true;
         // 
+        // CipherModeLabel
+        // 
+        CipherModeLabel.AutoSize = true;
+        CipherModeLabel.Location = new Point(270, 16);
+        CipherModeLabel.Margin = new Padding(2, 0, 2, 0);
+        CipherModeLabel.Name = "CipherModeLabel";
+        CipherModeLabel.Size = new Size(96, 19);
+        CipherModeLabel.TabIndex = 13;
+        CipherModeLabel.Text = "AES加密模式";
+        // 
         // CipherModeBox
         // 
         CipherModeBox.DisplayMember = "Value";
         CipherModeBox.FormattingEnabled = true;
-        CipherModeBox.Location = new Point(346, 13);
+        CipherModeBox.Location = new Point(370, 13);
         CipherModeBox.Margin = new Padding(2);
         CipherModeBox.Name = "CipherModeBox";
         CipherModeBox.Size = new Size(143, 27);
@@ -189,10 +199,10 @@ partial class EncryptToolForm
         IvBox.Location = new Point(95, 140);
         IvBox.Margin = new Padding(2);
         IvBox.Multiline = true;
-        IvBox.Name = "DESIvBox";
+        IvBox.Name = "IvBox";
         IvBox.Size = new Size(314, 30);
         IvBox.TabIndex = 8;
-        IvBox.TextChanged += DESIvBox_TextChanged;
+        IvBox.TextChanged += IvBox_TextChanged;
         // 
         // IvLabel
         // 
@@ -200,7 +210,7 @@ partial class EncryptToolForm
         IvLabel.Location = new Point(23, 140);
         IvLabel.Margin = new Padding(2, 0, 2, 0);
         IvLabel.Name = "IvLabel";
-        IvLabel.Size = new Size(49, 19);
+        IvLabel.Size = new Size(85, 19);
         IvLabel.TabIndex = 7;
         IvLabel.Text = "Iv 初始向量";
         // 
@@ -226,23 +236,23 @@ partial class EncryptToolForm
         encryptWayBox.ValueMember = "Key";
         encryptWayBox.SelectedIndexChanged += SelectedEncryptChanged;
         // 
-        // DESKeyBox
+        // KeyBox
         // 
         KeyBox.Location = new Point(95, 89);
         KeyBox.Margin = new Padding(2);
         KeyBox.Multiline = true;
-        KeyBox.Name = "DESKeyBox";
+        KeyBox.Name = "KeyBox";
         KeyBox.Size = new Size(314, 30);
         KeyBox.TabIndex = 4;
-        KeyBox.TextChanged += DESKeyBoxTextChanged;
+        KeyBox.TextChanged += KeyBoxTextChanged;
         // 
-        // DESKeyLabel
+        // KeyLabel
         // 
         KeyLabel.AutoSize = true;
         KeyLabel.Location = new Point(23, 92);
         KeyLabel.Margin = new Padding(2, 0, 2, 0);
-        KeyLabel.Name = "DESKeyLabel";
-        KeyLabel.Size = new Size(62, 19);
+        KeyLabel.Name = "KeyLabel";
+        KeyLabel.Size = new Size(68, 19);
         KeyLabel.TabIndex = 1;
         KeyLabel.Text = "Key 密鑰";
         // 
@@ -257,16 +267,6 @@ partial class EncryptToolForm
         errorTextLbl.ReadOnly = true;
         errorTextLbl.Size = new Size(750, 68);
         errorTextLbl.TabIndex = 10;
-        // 
-        // CipherModeLabel
-        // 
-        CipherModeLabel.AutoSize = true;
-        CipherModeLabel.Location = new Point(270, 16);
-        CipherModeLabel.Margin = new Padding(2, 0, 2, 0);
-        CipherModeLabel.Name = "CipherModeLabel";
-        CipherModeLabel.Size = new Size(62, 19);
-        CipherModeLabel.TabIndex = 13;
-        CipherModeLabel.Text = "AES加密模式";
         // 
         // EncryptToolForm
         // 
@@ -306,11 +306,11 @@ partial class EncryptToolForm
 
     private Dictionary<int, string> GetEnumDictionary<T>() where T : Enum
     {
-        var enumDictionary = new Dictionary<int, string>();
-        enumDictionary = Enum.GetValues(typeof(T))
+        var encryptionMethods = new Dictionary<int, string>();
+        encryptionMethods = Enum.GetValues(typeof(T))
               .Cast<T>()
               .ToDictionary(e => Convert.ToInt32(e), e => e.ToString());
-        return enumDictionary;
+        return encryptionMethods;
     }
 
     private TextBox errorTextLbl;

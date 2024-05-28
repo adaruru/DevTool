@@ -9,7 +9,7 @@ public class AES
     /// <summary>
     /// 加密
     /// </summary>
-    public static string Encrypt(string source, string key, string iv)
+    public static string Encrypt(string source, string key, string iv, CipherMode mode)
     {
         try
         {
@@ -20,6 +20,8 @@ public class AES
 
             aes.Key = byteKey;
             aes.IV = byteIv;
+            aes.Mode = mode;
+
             var encrypt = "";
             using (var ms = new MemoryStream())
             using (var cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
@@ -41,7 +43,7 @@ public class AES
     /// <summary>
     /// 解密
     /// </summary>
-    public static string Decrypt(string encrypt, string key, string iv)
+    public static string Decrypt(string encrypt, string key, string iv, CipherMode mode)
     {
         try
         {
@@ -50,6 +52,7 @@ public class AES
             var byteIv = Encoding.ASCII.GetBytes(iv);
             aes.Key = byteKey;
             aes.IV = byteIv;
+            aes.Mode = mode;
 
             var dataByteArray = Convert.FromBase64String(encrypt);
             using (MemoryStream ms = new MemoryStream())
@@ -73,7 +76,7 @@ public class AES
     /// <summary>
     /// 加密
     /// </summary>
-    public static string Encrypt(string source, byte[] key, byte[] iv)
+    public static string Encrypt(string source, byte[] key, byte[] iv, CipherMode mode)
     {
         try
         {
@@ -82,6 +85,8 @@ public class AES
 
             aes.Key = key;
             aes.IV = iv;
+            aes.Mode = mode;
+
             var encrypt = "";
             using (var ms = new MemoryStream())
             {
@@ -104,13 +109,14 @@ public class AES
     /// <summary>
     /// 解密
     /// </summary>
-    public static string Decrypt(string encrypt, byte[] key, byte[] iv)
+    public static string Decrypt(string encrypt, byte[] key, byte[] iv, CipherMode mode)
     {
         try
         {
             var aes = new AesCryptoServiceProvider();
             aes.Key = key;
             aes.IV = iv;
+            aes.Mode = mode;
 
             var dataByteArray = Convert.FromBase64String(encrypt);
             using (var ms = new MemoryStream())

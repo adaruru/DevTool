@@ -35,7 +35,7 @@ public partial class EncryptToolForm : Form
             switch (encryptWayBox.SelectedIndex)
             {
                 case 0:
-                    afterBox.Text = AES.Encrypt(raw, key, iv);
+                    afterBox.Text = AES.Encrypt(raw, key, iv, (CipherMode)CipherModeBox.SelectedValue);
                     break;
                 case 1:
                     afterBox.Text = DES.Encrypt(raw, key, iv);
@@ -79,14 +79,24 @@ public partial class EncryptToolForm : Form
             var selectedEncryption = (EncryptWayEnum)selectedValue;
             Properties.Settings.Default.encryptWay = selectedValue.ToString();
             Properties.Settings.Default.Save();
+            if ((EncryptWayEnum)encryptWayBox.SelectedValue == EncryptWayEnum.AES)
+            {
+                CipherModeBox.ValueMember = "Key";
+                CipherModeBox.DataSource = new BindingSource(GetEnumDictionary<CipherMode>(), null);
+            }
+            else
+            {
+                CipherModeBox.DataSource = null;
+            }
         }
+
     }
 
     private void EncryptToolForm_Load(object sender, EventArgs e)
     {
         encryptWayBox.ValueMember = "Key";
         encryptWayBox.DataSource = new BindingSource(GetEnumDictionary<EncryptWayEnum>(), null);
-        if (encryptWayBox.SelectedIndex == 0)
+        if ((EncryptWayEnum)encryptWayBox.SelectedValue != EncryptWayEnum.AES)
         {
             CipherModeBox.ValueMember = "Key";
             CipherModeBox.DataSource = new BindingSource(GetEnumDictionary<CipherMode>(), null);
@@ -95,14 +105,14 @@ public partial class EncryptToolForm : Form
         LoadSettings();
     }
 
-    private void DESKeyBoxTextChanged(object sender, EventArgs e)
+    private void KeyBoxTextChanged(object sender, EventArgs e)
     {
         string newDESKey = KeyBox.Text;
         Properties.Settings.Default.DESKey = newDESKey;
         Properties.Settings.Default.Save();
     }
 
-    private void DESIvBox_TextChanged(object sender, EventArgs e)
+    private void IvBox_TextChanged(object sender, EventArgs e)
     {
         Properties.Settings.Default.DESIv = IvBox.Text;
         Properties.Settings.Default.Save();
