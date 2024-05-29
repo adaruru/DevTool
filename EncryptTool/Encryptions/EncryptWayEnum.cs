@@ -10,5 +10,7 @@
     ECC = 7,
     DSA = 8,
     PGP = 9,
-    SMIME = 10
+    SMIME = 10,
+    MD5 = 11,
+    SHA256 = 12,
 }

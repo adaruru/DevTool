@@ -27,9 +27,9 @@ public partial class EncryptToolForm : Form
         var sIv = ivBox.Text;
         var result = true;
 
-        switch (encryptWayBox.SelectedIndex)
+        switch ((EncryptWayEnum)encryptWayBox.SelectedIndex)
         {
-            case 0:
+            case EncryptWayEnum.AES:
                 if (sKey.Length != 16 && sKey.Length != 24 && sKey.Length != 32)
                 {
                     errorTextLbl.Text = "Key 密鑰必須是16, 24, 或 32位";
@@ -41,7 +41,7 @@ public partial class EncryptToolForm : Form
                     result = false;
                 }
                 break;
-            case 1:
+            case EncryptWayEnum.DES_Unsafe:
                 if (sKey.Length != 8)
                 {
                     errorTextLbl.Text = "Key 密鑰必須是8位";
@@ -53,6 +53,9 @@ public partial class EncryptToolForm : Form
                     result = false;
                 }
                 break;
+            case EncryptWayEnum.MD5:
+            case EncryptWayEnum.SHA256:
+                break;
             default:
                 errorTextLbl.Text = "未實作加密內容";
                 result = false;
@@ -62,57 +65,80 @@ public partial class EncryptToolForm : Form
     }
     private void EncryptClick(object sender, EventArgs e)
     {
-        if (!IsCheckKeyAndIvLength()) return;
+        try
+        {
+            if (!IsCheckKeyAndIvLength()) return;
 
-        var raw = beforeBox.Text;
-        if (string.IsNullOrEmpty(raw))
-        {
-            errorTextLbl.Text = "未輸入加密前資料";
-        }
-        else
-        {
-            byte[] key = Encoding.ASCII.GetBytes(keyBox.Text);
-            byte[] iv = Encoding.ASCII.GetBytes(ivBox.Text);
-            switch (encryptWayBox.SelectedIndex)
+            var raw = beforeBox.Text;
+            if (string.IsNullOrEmpty(raw))
             {
-                case 0:
-                    afterBox.Text = AES.Encrypt(raw, key, iv, (CipherMode)CipherModeBox.SelectedValue);
-                    break;
-                case 1:
-                    afterBox.Text = DES.Encrypt(raw, key, iv);
-                    break;
-                default:
-                    errorTextLbl.Text = "未實作加密內容";
-                    break;
+                errorTextLbl.Text = "未輸入加密前資料";
             }
+            else
+            {
+                byte[] key = Encoding.ASCII.GetBytes(keyBox.Text);
+                byte[] iv = Encoding.ASCII.GetBytes(ivBox.Text);
+                switch ((EncryptWayEnum)encryptWayBox.SelectedValue)
+                {
+                    case EncryptWayEnum.AES:
+                        afterBox.Text = AES.Encrypt(raw, key, iv, (CipherMode)CipherModeBox.SelectedValue);
+                        break;
+                    case EncryptWayEnum.DES_Unsafe:
+                        afterBox.Text = DES.Encrypt(raw, key, iv);
+                        break;
+                    case EncryptWayEnum.MD5:
+                        afterBox.Text = MD5.Encrypt(raw);
+                        break;
+                    case EncryptWayEnum.SHA256:
+                        afterBox.Text = SHA256.Encrypt(raw);
+                        break;
+                    default:
+                        errorTextLbl.Text = "未實作加密內容";
+                        break;
+                }
+            }
+        }
+        catch (Exception es)
+        {
+            errorTextLbl.Text += $"出現其他異常錯誤:{es.Message}";
         }
     }
 
     private void DecryptBtnClick(object sender, EventArgs e)
     {
-        if (!IsCheckKeyAndIvLength()) return;
-        var raw = afterBox.Text;
-        if (string.IsNullOrEmpty(raw))
+        try
         {
-            errorTextLbl.Text = "未輸入加密後資料";
-        }
-        else
-        {
-            byte[] key = Encoding.ASCII.GetBytes(keyBox.Text);
-            byte[] iv = Encoding.ASCII.GetBytes(ivBox.Text);
-            switch (encryptWayBox.SelectedIndex)
+            if (!IsCheckKeyAndIvLength()) return;
+            var raw = afterBox.Text;
+            if (string.IsNullOrEmpty(raw))
             {
-                case 0:
-
-                    beforeBox.Text = AES.Decrypt(raw, key, iv, (CipherMode)CipherModeBox.SelectedValue);
-                    break;
-                case 1:
-                    beforeBox.Text = DES.Decrypt(raw, key, iv);
-                    break;
-                default:
-                    errorTextLbl.Text = "未實作加密內容";
-                    break;
+                errorTextLbl.Text = "未輸入加密後資料";
             }
+            else
+            {
+                byte[] key = Encoding.ASCII.GetBytes(keyBox.Text);
+                byte[] iv = Encoding.ASCII.GetBytes(ivBox.Text);
+                switch ((EncryptWayEnum)encryptWayBox.SelectedIndex)
+                {
+                    case EncryptWayEnum.AES:
+                        beforeBox.Text = AES.Decrypt(raw, key, iv, (CipherMode)CipherModeBox.SelectedValue);
+                        break;
+                    case EncryptWayEnum.DES_Unsafe:
+                        beforeBox.Text = DES.Decrypt(raw, key, iv);
+                        break;
+                    case EncryptWayEnum.MD5:
+                    case EncryptWayEnum.SHA256:
+                        errorTextLbl.Text = $"{(EncryptWayEnum)encryptWayBox.SelectedIndex}雜湊法無法解密";
+                        break;
+                    default:
+                        errorTextLbl.Text = "未實作加密內容";
+                        break;
+                }
+            }
+        }
+        catch (Exception es)
+        {
+            errorTextLbl.Text += $"出現其他異常錯誤:{es.Message}";
         }
     }
     private void KeyBoxTextChanged(object sender, EventArgs e)
