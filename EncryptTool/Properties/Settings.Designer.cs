@@ -25,7 +25,7 @@ namespace EncryptTool.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("jG6$q)n%")]
+        [global::System.Configuration.DefaultSettingValueAttribute("GU8/IxLV")]
         public string Key {
             get {
                 return ((string)(this["Key"]));
@@ -37,7 +37,7 @@ namespace EncryptTool.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0(uS6B\'U")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Yo65Vova")]
         public string Iv {
             get {
                 return ((string)(this["Iv"]));

@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="Key" Type="System.String" Scope="User">
-      <Value Profile="(Default)">jG6$q)n%</Value>
+      <Value Profile="(Default)">GU8/IxLV</Value>
     </Setting>
     <Setting Name="Iv" Type="System.String" Scope="User">
-      <Value Profile="(Default)">0(uS6B'U</Value>
+      <Value Profile="(Default)">Yo65Vova</Value>
     </Setting>
     <Setting Name="encryptWay" Type="System.String" Scope="User">
       <Value Profile="(Default)">1</Value>
