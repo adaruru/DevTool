@@ -1,7 +1,5 @@
-﻿using System.Buffers.Text;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
-using System.Windows.Forms;
 using Properties = EncryptTool.Properties;
 
 public partial class EncryptToolForm : Form
@@ -9,7 +7,6 @@ public partial class EncryptToolForm : Form
     public EncryptToolForm()
     {
         InitializeComponent();
-        //this.Load += EncryptToolForm_Load; // 註冊載入事件處理程序
     }
     private void BeforeBoxChange(object sender, EventArgs e)
     {
@@ -23,9 +20,50 @@ public partial class EncryptToolForm : Form
         Properties.Settings.Default.Save();
     }
 
-    private void EncryptClick(object sender, EventArgs e)
+    private bool IsCheckKeyAndIvLength()
     {
         errorTextLbl.Text = "";
+        var sKey = keyBox.Text;
+        var sIv = ivBox.Text;
+        var result = true;
+
+        switch (encryptWayBox.SelectedIndex)
+        {
+            case 0:
+                if (sKey.Length != 16 && sKey.Length != 24 && sKey.Length != 32)
+                {
+                    errorTextLbl.Text = "Key 密鑰必須是16, 24, 或 32位";
+                    result = false;
+                }
+                if (sIv.Length != 16)
+                {
+                    errorTextLbl.Text += " Iv 初始向量必須是16位";
+                    result = false;
+                }
+                break;
+            case 1:
+                if (sKey.Length != 8)
+                {
+                    errorTextLbl.Text = "Key 密鑰必須是8位";
+                    result = false;
+                }
+                if (sIv.Length != 8)
+                {
+                    errorTextLbl.Text += " Iv 初始向量必須是8位";
+                    result = false;
+                }
+                break;
+            default:
+                errorTextLbl.Text = "未實作加密內容";
+                result = false;
+                break;
+        }
+        return result;
+    }
+    private void EncryptClick(object sender, EventArgs e)
+    {
+        if (!IsCheckKeyAndIvLength()) return;
+
         var raw = beforeBox.Text;
         if (string.IsNullOrEmpty(raw))
         {
@@ -33,27 +71,11 @@ public partial class EncryptToolForm : Form
         }
         else
         {
-            var sKey = keyBox.Text;
-            var sIv = ivBox.Text;
-            byte[] key = Encoding.ASCII.GetBytes(sKey);
-            byte[] iv = Encoding.ASCII.GetBytes(sIv);
-
+            byte[] key = Encoding.ASCII.GetBytes(keyBox.Text);
+            byte[] iv = Encoding.ASCII.GetBytes(ivBox.Text);
             switch (encryptWayBox.SelectedIndex)
             {
                 case 0:
-                    if (sKey.Length < 16)
-                    {
-                        errorTextLbl.Text = "Key 密鑰小於16位";
-                    }
-                    if (sIv.Length < 16)
-                    {
-                        errorTextLbl.Text += "Iv 初始向量小於16位";
-                    }
-                    if (sKey.Length < 16 || sIv.Length < 16)
-                    {
-                        return;
-                    }
-
                     afterBox.Text = AES.Encrypt(raw, key, iv, (CipherMode)CipherModeBox.SelectedValue);
                     break;
                 case 1:
@@ -68,7 +90,7 @@ public partial class EncryptToolForm : Form
 
     private void DecryptBtnClick(object sender, EventArgs e)
     {
-        errorTextLbl.Text = "";
+        if (!IsCheckKeyAndIvLength()) return;
         var raw = afterBox.Text;
         if (string.IsNullOrEmpty(raw))
         {
@@ -76,41 +98,15 @@ public partial class EncryptToolForm : Form
         }
         else
         {
-            var sKey = keyBox.Text;
-            var sIv = ivBox.Text;
-            byte[] key = Encoding.ASCII.GetBytes(sKey);
-            byte[] iv = Encoding.ASCII.GetBytes(sIv);
-
+            byte[] key = Encoding.ASCII.GetBytes(keyBox.Text);
+            byte[] iv = Encoding.ASCII.GetBytes(ivBox.Text);
             switch (encryptWayBox.SelectedIndex)
             {
                 case 0:
-                    if (sKey.Length != 16 && sKey.Length != 24 && sKey.Length != 32)
-                    {
-                        errorTextLbl.Text = "Key 密鑰必須是16, 24, 或 32位";
-                    }
-                    if (sIv.Length != 16)
-                    {
-                        errorTextLbl.Text += " Iv 初始向量必須是16位";
-                    }
-                    if (sKey.Length != 16 && sKey.Length != 24 && sKey.Length != 32 || sIv.Length != 16)
-                    {
-                        return;
-                    }
+
                     beforeBox.Text = AES.Decrypt(raw, key, iv, (CipherMode)CipherModeBox.SelectedValue);
                     break;
                 case 1:
-                    if (sKey.Length != 8)
-                    {
-                        errorTextLbl.Text = "Key 密鑰必須是8位";
-                    }
-                    if (sIv.Length != 8)
-                    {
-                        errorTextLbl.Text += " Iv 初始向量必須是8位";
-                    }
-                    if (sKey.Length != 8 || sIv.Length != 8)
-                    {
-                        return;
-                    }
                     beforeBox.Text = DES.Decrypt(raw, key, iv);
                     break;
                 default:
@@ -139,7 +135,7 @@ public partial class EncryptToolForm : Form
         {
             Properties.Settings.Default.Reset();
             Properties.Settings.Default.Save();
-            LoadSettings();
+            LoadSettings(); //ResetBtn
         }
     }
     private void GenKeyBtnClick(object sender, EventArgs e)
@@ -190,27 +186,36 @@ public partial class EncryptToolForm : Form
         var selectedValue = encryptWayBox.SelectedValue;
         Properties.Settings.Default.encryptWay = selectedValue.ToString();
         Properties.Settings.Default.Save();
+        LoadCipherMode();
+    }
+    private void EncryptToolFormLoad(object sender, EventArgs e)
+    {
+        encryptWayBox.ValueMember = "Key";
+        encryptWayBox.DataSource = new BindingSource(GetEnumDictionary<EncryptWayEnum>(), null);
+        LoadCipherMode();
+        LoadSettings(); //Form_Load 訂閱事件前先載入值
+        BindEvent();
+    }
+    private void LoadCipherMode()
+    {
         if ((EncryptWayEnum)encryptWayBox.SelectedValue == EncryptWayEnum.AES)
         {
             CipherModeBox.ValueMember = "Key";
-            CipherModeBox.DataSource = new BindingSource(GetEnumDictionary<CipherMode>(), null);
+            var dic = GetEnumDictionary<CipherMode>().Where(d => (CipherMode)d.Key != CipherMode.OFB && (CipherMode)d.Key != CipherMode.CTS); //排除 3、5
+            CipherModeBox.DataSource = new BindingSource(dic, null);
         }
         else
         {
             CipherModeBox.DataSource = null;
         }
     }
-    private void EncryptToolForm_Load(object sender, EventArgs e)
+    private Dictionary<int, string> GetEnumDictionary<T>() where T : Enum
     {
-        encryptWayBox.ValueMember = "Key";
-        encryptWayBox.DataSource = new BindingSource(GetEnumDictionary<EncryptWayEnum>(), null);
-        if ((EncryptWayEnum)encryptWayBox.SelectedValue != EncryptWayEnum.AES)
-        {
-            CipherModeBox.ValueMember = "Key";
-            CipherModeBox.DataSource = new BindingSource(GetEnumDictionary<CipherMode>(), null);
-        }
-        LoadSettings(); //訂閱事件前先載入值
-        BindEvent();
+        var encryptionMethods = new Dictionary<int, string>();
+        encryptionMethods = Enum.GetValues(typeof(T))
+              .Cast<T>()
+              .ToDictionary(e => Convert.ToInt32(e), e => e.ToString());
+        return encryptionMethods;
     }
     private void LoadSettings()
     {

@@ -295,7 +295,7 @@ partial class EncryptToolForm
         Margin = new Padding(2);
         Name = "EncryptToolForm";
         Text = "EncryptTool";
-        Load += EncryptToolForm_Load;
+        Load += EncryptToolFormLoad;
         tabControl1.ResumeLayout(false);
         encryptTab.ResumeLayout(false);
         encryptTab.PerformLayout();
@@ -319,17 +319,6 @@ partial class EncryptToolForm
     private TextBox keyBox;
     private ComboBox encryptWayBox;
     private Label encryptWayLabel;
-
-
-    private Dictionary<int, string> GetEnumDictionary<T>() where T : Enum
-    {
-        var encryptionMethods = new Dictionary<int, string>();
-        encryptionMethods = Enum.GetValues(typeof(T))
-              .Cast<T>()
-              .ToDictionary(e => Convert.ToInt32(e), e => e.ToString());
-        return encryptionMethods;
-    }
-
     private TextBox errorTextLbl;
     private TextBox ivBox;
     private Label ivLabel;
