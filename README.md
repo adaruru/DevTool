@@ -13,8 +13,6 @@
 
 ### EncryptTool
 
-便攜加密工具
-
 [工具下載EncryptTool.exe](https://github.com/adaruru/DevTool/releases/download/1.1.EncryptTool/EncryptTool.exe)
 
 便攜加密工具，可加密、解密: AES、DES，只能加密: MD5、SHA256，可建key、Iv
