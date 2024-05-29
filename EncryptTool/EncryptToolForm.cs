@@ -63,6 +63,7 @@ public partial class EncryptToolForm : Form
         }
         return result;
     }
+
     private void EncryptClick(object sender, EventArgs e)
     {
         try
@@ -141,6 +142,7 @@ public partial class EncryptToolForm : Form
             errorTextLbl.Text += $"出現其他異常錯誤:{es.Message}";
         }
     }
+
     private void KeyBoxTextChanged(object sender, EventArgs e)
     {
         string newDESKey = keyBox.Text;
@@ -207,6 +209,7 @@ public partial class EncryptToolForm : Form
         Properties.Settings.Default.Iv = iv;
         Properties.Settings.Default.Save();
     }
+
     private void SelectedEncryptChanged(object sender, EventArgs e)
     {
         var selectedValue = encryptWayBox.SelectedValue;
@@ -214,14 +217,16 @@ public partial class EncryptToolForm : Form
         Properties.Settings.Default.Save();
         LoadCipherMode();
     }
+
     private void EncryptToolFormLoad(object sender, EventArgs e)
     {
         encryptWayBox.ValueMember = "Key";
         encryptWayBox.DataSource = new BindingSource(GetEnumDictionary<EncryptWayEnum>(), null);
-        LoadCipherMode();
         LoadSettings(); //Form_Load 訂閱事件前先載入值
         BindEvent();
+        LoadCipherMode();
     }
+
     private void LoadCipherMode()
     {
         if ((EncryptWayEnum)encryptWayBox.SelectedValue == EncryptWayEnum.AES)
@@ -235,6 +240,7 @@ public partial class EncryptToolForm : Form
             CipherModeBox.DataSource = null;
         }
     }
+
     private Dictionary<int, string> GetEnumDictionary<T>() where T : Enum
     {
         var encryptionMethods = new Dictionary<int, string>();
