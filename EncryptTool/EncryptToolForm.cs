@@ -108,13 +108,13 @@ public partial class EncryptToolForm : Form
     private void KeyBoxTextChanged(object sender, EventArgs e)
     {
         string newDESKey = KeyBox.Text;
-        Properties.Settings.Default.DESKey = newDESKey;
+        Properties.Settings.Default.Key = newDESKey;
         Properties.Settings.Default.Save();
     }
 
     private void IvBox_TextChanged(object sender, EventArgs e)
     {
-        Properties.Settings.Default.DESIv = IvBox.Text;
+        Properties.Settings.Default.Iv = IvBox.Text;
         Properties.Settings.Default.Save();
     }
 
@@ -132,8 +132,8 @@ public partial class EncryptToolForm : Form
     {
         //處理所有預設值
         encryptWayBox.SelectedIndex = Convert.ToInt32(Properties.Settings.Default.encryptWay);
-        IvBox.Text = Properties.Settings.Default.DESIv;
-        KeyBox.Text = Properties.Settings.Default.DESKey;
+        IvBox.Text = Properties.Settings.Default.Iv;
+        KeyBox.Text = Properties.Settings.Default.Key;
     }
 
     private void genKeyBtnClick(object sender, EventArgs e)

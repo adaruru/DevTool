@@ -26,24 +26,24 @@ namespace EncryptTool.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("jG6$q)n%")]
-        public string DESKey {
+        public string Key {
             get {
-                return ((string)(this["DESKey"]));
+                return ((string)(this["Key"]));
             }
             set {
-                this["DESKey"] = value;
+                this["Key"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0(uS6B\'U")]
-        public string DESIv {
+        public string Iv {
             get {
-                return ((string)(this["DESIv"]));
+                return ((string)(this["Iv"]));
             }
             set {
-                this["DESIv"] = value;
+                this["Iv"] = value;
             }
         }
         
