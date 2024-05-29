@@ -42,12 +42,12 @@ partial class EncryptToolForm
         CipherModeLabel = new Label();
         CipherModeBox = new ComboBox();
         resetBtn = new Button();
-        IvBox = new TextBox();
-        IvLabel = new Label();
+        ivBox = new TextBox();
+        ivLabel = new Label();
         encryptWayLabel = new Label();
         encryptWayBox = new ComboBox();
-        KeyBox = new TextBox();
-        KeyLabel = new Label();
+        keyBox = new TextBox();
+        keyLabel = new Label();
         errorTextLbl = new TextBox();
         tabControl1.SuspendLayout();
         encryptTab.SuspendLayout();
@@ -81,7 +81,6 @@ partial class EncryptToolForm
         encryptTab.TabIndex = 0;
         encryptTab.Text = "加密工具";
         encryptTab.UseVisualStyleBackColor = true;
-        encryptTab.Click += encryptTabClick;
         // 
         // decryptBtn
         // 
@@ -92,7 +91,6 @@ partial class EncryptToolForm
         decryptBtn.TabIndex = 8;
         decryptBtn.Text = "解密";
         decryptBtn.UseVisualStyleBackColor = true;
-        decryptBtn.Click += decryptBtnClick;
         // 
         // encryptBtn
         // 
@@ -103,7 +101,6 @@ partial class EncryptToolForm
         encryptBtn.TabIndex = 7;
         encryptBtn.Text = "加密";
         encryptBtn.UseVisualStyleBackColor = true;
-        encryptBtn.Click += encryptClick;
         // 
         // afterBox
         // 
@@ -142,7 +139,6 @@ partial class EncryptToolForm
         beforeLabel.Size = new Size(54, 19);
         beforeLabel.TabIndex = 0;
         beforeLabel.Text = "加密前";
-        beforeLabel.Click += beforeLabelClick;
         // 
         // settingTab
         // 
@@ -151,12 +147,12 @@ partial class EncryptToolForm
         settingTab.Controls.Add(CipherModeLabel);
         settingTab.Controls.Add(CipherModeBox);
         settingTab.Controls.Add(resetBtn);
-        settingTab.Controls.Add(IvBox);
-        settingTab.Controls.Add(IvLabel);
+        settingTab.Controls.Add(ivBox);
+        settingTab.Controls.Add(ivLabel);
         settingTab.Controls.Add(encryptWayLabel);
         settingTab.Controls.Add(encryptWayBox);
-        settingTab.Controls.Add(KeyBox);
-        settingTab.Controls.Add(KeyLabel);
+        settingTab.Controls.Add(keyBox);
+        settingTab.Controls.Add(keyLabel);
         settingTab.Location = new Point(4, 28);
         settingTab.Margin = new Padding(2);
         settingTab.Name = "settingTab";
@@ -169,29 +165,27 @@ partial class EncryptToolForm
         // genIvBtn
         // 
         genIvBtn.BackColor = SystemColors.Control;
-        genIvBtn.Location = new Point(515, 129);
+        genIvBtn.Location = new Point(532, 129);
         genIvBtn.Name = "genIvBtn";
         genIvBtn.Size = new Size(110, 32);
         genIvBtn.TabIndex = 15;
         genIvBtn.Text = "建 Iv";
         genIvBtn.UseVisualStyleBackColor = false;
-        genIvBtn.Click += genIvBtnClick;
         // 
         // genKeyBtn
         // 
         genKeyBtn.BackColor = SystemColors.Control;
-        genKeyBtn.Location = new Point(515, 85);
+        genKeyBtn.Location = new Point(532, 84);
         genKeyBtn.Name = "genKeyBtn";
         genKeyBtn.Size = new Size(110, 32);
         genKeyBtn.TabIndex = 14;
         genKeyBtn.Text = "建 Key";
         genKeyBtn.UseVisualStyleBackColor = false;
-        genKeyBtn.Click += genKeyBtnClick;
         // 
         // CipherModeLabel
         // 
         CipherModeLabel.AutoSize = true;
-        CipherModeLabel.Location = new Point(270, 16);
+        CipherModeLabel.Location = new Point(261, 16);
         CipherModeLabel.Margin = new Padding(2, 0, 2, 0);
         CipherModeLabel.Name = "CipherModeLabel";
         CipherModeLabel.Size = new Size(96, 19);
@@ -218,27 +212,26 @@ partial class EncryptToolForm
         resetBtn.TabIndex = 11;
         resetBtn.Text = "重置設定";
         resetBtn.UseVisualStyleBackColor = false;
-        resetBtn.Click += resetBtn_Click;
         // 
-        // IvBox
+        // ivBox
         // 
-        IvBox.Location = new Point(112, 129);
-        IvBox.Margin = new Padding(2);
-        IvBox.Multiline = true;
-        IvBox.Name = "IvBox";
-        IvBox.Size = new Size(398, 30);
-        IvBox.TabIndex = 8;
-        IvBox.TextChanged += IvBox_TextChanged;
+        ivBox.Location = new Point(112, 129);
+        ivBox.Margin = new Padding(2);
+        ivBox.Multiline = true;
+        ivBox.Name = "ivBox";
+        ivBox.Size = new Size(415, 30);
+        ivBox.TabIndex = 8;
+        ivBox.TextChanged += IvBox_TextChanged;
         // 
-        // IvLabel
+        // ivLabel
         // 
-        IvLabel.AutoSize = true;
-        IvLabel.Location = new Point(16, 132);
-        IvLabel.Margin = new Padding(2, 0, 2, 0);
-        IvLabel.Name = "IvLabel";
-        IvLabel.Size = new Size(85, 19);
-        IvLabel.TabIndex = 7;
-        IvLabel.Text = "Iv 初始向量";
+        ivLabel.AutoSize = true;
+        ivLabel.Location = new Point(16, 133);
+        ivLabel.Margin = new Padding(2, 0, 2, 0);
+        ivLabel.Name = "ivLabel";
+        ivLabel.Size = new Size(85, 19);
+        ivLabel.TabIndex = 7;
+        ivLabel.Text = "IV 初始向量";
         // 
         // encryptWayLabel
         // 
@@ -260,27 +253,25 @@ partial class EncryptToolForm
         encryptWayBox.Size = new Size(151, 27);
         encryptWayBox.TabIndex = 5;
         encryptWayBox.ValueMember = "Key";
-        encryptWayBox.SelectedIndexChanged += SelectedEncryptChanged;
         // 
-        // KeyBox
+        // keyBox
         // 
-        KeyBox.Location = new Point(112, 85);
-        KeyBox.Margin = new Padding(2);
-        KeyBox.Multiline = true;
-        KeyBox.Name = "KeyBox";
-        KeyBox.Size = new Size(398, 30);
-        KeyBox.TabIndex = 4;
-        KeyBox.TextChanged += KeyBoxTextChanged;
+        keyBox.Location = new Point(112, 85);
+        keyBox.Margin = new Padding(2);
+        keyBox.Multiline = true;
+        keyBox.Name = "keyBox";
+        keyBox.Size = new Size(415, 30);
+        keyBox.TabIndex = 4;
         // 
-        // KeyLabel
+        // keyLabel
         // 
-        KeyLabel.AutoSize = true;
-        KeyLabel.Location = new Point(17, 92);
-        KeyLabel.Margin = new Padding(2, 0, 2, 0);
-        KeyLabel.Name = "KeyLabel";
-        KeyLabel.Size = new Size(68, 19);
-        KeyLabel.TabIndex = 1;
-        KeyLabel.Text = "Key 密鑰";
+        keyLabel.AutoSize = true;
+        keyLabel.Location = new Point(16, 92);
+        keyLabel.Margin = new Padding(2, 0, 2, 0);
+        keyLabel.Name = "keyLabel";
+        keyLabel.Size = new Size(68, 19);
+        keyLabel.TabIndex = 1;
+        keyLabel.Text = "Key 密鑰";
         // 
         // errorTextLbl
         // 
@@ -324,8 +315,8 @@ partial class EncryptToolForm
     private TextBox afterBox;
     private Button encryptBtn;
     private Button decryptBtn;
-    private Label KeyLabel;
-    private TextBox KeyBox;
+    private Label keyLabel;
+    private TextBox keyBox;
     private ComboBox encryptWayBox;
     private Label encryptWayLabel;
 
@@ -340,8 +331,8 @@ partial class EncryptToolForm
     }
 
     private TextBox errorTextLbl;
-    private TextBox IvBox;
-    private Label IvLabel;
+    private TextBox ivBox;
+    private Label ivLabel;
     private Button resetBtn;
     private ComboBox CipherModeBox;
     private Label CipherModeLabel;

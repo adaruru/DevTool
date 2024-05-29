@@ -58,5 +58,29 @@ namespace EncryptTool.Properties {
                 this["encryptWay"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string beforeText {
+            get {
+                return ((string)(this["beforeText"]));
+            }
+            set {
+                this["beforeText"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string afterText {
+            get {
+                return ((string)(this["afterText"]));
+            }
+            set {
+                this["afterText"] = value;
+            }
+        }
     }
 }
