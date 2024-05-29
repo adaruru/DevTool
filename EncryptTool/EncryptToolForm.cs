@@ -135,4 +135,20 @@ public partial class EncryptToolForm : Form
         IvBox.Text = Properties.Settings.Default.DESIv;
         KeyBox.Text = Properties.Settings.Default.DESKey;
     }
+
+    private void genKeyBtnClick(object sender, EventArgs e)
+    {
+        var aes = Aes.Create();
+        aes.GenerateKey();
+        string key = Convert.ToBase64String(aes.Key);
+        string iv = Convert.ToBase64String(aes.Key);
+    }
+
+    private void genIvBtnClick(object sender, EventArgs e)
+    {
+        var aes = Aes.Create();
+        aes.GenerateKey();
+        string key = Convert.ToBase64String(aes.Key);
+        string iv = Convert.ToBase64String(aes.Key);
+    }
 }
