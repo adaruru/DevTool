@@ -37,6 +37,7 @@ partial class EncryptToolForm
         afterLabel = new Label();
         beforeLabel = new Label();
         settingTab = new TabPage();
+        genIvBtn = new Button();
         genKeyBtn = new Button();
         CipherModeLabel = new Label();
         CipherModeBox = new ComboBox();
@@ -48,7 +49,6 @@ partial class EncryptToolForm
         KeyBox = new TextBox();
         KeyLabel = new Label();
         errorTextLbl = new TextBox();
-        genIvBtn = new Button();
         tabControl1.SuspendLayout();
         encryptTab.SuspendLayout();
         settingTab.SuspendLayout();
@@ -166,10 +166,21 @@ partial class EncryptToolForm
         settingTab.Text = "加密設定";
         settingTab.UseVisualStyleBackColor = true;
         // 
+        // genIvBtn
+        // 
+        genIvBtn.BackColor = SystemColors.Control;
+        genIvBtn.Location = new Point(515, 129);
+        genIvBtn.Name = "genIvBtn";
+        genIvBtn.Size = new Size(110, 32);
+        genIvBtn.TabIndex = 15;
+        genIvBtn.Text = "建 Iv";
+        genIvBtn.UseVisualStyleBackColor = false;
+        genIvBtn.Click += genIvBtnClick;
+        // 
         // genKeyBtn
         // 
         genKeyBtn.BackColor = SystemColors.Control;
-        genKeyBtn.Location = new Point(441, 85);
+        genKeyBtn.Location = new Point(515, 85);
         genKeyBtn.Name = "genKeyBtn";
         genKeyBtn.Size = new Size(110, 32);
         genKeyBtn.TabIndex = 14;
@@ -211,18 +222,18 @@ partial class EncryptToolForm
         // 
         // IvBox
         // 
-        IvBox.Location = new Point(112, 137);
+        IvBox.Location = new Point(112, 129);
         IvBox.Margin = new Padding(2);
         IvBox.Multiline = true;
         IvBox.Name = "IvBox";
-        IvBox.Size = new Size(314, 30);
+        IvBox.Size = new Size(398, 30);
         IvBox.TabIndex = 8;
         IvBox.TextChanged += IvBox_TextChanged;
         // 
         // IvLabel
         // 
         IvLabel.AutoSize = true;
-        IvLabel.Location = new Point(23, 140);
+        IvLabel.Location = new Point(16, 132);
         IvLabel.Margin = new Padding(2, 0, 2, 0);
         IvLabel.Name = "IvLabel";
         IvLabel.Size = new Size(85, 19);
@@ -253,18 +264,18 @@ partial class EncryptToolForm
         // 
         // KeyBox
         // 
-        KeyBox.Location = new Point(112, 81);
+        KeyBox.Location = new Point(112, 85);
         KeyBox.Margin = new Padding(2);
         KeyBox.Multiline = true;
         KeyBox.Name = "KeyBox";
-        KeyBox.Size = new Size(314, 30);
+        KeyBox.Size = new Size(398, 30);
         KeyBox.TabIndex = 4;
         KeyBox.TextChanged += KeyBoxTextChanged;
         // 
         // KeyLabel
         // 
         KeyLabel.AutoSize = true;
-        KeyLabel.Location = new Point(23, 92);
+        KeyLabel.Location = new Point(17, 92);
         KeyLabel.Margin = new Padding(2, 0, 2, 0);
         KeyLabel.Name = "KeyLabel";
         KeyLabel.Size = new Size(68, 19);
@@ -282,17 +293,6 @@ partial class EncryptToolForm
         errorTextLbl.ReadOnly = true;
         errorTextLbl.Size = new Size(750, 68);
         errorTextLbl.TabIndex = 10;
-        // 
-        // genIvBtn
-        // 
-        genIvBtn.BackColor = SystemColors.Control;
-        genIvBtn.Location = new Point(441, 137);
-        genIvBtn.Name = "genIvBtn";
-        genIvBtn.Size = new Size(110, 32);
-        genIvBtn.TabIndex = 15;
-        genIvBtn.Text = "建 Iv";
-        genIvBtn.UseVisualStyleBackColor = false;
-        genIvBtn.Click += genIvBtnClick;
         // 
         // EncryptToolForm
         // 

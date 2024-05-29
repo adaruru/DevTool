@@ -141,14 +141,18 @@ public partial class EncryptToolForm : Form
         var aes = Aes.Create();
         aes.GenerateKey();
         string key = Convert.ToBase64String(aes.Key);
-        string iv = Convert.ToBase64String(aes.Key);
+        KeyBox.Text = key;
+        Properties.Settings.Default.Key = key;
+        Properties.Settings.Default.Save();
     }
 
     private void genIvBtnClick(object sender, EventArgs e)
     {
         var aes = Aes.Create();
         aes.GenerateKey();
-        string key = Convert.ToBase64String(aes.Key);
-        string iv = Convert.ToBase64String(aes.Key);
+        string iv = Convert.ToBase64String(aes.IV);
+        IvBox.Text = iv;
+        Properties.Settings.Default.Iv = iv;
+        Properties.Settings.Default.Save();
     }
 }
