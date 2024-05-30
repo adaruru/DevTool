@@ -104,3 +104,7 @@ key 的顯示會受限於 欄位名稱 是否是TableName+id 或者是 tableName
 就會回到預設值，僅勾選大部分情況會需要的欄位顯示
 
 ![image-20240524122206805](.attach/.readme/image-20240524122206805.png)
+
+### 建置
+
+dotnet publish DbTool/DbTool.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeAllContentForSelfExtract=true -o bin\Release\net6.0-windows\publish\win-x64\
