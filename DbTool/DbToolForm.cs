@@ -75,7 +75,7 @@ public partial class DbToolForm : Form
                 Path.Combine(Directory.GetCurrentDirectory(), "ImportDescription.xlsx") :
                 Path.Combine(Directory.GetCurrentDirectory(), $"{SchemaName}{DateTime.Now.ToString("yyyyMMddHHmmss")}Schema.xlsx");
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
+       
             //use template
             string resourceName = "DbTool.Template.Schema.xlsx";
             Assembly assembly = Assembly.GetExecutingAssembly();
@@ -86,8 +86,6 @@ public partial class DbToolForm : Form
                 return;
             }
             using var package = new ExcelPackage(resourceStream);
-
-            // var worksheet = package.Workbook.Worksheets.Add("TableLists");
             var worksheet = package.Workbook.Worksheets["TableLists"];
             for (int i = 0; i < Schema.Tables.Count; i++)
             {
@@ -103,7 +101,7 @@ public partial class DbToolForm : Form
                 var tableSheet = package.Workbook.Worksheets.Copy("ColumnSample", Schema.Tables[i].TableName);
                 for (int r = 0; r < Schema.Tables[i].Columns.Count(); r++)
                 {
-                    var c = 0;
+                    var column = 0;
                     tableSheet.Cells[1, 1].Value = Schema.Tables[i].TableName;
                     if (control.IsTableDescriptionShow)
                     {
@@ -112,75 +110,79 @@ public partial class DbToolForm : Form
 
                     if (control.IsSortShow)
                     {
-                        c++;
-                        tableSheet.Cells[2, c].Value = "Sort";
-                        tableSheet.Cells[r + 3, c].Value = Schema.Tables[i].Columns[r].Sort;
+                        column++;
+                        tableSheet.Cells[2, column].Value = "Sort";
+                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Sort;
                     }
-                    c++;
-                    tableSheet.Cells[2, c].Value = "Column";
-                    tableSheet.Cells[r + 3, c].Value = Schema.Tables[i].Columns[r].ColumnName;
+                    column++;
+                    tableSheet.Cells[2, column].Value = "Column";
+                    tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ColumnName;
 
                     if (control.IsDataTypeShow)
                     {
-                        c++;
-                        tableSheet.Cells[2, c].Value = "DataType";
-                        tableSheet.Cells[r + 3, c].Value = Schema.Tables[i].Columns[r].DataType;
+                        column++;
+                        tableSheet.Cells[2, column].Value = "DataType";
+                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].DataType;
                     }
                     if (control.IsDefaultValueShow)
                     {
-                        c++;
-                        tableSheet.Cells[2, c].Value = "DefaultValue";
-                        tableSheet.Cells[r + 3, c].Value = Schema.Tables[i].Columns[r].DefaultValue;
+                        column++;
+                        tableSheet.Cells[2, column].Value = "DefaultValue";
+                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].DefaultValue;
                     }
                     if (control.IsIdentityShow)
                     {
-                        c++;
-                        tableSheet.Cells[2, c].Value = "Identity";
-                        tableSheet.Cells[r + 3, c].Value = Schema.Tables[i].Columns[r].Identity;
+                        column++;
+                        tableSheet.Cells[2, column].Value = "Identity";
+                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Identity;
                     }
                     if (control.IsPrimaryKeyShow)
                     {
-                        c++;
-                        tableSheet.Cells[2, c].Value = "PrimaryKey";
-                        tableSheet.Cells[r + 3, c].Value = Schema.Tables[i].Columns[r].PrimaryKey;
+                        column++;
+                        tableSheet.Cells[2, column].Value = "PrimaryKey";
+                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].PrimaryKey;
                     }
                     if (control.IsNotNullShow)
                     {
-                        c++;
-                        tableSheet.Cells[2, c].Value = "NotNull";
-                        tableSheet.Cells[r + 3, c].Value = Schema.Tables[i].Columns[r].NotNull;
+                        column++;
+                        tableSheet.Cells[2, column].Value = "NotNull";
+                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].NotNull;
                     }
                     if (control.IsLengthShow)
                     {
-                        c++;
-                        tableSheet.Cells[2, c].Value = "Length";
-                        tableSheet.Cells[r + 3, c].Value = Schema.Tables[i].Columns[r].Length;
+                        column++;
+                        tableSheet.Cells[2, column].Value = "Length";
+                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Length;
                     }
                     if (control.IsPrecisionShow)
                     {
-                        c++;
-                        tableSheet.Cells[2, c].Value = "Precision";
-                        tableSheet.Cells[r + 3, c].Value = Schema.Tables[i].Columns[r].Precision;
+                        column++;
+                        tableSheet.Cells[2, column].Value = "Precision";
+                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Precision;
                     }
                     if (control.IsScaleShow)
                     {
-                        c++;
-                        tableSheet.Cells[2, c].Value = "Scale";
-                        tableSheet.Cells[r + 3, c].Value = Schema.Tables[i].Columns[r].Scale;
+                        column++;
+                        tableSheet.Cells[2, column].Value = "Scale";
+                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Scale;
                     }
                     if (control.IsColumnDescriptionShow)
                     {
-                        c++;
-                        tableSheet.Cells[2, c].Value = "Description";
-                        tableSheet.Cells[r + 3, c].Value = Schema.Tables[i].Columns[r].ColumnDescription;
+                        column++;
+                        tableSheet.Cells[2, column].Value = "Description";
+                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ColumnDescription;
                     }
                 }
                 tableSheet.Cells.AutoFitColumns();
+                tableSheet.View.TabSelected = false;// 設置為不選取狀態
             }
             worksheet.Cells.AutoFitColumns();
             package.Workbook.Worksheets.Delete("ColumnSample");
-            package.SaveAs(new FileInfo(destinationPath));
 
+            // 開啟時只選取TableLists
+            package.Workbook.View.ActiveTab = 0;
+
+            package.SaveAs(new FileInfo(destinationPath));
             Process.Start(new ProcessStartInfo
             {
                 FileName = destinationPath,
@@ -367,8 +369,8 @@ ORDER BY st.name
         var result = MessageBox.Show("你確定要重置所有設定嗎", "確認重置", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
         if (result == DialogResult.Yes)
         {
-            Properties.Settings.Default.Reset();
-            Properties.Settings.Default.Save();
+            Settings.Default.Reset();
+            Settings.Default.Save();
             LoadSettings();
         }
     }
@@ -486,7 +488,6 @@ ORDER BY st.name
                                 // Add the table to the schema
                                 SchemaDescription.Tables[i].Columns?.Add(column);
                             }
-
                         }
                     }
                     else
@@ -611,7 +612,7 @@ END;";
             }
         }
         catch (Exception es)
-        { 
+        {
             errorTextLbl.Text = $"出現其他異常錯誤:{es.Message}";
         }
     }
