@@ -204,6 +204,7 @@ public partial class DbToolForm : Form
 		LEFT JOIN sys.extended_properties p ON p.major_id = st.object_id
 		AND p.minor_id = 0
 		AND p.name = 'MS_Description'
+    WHERE st.name != 'sysdiagrams'
 	ORDER BY st.name";
 
         var dataTable = Conn.GetDataTable(query);
@@ -227,37 +228,37 @@ public partial class DbToolForm : Form
         for (int i = 0; i < Schema.Tables.Count; i++)
         {
             var query = @"
-SELECT sc.column_id [Sort]
-	,sc.name [ColumnName]
+SELECT DISTINCT sc.column_id AS [Sort]
+	,sc.name AS [ColumnName]
 	,ic.DATA_TYPE + CASE 
 		WHEN ISNULL(ic.CHARACTER_MAXIMUM_LENGTH, '') = ''
 			THEN ''
 		ELSE '(' + CAST(ic.CHARACTER_MAXIMUM_LENGTH AS VARCHAR) + ')'
-		END [DataType]
-	,ISNULL(ic.COLUMN_DEFAULT, '') [DefaultValue]
+		END AS [DataType]
+	,ISNULL(ic.COLUMN_DEFAULT, '') AS [DefaultValue]
 	,CASE sc.is_identity
 		WHEN 1
 			THEN 'Y'
 		ELSE ''
-		END [Identity]
+		END AS [Identity]
 	,CASE 
 		WHEN ISNULL(ik.TABLE_NAME, '') <> ''
 			THEN 'Y'
 		ELSE ''
-		END [PrimaryKey]
-	,ISNULL(sep.value, '') [ColumnDescription]
+		END AS [PrimaryKey]
+	,ISNULL(sep.value, '') AS [ColumnDescription]
 	,CASE 
 		WHEN sc.is_nullable = 0
 			THEN 'Y'
 		ELSE ''
-		END [NotNull]
-	,ic.CHARACTER_MAXIMUM_LENGTH [Length]
-	,ic.NUMERIC_PRECISION [Precision]
-	,ic.NUMERIC_SCALE [Scale]
+		END AS [NotNull]
+	,ic.CHARACTER_MAXIMUM_LENGTH AS [Length]
+	,ic.NUMERIC_PRECISION AS [Precision]
+	,ic.NUMERIC_SCALE AS [Scale]
+	,st.name AS [TableName]
 FROM sys.tables st
 INNER JOIN sys.columns sc ON st.object_id = sc.object_id
-	AND st.name = @TableName --check table
-	--AND st.name like '%hina%'
+    AND st.name = @TableName --check table
 INNER JOIN INFORMATION_SCHEMA.COLUMNS ic ON ic.TABLE_NAME = st.name
 	AND ic.COLUMN_NAME = sc.name
 LEFT JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE ik ON ik.TABLE_NAME = ic.TABLE_NAME
@@ -268,9 +269,10 @@ LEFT JOIN sys.extended_properties sep ON st.object_id = sep.major_id
 LEFT JOIN sys.extended_properties p ON p.major_id = st.object_id
 	AND p.minor_id = 0
 	AND p.name = 'MS_Description'
-ORDER BY st.name --table name
-	,sc.column_id --column sort
-	,sc.name --column name";
+ORDER BY st.name
+	,sc.column_id
+	,sc.name;
+";
 
             using SqlConnection con = new SqlConnection(connStrBox.Text);
             using SqlCommand cmd = new SqlCommand(query, con);
