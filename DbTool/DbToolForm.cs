@@ -173,10 +173,10 @@ public partial class DbToolForm : Form
                         tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ColumnDescription;
                     }
                 }
-                tableSheet.Cells.AutoFitColumns();
+                tableSheet.Cells.AutoFitColumns(); //調整欄寬
                 tableSheet.View.TabSelected = false;// 設置為不選取狀態
             }
-            worksheet.Cells.AutoFitColumns();
+            worksheet.Cells.AutoFitColumns();//調整欄寬
             package.Workbook.Worksheets.Delete("ColumnSample");
 
             // 開啟時只選取TableLists
