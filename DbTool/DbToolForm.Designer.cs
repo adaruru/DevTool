@@ -42,6 +42,7 @@ partial class DbToolForm
         IsDisplay = new CheckBox();
         modelGenBtn = new Button();
         schmaTool = new TabPage();
+        downloadSchemaWordBtn = new Button();
         ImportDescription = new Button();
         IsScaleShow = new CheckBox();
         IsPrecisionShow = new CheckBox();
@@ -81,9 +82,9 @@ partial class DbToolForm
         downloadSchemaBtn.Location = new Point(15, 102);
         downloadSchemaBtn.Margin = new Padding(2);
         downloadSchemaBtn.Name = "downloadSchemaBtn";
-        downloadSchemaBtn.Size = new Size(128, 28);
+        downloadSchemaBtn.Size = new Size(170, 28);
         downloadSchemaBtn.TabIndex = 1;
-        downloadSchemaBtn.Text = "下載資料庫規格";
+        downloadSchemaBtn.Text = "下載資料庫規格 Excel";
         downloadSchemaBtn.UseVisualStyleBackColor = true;
         downloadSchemaBtn.Click += downloadSchemaEvent;
         // 
@@ -225,6 +226,7 @@ partial class DbToolForm
         // 
         // schmaTool
         // 
+        schmaTool.Controls.Add(downloadSchemaWordBtn);
         schmaTool.Controls.Add(ImportDescription);
         schmaTool.Controls.Add(IsScaleShow);
         schmaTool.Controls.Add(IsPrecisionShow);
@@ -248,9 +250,20 @@ partial class DbToolForm
         schmaTool.Text = "資料庫規格";
         schmaTool.UseVisualStyleBackColor = true;
         // 
+        // downloadSchemaWordBtn
+        // 
+        downloadSchemaWordBtn.Location = new Point(16, 144);
+        downloadSchemaWordBtn.Margin = new Padding(2);
+        downloadSchemaWordBtn.Name = "downloadSchemaWordBtn";
+        downloadSchemaWordBtn.Size = new Size(170, 28);
+        downloadSchemaWordBtn.TabIndex = 15;
+        downloadSchemaWordBtn.Text = "下載資料庫規格 Word";
+        downloadSchemaWordBtn.UseVisualStyleBackColor = true;
+        downloadSchemaWordBtn.Click += downloadSchemaWordBtnClick;
+        // 
         // ImportDescription
         // 
-        ImportDescription.Location = new Point(15, 168);
+        ImportDescription.Location = new Point(265, 144);
         ImportDescription.Margin = new Padding(2);
         ImportDescription.Name = "ImportDescription";
         ImportDescription.Size = new Size(92, 28);
@@ -405,7 +418,7 @@ partial class DbToolForm
         // 
         // downloadTemplateBtn
         // 
-        downloadTemplateBtn.Location = new Point(15, 135);
+        downloadTemplateBtn.Location = new Point(265, 102);
         downloadTemplateBtn.Margin = new Padding(2);
         downloadTemplateBtn.Name = "downloadTemplateBtn";
         downloadTemplateBtn.Size = new Size(155, 28);
@@ -506,4 +519,5 @@ partial class DbToolForm
     private CheckBox isSummary;
     private TabPage settingTab;
     private Button resetBtn;
+    private Button downloadSchemaWordBtn;
 }

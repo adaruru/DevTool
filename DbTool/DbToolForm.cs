@@ -1,11 +1,15 @@
 using DbTool.Properties;
+using DbTool.Service;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentFormat.OpenXml;
 using OfficeOpenXml;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Reflection;
 using Properties = DbTool.Properties;
-
+using Settings = DbTool.Properties.Settings;
 
 public partial class DbToolForm : Form
 {
@@ -46,6 +50,10 @@ public partial class DbToolForm : Form
             UseShellExecute = true
         });
     }
+    private void downloadTemplateWordBtnClick(object sender, EventArgs e)
+    {
+
+    }
 
     /// <summary>
     /// 下載範例與下載
@@ -75,7 +83,7 @@ public partial class DbToolForm : Form
                 Path.Combine(Directory.GetCurrentDirectory(), "ImportDescription.xlsx") :
                 Path.Combine(Directory.GetCurrentDirectory(), $"{SchemaName}{DateTime.Now.ToString("yyyyMMddHHmmss")}Schema.xlsx");
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-       
+
             //use template
             string resourceName = "DbTool.Template.Schema.xlsx";
             Assembly assembly = Assembly.GetExecutingAssembly();
