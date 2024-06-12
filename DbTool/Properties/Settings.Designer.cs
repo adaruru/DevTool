@@ -214,5 +214,17 @@ namespace DbTool.Properties {
                 this["IsColumnDescriptionShow"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool isWordWithToc {
+            get {
+                return ((bool)(this["isWordWithToc"]));
+            }
+            set {
+                this["isWordWithToc"] = value;
+            }
+        }
     }
 }

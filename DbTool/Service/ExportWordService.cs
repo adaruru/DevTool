@@ -11,8 +11,8 @@ public class ExportWordService
     public void ExportWordSchema(Schema Schema, string connStrBox)
     {
         //use template
+        string resourceName = FormControl.isWordWithToc ? "DbTool.Template.SchemaToc.docx" : "DbTool.Template.Schema.docx";
 
-        string resourceName = "DbTool.Template.Schema.docx";
         Assembly assembly = Assembly.GetExecutingAssembly();
         using Stream resourceStream = assembly.GetManifestResourceStream(resourceName);
         byte[] templateBytes;
@@ -280,7 +280,7 @@ public class ExportWordService
     public void ExportWordSchemaPerTable(Schema Schema, string connStrBox)
     {
         //use template
-        string resourceName = "DbTool.Template.Schema.docx";
+        string resourceName = FormControl.isWordWithToc ? "DbTool.Template.SchemaToc.docx" : "DbTool.Template.Schema.docx";
         Assembly assembly = Assembly.GetExecutingAssembly();
         using Stream resourceStream = assembly.GetManifestResourceStream(resourceName);
         byte[] templateBytes;
@@ -332,7 +332,6 @@ public class ExportWordService
                 )
             );
             table.AppendChild(tblProps);
-
 
             // Add rows and cells to the table
             for (int r = 0; r < 3; r++)

@@ -660,66 +660,84 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
     private void IsTableDescriptionShowChanged(object sender, EventArgs e)
     {
         Settings.Default.IsTableDescriptionShow = IsTableDescriptionShow.Checked;
+        FormControl.IsTableDescriptionShow = IsTableDescriptionShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsSortShowChanged(object sender, EventArgs e)
     {
         Settings.Default.IsSortShow = IsSortShow.Checked;
+        FormControl.IsSortShow = IsSortShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsDataTypeShowChanged(object sender, EventArgs e)
     {
         Settings.Default.IsDataTypeShow = IsDataTypeShow.Checked;
+        FormControl.IsDataTypeShow = IsDataTypeShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsDefaultValueShowChanged(object sender, EventArgs e)
     {
         Settings.Default.IsDefaultValueShow = IsDefaultValueShow.Checked;
+        FormControl.IsDefaultValueShow = IsDefaultValueShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsIdentityShowChanged(object sender, EventArgs e)
     {
         Settings.Default.IsIdentityShow = IsIdentityShow.Checked;
+        FormControl.IsIdentityShow = IsIdentityShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsPrimaryKeyShowChanged(object sender, EventArgs e)
     {
         Settings.Default.IsPrimaryKeyShow = IsPrimaryKeyShow.Checked;
+        FormControl.IsPrimaryKeyShow = IsPrimaryKeyShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsNotNullShowChanged(object sender, EventArgs e)
     {
         Settings.Default.IsNotNullShow = IsNotNullShow.Checked;
+        FormControl.IsNotNullShow = IsNotNullShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsLengthShowChanged(object sender, EventArgs e)
     {
         Settings.Default.IsLengthShow = IsLengthShow.Checked;
+        FormControl.IsLengthShow = IsLengthShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsPrecisionShowChanged(object sender, EventArgs e)
     {
         Settings.Default.IsPrecisionShow = IsPrecisionShow.Checked;
+        FormControl.IsPrecisionShow = IsPrecisionShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsScaleShowChanged(object sender, EventArgs e)
     {
         Settings.Default.IsScaleShow = IsScaleShow.Checked;
+        FormControl.IsScaleShow = IsScaleShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsColumnDescriptionShowChanged(object sender, EventArgs e)
     {
         Settings.Default.IsColumnDescriptionShow = IsColumnDescriptionShow.Checked;
+        FormControl.IsColumnDescriptionShow = IsColumnDescriptionShow.Checked;
+        Settings.Default.Save();
+    }
+
+    private void isWordWithTocChanged(object sender, EventArgs e)
+    {
+        Settings.Default.isWordWithToc = isWordWithToc.Checked;
+        FormControl.isWordWithToc = isWordWithToc.Checked;
         Settings.Default.Save();
     }
     #endregion ==System Default Setting event==

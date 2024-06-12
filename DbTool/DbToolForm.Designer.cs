@@ -59,6 +59,7 @@ partial class DbToolForm
         settingTab = new TabPage();
         resetBtn = new Button();
         errorTextLbl = new TextBox();
+        isWordWithToc = new CheckBox();
         tabControl1.SuspendLayout();
         connTool.SuspendLayout();
         modelTool.SuspendLayout();
@@ -226,6 +227,7 @@ partial class DbToolForm
         // 
         // schmaTool
         // 
+        schmaTool.Controls.Add(isWordWithToc);
         schmaTool.Controls.Add(downloadSchemaWordBtn);
         schmaTool.Controls.Add(ImportDescription);
         schmaTool.Controls.Add(IsScaleShow);
@@ -462,6 +464,18 @@ partial class DbToolForm
         errorTextLbl.TabIndex = 8;
         errorTextLbl.DoubleClick += errorTextDoubleClick;
         // 
+        // isWordWithToc
+        // 
+        isWordWithToc.AutoSize = true;
+        isWordWithToc.Location = new Point(16, 176);
+        isWordWithToc.Margin = new Padding(2);
+        isWordWithToc.Name = "isWordWithToc";
+        isWordWithToc.Size = new Size(146, 23);
+        isWordWithToc.TabIndex = 16;
+        isWordWithToc.Text = "Word是否有目錄";
+        isWordWithToc.UseVisualStyleBackColor = true;
+        isWordWithToc.CheckedChanged += isWordWithTocChanged;
+        // 
         // DbToolForm
         // 
         AutoScaleDimensions = new SizeF(9F, 19F);
@@ -520,4 +534,5 @@ partial class DbToolForm
     private TabPage settingTab;
     private Button resetBtn;
     private Button downloadSchemaWordBtn;
+    private CheckBox isWordWithToc;
 }
