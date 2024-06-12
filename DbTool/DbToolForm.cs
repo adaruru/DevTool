@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Reflection;
 using Properties = DbTool.Properties;
 using Settings = DbTool.Properties.Settings;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 public partial class DbToolForm : Form
 {
@@ -17,8 +18,7 @@ public partial class DbToolForm : Form
     {
         InitializeComponent();
     }
-    public Schema Schema = new Schema();
-    public Schema SchemaDescription = new Schema();
+    public Schema SchemaForImportDescription = new Schema();
     public ConnService Conn;
     public string SchemaName = "";
 
@@ -50,9 +50,255 @@ public partial class DbToolForm : Form
             UseShellExecute = true
         });
     }
-    private void downloadTemplateWordBtnClick(object sender, EventArgs e)
-    {
 
+    private void downloadSchemaWordBtnClick(object sender, EventArgs e)
+    {
+        errorTextLbl.Text = "檔案產製中請稍後";
+        if (string.IsNullOrEmpty(connStrBox.Text))
+        {
+            throw new Exception("請輸入連線字串");
+        }
+
+        Conn = new ConnService(connStrBox.Text);
+        Conn.SetTable();
+        Conn.SetColumn();
+        var Schema = Conn.Schema;
+
+        //use template
+        string resourceName = "DbTool.Template.Schema.docx";
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        using Stream resourceStream = assembly.GetManifestResourceStream(resourceName);
+        byte[] templateBytes;
+
+        if (resourceStream == null)
+        {
+            MessageBox.Show($"Embedded resource '{resourceName}' not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        using (var memoryStream = new MemoryStream())
+        {
+            resourceStream.CopyTo(memoryStream);
+            templateBytes = memoryStream.ToArray();
+        }
+
+        var docxBytes = WordRender.GenerateDocx(templateBytes,
+               new Dictionary<string, string>()
+               {
+                   ["Title"] = $"{SchemaName}資料庫規格",
+                   ["PubDate"] = $"{DateTime.Now:yyyy年MM月dd日HH:mm:ss}",
+                   ["Source"] = $"連線字串 : {connStrBox.Text}"
+               });
+
+        string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), $"{Schema.SchemaName}{DateTime.Now:yyyyMMddHHmmss}.docx");
+        File.WriteAllBytes(destinationPath, docxBytes);
+
+        //新建 using (WordprocessingDocument wordDoc = WordprocessingDocument.Create(filePath, WordprocessingDocumentType.Document))
+        using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(destinationPath, true))
+        {
+            MainDocumentPart mainPart = wordDoc.MainDocumentPart;
+
+            // 建立一個新的段落，用於產生一個空行
+            Paragraph emptyParagraph = new Paragraph(new DocumentFormat.OpenXml.Wordprocessing.Run(new DocumentFormat.OpenXml.Wordprocessing.Text("")));
+            mainPart.Document.Body.AppendChild(emptyParagraph);
+
+            var Borderval = new EnumValue<BorderValues>(BorderValues.Single);
+            var schemaTable = Schema.Tables;
+
+            for (int i = 0; i < schemaTable.Count; i++)
+            {
+                DocumentFormat.OpenXml.Wordprocessing.Table table = new DocumentFormat.OpenXml.Wordprocessing.Table();
+                // Set table properties
+                TableProperties tblProps = new TableProperties(
+                    new TableWidth { Width = "5000", Type = TableWidthUnitValues.Pct },
+                    new TableBorders(
+                        new DocumentFormat.OpenXml.Wordprocessing.TopBorder { Val = Borderval, Size = 12 },
+                        new DocumentFormat.OpenXml.Wordprocessing.BottomBorder { Val = Borderval, Size = 12 },
+                        new DocumentFormat.OpenXml.Wordprocessing.LeftBorder { Val = Borderval, Size = 12 },
+                        new DocumentFormat.OpenXml.Wordprocessing.RightBorder { Val = Borderval, Size = 12 },
+                        new InsideHorizontalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 },
+                        new InsideVerticalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 }
+                    )
+                );
+                table.AppendChild(tblProps);
+
+                var schemaCulumn = schemaTable[i].Columns;
+
+                for (int j = 0; j < schemaCulumn.Count + 2; j++)
+                {
+                    if (j == 0)
+                    {
+                        TableRow tr = new TableRow();
+                        TableCell cell1 = new TableCell(
+                            new Paragraph(
+                                new DocumentFormat.OpenXml.Wordprocessing.Run(
+                                    new DocumentFormat.OpenXml.Wordprocessing.Text($"Table"))));
+                        TableCell cell2 = new TableCell(
+                            new Paragraph(
+                                new DocumentFormat.OpenXml.Wordprocessing.Run(
+                                    new DocumentFormat.OpenXml.Wordprocessing.Text($"TableDescription"))));
+                        // Set cell properties
+                        TableCellProperties tcp = new TableCellProperties(
+                            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "2500" }
+                            );
+                        cell1.Append(tcp);
+                        tr.Append(cell1);
+                        tr.Append(cell2);
+                        table.Append(tr);
+                    }
+                    if (j == 1)
+                    {
+                        TableRow tr = new TableRow();
+                        TableCell cell1 = new TableCell(
+                            new Paragraph(
+                                new DocumentFormat.OpenXml.Wordprocessing.Run(
+                                    new DocumentFormat.OpenXml.Wordprocessing.Text($"{schemaTable[0].TableName}"))));
+                        TableCell cell2 = new TableCell(
+                            new Paragraph(
+                                new DocumentFormat.OpenXml.Wordprocessing.Run(
+                                    new DocumentFormat.OpenXml.Wordprocessing.Text($"{schemaTable[0].TableDescription}"))));
+                        // Set cell properties
+                        TableCellProperties tcp = new TableCellProperties(
+                            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "2500" }
+                            );
+                        cell1.Append(tcp);
+                        tr.Append(cell1);
+                        tr.Append(cell2);
+                        table.Append(tr);
+                    }
+                    else
+                    {
+                        TableRow tr = new TableRow();
+                        var c1 = new TableCell(new Paragraph(
+                            new DocumentFormat.OpenXml.Wordprocessing.Run(
+                                new DocumentFormat.OpenXml.Wordprocessing.Text($"ColumnName"))));
+                        var c2 = new TableCell(new Paragraph(
+                            new DocumentFormat.OpenXml.Wordprocessing.Run(
+                                new DocumentFormat.OpenXml.Wordprocessing.Text($"Sort"))));
+                        // Set cell properties
+                        TableCellProperties tcp = new TableCellProperties(
+                            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "410" }
+                        );
+                        c1.Append(tcp);
+                        tr.Append(c1);
+                        tr.Append(c2);
+                        table.Append(tr);
+                    }
+
+                }
+                // Add the table to the document body
+                mainPart.Document.Body.AppendChild(table);
+
+                Paragraph A = new Paragraph(new DocumentFormat.OpenXml.Wordprocessing.Run(new DocumentFormat.OpenXml.Wordprocessing.Text("")));
+                mainPart.Document.Body.AppendChild(A);
+
+            }
+            mainPart.Document.Save();
+        }
+
+        Process.Start(new ProcessStartInfo(destinationPath) { UseShellExecute = true });
+    }
+
+    private void downloadSchemaPerTableWordBtnClick(object sender, EventArgs e)
+    {
+        //use template
+        string resourceName = "DbTool.Template.Schema.docx";
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        using Stream resourceStream = assembly.GetManifestResourceStream(resourceName);
+        byte[] templateBytes;
+
+        if (resourceStream == null)
+        {
+            MessageBox.Show($"Embedded resource '{resourceName}' not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        using (var memoryStream = new MemoryStream())
+        {
+            resourceStream.CopyTo(memoryStream);
+            templateBytes = memoryStream.ToArray();
+        }
+
+        var docxBytes = WordRender.GenerateDocx(templateBytes,
+               new Dictionary<string, string>()
+               {
+                   ["Title"] = "XXXX資料庫規格",
+                   ["PubDate"] = "2021-04-01",
+                   ["Source"] = "XXXXX 連線字串"
+               });
+        string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), $"Schema_{DateTime.Now:HHmmss}.docx");
+        File.WriteAllBytes(destinationPath, docxBytes);
+
+        //新建 using (WordprocessingDocument wordDoc = WordprocessingDocument.Create(filePath, WordprocessingDocumentType.Document))
+        using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(destinationPath, true))
+        {
+            // Add a main document part
+            MainDocumentPart mainPart = wordDoc.MainDocumentPart;
+            mainPart.Document = new Document();
+            Body body = mainPart.Document.AppendChild(new Body());
+
+            // Create a table
+            DocumentFormat.OpenXml.Wordprocessing.Table table = new DocumentFormat.OpenXml.Wordprocessing.Table();
+
+            var Borderval = new EnumValue<BorderValues>(BorderValues.Single);
+            // Set table properties
+            TableProperties tblProps = new TableProperties(
+                new TableWidth { Width = "10000", Type = TableWidthUnitValues.Pct }, // 設定表格寬度為頁面寬度的50%
+                new TableBorders(
+                    new DocumentFormat.OpenXml.Wordprocessing.TopBorder { Val = Borderval, Size = 12 },
+                    new DocumentFormat.OpenXml.Wordprocessing.BottomBorder { Val = Borderval, Size = 12 },
+                    new DocumentFormat.OpenXml.Wordprocessing.LeftBorder { Val = Borderval, Size = 12 },
+                    new DocumentFormat.OpenXml.Wordprocessing.RightBorder { Val = Borderval, Size = 12 },
+                    new InsideHorizontalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 },
+                    new InsideVerticalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 }
+                )
+            );
+            table.AppendChild(tblProps);
+
+
+            // Add rows and cells to the table
+            for (int r = 0; r < 3; r++)
+            {
+                TableRow tr = new TableRow();
+                if (r == 0)
+                {
+                    TableCell cell1 = new TableCell(
+                        new Paragraph(
+                            new DocumentFormat.OpenXml.Wordprocessing.Run(
+                                new DocumentFormat.OpenXml.Wordprocessing.Text($"Table"))));
+                    TableCell cell2 = new TableCell(
+                        new Paragraph(
+                            new DocumentFormat.OpenXml.Wordprocessing.Run(
+                                new DocumentFormat.OpenXml.Wordprocessing.Text($"TableDescription"))));
+                    // Set cell properties
+                    TableCellProperties tcp = new TableCellProperties(
+                        new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "5000" }
+                        );
+                    cell1.Append(tcp);
+                    tr.Append(cell1);
+                    tr.Append(cell2);
+                }
+                else
+                {
+                    for (int column = 0; column < 3; column++)
+                    {
+                        TableCell cell = new TableCell(new Paragraph(new DocumentFormat.OpenXml.Wordprocessing.Run(new DocumentFormat.OpenXml.Wordprocessing.Text($"Cell {r + 1},{column + 1}"))));
+                        // Set cell properties
+                        TableCellProperties tcp = new TableCellProperties(
+                            new TableCellWidth { Type = TableWidthUnitValues.Dxa, Width = "2400" }
+                        );
+                        cell.Append(tcp);
+                        tr.Append(cell);
+                    }
+                }
+                table.Append(tr);
+            }
+
+            // Add the table to the document body
+            body.AppendChild(table);
+        }
+
+        Process.Start(new ProcessStartInfo(destinationPath) { UseShellExecute = true });
     }
 
     /// <summary>
@@ -69,10 +315,11 @@ public partial class DbToolForm : Form
             {
                 throw new Exception("請輸入連線字串");
             }
-            Conn = new ConnService(connStrBox.Text);
 
-            SetTable();
-            SetColumn();
+            Conn = new ConnService(connStrBox.Text);
+            Conn.SetTable();
+            Conn.SetColumn();
+
             Button clickedButton = sender as Button;
             var isTemplate = clickedButton != null && clickedButton == downloadTemplateBtn;
 
@@ -93,6 +340,7 @@ public partial class DbToolForm : Form
                 MessageBox.Show($"Embedded resource '{resourceName}' not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            var Schema = Conn.Schema;
             using var package = new ExcelPackage(resourceStream);
             var worksheet = package.Workbook.Worksheets["TableLists"];
             for (int i = 0; i < Schema.Tables.Count; i++)
@@ -204,116 +452,6 @@ public partial class DbToolForm : Form
         }
     }
 
-    private void SetTable()
-    {
-        Schema = new Schema();
-        var query = @"
-	SELECT st.name [TableName]
-		,ISNULL(p.value, '') [TableDescription]
-	FROM sys.tables st
-		LEFT JOIN sys.extended_properties p ON p.major_id = st.object_id
-		AND p.minor_id = 0
-		AND p.name = 'MS_Description'
-    WHERE st.name != 'sysdiagrams'
-	ORDER BY st.name";
-
-        var dataTable = Conn.GetDataTable(query);
-
-        foreach (DataRow row in dataTable.Rows)
-        {
-            string tableName = row["TableName"]?.ToString();
-            string tableDescription = row["TableDescription"]?.ToString();
-
-            // Create a new Table instance
-            Table table = new Table
-            {
-                TableName = tableName,
-                TableDescription = tableDescription
-            };
-            Schema.Tables?.Add(table);
-        }
-    }
-    private void SetColumn()
-    {
-        for (int i = 0; i < Schema.Tables.Count; i++)
-        {
-            var query = @"
-SELECT DISTINCT sc.column_id AS [Sort]
-	,sc.name AS [ColumnName]
-	,ic.DATA_TYPE + CASE 
-		WHEN ISNULL(ic.CHARACTER_MAXIMUM_LENGTH, '') = ''
-			THEN ''
-		ELSE '(' + CAST(ic.CHARACTER_MAXIMUM_LENGTH AS VARCHAR) + ')'
-		END AS [DataType]
-	,ISNULL(ic.COLUMN_DEFAULT, '') AS [DefaultValue]
-	,CASE sc.is_identity
-		WHEN 1
-			THEN 'Y'
-		ELSE ''
-		END AS [Identity]
-	,CASE 
-		WHEN ISNULL(ik.TABLE_NAME, '') <> ''
-			THEN 'Y'
-		ELSE ''
-		END AS [PrimaryKey]
-	,ISNULL(sep.value, '') AS [ColumnDescription]
-	,CASE 
-		WHEN sc.is_nullable = 0
-			THEN 'Y'
-		ELSE ''
-		END AS [NotNull]
-	,ic.CHARACTER_MAXIMUM_LENGTH AS [Length]
-	,ic.NUMERIC_PRECISION AS [Precision]
-	,ic.NUMERIC_SCALE AS [Scale]
-	,st.name AS [TableName]
-FROM sys.tables st
-INNER JOIN sys.columns sc ON st.object_id = sc.object_id
-    AND st.name = @TableName --check table
-INNER JOIN INFORMATION_SCHEMA.COLUMNS ic ON ic.TABLE_NAME = st.name
-	AND ic.COLUMN_NAME = sc.name
-LEFT JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE ik ON ik.TABLE_NAME = ic.TABLE_NAME
-	AND ik.COLUMN_NAME = ic.COLUMN_NAME
-LEFT JOIN sys.extended_properties sep ON st.object_id = sep.major_id
-	AND sc.column_id = sep.minor_id
-	AND sep.name = 'MS_Description'
-LEFT JOIN sys.extended_properties p ON p.major_id = st.object_id
-	AND p.minor_id = 0
-	AND p.name = 'MS_Description'
-ORDER BY st.name
-	,sc.column_id
-	,sc.name;
-";
-
-            using SqlConnection con = new SqlConnection(connStrBox.Text);
-            using SqlCommand cmd = new SqlCommand(query, con);
-            con.Open();
-            cmd.Parameters.AddWithValue("@TableName", Schema.Tables[i].TableName);
-            using SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            DataTable dataTable = new DataTable();
-            adapter.Fill(dataTable);
-            con.Close();
-
-            foreach (DataRow row in dataTable.Rows)
-            {
-                Column column = new Column
-                {
-                    Sort = row["Sort"]?.ToString(),
-                    ColumnName = row["ColumnName"]?.ToString(),
-                    DataType = row["DataType"]?.ToString(),
-                    DefaultValue = row["DefaultValue"]?.ToString(),
-                    Identity = row["Identity"]?.ToString(),
-                    PrimaryKey = row["PrimaryKey"]?.ToString(),
-                    ColumnDescription = row["ColumnDescription"]?.ToString(),
-                    NotNull = row["NotNull"]?.ToString(),
-                    Length = row["Length"]?.ToString(),
-                    Precision = row["Precision"]?.ToString(),
-                    Scale = row["Scale"]?.ToString(),
-                };
-                Schema.Tables[i].Columns?.Add(column);
-            }
-        }
-    }
-
     private ColumnControl GetControl(bool isTemplate)
     {
         if (isTemplate)
@@ -420,6 +558,7 @@ ORDER BY st.name
         try
         {
             Conn = new ConnService(connStrBox.Text);
+            var Schema = Conn.Schema;
 
             var query = "select DB_NAME()";
             var result = Conn.GetValueStr(query);
@@ -449,7 +588,7 @@ ORDER BY st.name
             openFileDialog.Filter = "Excel Files|*.xlsx;*.xls|All Files|*.*";
             openFileDialog.Title = "請選擇匯入範本";
 
-            SchemaDescription = new Schema();
+            SchemaForImportDescription = new Schema();
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string filePath = openFileDialog.FileName;
@@ -475,12 +614,12 @@ ORDER BY st.name
                             TableDescription = worksheet.Cells[row, 2].Text
                         };
                         // Add the table to the schema
-                        SchemaDescription.Tables?.Add(table);
+                        SchemaForImportDescription.Tables?.Add(table);
                     }
                 }
-                for (int i = 0; i < SchemaDescription.Tables.Count; i++)
+                for (int i = 0; i < SchemaForImportDescription.Tables.Count; i++)
                 {
-                    ExcelWorksheet tableSheet = package.Workbook.Worksheets[SchemaDescription.Tables[i].TableName];
+                    ExcelWorksheet tableSheet = package.Workbook.Worksheets[SchemaForImportDescription.Tables[i].TableName];
                     if (tableSheet != null)
                     {
                         for (int row = 3; row <= tableSheet.Dimension.End.Row; row++)
@@ -494,13 +633,13 @@ ORDER BY st.name
                             if (!string.IsNullOrEmpty(tableSheet.Cells[row, 2].Text))
                             {
                                 // Add the table to the schema
-                                SchemaDescription.Tables[i].Columns?.Add(column);
+                                SchemaForImportDescription.Tables[i].Columns?.Add(column);
                             }
                         }
                     }
                     else
                     {
-                        throw new Exception($"沒有table {SchemaDescription.Tables[i].TableName}的分頁,請使用正確匯入範本");
+                        throw new Exception($"沒有table {SchemaForImportDescription.Tables[i].TableName}的分頁,請使用正確匯入範本");
                     }
                 }
             }
@@ -516,9 +655,9 @@ ORDER BY st.name
 
     private void InsertTableDescription()
     {
-        for (int i = 0; i < SchemaDescription.Tables.Count; i++)
+        for (int i = 0; i < SchemaForImportDescription.Tables.Count; i++)
         {
-            if (!string.IsNullOrEmpty(SchemaDescription.Tables[i].TableDescription))
+            if (!string.IsNullOrEmpty(SchemaForImportDescription.Tables[i].TableDescription))
             {
 
                 var str = @"
@@ -550,8 +689,8 @@ END;";
                 using SqlConnection con = new SqlConnection(connStrBox.Text);
                 using SqlCommand cmd = new SqlCommand(str, con);
                 con.Open();
-                cmd.Parameters.AddWithValue("@TableName", SchemaDescription.Tables[i].TableName);
-                cmd.Parameters.AddWithValue("@TableDescription", SchemaDescription.Tables[i].TableDescription);
+                cmd.Parameters.AddWithValue("@TableName", SchemaForImportDescription.Tables[i].TableName);
+                cmd.Parameters.AddWithValue("@TableDescription", SchemaForImportDescription.Tables[i].TableDescription);
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
@@ -560,9 +699,9 @@ END;";
 
     private void InsertColumnDescription()
     {
-        for (int i = 0; i < SchemaDescription.Tables.Count; i++)
+        for (int i = 0; i < SchemaForImportDescription.Tables.Count; i++)
         {
-            for (int c = 0; c < SchemaDescription.Tables[i].Columns.Count; c++)
+            for (int c = 0; c < SchemaForImportDescription.Tables[i].Columns.Count; c++)
             {
                 var str = @"
 IF EXISTS (
@@ -597,9 +736,9 @@ END;";
                 using SqlConnection con = new SqlConnection(connStrBox.Text);
                 using SqlCommand cmd = new SqlCommand(str, con);
                 con.Open();
-                cmd.Parameters.AddWithValue("@TableName", SchemaDescription.Tables[i].TableName);
-                cmd.Parameters.AddWithValue("@ColumnName", SchemaDescription.Tables[i].Columns[c].ColumnName);
-                cmd.Parameters.AddWithValue("@ColumnDescription", SchemaDescription.Tables[i].Columns[c].ColumnDescription);
+                cmd.Parameters.AddWithValue("@TableName", SchemaForImportDescription.Tables[i].TableName);
+                cmd.Parameters.AddWithValue("@ColumnName", SchemaForImportDescription.Tables[i].Columns[c].ColumnName);
+                cmd.Parameters.AddWithValue("@ColumnDescription", SchemaForImportDescription.Tables[i].Columns[c].ColumnDescription);
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
@@ -630,7 +769,7 @@ END;";
     {
         try
         {
-            SetTable();
+            Conn.SetTable();
         }
         catch (Exception es)
         {
@@ -642,7 +781,8 @@ END;";
         errorTextLbl.Text = $"產製中請稍後";
         try
         {
-            SetColumn();
+            Conn.SetColumn();
+            var Schema = Conn.Schema;
             var modelDir = Path.Combine(Directory.GetCurrentDirectory(),
                 "Model");
             if (!Directory.Exists(modelDir))
