@@ -430,5 +430,4 @@ public class ExportWordService
             new OutlineLevel() { Val = 2 }));
         styles.Append(heading2);
     }
-
 }
