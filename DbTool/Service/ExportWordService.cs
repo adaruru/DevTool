@@ -8,7 +8,7 @@ using WordTable = DocumentFormat.OpenXml.Wordprocessing.Table;
 
 public class ExportWordService
 {
-    public void ExportWordSchema(Schema Schema, string connStrBox)
+    public string ExportWordSchema(Schema Schema, string connStrBox)
     {
         //use template
         string resourceName = FormControl.isWordWithToc ? "DbTool.Template.SchemaToc.docx" : "DbTool.Template.Schema.docx";
@@ -20,7 +20,7 @@ public class ExportWordService
         if (resourceStream == null)
         {
             MessageBox.Show($"Embedded resource '{resourceName}' not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
+            return "";
         }
 
         using (var memoryStream = new MemoryStream())
@@ -55,7 +55,7 @@ public class ExportWordService
 
             for (int i = 0; i < schemaTable.Count; i++)
             {
-                Paragraph p1 = new Paragraph(new Run(new Text($"TableName : {schemaTable[i].TableName}  {schemaTable[i].TableDescription}")));
+                Paragraph p1 = new Paragraph(new Run(new Text($"{schemaTable[i].TableName}  {schemaTable[i].TableDescription}")));
                 SetStyle(p1, "Heading1");
                 mainPart.Document.Body.AppendChild(p1);
 
@@ -98,6 +98,7 @@ public class ExportWordService
         }
 
         Process.Start(new ProcessStartInfo(destinationPath) { UseShellExecute = true });
+        return destinationPath;
     }
     public TableRow GetTableRow()
     {
@@ -306,8 +307,6 @@ public class ExportWordService
                });
         string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), $"Schema_{DateTime.Now:HHmmss}.docx");
         File.WriteAllBytes(destinationPath, docxBytes);
-
-        //新建 using (WordprocessingDocument wordDoc = WordprocessingDocument.Create(filePath, WordprocessingDocumentType.Document))
         using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(destinationPath, true))
         {
             // Add a main document part

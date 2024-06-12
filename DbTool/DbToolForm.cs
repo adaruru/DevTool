@@ -25,7 +25,6 @@ public partial class DbToolForm : Form
         connStrBox.Text = "Data Source=MSI;Initial Catalog=MvcCoreTraining_Amanda;user id=sa;password=ruru;";
     }
 
-
     /// 保留資源範本 單純下載 測試用
     private void downloadTemplateEvent(object sender, EventArgs e)
     {
@@ -62,6 +61,8 @@ public partial class DbToolForm : Form
         Conn.SetColumn();
         SetControl(isTemplate: false);
         ExportWordService.ExportWordSchema(Conn.Schema, connStrBox.Text);
+        var destinationPath = ExportWordService.ExportWordSchema(Conn.Schema, connStrBox.Text);
+        errorTextLbl.Text = $"檔案產製完成儲存於{destinationPath}";
     }
 
     private void downloadSchemaPerTableWordBtnClick(object sender, EventArgs e)
@@ -75,7 +76,6 @@ public partial class DbToolForm : Form
         Conn = new ConnService(connStrBox.Text, SchemaName);
         Conn.SetTable();
         Conn.SetColumn();
-        ExportWordService.ExportWordSchemaPerTable(Conn.Schema, connStrBox.Text);
     }
 
     /// <summary>
@@ -316,6 +316,9 @@ public partial class DbToolForm : Form
         IsPrecisionShow.Checked = Settings.Default.IsPrecisionShow; // false 精度
         IsScaleShow.Checked = Settings.Default.IsScaleShow; // false 小位數
         IsColumnDescriptionShow.Checked = Settings.Default.IsColumnDescriptionShow; // true 欄描述
+
+        /// genWorld用
+        isWordWithToc.Checked = Settings.Default.isWordWithToc; //true 產製word規格是否有目錄
     }
 
     /// <summary>
