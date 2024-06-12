@@ -1,7 +1,5 @@
 using DbTool.Properties;
-using DbTool.Service;
 using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Wordprocessing;
 using DocumentFormat.OpenXml;
 using OfficeOpenXml;
 using System.Data.SqlClient;
@@ -67,104 +65,16 @@ public partial class DbToolForm : Form
 
     private void downloadSchemaPerTableWordBtnClick(object sender, EventArgs e)
     {
-        //use template
-        string resourceName = "DbTool.Template.Schema.docx";
-        Assembly assembly = Assembly.GetExecutingAssembly();
-        using Stream resourceStream = assembly.GetManifestResourceStream(resourceName);
-        byte[] templateBytes;
-
-        if (resourceStream == null)
+        errorTextLbl.Text = "檔案產製中請稍後";
+        if (string.IsNullOrEmpty(connStrBox.Text))
         {
-            MessageBox.Show($"Embedded resource '{resourceName}' not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
+            throw new Exception("請輸入連線字串");
         }
 
-        using (var memoryStream = new MemoryStream())
-        {
-            resourceStream.CopyTo(memoryStream);
-            templateBytes = memoryStream.ToArray();
-        }
-
-        var docxBytes = WordRender.GenerateDocx(templateBytes,
-               new Dictionary<string, string>()
-               {
-                   ["Title"] = "XXXX資料庫規格",
-                   ["PubDate"] = "2021-04-01",
-                   ["Source"] = "XXXXX 連線字串"
-               });
-        string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), $"Schema_{DateTime.Now:HHmmss}.docx");
-        File.WriteAllBytes(destinationPath, docxBytes);
-
-        //新建 using (WordprocessingDocument wordDoc = WordprocessingDocument.Create(filePath, WordprocessingDocumentType.Document))
-        using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(destinationPath, true))
-        {
-            // Add a main document part
-            MainDocumentPart mainPart = wordDoc.MainDocumentPart;
-            mainPart.Document = new Document();
-            Body body = mainPart.Document.AppendChild(new Body());
-
-            // Create a table
-            DocumentFormat.OpenXml.Wordprocessing.Table table = new DocumentFormat.OpenXml.Wordprocessing.Table();
-
-            var Borderval = new EnumValue<BorderValues>(BorderValues.Single);
-            // Set table properties
-            TableProperties tblProps = new TableProperties(
-                new TableWidth { Width = "10000", Type = TableWidthUnitValues.Pct }, // 設定表格寬度為頁面寬度的50%
-                new TableBorders(
-                    new DocumentFormat.OpenXml.Wordprocessing.TopBorder { Val = Borderval, Size = 12 },
-                    new DocumentFormat.OpenXml.Wordprocessing.BottomBorder { Val = Borderval, Size = 12 },
-                    new DocumentFormat.OpenXml.Wordprocessing.LeftBorder { Val = Borderval, Size = 12 },
-                    new DocumentFormat.OpenXml.Wordprocessing.RightBorder { Val = Borderval, Size = 12 },
-                    new InsideHorizontalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 },
-                    new InsideVerticalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 }
-                )
-            );
-            table.AppendChild(tblProps);
-
-
-            // Add rows and cells to the table
-            for (int r = 0; r < 3; r++)
-            {
-                TableRow tr = new TableRow();
-                if (r == 0)
-                {
-                    TableCell cell1 = new TableCell(
-                        new Paragraph(
-                            new DocumentFormat.OpenXml.Wordprocessing.Run(
-                                new DocumentFormat.OpenXml.Wordprocessing.Text($"Table"))));
-                    TableCell cell2 = new TableCell(
-                        new Paragraph(
-                            new DocumentFormat.OpenXml.Wordprocessing.Run(
-                                new DocumentFormat.OpenXml.Wordprocessing.Text($"TableDescription"))));
-                    // Set cell properties
-                    TableCellProperties tcp = new TableCellProperties(
-                        new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "5000" }
-                        );
-                    cell1.Append(tcp);
-                    tr.Append(cell1);
-                    tr.Append(cell2);
-                }
-                else
-                {
-                    for (int column = 0; column < 3; column++)
-                    {
-                        TableCell cell = new TableCell(new Paragraph(new DocumentFormat.OpenXml.Wordprocessing.Run(new DocumentFormat.OpenXml.Wordprocessing.Text($"Cell {r + 1},{column + 1}"))));
-                        // Set cell properties
-                        TableCellProperties tcp = new TableCellProperties(
-                            new TableCellWidth { Type = TableWidthUnitValues.Dxa, Width = "2400" }
-                        );
-                        cell.Append(tcp);
-                        tr.Append(cell);
-                    }
-                }
-                table.Append(tr);
-            }
-
-            // Add the table to the document body
-            body.AppendChild(table);
-        }
-
-        Process.Start(new ProcessStartInfo(destinationPath) { UseShellExecute = true });
+        Conn = new ConnService(connStrBox.Text, SchemaName);
+        Conn.SetTable();
+        Conn.SetColumn();
+        ExportWordService.ExportWordSchemaPerTable(Conn.Schema, connStrBox.Text);
     }
 
     /// <summary>
@@ -355,8 +265,8 @@ public partial class DbToolForm : Form
     private void connStrBoxEvent(object sender, EventArgs e)
     {
         string conn = connStrBox.Text;
-        Properties.Settings.Default.ConnString = conn;
-        Properties.Settings.Default.Save();
+        Settings.Default.ConnString = conn;
+        Settings.Default.Save();
     }
 
     private void label2_Click(object sender, EventArgs e)
@@ -612,7 +522,7 @@ END;";
         {
             if (Conn == null)
             {
-                throw new Exception("請輸入連線字串");
+                throw new Exception("請先輸入連線字串 並執行連線測試");
             }
             if (tabControl1.SelectedTab == modelTool)
             {
@@ -621,7 +531,7 @@ END;";
         }
         catch (Exception es)
         {
-            errorTextLbl.Text = $"出現其他異常錯誤:{es.Message}";
+            errorTextLbl.Text = $"{es.Message}";
         }
     }
 
@@ -635,7 +545,7 @@ END;";
         }
         catch (Exception es)
         {
-            errorTextLbl.Text = $"出現其他異常錯誤:{es.Message}";
+            errorTextLbl.Text = $"出現其他異常錯誤: {es.Message}";
         }
     }
     private void modelGenEvent(object sender, EventArgs e)

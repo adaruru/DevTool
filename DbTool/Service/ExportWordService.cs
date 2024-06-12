@@ -145,4 +145,106 @@ public class ExportWordService
 
         Process.Start(new ProcessStartInfo(destinationPath) { UseShellExecute = true });
     }
+
+    public void ExportWordSchemaPerTable(Schema Schema, string connStrBox)
+    {
+        //use template
+        string resourceName = "DbTool.Template.Schema.docx";
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        using Stream resourceStream = assembly.GetManifestResourceStream(resourceName);
+        byte[] templateBytes;
+
+        if (resourceStream == null)
+        {
+            MessageBox.Show($"Embedded resource '{resourceName}' not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        using (var memoryStream = new MemoryStream())
+        {
+            resourceStream.CopyTo(memoryStream);
+            templateBytes = memoryStream.ToArray();
+        }
+
+        var docxBytes = WordRender.GenerateDocx(templateBytes,
+               new Dictionary<string, string>()
+               {
+                   ["Title"] = "XXXX資料庫規格",
+                   ["PubDate"] = "2021-04-01",
+                   ["Source"] = "XXXXX 連線字串"
+               });
+        string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), $"Schema_{DateTime.Now:HHmmss}.docx");
+        File.WriteAllBytes(destinationPath, docxBytes);
+
+        //新建 using (WordprocessingDocument wordDoc = WordprocessingDocument.Create(filePath, WordprocessingDocumentType.Document))
+        using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(destinationPath, true))
+        {
+            // Add a main document part
+            MainDocumentPart mainPart = wordDoc.MainDocumentPart;
+            mainPart.Document = new Document();
+            Body body = mainPart.Document.AppendChild(new Body());
+
+            // Create a table
+            WordTable table = new WordTable();
+
+            var Borderval = new EnumValue<BorderValues>(BorderValues.Single);
+            // Set table properties
+            TableProperties tblProps = new TableProperties(
+                new TableWidth { Width = "10000", Type = TableWidthUnitValues.Pct }, // 設定表格寬度為頁面寬度的50%
+                new TableBorders(
+                    new TopBorder { Val = Borderval, Size = 12 },
+                    new BottomBorder { Val = Borderval, Size = 12 },
+                    new LeftBorder { Val = Borderval, Size = 12 },
+                    new RightBorder { Val = Borderval, Size = 12 },
+                    new InsideHorizontalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 },
+                    new InsideVerticalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 }
+                )
+            );
+            table.AppendChild(tblProps);
+
+
+            // Add rows and cells to the table
+            for (int r = 0; r < 3; r++)
+            {
+                TableRow tr = new TableRow();
+                if (r == 0)
+                {
+                    TableCell cell1 = new TableCell(
+                        new Paragraph(
+                            new Run(
+                                new Text($"Table"))));
+                    TableCell cell2 = new TableCell(
+                        new Paragraph(
+                            new Run(
+                                new Text($"TableDescription"))));
+                    // Set cell properties
+                    TableCellProperties tcp = new TableCellProperties(
+                        new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "5000" }
+                        );
+                    cell1.Append(tcp);
+                    tr.Append(cell1);
+                    tr.Append(cell2);
+                }
+                else
+                {
+                    for (int column = 0; column < 3; column++)
+                    {
+                        TableCell cell = new TableCell(new Paragraph(new Run(new Text($"Cell {r + 1},{column + 1}"))));
+                        // Set cell properties
+                        TableCellProperties tcp = new TableCellProperties(
+                            new TableCellWidth { Type = TableWidthUnitValues.Dxa, Width = "2400" }
+                        );
+                        cell.Append(tcp);
+                        tr.Append(cell);
+                    }
+                }
+                table.Append(tr);
+            }
+
+            // Add the table to the document body
+            body.AppendChild(table);
+        }
+
+        Process.Start(new ProcessStartInfo(destinationPath) { UseShellExecute = true });
+    }
 }
