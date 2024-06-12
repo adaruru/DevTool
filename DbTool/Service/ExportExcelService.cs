@@ -1,4 +1,3 @@
-﻿namespace DbTool.Service;
-public class ExportExcelService
+﻿public class ExportExcelService
 {
 }

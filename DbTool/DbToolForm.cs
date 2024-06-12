@@ -323,7 +323,7 @@ public partial class DbToolForm : Form
             Button clickedButton = sender as Button;
             var isTemplate = clickedButton != null && clickedButton == downloadTemplateBtn;
 
-            var control = GetControl(isTemplate);//控制範本或規格 Excel 顯示欄位
+            SetControl(isTemplate);//控制範本或規格 Excel 顯示欄位
 
             //範本或規格 Excel 檔案名稱
             string destinationPath = isTemplate ?
@@ -348,7 +348,7 @@ public partial class DbToolForm : Form
                 worksheet.Cells[1, 1].Value = "Table";
                 worksheet.Cells[i + 2, 1].Value = Schema.Tables[i].TableName;
 
-                if (control.IsTableDescriptionShow)
+                if (FormControl.IsTableDescriptionShow)
                 {
                     worksheet.Cells[1, 2].Value = "Description";
                     worksheet.Cells[i + 2, 2].Value = Schema.Tables[i].TableDescription;
@@ -359,12 +359,12 @@ public partial class DbToolForm : Form
                 {
                     var column = 0;
                     tableSheet.Cells[1, 1].Value = Schema.Tables[i].TableName;
-                    if (control.IsTableDescriptionShow)
+                    if (FormControl.IsTableDescriptionShow)
                     {
                         tableSheet.Cells[1, 2].Value = Schema.Tables[i].TableDescription;
                     }
 
-                    if (control.IsSortShow)
+                    if (FormControl.IsSortShow)
                     {
                         column++;
                         tableSheet.Cells[2, column].Value = "Sort";
@@ -374,55 +374,55 @@ public partial class DbToolForm : Form
                     tableSheet.Cells[2, column].Value = "Column";
                     tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ColumnName;
 
-                    if (control.IsDataTypeShow)
+                    if (FormControl.IsDataTypeShow)
                     {
                         column++;
                         tableSheet.Cells[2, column].Value = "DataType";
                         tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].DataType;
                     }
-                    if (control.IsDefaultValueShow)
+                    if (FormControl.IsDefaultValueShow)
                     {
                         column++;
                         tableSheet.Cells[2, column].Value = "DefaultValue";
                         tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].DefaultValue;
                     }
-                    if (control.IsIdentityShow)
+                    if (FormControl.IsIdentityShow)
                     {
                         column++;
                         tableSheet.Cells[2, column].Value = "Identity";
                         tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Identity;
                     }
-                    if (control.IsPrimaryKeyShow)
+                    if (FormControl.IsPrimaryKeyShow)
                     {
                         column++;
                         tableSheet.Cells[2, column].Value = "PrimaryKey";
                         tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].PrimaryKey;
                     }
-                    if (control.IsNotNullShow)
+                    if (FormControl.IsNotNullShow)
                     {
                         column++;
                         tableSheet.Cells[2, column].Value = "NotNull";
                         tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].NotNull;
                     }
-                    if (control.IsLengthShow)
+                    if (FormControl.IsLengthShow)
                     {
                         column++;
                         tableSheet.Cells[2, column].Value = "Length";
                         tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Length;
                     }
-                    if (control.IsPrecisionShow)
+                    if (FormControl.IsPrecisionShow)
                     {
                         column++;
                         tableSheet.Cells[2, column].Value = "Precision";
                         tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Precision;
                     }
-                    if (control.IsScaleShow)
+                    if (FormControl.IsScaleShow)
                     {
                         column++;
                         tableSheet.Cells[2, column].Value = "Scale";
                         tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Scale;
                     }
-                    if (control.IsColumnDescriptionShow)
+                    if (FormControl.IsColumnDescriptionShow)
                     {
                         column++;
                         tableSheet.Cells[2, column].Value = "Description";
@@ -452,45 +452,36 @@ public partial class DbToolForm : Form
         }
     }
 
-    private ColumnControl GetControl(bool isTemplate)
+    private void SetControl(bool isTemplate)
     {
         if (isTemplate)
         {
-            var control = new ColumnControl() //下載匯入欄描述 必須固定描述欄的位置
-            {
-                IsTableDescriptionShow = true,
-                IsColumnDescriptionShow = true,
-                IsSortShow = false,
-                IsDataTypeShow = false,
-                IsDefaultValueShow = false,
-                IsIdentityShow = false,
-                IsPrimaryKeyShow = false,
-                IsNotNullShow = false,
-                IsLengthShow = false,
-                IsPrecisionShow = false,
-                IsScaleShow = false,
-            };
-            return control;
+            FormControl.IsTableDescriptionShow = true;
+            FormControl.IsColumnDescriptionShow = true;
+            FormControl.IsSortShow = false;
+            FormControl.IsDataTypeShow = false;
+            FormControl.IsDefaultValueShow = false;
+            FormControl.IsIdentityShow = false;
+            FormControl.IsPrimaryKeyShow = false;
+            FormControl.IsNotNullShow = false;
+            FormControl.IsLengthShow = false;
+            FormControl.IsPrecisionShow = false;
+            FormControl.IsScaleShow = false;
         }
         else
         {
-            var control = new ColumnControl() //下載資料庫規格 依照使用者設定
-            {
-                IsTableDescriptionShow = IsTableDescriptionShow.Checked,
-                IsColumnDescriptionShow = IsColumnDescriptionShow.Checked,
-                IsSortShow = IsSortShow.Checked,
-                IsDataTypeShow = IsDataTypeShow.Checked,
-                IsDefaultValueShow = IsDefaultValueShow.Checked,
-                IsIdentityShow = IsIdentityShow.Checked,
-                IsPrimaryKeyShow = IsPrimaryKeyShow.Checked,
-                IsNotNullShow = IsNotNullShow.Checked,
-                IsLengthShow = IsLengthShow.Checked,
-                IsPrecisionShow = IsPrecisionShow.Checked,
-                IsScaleShow = IsScaleShow.Checked,
-            };
-            return control;
+            FormControl.IsTableDescriptionShow = IsTableDescriptionShow.Checked;
+            FormControl.IsColumnDescriptionShow = IsColumnDescriptionShow.Checked;
+            FormControl.IsSortShow = IsSortShow.Checked;
+            FormControl.IsDataTypeShow = IsDataTypeShow.Checked;
+            FormControl.IsDefaultValueShow = IsDefaultValueShow.Checked;
+            FormControl.IsIdentityShow = IsIdentityShow.Checked;
+            FormControl.IsPrimaryKeyShow = IsPrimaryKeyShow.Checked;
+            FormControl.IsNotNullShow = IsNotNullShow.Checked;
+            FormControl.IsLengthShow = IsLengthShow.Checked;
+            FormControl.IsPrecisionShow = IsPrecisionShow.Checked;
+            FormControl.IsScaleShow = IsScaleShow.Checked;
         }
-
     }
 
     private void connStrBoxEvent(object sender, EventArgs e)

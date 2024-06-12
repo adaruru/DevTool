@@ -1,5 +1,3 @@
-﻿namespace DbTool.Service;
-
-internal class ExportWordService
+﻿internal class ExportWordService
 {
 }
