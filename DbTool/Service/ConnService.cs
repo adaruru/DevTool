@@ -5,7 +5,7 @@ public class ConnService
 {
     public Schema Schema { get; set; }
     public string? ConnString;
-    public ConnService(string connStr)
+    public ConnService(string connStr, string schemaName)
     {
         if (string.IsNullOrEmpty(connStr))
         {
@@ -13,11 +13,11 @@ public class ConnService
         }
         ConnString = connStr;
         Schema = new Schema();
+        Schema.SchemaName = schemaName;
     }
 
     public void SetTable()
     {
-        Schema = new Schema();
         var query = @"
 	SELECT st.name [TableName]
 		,ISNULL(p.value, '') [TableDescription]

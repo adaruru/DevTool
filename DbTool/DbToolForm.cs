@@ -15,7 +15,9 @@ public partial class DbToolForm : Form
     public DbToolForm()
     {
         InitializeComponent();
+
     }
+    public ExportWordService ExportWordService = new ExportWordService();
     public Schema SchemaForImportDescription = new Schema();
     public ConnService Conn;
     public string SchemaName = "";
@@ -57,144 +59,10 @@ public partial class DbToolForm : Form
             throw new Exception("請輸入連線字串");
         }
 
-        Conn = new ConnService(connStrBox.Text);
+        Conn = new ConnService(connStrBox.Text, SchemaName);
         Conn.SetTable();
         Conn.SetColumn();
-        var Schema = Conn.Schema;
-
-        //use template
-        string resourceName = "DbTool.Template.Schema.docx";
-        Assembly assembly = Assembly.GetExecutingAssembly();
-        using Stream resourceStream = assembly.GetManifestResourceStream(resourceName);
-        byte[] templateBytes;
-
-        if (resourceStream == null)
-        {
-            MessageBox.Show($"Embedded resource '{resourceName}' not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
-        }
-
-        using (var memoryStream = new MemoryStream())
-        {
-            resourceStream.CopyTo(memoryStream);
-            templateBytes = memoryStream.ToArray();
-        }
-
-        var docxBytes = WordRender.GenerateDocx(templateBytes,
-               new Dictionary<string, string>()
-               {
-                   ["Title"] = $"{SchemaName}資料庫規格",
-                   ["PubDate"] = $"{DateTime.Now:yyyy年MM月dd日HH:mm:ss}",
-                   ["Source"] = $"連線字串 : {connStrBox.Text}"
-               });
-
-        string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), $"{Schema.SchemaName}{DateTime.Now:yyyyMMddHHmmss}.docx");
-        File.WriteAllBytes(destinationPath, docxBytes);
-
-        //新建 using (WordprocessingDocument wordDoc = WordprocessingDocument.Create(filePath, WordprocessingDocumentType.Document))
-        using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(destinationPath, true))
-        {
-            MainDocumentPart mainPart = wordDoc.MainDocumentPart;
-
-            // 建立一個新的段落，用於產生一個空行
-            Paragraph emptyParagraph = new Paragraph(new DocumentFormat.OpenXml.Wordprocessing.Run(new DocumentFormat.OpenXml.Wordprocessing.Text("")));
-            mainPart.Document.Body.AppendChild(emptyParagraph);
-
-            var Borderval = new EnumValue<BorderValues>(BorderValues.Single);
-            var schemaTable = Schema.Tables;
-
-            for (int i = 0; i < schemaTable.Count; i++)
-            {
-                DocumentFormat.OpenXml.Wordprocessing.Table table = new DocumentFormat.OpenXml.Wordprocessing.Table();
-                // Set table properties
-                TableProperties tblProps = new TableProperties(
-                    new TableWidth { Width = "5000", Type = TableWidthUnitValues.Pct },
-                    new TableBorders(
-                        new DocumentFormat.OpenXml.Wordprocessing.TopBorder { Val = Borderval, Size = 12 },
-                        new DocumentFormat.OpenXml.Wordprocessing.BottomBorder { Val = Borderval, Size = 12 },
-                        new DocumentFormat.OpenXml.Wordprocessing.LeftBorder { Val = Borderval, Size = 12 },
-                        new DocumentFormat.OpenXml.Wordprocessing.RightBorder { Val = Borderval, Size = 12 },
-                        new InsideHorizontalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 },
-                        new InsideVerticalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 }
-                    )
-                );
-                table.AppendChild(tblProps);
-
-                var schemaCulumn = schemaTable[i].Columns;
-
-                for (int j = 0; j < schemaCulumn.Count + 2; j++)
-                {
-                    if (j == 0)
-                    {
-                        TableRow tr = new TableRow();
-                        TableCell cell1 = new TableCell(
-                            new Paragraph(
-                                new DocumentFormat.OpenXml.Wordprocessing.Run(
-                                    new DocumentFormat.OpenXml.Wordprocessing.Text($"Table"))));
-                        TableCell cell2 = new TableCell(
-                            new Paragraph(
-                                new DocumentFormat.OpenXml.Wordprocessing.Run(
-                                    new DocumentFormat.OpenXml.Wordprocessing.Text($"TableDescription"))));
-                        // Set cell properties
-                        TableCellProperties tcp = new TableCellProperties(
-                            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "2500" }
-                            );
-                        cell1.Append(tcp);
-                        tr.Append(cell1);
-                        tr.Append(cell2);
-                        table.Append(tr);
-                    }
-                    if (j == 1)
-                    {
-                        TableRow tr = new TableRow();
-                        TableCell cell1 = new TableCell(
-                            new Paragraph(
-                                new DocumentFormat.OpenXml.Wordprocessing.Run(
-                                    new DocumentFormat.OpenXml.Wordprocessing.Text($"{schemaTable[0].TableName}"))));
-                        TableCell cell2 = new TableCell(
-                            new Paragraph(
-                                new DocumentFormat.OpenXml.Wordprocessing.Run(
-                                    new DocumentFormat.OpenXml.Wordprocessing.Text($"{schemaTable[0].TableDescription}"))));
-                        // Set cell properties
-                        TableCellProperties tcp = new TableCellProperties(
-                            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "2500" }
-                            );
-                        cell1.Append(tcp);
-                        tr.Append(cell1);
-                        tr.Append(cell2);
-                        table.Append(tr);
-                    }
-                    else
-                    {
-                        TableRow tr = new TableRow();
-                        var c1 = new TableCell(new Paragraph(
-                            new DocumentFormat.OpenXml.Wordprocessing.Run(
-                                new DocumentFormat.OpenXml.Wordprocessing.Text($"ColumnName"))));
-                        var c2 = new TableCell(new Paragraph(
-                            new DocumentFormat.OpenXml.Wordprocessing.Run(
-                                new DocumentFormat.OpenXml.Wordprocessing.Text($"Sort"))));
-                        // Set cell properties
-                        TableCellProperties tcp = new TableCellProperties(
-                            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "410" }
-                        );
-                        c1.Append(tcp);
-                        tr.Append(c1);
-                        tr.Append(c2);
-                        table.Append(tr);
-                    }
-
-                }
-                // Add the table to the document body
-                mainPart.Document.Body.AppendChild(table);
-
-                Paragraph A = new Paragraph(new DocumentFormat.OpenXml.Wordprocessing.Run(new DocumentFormat.OpenXml.Wordprocessing.Text("")));
-                mainPart.Document.Body.AppendChild(A);
-
-            }
-            mainPart.Document.Save();
-        }
-
-        Process.Start(new ProcessStartInfo(destinationPath) { UseShellExecute = true });
+        ExportWordService.ExportWordSchema(Conn.Schema, connStrBox.Text);
     }
 
     private void downloadSchemaPerTableWordBtnClick(object sender, EventArgs e)
@@ -314,7 +182,7 @@ public partial class DbToolForm : Form
                 throw new Exception("請輸入連線字串");
             }
 
-            Conn = new ConnService(connStrBox.Text);
+            Conn = new ConnService(connStrBox.Text, SchemaName);
             Conn.SetTable();
             Conn.SetColumn();
 
@@ -538,7 +406,7 @@ public partial class DbToolForm : Form
         IsScaleShow.Checked = Settings.Default.IsScaleShow; // false 小位數
         IsColumnDescriptionShow.Checked = Settings.Default.IsColumnDescriptionShow; // true 欄描述
     }
-    
+
     /// <summary>
     /// 雙擊清除錯誤訊息
     /// </summary>
@@ -551,9 +419,8 @@ public partial class DbToolForm : Form
     {
         try
         {
-            Conn = new ConnService(connStrBox.Text);
+            Conn = new ConnService(connStrBox.Text, SchemaName);
             var Schema = Conn.Schema;
-
             var query = "select DB_NAME()";
             var result = Conn.GetValueStr(query);
             if (!string.IsNullOrEmpty(result))
@@ -763,6 +630,7 @@ END;";
     {
         try
         {
+            Conn = new ConnService(connStrBox.Text, SchemaName);
             Conn.SetTable();
         }
         catch (Exception es)
