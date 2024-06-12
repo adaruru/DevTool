@@ -517,10 +517,12 @@ public partial class DbToolForm : Form
         //處理所有預設值
         connStrBox.Text = Settings.Default.ConnString;
 
-        isSummary.Checked = Settings.Default.isSummary; // true 表描述
+        #region  ==genModel用==
+        isSummary.Checked = Settings.Default.isSummary; // true  表描述
         IsDisplay.Checked = Settings.Default.IsDisplay; // false 預設
         IsRequired.Checked = Settings.Default.IsRequired; // false 預設
         isKey.Checked = Settings.Default.isKey; // false 預設
+        #endregion  ==genModel用==
 
         IsTableDescriptionShow.Checked = Settings.Default.IsTableDescriptionShow; // true 表描述
 
