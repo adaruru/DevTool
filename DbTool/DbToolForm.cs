@@ -4,13 +4,11 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using DocumentFormat.OpenXml;
 using OfficeOpenXml;
-using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Reflection;
 using Properties = DbTool.Properties;
 using Settings = DbTool.Properties.Settings;
-using DocumentFormat.OpenXml.Spreadsheet;
 
 public partial class DbToolForm : Form
 {
@@ -456,6 +454,7 @@ public partial class DbToolForm : Form
     {
         if (isTemplate)
         {
+            //下載匯入欄描述 必須固定描述欄的位置
             FormControl.IsTableDescriptionShow = true;
             FormControl.IsColumnDescriptionShow = true;
             FormControl.IsSortShow = false;
@@ -470,6 +469,7 @@ public partial class DbToolForm : Form
         }
         else
         {
+            //下載資料庫規格 依照使用者設定
             FormControl.IsTableDescriptionShow = IsTableDescriptionShow.Checked;
             FormControl.IsColumnDescriptionShow = IsColumnDescriptionShow.Checked;
             FormControl.IsSortShow = IsSortShow.Checked;
@@ -536,10 +536,11 @@ public partial class DbToolForm : Form
         IsScaleShow.Checked = Settings.Default.IsScaleShow; // false 小位數
         IsColumnDescriptionShow.Checked = Settings.Default.IsColumnDescriptionShow; // true 欄描述
     }
-
-
-
-    private void errorTextEvent(object sender, EventArgs e)
+    
+    /// <summary>
+    /// 雙擊清除錯誤訊息
+    /// </summary>
+    private void errorTextDoubleClick(object sender, EventArgs e)
     {
         errorTextLbl.Text = "";
     }
@@ -850,10 +851,7 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
 
     }
 
-    private void tableSelectEvent(object sender, EventArgs e)
-    {
-    }
-
+    #region ==System Default Setting event==
     private void isSummaryChanged(object sender, EventArgs e)
     {
         Settings.Default.isSummary = isSummary.Checked;
@@ -943,4 +941,5 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
         Settings.Default.IsColumnDescriptionShow = IsColumnDescriptionShow.Checked;
         Settings.Default.Save();
     }
+    #endregion ==System Default Setting event==
 }
