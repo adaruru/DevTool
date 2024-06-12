@@ -60,6 +60,7 @@ public partial class DbToolForm : Form
         Conn = new ConnService(connStrBox.Text, SchemaName);
         Conn.SetTable();
         Conn.SetColumn();
+        SetControl(isTemplate: false);
         ExportWordService.ExportWordSchema(Conn.Schema, connStrBox.Text);
     }
 

@@ -34,7 +34,7 @@ public class ExportWordService
                {
                    ["Title"] = $"{Schema.SchemaName}資料庫規格",
                    ["PubDate"] = $"{DateTime.Now:yyyy年MM月dd日HH:mm:ss}",
-                   ["Source"] = $"連線字串 : {connStrBox}"
+                   ["Source"] = $"{connStrBox}"
                });
 
         string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), $"{Schema.SchemaName}{DateTime.Now:yyyyMMddHHmmss}.docx");
@@ -44,6 +44,7 @@ public class ExportWordService
         using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(destinationPath, true))
         {
             MainDocumentPart mainPart = wordDoc.MainDocumentPart;
+            AddHeadingStyles(mainPart);
 
             // 建立一個新的段落，用於產生一個空行
             Paragraph emptyParagraph = new Paragraph(new Run(new Text("")));
@@ -54,6 +55,10 @@ public class ExportWordService
 
             for (int i = 0; i < schemaTable.Count; i++)
             {
+                Paragraph p1 = new Paragraph(new Run(new Text($"TableName : {schemaTable[i].TableName}  {schemaTable[i].TableDescription}")));
+                SetStyle(p1, "Heading1");
+                mainPart.Document.Body.AppendChild(p1);
+
                 WordTable table = new WordTable();
                 // Set table properties
                 TableProperties tblProps = new TableProperties(
@@ -69,69 +74,18 @@ public class ExportWordService
                 );
                 table.AppendChild(tblProps);
 
+                //var r1 = GetTableRow();
+                //table.Append(r1);
+                //var r2 = GetTableDescriptionRow(schemaTable[i]);
+                //table.Append(r2);
+                var r3 = GetColumnHeaderRow();
+                table.Append(r3);
+
                 var schemaCulumn = schemaTable[i].Columns;
-
-                for (int j = 0; j < schemaCulumn.Count + 2; j++)
+                for (int j = 0; j < schemaCulumn.Count; j++)
                 {
-                    if (j == 0)
-                    {
-                        TableRow tr = new TableRow();
-                        TableCell cell1 = new TableCell(
-                            new Paragraph(
-                                new Run(
-                                    new Text($"Table"))));
-                        TableCell cell2 = new TableCell(
-                            new Paragraph(
-                                new Run(
-                                    new Text($"TableDescription"))));
-                        // Set cell properties
-                        TableCellProperties tcp = new TableCellProperties(
-                            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "2500" }
-                            );
-                        cell1.Append(tcp);
-                        tr.Append(cell1);
-                        tr.Append(cell2);
-                        table.Append(tr);
-                    }
-                    if (j == 1)
-                    {
-                        TableRow tr = new TableRow();
-                        TableCell cell1 = new TableCell(
-                            new Paragraph(
-                                new Run(
-                                    new Text($"{schemaTable[0].TableName}"))));
-                        TableCell cell2 = new TableCell(
-                            new Paragraph(
-                                new Run(
-                                    new Text($"{schemaTable[0].TableDescription}"))));
-                        // Set cell properties
-                        TableCellProperties tcp = new TableCellProperties(
-                            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "2500" }
-                            );
-                        cell1.Append(tcp);
-                        tr.Append(cell1);
-                        tr.Append(cell2);
-                        table.Append(tr);
-                    }
-                    else
-                    {
-                        TableRow tr = new TableRow();
-                        var c1 = new TableCell(new Paragraph(
-                            new Run(
-                                new Text($"ColumnName"))));
-                        var c2 = new TableCell(new Paragraph(
-                            new Run(
-                                new Text($"Sort"))));
-                        // Set cell properties
-                        TableCellProperties tcp = new TableCellProperties(
-                            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "410" }
-                        );
-                        c1.Append(tcp);
-                        tr.Append(c1);
-                        tr.Append(c2);
-                        table.Append(tr);
-                    }
-
+                    var tr = GetColumnValueRow(schemaCulumn[j]);
+                    table.Append(tr);
                 }
                 // Add the table to the document body
                 mainPart.Document.Body.AppendChild(table);
@@ -144,6 +98,183 @@ public class ExportWordService
         }
 
         Process.Start(new ProcessStartInfo(destinationPath) { UseShellExecute = true });
+    }
+    public TableRow GetTableRow()
+    {
+        var tr = new TableRow();
+        var c1 = new TableCell(
+            new Paragraph(new Run(new Text($"TableName"))));
+        var c2 = new TableCell(
+            new Paragraph(new Run(new Text($"TableDescription"))));
+        // Set cell properties
+        var tcp1 = new TableCellProperties(
+            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "2500" }
+            );
+        c1.Append(tcp1);
+        tr.Append(c1);
+        tr.Append(c2);
+        return tr;
+    }
+    public TableRow GetTableDescriptionRow(Table schemaTable)
+    {
+        var tr = new TableRow();
+        var c3 = new TableCell(
+            new Paragraph(
+                new Run(
+                    new Text($"{schemaTable.TableName}"))));
+        var c4 = new TableCell(
+            new Paragraph(
+                new Run(
+                    new Text($"{schemaTable.TableDescription}"))));
+        // Set cell properties
+        var tcp2 = new TableCellProperties(
+            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "2500" }
+            );
+        c3.Append(tcp2);
+        tr.Append(c3);
+        tr.Append(c4);
+        return tr;
+    }
+    public TableRow GetColumnHeaderRow()
+    {
+        TableRow tr = new TableRow();
+        var cells = new List<TableCell>();
+        if (FormControl.IsSortShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text("Sort"))));
+            cells.Add(c);
+        }
+        if (FormControl.IsDataTypeShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text("DataType"))));
+            cells.Add(c);
+        }
+        if (FormControl.IsDefaultValueShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text("DefaultValue"))));
+            cells.Add(c);
+        }
+        if (FormControl.IsIdentityShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text("Identity"))));
+            cells.Add(c);
+        }
+        if (FormControl.IsPrimaryKeyShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text("PrimaryKey"))));
+            cells.Add(c);
+        }
+        if (FormControl.IsNotNullShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text("NotNull"))));
+            cells.Add(c);
+        }
+        if (FormControl.IsLengthShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text("Length"))));
+            cells.Add(c);
+        }
+        if (FormControl.IsPrecisionShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text("Precision"))));
+            cells.Add(c);
+        }
+        if (FormControl.IsScaleShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text("Scale"))));
+            cells.Add(c);
+        }
+        if (FormControl.IsColumnDescriptionShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text("Description"))));
+            cells.Add(c);
+        }
+        var count = cells.Count() == 0 ? 1 : cells.Count();
+        var width = 5000 / count;
+        // Set cell properties
+        TableCellProperties tcp = new TableCellProperties(
+            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = width.ToString() }
+        );
+        for (int ci = 0; ci < cells.Count; ci++)
+        {
+            if (ci == 0)
+            {
+                cells[ci].AppendChild(tcp);
+            }
+            tr.Append(cells[ci]);
+        }
+        return tr;
+    }
+    public TableRow GetColumnValueRow(Column column)
+    {
+        TableRow tr = new TableRow();
+        var cells = new List<TableCell>();
+
+        if (FormControl.IsSortShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text(column.Sort))));
+            cells.Add(c);
+        }
+        if (FormControl.IsDataTypeShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text(column.DataType))));
+            cells.Add(c);
+        }
+        if (FormControl.IsDefaultValueShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text(column.DefaultValue))));
+            cells.Add(c);
+        }
+        if (FormControl.IsIdentityShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text(column.Identity))));
+            cells.Add(c);
+        }
+        if (FormControl.IsPrimaryKeyShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text(column.PrimaryKey))));
+            cells.Add(c);
+        }
+        if (FormControl.IsNotNullShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text(column.NotNull))));
+            cells.Add(c);
+        }
+        if (FormControl.IsLengthShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text(column.Length))));
+            cells.Add(c);
+        }
+        if (FormControl.IsPrecisionShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text(column.Precision))));
+            cells.Add(c);
+        }
+        if (FormControl.IsScaleShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text(column.Scale))));
+            cells.Add(c);
+        }
+        if (FormControl.IsColumnDescriptionShow)
+        {
+            var c = new TableCell(new Paragraph(new Run(new Text(column.ColumnDescription))));
+            cells.Add(c);
+        }
+        var count = cells.Count() == 0 ? 1 : cells.Count();
+        var width = 5000 / count;
+        // Set cell properties
+        TableCellProperties tcp = new TableCellProperties(
+            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = width.ToString() }
+        );
+        for (int ci = 0; ci < cells.Count; ci++)
+        {
+            if (ci == 0)
+            {
+                cells[ci].AppendChild(tcp);
+            }
+            tr.Append(cells[ci]);
+        }
+        return tr;
     }
 
     public void ExportWordSchemaPerTable(Schema Schema, string connStrBox)
@@ -247,4 +378,59 @@ public class ExportWordService
 
         Process.Start(new ProcessStartInfo(destinationPath) { UseShellExecute = true });
     }
+
+    private void SetStyle(Paragraph paragraph, string styleId)
+    {
+        ParagraphProperties pPr = new ParagraphProperties();
+        ParagraphStyleId paragraphStyleId = new ParagraphStyleId() { Val = styleId };
+        pPr.Append(paragraphStyleId);
+        paragraph.PrependChild(pPr);
+    }
+
+    private void AddHeadingStyles(MainDocumentPart mainPart)
+    {
+        StyleDefinitionsPart styleDefinitionsPart = mainPart.StyleDefinitionsPart;
+        if (styleDefinitionsPart == null)
+        {
+            styleDefinitionsPart = mainPart.AddNewPart<StyleDefinitionsPart>();
+            styleDefinitionsPart.Styles = new Styles();
+        }
+
+        Styles styles = styleDefinitionsPart.Styles;
+
+        // 添加 Heading1 样式
+        Style heading1 = new Style()
+        {
+            Type = StyleValues.Paragraph,
+            StyleId = "Heading1",
+            CustomStyle = true
+        };
+        heading1.Append(new StyleName() { Val = "Heading 1" });
+        heading1.Append(new BasedOn() { Val = "Normal" });
+        heading1.Append(new NextParagraphStyle() { Val = "Normal" });
+        heading1.Append(new UIPriority() { Val = 9 });
+        heading1.Append(new PrimaryStyle());
+        heading1.Append(new StyleParagraphProperties(
+            new SpacingBetweenLines() { Before = "240", After = "60" },
+            new OutlineLevel() { Val = 1 }));
+        styles.Append(heading1);
+
+        // 添加 Heading2 样式
+        Style heading2 = new Style()
+        {
+            Type = StyleValues.Paragraph,
+            StyleId = "Heading2",
+            CustomStyle = true
+        };
+        heading2.Append(new StyleName() { Val = "Heading 2" });
+        heading2.Append(new BasedOn() { Val = "Normal" });
+        heading2.Append(new NextParagraphStyle() { Val = "Normal" });
+        heading2.Append(new UIPriority() { Val = 9 });
+        heading2.Append(new PrimaryStyle());
+        heading2.Append(new StyleParagraphProperties(
+            new SpacingBetweenLines() { Before = "240", After = "60" },
+            new OutlineLevel() { Val = 2 }));
+        styles.Append(heading2);
+    }
+
 }
