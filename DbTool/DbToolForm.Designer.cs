@@ -42,6 +42,8 @@ partial class DbToolForm
         IsDisplay = new CheckBox();
         modelGenBtn = new Button();
         schmaTool = new TabPage();
+        downloadSchemaWordPerTableBtn = new Button();
+        isWordWithToc = new CheckBox();
         downloadSchemaWordBtn = new Button();
         ImportDescription = new Button();
         IsScaleShow = new CheckBox();
@@ -59,7 +61,6 @@ partial class DbToolForm
         settingTab = new TabPage();
         resetBtn = new Button();
         errorTextLbl = new TextBox();
-        isWordWithToc = new CheckBox();
         tabControl1.SuspendLayout();
         connTool.SuspendLayout();
         modelTool.SuspendLayout();
@@ -80,7 +81,7 @@ partial class DbToolForm
         // 
         // downloadSchemaBtn
         // 
-        downloadSchemaBtn.Location = new Point(15, 102);
+        downloadSchemaBtn.Location = new Point(15, 95);
         downloadSchemaBtn.Margin = new Padding(2);
         downloadSchemaBtn.Name = "downloadSchemaBtn";
         downloadSchemaBtn.Size = new Size(170, 28);
@@ -129,9 +130,9 @@ partial class DbToolForm
         tabControl1.Controls.Add(settingTab);
         tabControl1.Location = new Point(0, 2);
         tabControl1.Margin = new Padding(2);
-        tabControl1.Name = "分頁切換";
+        tabControl1.Name = "tabControl1";
         tabControl1.SelectedIndex = 0;
-        tabControl1.Size = new Size(536, 244);
+        tabControl1.Size = new Size(536, 255);
         tabControl1.TabIndex = 7;
         tabControl1.SelectedIndexChanged += tabControlChanged;
         // 
@@ -145,7 +146,7 @@ partial class DbToolForm
         connTool.Margin = new Padding(2);
         connTool.Name = "connTool";
         connTool.Padding = new Padding(2);
-        connTool.Size = new Size(528, 212);
+        connTool.Size = new Size(528, 223);
         connTool.TabIndex = 0;
         connTool.Text = "資料庫連線";
         connTool.UseVisualStyleBackColor = true;
@@ -161,7 +162,7 @@ partial class DbToolForm
         modelTool.Margin = new Padding(2);
         modelTool.Name = "modelTool";
         modelTool.Padding = new Padding(2);
-        modelTool.Size = new Size(528, 212);
+        modelTool.Size = new Size(528, 223);
         modelTool.TabIndex = 1;
         modelTool.Text = "model產檔";
         modelTool.UseVisualStyleBackColor = true;
@@ -227,6 +228,7 @@ partial class DbToolForm
         // 
         // schmaTool
         // 
+        schmaTool.Controls.Add(downloadSchemaWordPerTableBtn);
         schmaTool.Controls.Add(isWordWithToc);
         schmaTool.Controls.Add(downloadSchemaWordBtn);
         schmaTool.Controls.Add(ImportDescription);
@@ -247,14 +249,37 @@ partial class DbToolForm
         schmaTool.Margin = new Padding(2);
         schmaTool.Name = "schmaTool";
         schmaTool.Padding = new Padding(2);
-        schmaTool.Size = new Size(528, 212);
+        schmaTool.Size = new Size(528, 223);
         schmaTool.TabIndex = 2;
         schmaTool.Text = "資料庫規格";
         schmaTool.UseVisualStyleBackColor = true;
         // 
+        // downloadSchemaWordPerTableBtn
+        // 
+        downloadSchemaWordPerTableBtn.Location = new Point(15, 157);
+        downloadSchemaWordPerTableBtn.Margin = new Padding(2);
+        downloadSchemaWordPerTableBtn.Name = "downloadSchemaWordPerTableBtn";
+        downloadSchemaWordPerTableBtn.Size = new Size(243, 28);
+        downloadSchemaWordPerTableBtn.TabIndex = 17;
+        downloadSchemaWordPerTableBtn.Text = "下載資料庫規格 Word (一表一檔)";
+        downloadSchemaWordPerTableBtn.UseVisualStyleBackColor = true;
+        downloadSchemaWordPerTableBtn.Click += downloadSchemaWordPerTableBtnClick;
+        // 
+        // isWordWithToc
+        // 
+        isWordWithToc.AutoSize = true;
+        isWordWithToc.Location = new Point(17, 189);
+        isWordWithToc.Margin = new Padding(2);
+        isWordWithToc.Name = "isWordWithToc";
+        isWordWithToc.Size = new Size(146, 23);
+        isWordWithToc.TabIndex = 16;
+        isWordWithToc.Text = "Word是否有目錄";
+        isWordWithToc.UseVisualStyleBackColor = true;
+        isWordWithToc.CheckedChanged += isWordWithTocChanged;
+        // 
         // downloadSchemaWordBtn
         // 
-        downloadSchemaWordBtn.Location = new Point(16, 144);
+        downloadSchemaWordBtn.Location = new Point(16, 126);
         downloadSchemaWordBtn.Margin = new Padding(2);
         downloadSchemaWordBtn.Name = "downloadSchemaWordBtn";
         downloadSchemaWordBtn.Size = new Size(170, 28);
@@ -265,7 +290,7 @@ partial class DbToolForm
         // 
         // ImportDescription
         // 
-        ImportDescription.Location = new Point(265, 144);
+        ImportDescription.Location = new Point(265, 126);
         ImportDescription.Margin = new Padding(2);
         ImportDescription.Name = "ImportDescription";
         ImportDescription.Size = new Size(92, 28);
@@ -420,7 +445,7 @@ partial class DbToolForm
         // 
         // downloadTemplateBtn
         // 
-        downloadTemplateBtn.Location = new Point(265, 102);
+        downloadTemplateBtn.Location = new Point(265, 95);
         downloadTemplateBtn.Margin = new Padding(2);
         downloadTemplateBtn.Name = "downloadTemplateBtn";
         downloadTemplateBtn.Size = new Size(155, 28);
@@ -435,7 +460,7 @@ partial class DbToolForm
         settingTab.Location = new Point(4, 28);
         settingTab.Name = "settingTab";
         settingTab.Padding = new Padding(3);
-        settingTab.Size = new Size(528, 212);
+        settingTab.Size = new Size(528, 223);
         settingTab.TabIndex = 3;
         settingTab.Text = "設定";
         settingTab.UseVisualStyleBackColor = true;
@@ -455,7 +480,7 @@ partial class DbToolForm
         // 
         errorTextLbl.BackColor = SystemColors.Control;
         errorTextLbl.BorderStyle = BorderStyle.None;
-        errorTextLbl.Location = new Point(3, 248);
+        errorTextLbl.Location = new Point(7, 255);
         errorTextLbl.Margin = new Padding(2);
         errorTextLbl.Multiline = true;
         errorTextLbl.Name = "errorTextLbl";
@@ -463,18 +488,6 @@ partial class DbToolForm
         errorTextLbl.Size = new Size(522, 60);
         errorTextLbl.TabIndex = 8;
         errorTextLbl.DoubleClick += errorTextDoubleClick;
-        // 
-        // isWordWithToc
-        // 
-        isWordWithToc.AutoSize = true;
-        isWordWithToc.Location = new Point(16, 176);
-        isWordWithToc.Margin = new Padding(2);
-        isWordWithToc.Name = "isWordWithToc";
-        isWordWithToc.Size = new Size(146, 23);
-        isWordWithToc.TabIndex = 16;
-        isWordWithToc.Text = "Word是否有目錄";
-        isWordWithToc.UseVisualStyleBackColor = true;
-        isWordWithToc.CheckedChanged += isWordWithTocChanged;
         // 
         // DbToolForm
         // 
@@ -535,4 +548,5 @@ partial class DbToolForm
     private Button resetBtn;
     private Button downloadSchemaWordBtn;
     private CheckBox isWordWithToc;
+    private Button downloadSchemaWordPerTableBtn;
 }

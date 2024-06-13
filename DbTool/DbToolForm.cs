@@ -55,7 +55,6 @@ public partial class DbToolForm : Form
         {
             throw new Exception("請輸入連線字串");
         }
-
         Conn = new ConnService(connStrBox.Text, SchemaName);
         Conn.SetTable();
         Conn.SetColumn();
@@ -64,14 +63,13 @@ public partial class DbToolForm : Form
         errorTextLbl.Text = $"檔案產製完成儲存於{destinationPath}";
     }
 
-    private void downloadSchemaPerTableWordBtnClick(object sender, EventArgs e)
+    private void downloadSchemaWordPerTableBtnClick(object sender, EventArgs e)
     {
         errorTextLbl.Text = "檔案產製中請稍後";
         if (string.IsNullOrEmpty(connStrBox.Text))
         {
             throw new Exception("請輸入連線字串");
         }
-
         Conn = new ConnService(connStrBox.Text, SchemaName);
         Conn.SetTable();
         Conn.SetColumn();
