@@ -10,7 +10,6 @@ public class ExportWordService
 {
     public string ExportWordSchema(Schema Schema, string connStrBox)
     {
-        //use template
         string resourceName = FormControl.isWordWithToc ? "DbTool.Template.SchemaToc.docx" : "DbTool.Template.Schema.docx";
 
         Assembly assembly = Assembly.GetExecutingAssembly();
@@ -40,19 +39,14 @@ public class ExportWordService
         string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), $"{Schema.SchemaName}{DateTime.Now:yyyyMMddHHmmss}.docx");
         File.WriteAllBytes(destinationPath, docxBytes);
 
-        //新建 using (WordprocessingDocument wordDoc = WordprocessingDocument.Create(filePath, WordprocessingDocumentType.Document))
+        //附於現有檔案
         using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(destinationPath, true))
         {
             MainDocumentPart mainPart = wordDoc.MainDocumentPart;
             AddHeadingStyles(mainPart);
 
-            // 建立一個新的段落，用於產生一個空行
-            Paragraph emptyParagraph = new Paragraph(new Run(new Text("")));
-            mainPart.Document.Body.AppendChild(emptyParagraph);
-
-            var Borderval = new EnumValue<BorderValues>(BorderValues.Single);
+            var BorderSingle = BorderValues.Single;
             var schemaTable = Schema.Tables;
-
             for (int i = 0; i < schemaTable.Count; i++)
             {
                 Paragraph p1 = new Paragraph(new Run(new Text($"{schemaTable[i].TableName}  {schemaTable[i].TableDescription}")));
@@ -64,12 +58,13 @@ public class ExportWordService
                 TableProperties tblProps = new TableProperties(
                     new TableWidth { Width = "5000", Type = TableWidthUnitValues.Pct },
                     new TableBorders(
-                        new TopBorder { Val = Borderval, Size = 12 },
-                        new BottomBorder { Val = Borderval, Size = 12 },
-                        new LeftBorder { Val = Borderval, Size = 12 },
-                        new RightBorder { Val = Borderval, Size = 12 },
-                        new InsideHorizontalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 },
-                        new InsideVerticalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 12 }
+                        new TopBorder { Val = BorderSingle, Size = 1 },
+                        new BottomBorder { Val = BorderSingle, Size = 1 },
+                        new LeftBorder { Val = BorderSingle, Size = 1 },
+                        new RightBorder { Val = BorderSingle, Size = 1 },
+                        new InsideHorizontalBorder { Val = BorderSingle, Size = 1 },
+                        new InsideVerticalBorder { Val = BorderSingle, Size = 1 },
+                        new FontSize { Val = "20" }
                     )
                 );
                 table.AppendChild(tblProps);
@@ -81,6 +76,8 @@ public class ExportWordService
                 var r3 = GetColumnHeaderRow();
                 table.Append(r3);
 
+
+
                 var schemaCulumn = schemaTable[i].Columns;
                 for (int j = 0; j < schemaCulumn.Count; j++)
                 {
@@ -89,193 +86,13 @@ public class ExportWordService
                 }
                 // Add the table to the document body
                 mainPart.Document.Body.AppendChild(table);
-
-                Paragraph A = new Paragraph(new Run(new Text("")));
-                mainPart.Document.Body.AppendChild(A);
-
+                AddNewLine(mainPart);
             }
             mainPart.Document.Save();
         }
 
         Process.Start(new ProcessStartInfo(destinationPath) { UseShellExecute = true });
         return destinationPath;
-    }
-    public TableRow GetTableRow()
-    {
-        var tr = new TableRow();
-        var c1 = new TableCell(
-            new Paragraph(new Run(new Text($"TableName"))));
-        var c2 = new TableCell(
-            new Paragraph(new Run(new Text($"TableDescription"))));
-        // Set cell properties
-        var tcp1 = new TableCellProperties(
-            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "2500" }
-            );
-        c1.Append(tcp1);
-        tr.Append(c1);
-        tr.Append(c2);
-        return tr;
-    }
-    public TableRow GetTableDescriptionRow(Table schemaTable)
-    {
-        var tr = new TableRow();
-        var c3 = new TableCell(
-            new Paragraph(
-                new Run(
-                    new Text($"{schemaTable.TableName}"))));
-        var c4 = new TableCell(
-            new Paragraph(
-                new Run(
-                    new Text($"{schemaTable.TableDescription}"))));
-        // Set cell properties
-        var tcp2 = new TableCellProperties(
-            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "2500" }
-            );
-        c3.Append(tcp2);
-        tr.Append(c3);
-        tr.Append(c4);
-        return tr;
-    }
-    public TableRow GetColumnHeaderRow()
-    {
-        TableRow tr = new TableRow();
-        var cells = new List<TableCell>();
-        if (FormControl.IsSortShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text("Sort"))));
-            cells.Add(c);
-        }
-        if (FormControl.IsDataTypeShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text("DataType"))));
-            cells.Add(c);
-        }
-        if (FormControl.IsDefaultValueShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text("DefaultValue"))));
-            cells.Add(c);
-        }
-        if (FormControl.IsIdentityShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text("Identity"))));
-            cells.Add(c);
-        }
-        if (FormControl.IsPrimaryKeyShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text("PrimaryKey"))));
-            cells.Add(c);
-        }
-        if (FormControl.IsNotNullShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text("NotNull"))));
-            cells.Add(c);
-        }
-        if (FormControl.IsLengthShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text("Length"))));
-            cells.Add(c);
-        }
-        if (FormControl.IsPrecisionShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text("Precision"))));
-            cells.Add(c);
-        }
-        if (FormControl.IsScaleShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text("Scale"))));
-            cells.Add(c);
-        }
-        if (FormControl.IsColumnDescriptionShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text("Description"))));
-            cells.Add(c);
-        }
-        var count = cells.Count() == 0 ? 1 : cells.Count();
-        var width = 5000 / count;
-        // Set cell properties
-        TableCellProperties tcp = new TableCellProperties(
-            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = width.ToString() }
-        );
-        for (int ci = 0; ci < cells.Count; ci++)
-        {
-            if (ci == 0)
-            {
-                cells[ci].AppendChild(tcp);
-            }
-            tr.Append(cells[ci]);
-        }
-        return tr;
-    }
-    public TableRow GetColumnValueRow(Column column)
-    {
-        TableRow tr = new TableRow();
-        var cells = new List<TableCell>();
-
-        if (FormControl.IsSortShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text(column.Sort))));
-            cells.Add(c);
-        }
-        if (FormControl.IsDataTypeShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text(column.DataType))));
-            cells.Add(c);
-        }
-        if (FormControl.IsDefaultValueShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text(column.DefaultValue))));
-            cells.Add(c);
-        }
-        if (FormControl.IsIdentityShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text(column.Identity))));
-            cells.Add(c);
-        }
-        if (FormControl.IsPrimaryKeyShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text(column.PrimaryKey))));
-            cells.Add(c);
-        }
-        if (FormControl.IsNotNullShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text(column.NotNull))));
-            cells.Add(c);
-        }
-        if (FormControl.IsLengthShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text(column.Length))));
-            cells.Add(c);
-        }
-        if (FormControl.IsPrecisionShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text(column.Precision))));
-            cells.Add(c);
-        }
-        if (FormControl.IsScaleShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text(column.Scale))));
-            cells.Add(c);
-        }
-        if (FormControl.IsColumnDescriptionShow)
-        {
-            var c = new TableCell(new Paragraph(new Run(new Text(column.ColumnDescription))));
-            cells.Add(c);
-        }
-        var count = cells.Count() == 0 ? 1 : cells.Count();
-        var width = 5000 / count;
-        // Set cell properties
-        TableCellProperties tcp = new TableCellProperties(
-            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = width.ToString() }
-        );
-        for (int ci = 0; ci < cells.Count; ci++)
-        {
-            if (ci == 0)
-            {
-                cells[ci].AppendChild(tcp);
-            }
-            tr.Append(cells[ci]);
-        }
-        return tr;
     }
 
     public void ExportWordSchemaPerTable(Schema Schema, string connStrBox)
@@ -377,6 +194,188 @@ public class ExportWordService
         Process.Start(new ProcessStartInfo(destinationPath) { UseShellExecute = true });
     }
 
+    /// <summary>
+    /// 新建wrod參考
+    /// </summary>
+    public void UseWord()
+    {
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "test.docx");
+        //新建檔案
+        using (WordprocessingDocument wordDoc = WordprocessingDocument.Create(filePath, WordprocessingDocumentType.Document))
+        {
+            // Add a main document part
+            MainDocumentPart mainPart = wordDoc.AddMainDocumentPart();
+            mainPart.Document = new Document();
+            Body body = mainPart.Document.AppendChild(new Body());
+            WordTable table = new WordTable();
+            var r1 = GetTableRow();
+            table.Append(r1);
+            mainPart.Document.Body.AppendChild(table);
+            mainPart.Document.Save();
+        }
+    }
+    public TableRow GetTableRow()
+    {
+        var tr = new TableRow();
+        var c1 = GetCellFont12("TableName");
+        var c2 = GetCellFont12("TableDescription");
+        // Set cell properties
+        var tcp1 = new TableCellProperties(
+            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "2500" }
+            );
+        c1.Append(tcp1);
+        tr.Append(c1);
+        tr.Append(c2);
+        return tr;
+    }
+    public TableRow GetTableDescriptionRow(Table schemaTable)
+    {
+        var tr = new TableRow();
+        var c3 = GetCellFont12(schemaTable.TableName);
+        var c4 = GetCellFont12(schemaTable.TableDescription);
+        // Set cell properties
+        var tcp2 = new TableCellProperties(
+            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "2500" }
+            );
+        c3.Append(tcp2);
+        tr.Append(c3);
+        tr.Append(c4);
+        return tr;
+    }
+    public TableRow GetColumnHeaderRow()
+    {
+        TableRow tr = new TableRow();
+        var cells = new List<TableCell>();
+        if (FormControl.IsSortShow)
+        {
+            cells.Add(GetCellFont10FilledColor("Sort"));
+        }
+        if (FormControl.IsDataTypeShow)
+        {
+            cells.Add(GetCellFont10FilledColor("DataType"));
+        }
+        if (FormControl.IsDefaultValueShow)
+        {
+            cells.Add(GetCellFont10FilledColor("DefaultValue"));
+        }
+        if (FormControl.IsIdentityShow)
+        {
+            cells.Add(GetCellFont10FilledColor("Identity"));
+        }
+        if (FormControl.IsPrimaryKeyShow)
+        {
+            cells.Add(GetCellFont10FilledColor("PrimaryKey"));
+        }
+        if (FormControl.IsNotNullShow)
+        {
+            cells.Add(GetCellFont10FilledColor("NotNull"));
+        }
+        if (FormControl.IsLengthShow)
+        {
+            cells.Add(GetCellFont10FilledColor("Length"));
+        }
+        if (FormControl.IsPrecisionShow)
+        {
+            cells.Add(GetCellFont10FilledColor("Precision"));
+        }
+        if (FormControl.IsScaleShow)
+        {
+            cells.Add(GetCellFont10FilledColor("Scale"));
+        }
+        if (FormControl.IsColumnDescriptionShow)
+        {
+            cells.Add(GetCellFont10FilledColor("ColumnDescription"));
+        }
+        for (int ci = 0; ci < cells.Count; ci++)
+        {
+            tr.Append(cells[ci]);
+        }
+        return tr;
+    }
+    public TableRow GetColumnValueRow(Column column)
+    {
+        TableRow tr = new TableRow();
+        var cells = new List<TableCell>();
+
+        if (FormControl.IsSortShow)
+        {
+            cells.Add(GetCellFont10(column.Sort));
+        }
+        if (FormControl.IsDataTypeShow)
+        {
+            cells.Add(GetCellFont10(column.DataType));
+        }
+        if (FormControl.IsDefaultValueShow)
+        {
+            cells.Add(GetCellFont10(column.DefaultValue));
+        }
+        if (FormControl.IsIdentityShow)
+        {
+            cells.Add(GetCellFont10(column.Identity));
+        }
+        if (FormControl.IsPrimaryKeyShow)
+        {
+            cells.Add(GetCellFont10(column.PrimaryKey));
+        }
+        if (FormControl.IsNotNullShow)
+        {
+            cells.Add(GetCellFont10(column.NotNull));
+        }
+        if (FormControl.IsLengthShow)
+        {
+            cells.Add(GetCellFont10(column.Length));
+        }
+        if (FormControl.IsPrecisionShow)
+        {
+            cells.Add(GetCellFont10(column.Precision));
+        }
+        if (FormControl.IsScaleShow)
+        {
+            cells.Add(GetCellFont10(column.Scale));
+        }
+        if (FormControl.IsColumnDescriptionShow)
+        {
+            cells.Add(GetCellFont10(column.ColumnDescription));
+        }
+        for (int ci = 0; ci < cells.Count; ci++)
+        {
+            tr.Append(cells[ci]);
+        }
+        return tr;
+    }
+    public TableCell GetCellFont10FilledColor(string text)
+    {
+        var run = new Run(new Text(text));
+        run.RunProperties = new RunProperties(new FontSize { Val = "20" });
+        var paragraph = new Paragraph(run);
+        var cell = new TableCell(paragraph);
+
+        // Set cell properties
+        TableCellProperties tcp = new TableCellProperties(
+            new Shading()
+            {
+                Color = "auto",
+                Fill = "#82B3D4",//blue //"D9EAD3", green
+                Val = ShadingPatternValues.Clear
+            });
+        cell.Append(tcp);
+        return cell;
+    }
+
+    public TableCell GetCellFont10(string text)
+    {
+        var run = new Run(new Text(text));
+        run.RunProperties = new RunProperties(new FontSize { Val = "20" });
+        var paragraph = new Paragraph(run);
+        return new TableCell(paragraph);
+    }
+    public TableCell GetCellFont12(string text)
+    {
+        var run = new Run(new Text(text));
+        run.RunProperties = new RunProperties(new FontSize { Val = "24" });
+        var paragraph = new Paragraph(run);
+        return new TableCell(paragraph);
+    }
     private void SetStyle(Paragraph paragraph, string styleId)
     {
         ParagraphProperties pPr = new ParagraphProperties();
@@ -429,5 +428,10 @@ public class ExportWordService
             new SpacingBetweenLines() { Before = "240", After = "60" },
             new OutlineLevel() { Val = 2 }));
         styles.Append(heading2);
+    }
+    private void AddNewLine(MainDocumentPart mainPart)
+    {
+        Paragraph emptyParagraph = new Paragraph(new Run(new Text("")));
+        mainPart.Document.Body.AppendChild(emptyParagraph);
     }
 }
