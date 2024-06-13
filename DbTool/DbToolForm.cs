@@ -60,7 +60,6 @@ public partial class DbToolForm : Form
         Conn.SetTable();
         Conn.SetColumn();
         SetControl(isTemplate: false);
-        ExportWordService.ExportWordSchema(Conn.Schema, connStrBox.Text);
         var destinationPath = ExportWordService.ExportWordSchema(Conn.Schema, connStrBox.Text);
         errorTextLbl.Text = $"檔案產製完成儲存於{destinationPath}";
     }
@@ -76,6 +75,8 @@ public partial class DbToolForm : Form
         Conn = new ConnService(connStrBox.Text, SchemaName);
         Conn.SetTable();
         Conn.SetColumn();
+        var destinationPath = ExportWordService.ExportWordSchemaPerTable(Conn.Schema, connStrBox.Text);
+        errorTextLbl.Text = $"檔案產製完成儲存於{destinationPath}";
     }
 
     /// <summary>
@@ -270,17 +271,12 @@ public partial class DbToolForm : Form
         Settings.Default.Save();
     }
 
-    private void label2_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    private void DbToolForm_Load(object sender, EventArgs e)
+    private void DbToolFormLoad(object sender, EventArgs e)
     {
         LoadSettings();
     }
 
-    private void resetBtn_Click(object sender, EventArgs e)
+    private void resetBtnClick(object sender, EventArgs e)
     {
         var result = MessageBox.Show("你確定要重置所有設定嗎", "確認重置", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
         if (result == DialogResult.Yes)
@@ -520,7 +516,10 @@ END;";
         }
     }
 
-    private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+    /// <summary>
+    /// 分頁切換檢查是否有資料庫連線
+    /// </summary>
+    private void tabControlChanged(object sender, EventArgs e)
     {
         try
         {
@@ -539,7 +538,9 @@ END;";
         }
     }
 
-
+    /// <summary>
+    /// 選table 建 model 事件 暫留
+    /// </summary>
     private void modelToolSwitchEvent(object sender, EventArgs e)
     {
         try

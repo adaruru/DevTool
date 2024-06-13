@@ -129,11 +129,11 @@ partial class DbToolForm
         tabControl1.Controls.Add(settingTab);
         tabControl1.Location = new Point(0, 2);
         tabControl1.Margin = new Padding(2);
-        tabControl1.Name = "tabControl1";
+        tabControl1.Name = "分頁切換";
         tabControl1.SelectedIndex = 0;
         tabControl1.Size = new Size(536, 244);
         tabControl1.TabIndex = 7;
-        tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged;
+        tabControl1.SelectedIndexChanged += tabControlChanged;
         // 
         // connTool
         // 
@@ -449,7 +449,7 @@ partial class DbToolForm
         resetBtn.TabIndex = 15;
         resetBtn.Text = "重置設定";
         resetBtn.UseVisualStyleBackColor = true;
-        resetBtn.Click += resetBtn_Click;
+        resetBtn.Click += resetBtnClick;
         // 
         // errorTextLbl
         // 
@@ -486,7 +486,7 @@ partial class DbToolForm
         Margin = new Padding(2);
         Name = "DbToolForm";
         Text = "資料庫工具";
-        Load += DbToolForm_Load;
+        Load += DbToolFormLoad;
         tabControl1.ResumeLayout(false);
         connTool.ResumeLayout(false);
         connTool.PerformLayout();
