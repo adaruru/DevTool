@@ -337,7 +337,3 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 
-# BeatPulse healthcheck temp database
-healthchecksdb
-/CoreWeb/wwwroot/FileUpload
-/CoreWeb/FileUpload
