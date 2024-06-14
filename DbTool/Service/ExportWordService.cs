@@ -36,7 +36,7 @@ public class ExportWordService
                    ["Source"] = $"{connStrBox}"
                });
 
-        string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), $"{Schema.SchemaName}{DateTime.Now:yyyyMMddHHmmss}.docx");
+        string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), $"{Schema.SchemaName}Schema_{DateTime.Now:yyyyMMddHHmmss}.docx");
         File.WriteAllBytes(destinationPath, docxBytes);
 
         //附於現有檔案

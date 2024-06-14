@@ -104,7 +104,7 @@ public partial class DbToolForm : Form
             //範本或規格 Excel 檔案名稱
             string destinationPath = isTemplate ?
                 Path.Combine(Directory.GetCurrentDirectory(), "ImportDescription.xlsx") :
-                Path.Combine(Directory.GetCurrentDirectory(), $"{SchemaName}{DateTime.Now.ToString("yyyyMMddHHmmss")}Schema.xlsx");
+                Path.Combine(Directory.GetCurrentDirectory(), $"{SchemaName}Schema_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx");
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             //use template
