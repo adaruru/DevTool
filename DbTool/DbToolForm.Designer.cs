@@ -263,7 +263,7 @@ partial class DbToolForm
         downloadSchemaWordPerTableBtn.TabIndex = 17;
         downloadSchemaWordPerTableBtn.Text = "下載資料庫規格 Word (一表一檔)";
         downloadSchemaWordPerTableBtn.UseVisualStyleBackColor = true;
-        downloadSchemaWordPerTableBtn.Click += downloadSchemaWordPerTableBtnClick;
+        downloadSchemaWordPerTableBtn.Click += downloadSchemaWordBtnClick;
         // 
         // isWordWithToc
         // 

@@ -50,31 +50,32 @@ public partial class DbToolForm : Form
 
     private void downloadSchemaWordBtnClick(object sender, EventArgs e)
     {
-        errorTextLbl.Text = "檔案產製中請稍後";
-        if (string.IsNullOrEmpty(connStrBox.Text))
-        {
-            throw new Exception("請輸入連線字串");
-        }
-        Conn = new ConnService(connStrBox.Text, SchemaName);
-        Conn.SetTable();
-        Conn.SetColumn();
-        SetControl(isTemplate: false);
-        var destinationPath = ExportWordService.ExportWordSchema(Conn.Schema, connStrBox.Text);
-        errorTextLbl.Text = $"檔案產製完成儲存於{destinationPath}";
-    }
 
-    private void downloadSchemaWordPerTableBtnClick(object sender, EventArgs e)
-    {
-        errorTextLbl.Text = "檔案產製中請稍後";
-        if (string.IsNullOrEmpty(connStrBox.Text))
+        Button btn = sender as Button;
+        var isPerTable = btn != null && btn == downloadSchemaWordPerTableBtn;
+        try
         {
-            throw new Exception("請輸入連線字串");
+            errorTextLbl.Text = "檔案產製中請稍後";
+            if (string.IsNullOrEmpty(connStrBox.Text))
+            {
+                throw new Exception("請輸入連線字串");
+            }
+            Conn = new ConnService(connStrBox.Text, SchemaName);
+            Conn.SetTable();
+            Conn.SetColumn();
+            SetControl(isTemplate: false);
+
+            var destinationPath = string.Empty;
+            if (isPerTable)
+            { destinationPath = ExportWordService.ExportWordSchemaPerTable(Conn.Schema, connStrBox.Text); }
+            else
+            { destinationPath = ExportWordService.ExportWordSchema(Conn.Schema, connStrBox.Text); }
+            errorTextLbl.Text = $"檔案產製完成儲存於{destinationPath}";
         }
-        Conn = new ConnService(connStrBox.Text, SchemaName);
-        Conn.SetTable();
-        Conn.SetColumn();
-        var destinationPath = ExportWordService.ExportWordSchemaPerTable(Conn.Schema, connStrBox.Text);
-        errorTextLbl.Text = $"檔案產製完成儲存於{destinationPath}";
+        catch (Exception es)
+        {
+            errorTextLbl.Text = $"出現其他異常錯誤:{es.Message}";
+        }
     }
 
     /// <summary>
@@ -84,6 +85,8 @@ public partial class DbToolForm : Form
     /// <param name="e"></param>
     private void downloadSchemaEvent(object sender, EventArgs e)
     {
+        Button btn = sender as Button;
+        var isTemplate = btn != null && btn == downloadTemplateBtn;
         try
         {
             errorTextLbl.Text = "檔案產製中請稍後";
@@ -95,10 +98,6 @@ public partial class DbToolForm : Form
             Conn = new ConnService(connStrBox.Text, SchemaName);
             Conn.SetTable();
             Conn.SetColumn();
-
-            Button clickedButton = sender as Button;
-            var isTemplate = clickedButton != null && clickedButton == downloadTemplateBtn;
-
             SetControl(isTemplate);//控制範本或規格 Excel 顯示欄位
 
             //範本或規格 Excel 檔案名稱
@@ -226,6 +225,9 @@ public partial class DbToolForm : Form
         {
             errorTextLbl.Text = $"出現其他異常錯誤:{es.Message}";
         }
+
+        if (isTemplate)
+            SetControl(false);//還原 control 來自使用者設定
     }
 
     private void SetControl(bool isTemplate)
@@ -364,28 +366,44 @@ public partial class DbToolForm : Form
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 using ExcelPackage package = new ExcelPackage(new FileInfo(filePath));
                 ExcelWorksheet worksheet = package.Workbook.Worksheets["TableLists"];
-                if (worksheet != null)
-                {
-                    if (worksheet.Cells[1, 1].Text != "Table")
-                    {
-                        throw new Exception("請使用正確匯入範本");
-                    }
-                    if (worksheet.Cells[1, 2].Text != "Description")
-                    {
-                        throw new Exception("請使用正確匯入範本");
-                    }
 
-                    for (int row = 2; row <= worksheet.Dimension.End.Row; row++)
-                    {
-                        Table table = new Table
-                        {
-                            TableName = worksheet.Cells[row, 1].Text,
-                            TableDescription = worksheet.Cells[row, 2].Text
-                        };
-                        // Add the table to the schema
-                        SchemaForImportDescription.Tables?.Add(table);
-                    }
+                if (openFileDialog.SafeFileName != "ImportDescription.xlsx")
+                {
+                    throw new Exception("請下載匯入描述範本以編輯");
                 }
+                if (worksheet == null)
+                {
+                    throw new Exception("請下載匯入描述範本以編輯");
+                }
+                if (worksheet.Cells[1, 1].Text != "Table")
+                {
+                    throw new Exception("請下載匯入描述範本以編輯");
+                }
+                if (worksheet.Cells[1, 2].Text != "Description")
+                {
+                    throw new Exception("請下載匯入描述範本以編輯");
+                }
+                var checkSheet = package.Workbook.Worksheets[worksheet.Cells[2, 1].Text];
+                if (checkSheet.Cells[2, 1].Text != "Column")
+                {
+                    throw new Exception("請下載匯入描述範本以編輯");
+                }
+                if (checkSheet.Cells[2, 2].Text != "Description")
+                {
+                    throw new Exception("請下載匯入描述範本以編輯");
+                }
+
+                for (int row = 2; row <= worksheet.Dimension.End.Row; row++)
+                {
+                    Table table = new Table
+                    {
+                        TableName = worksheet.Cells[row, 1].Text,
+                        TableDescription = worksheet.Cells[row, 2].Text
+                    };
+                    // Add the table to the schema
+                    SchemaForImportDescription.Tables?.Add(table);
+                }
+
                 for (int i = 0; i < SchemaForImportDescription.Tables.Count; i++)
                 {
                     ExcelWorksheet tableSheet = package.Workbook.Worksheets[SchemaForImportDescription.Tables[i].TableName];
