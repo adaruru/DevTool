@@ -26,11 +26,31 @@
     /// </summary>
     private void InitializeComponent()
     {
-        this.components = new System.ComponentModel.Container();
-        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        this.ClientSize = new System.Drawing.Size(800, 450);
-        this.Text = "ServerToolForm";
+        instalIISBtn = new Button();
+        SuspendLayout();
+        // 
+        // instalIISBtn
+        // 
+        instalIISBtn.Location = new Point(74, 60);
+        instalIISBtn.Name = "instalIISBtn";
+        instalIISBtn.Size = new Size(185, 34);
+        instalIISBtn.TabIndex = 0;
+        instalIISBtn.Text = "安裝IIS";
+        instalIISBtn.UseVisualStyleBackColor = true;
+        instalIISBtn.Click += instalIIS;
+        // 
+        // ServerToolForm
+        // 
+        AutoScaleDimensions = new SizeF(9F, 19F);
+        AutoScaleMode = AutoScaleMode.Font;
+        ClientSize = new Size(324, 162);
+        Controls.Add(instalIISBtn);
+        Name = "ServerToolForm";
+        Text = "ServerToolForm";
+        ResumeLayout(false);
     }
 
     #endregion
+
+    private Button instalIISBtn;
 }
