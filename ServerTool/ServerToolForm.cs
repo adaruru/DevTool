@@ -26,8 +26,9 @@ public partial class ServerToolForm : Form
         // Command to install IIS
         string fileName = "C:\\Windows\\system32\\DISM.EXE";  // 如果 dism.exe 不在路徑中，使用絕對路徑
         string arguments = string.Empty;
-        arguments += "/Online /Enable-Feature /FeatureName:IIS-WebServer "; // 網站伺服器
-        arguments += "/FeatureName:IIS-WebServerRole "; // 網站伺服器角色
+        arguments += "/Online /Enable-Feature ";
+        arguments += "/FeatureName:IIS-WebServer "; // 網站伺服器
+        arguments += "/FeatureName:IIS-WebServerRole "; //World Wide Web 服務 網站伺服器角色
         arguments += "/FeatureName:IIS-WebServerManagementTools "; // 網站伺服器管理工具
         arguments += "/FeatureName:IIS-ManagementConsole "; // 管理主控台
         arguments += "/FeatureName:IIS-WebServer "; // 網站伺服器
@@ -75,6 +76,9 @@ public partial class ServerToolForm : Form
         arguments += "/FeatureName:WCF-TCP-Activation45 "; // WCF TCP 啟用 4.5
         arguments += "/FeatureName:WCF-TCP-PortSharing45 "; // WCF TCP 埠共用 4.5
         arguments += "/FeatureName:WCF-HTTP-Activation "; // WCF HTTP 啟用
+
+        arguments += "/FeatureName:IIS-HttpTracing "; //HTTP 跟踪（狀況及診斷）
+        //arguments += "/FeatureName:IIS-FTPServer /All"; // FTP伺服器 (FTP服務、FTP擴充性)
 
         ProcessStartInfo processStartInfo = new ProcessStartInfo
         {
@@ -129,5 +133,6 @@ public partial class ServerToolForm : Form
         {
             MessageBox.Show("執行安裝時發生錯誤: " + ex.Message);
         }
+        MessageBox.Show("done");
     }
 }
