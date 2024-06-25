@@ -28,7 +28,7 @@ public partial class DbToolForm : Form
     }
 
     /// 保留資源範本 單純下載 測試用
-    private void downloadTemplateEvent(object sender, EventArgs e)
+    private void exportTemplateEvent(object sender, EventArgs e)
     {
         string resourceName = "DbTool.Template.Schema.xlsx";
         Assembly assembly = Assembly.GetExecutingAssembly();
@@ -50,7 +50,7 @@ public partial class DbToolForm : Form
         });
     }
 
-    private void downloadSchemaWordBtnClick(object sender, EventArgs e)
+    private void exportSchemaWordBtnClick(object sender, EventArgs e)
     {
 
         Button btn = sender as Button;
@@ -85,7 +85,7 @@ public partial class DbToolForm : Form
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void downloadSchemaEvent(object sender, EventArgs e)
+    private void exportSchemaEvent(object sender, EventArgs e)
     {
         Button btn = sender as Button;
         var isTemplate = btn != null && btn == downloadTemplateBtn;

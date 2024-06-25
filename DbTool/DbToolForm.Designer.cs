@@ -88,7 +88,7 @@ partial class DbToolForm
         downloadSchemaBtn.TabIndex = 1;
         downloadSchemaBtn.Text = "下載資料庫規格 Excel";
         downloadSchemaBtn.UseVisualStyleBackColor = true;
-        downloadSchemaBtn.Click += downloadSchemaEvent;
+        downloadSchemaBtn.Click += exportSchemaEvent;
         // 
         // connStrBox
         // 
@@ -263,7 +263,7 @@ partial class DbToolForm
         downloadSchemaWordPerTableBtn.TabIndex = 17;
         downloadSchemaWordPerTableBtn.Text = "下載資料庫規格 Word (一表一檔)";
         downloadSchemaWordPerTableBtn.UseVisualStyleBackColor = true;
-        downloadSchemaWordPerTableBtn.Click += downloadSchemaWordBtnClick;
+        downloadSchemaWordPerTableBtn.Click += exportSchemaWordBtnClick;
         // 
         // isWordWithToc
         // 
@@ -286,7 +286,7 @@ partial class DbToolForm
         downloadSchemaWordBtn.TabIndex = 15;
         downloadSchemaWordBtn.Text = "下載資料庫規格 Word";
         downloadSchemaWordBtn.UseVisualStyleBackColor = true;
-        downloadSchemaWordBtn.Click += downloadSchemaWordBtnClick;
+        downloadSchemaWordBtn.Click += exportSchemaWordBtnClick;
         // 
         // ImportDescription
         // 
@@ -452,7 +452,7 @@ partial class DbToolForm
         downloadTemplateBtn.TabIndex = 2;
         downloadTemplateBtn.Text = "下載匯入描述範本";
         downloadTemplateBtn.UseVisualStyleBackColor = true;
-        downloadTemplateBtn.Click += downloadSchemaEvent;
+        downloadTemplateBtn.Click += exportSchemaEvent;
         // 
         // settingTab
         // 
