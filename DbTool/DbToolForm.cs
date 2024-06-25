@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Reflection;
 using Properties = DbTool.Properties;
 using Settings = DbTool.Properties.Settings;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 public partial class DbToolForm : Form
 {
@@ -15,9 +16,10 @@ public partial class DbToolForm : Form
         InitializeComponent();
 
     }
-    public ExportWordService ExportWordService = new ExportWordService();
-    public Schema SchemaForImportDescription = new Schema();
-    public ConnService Conn;
+    private readonly ExportWordService _exportWordService = new ExportWordService();
+    private readonly ExportExcelService _exportExcelService = new ExportExcelService();
+    private Schema _schemaForImportDescription = new Schema();
+    public ConnService conn;
     public string SchemaName = "";
 
     private void demoCommBtnEvent(object sender, EventArgs e)
@@ -60,16 +62,16 @@ public partial class DbToolForm : Form
             {
                 throw new Exception("請輸入連線字串");
             }
-            Conn = new ConnService(connStrBox.Text, SchemaName);
-            Conn.SetTable();
-            Conn.SetColumn();
+            conn = new ConnService(connStrBox.Text, SchemaName);
+            conn.SetTable();
+            conn.SetColumn();
             SetControl(isTemplate: false);
 
             var destinationPath = string.Empty;
             if (isPerTable)
-            { destinationPath = ExportWordService.ExportWordSchemaPerTable(Conn.Schema, connStrBox.Text); }
+            { destinationPath = _exportWordService.ExportWordSchemaPerTable(conn.Schema, connStrBox.Text); }
             else
-            { destinationPath = ExportWordService.ExportWordSchema(Conn.Schema, connStrBox.Text); }
+            { destinationPath = _exportWordService.ExportWordSchema(conn.Schema, connStrBox.Text); }
             errorTextLbl.Text = $"檔案產製完成儲存於{destinationPath}";
         }
         catch (Exception es)
@@ -95,131 +97,14 @@ public partial class DbToolForm : Form
                 throw new Exception("請輸入連線字串");
             }
 
-            Conn = new ConnService(connStrBox.Text, SchemaName);
-            Conn.SetTable();
-            Conn.SetColumn();
+            conn = new ConnService(connStrBox.Text, SchemaName);
+            conn.SetTable();
+            conn.SetColumn();
             SetControl(isTemplate);//控制範本或規格 Excel 顯示欄位
 
-            //範本或規格 Excel 檔案名稱
-            string destinationPath = isTemplate ?
-                Path.Combine(Directory.GetCurrentDirectory(), "ImportDescription.xlsx") :
-                Path.Combine(Directory.GetCurrentDirectory(), $"{SchemaName}Schema_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx");
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            var message = _exportExcelService.ExportExcelSchema(conn.Schema, connStrBox.Text, isTemplate);
 
-            //use template
-            string resourceName = "DbTool.Template.Schema.xlsx";
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            using Stream resourceStream = assembly.GetManifestResourceStream(resourceName);
-            if (resourceStream == null)
-            {
-                MessageBox.Show($"Embedded resource '{resourceName}' not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            var Schema = Conn.Schema;
-            using var package = new ExcelPackage(resourceStream);
-            var worksheet = package.Workbook.Worksheets["TableLists"];
-            for (int i = 0; i < Schema.Tables.Count; i++)
-            {
-                worksheet.Cells[1, 1].Value = "Table";
-                worksheet.Cells[i + 2, 1].Value = Schema.Tables[i].TableName;
-
-                if (FormControl.IsTableDescriptionShow)
-                {
-                    worksheet.Cells[1, 2].Value = "Description";
-                    worksheet.Cells[i + 2, 2].Value = Schema.Tables[i].TableDescription;
-                }
-
-                var tableSheet = package.Workbook.Worksheets.Copy("ColumnSample", Schema.Tables[i].TableName);
-                for (int r = 0; r < Schema.Tables[i].Columns.Count(); r++)
-                {
-                    var column = 0;
-                    tableSheet.Cells[1, 1].Value = Schema.Tables[i].TableName;
-                    if (FormControl.IsTableDescriptionShow)
-                    {
-                        tableSheet.Cells[1, 2].Value = Schema.Tables[i].TableDescription;
-                    }
-
-                    if (FormControl.IsSortShow)
-                    {
-                        column++;
-                        tableSheet.Cells[2, column].Value = "Sort";
-                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Sort;
-                    }
-                    column++;
-                    tableSheet.Cells[2, column].Value = "Column";
-                    tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ColumnName;
-
-                    if (FormControl.IsDataTypeShow)
-                    {
-                        column++;
-                        tableSheet.Cells[2, column].Value = "DataType";
-                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].DataType;
-                    }
-                    if (FormControl.IsDefaultValueShow)
-                    {
-                        column++;
-                        tableSheet.Cells[2, column].Value = "DefaultValue";
-                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].DefaultValue;
-                    }
-                    if (FormControl.IsIdentityShow)
-                    {
-                        column++;
-                        tableSheet.Cells[2, column].Value = "Identity";
-                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Identity;
-                    }
-                    if (FormControl.IsPrimaryKeyShow)
-                    {
-                        column++;
-                        tableSheet.Cells[2, column].Value = "PrimaryKey";
-                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].PrimaryKey;
-                    }
-                    if (FormControl.IsNotNullShow)
-                    {
-                        column++;
-                        tableSheet.Cells[2, column].Value = "NotNull";
-                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].NotNull;
-                    }
-                    if (FormControl.IsLengthShow)
-                    {
-                        column++;
-                        tableSheet.Cells[2, column].Value = "Length";
-                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Length;
-                    }
-                    if (FormControl.IsPrecisionShow)
-                    {
-                        column++;
-                        tableSheet.Cells[2, column].Value = "Precision";
-                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Precision;
-                    }
-                    if (FormControl.IsScaleShow)
-                    {
-                        column++;
-                        tableSheet.Cells[2, column].Value = "Scale";
-                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Scale;
-                    }
-                    if (FormControl.IsColumnDescriptionShow)
-                    {
-                        column++;
-                        tableSheet.Cells[2, column].Value = "Description";
-                        tableSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ColumnDescription;
-                    }
-                }
-                tableSheet.Cells.AutoFitColumns(); //調整欄寬
-                tableSheet.View.TabSelected = false;// 設置為不選取狀態
-            }
-            worksheet.Cells.AutoFitColumns();//調整欄寬
-            package.Workbook.Worksheets.Delete("ColumnSample");
-
-            // 開啟時只選取TableLists
-            package.Workbook.View.ActiveTab = 0;
-
-            package.SaveAs(new FileInfo(destinationPath));
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = destinationPath,
-                UseShellExecute = true
-            });
-            errorTextLbl.Text = $"檔案產製完成儲存於{destinationPath}";
+            errorTextLbl.Text = message;
         }
         catch (Exception es)
         {
@@ -329,10 +214,10 @@ public partial class DbToolForm : Form
     {
         try
         {
-            Conn = new ConnService(connStrBox.Text, SchemaName);
-            var Schema = Conn.Schema;
+            conn = new ConnService(connStrBox.Text, SchemaName);
+            var Schema = conn.Schema;
             var query = "select DB_NAME()";
-            var result = Conn.GetValueStr(query);
+            var result = conn.GetValueStr(query);
             if (!string.IsNullOrEmpty(result))
             {
                 errorTextLbl.Text = result + "資料庫順利連線";
@@ -351,7 +236,7 @@ public partial class DbToolForm : Form
         try
         {
             errorTextLbl.Text = "描述匯入中請稍後";
-            if (Conn == null)
+            if (conn == null)
             {
                 throw new Exception("請輸入連線字串");
             }
@@ -359,7 +244,7 @@ public partial class DbToolForm : Form
             openFileDialog.Filter = "Excel Files|*.xlsx;*.xls|All Files|*.*";
             openFileDialog.Title = "請選擇匯入範本";
 
-            SchemaForImportDescription = new Schema();
+            _schemaForImportDescription = new Schema();
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string filePath = openFileDialog.FileName;
@@ -401,12 +286,12 @@ public partial class DbToolForm : Form
                         TableDescription = worksheet.Cells[row, 2].Text
                     };
                     // Add the table to the schema
-                    SchemaForImportDescription.Tables?.Add(table);
+                    _schemaForImportDescription.Tables?.Add(table);
                 }
 
-                for (int i = 0; i < SchemaForImportDescription.Tables.Count; i++)
+                for (int i = 0; i < _schemaForImportDescription.Tables.Count; i++)
                 {
-                    ExcelWorksheet tableSheet = package.Workbook.Worksheets[SchemaForImportDescription.Tables[i].TableName];
+                    ExcelWorksheet tableSheet = package.Workbook.Worksheets[_schemaForImportDescription.Tables[i].TableName];
                     if (tableSheet != null)
                     {
                         for (int row = 3; row <= tableSheet.Dimension.End.Row; row++)
@@ -420,13 +305,13 @@ public partial class DbToolForm : Form
                             if (!string.IsNullOrEmpty(tableSheet.Cells[row, 2].Text))
                             {
                                 // Add the table to the schema
-                                SchemaForImportDescription.Tables[i].Columns?.Add(column);
+                                _schemaForImportDescription.Tables[i].Columns?.Add(column);
                             }
                         }
                     }
                     else
                     {
-                        throw new Exception($"沒有table {SchemaForImportDescription.Tables[i].TableName}的分頁,請使用正確匯入範本");
+                        throw new Exception($"沒有table {_schemaForImportDescription.Tables[i].TableName}的分頁,請使用正確匯入範本");
                     }
                 }
             }
@@ -442,9 +327,9 @@ public partial class DbToolForm : Form
 
     private void InsertTableDescription()
     {
-        for (int i = 0; i < SchemaForImportDescription.Tables.Count; i++)
+        for (int i = 0; i < _schemaForImportDescription.Tables.Count; i++)
         {
-            if (!string.IsNullOrEmpty(SchemaForImportDescription.Tables[i].TableDescription))
+            if (!string.IsNullOrEmpty(_schemaForImportDescription.Tables[i].TableDescription))
             {
 
                 var str = @"
@@ -476,8 +361,8 @@ END;";
                 using SqlConnection con = new SqlConnection(connStrBox.Text);
                 using SqlCommand cmd = new SqlCommand(str, con);
                 con.Open();
-                cmd.Parameters.AddWithValue("@TableName", SchemaForImportDescription.Tables[i].TableName);
-                cmd.Parameters.AddWithValue("@TableDescription", SchemaForImportDescription.Tables[i].TableDescription);
+                cmd.Parameters.AddWithValue("@TableName", _schemaForImportDescription.Tables[i].TableName);
+                cmd.Parameters.AddWithValue("@TableDescription", _schemaForImportDescription.Tables[i].TableDescription);
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
@@ -486,9 +371,9 @@ END;";
 
     private void InsertColumnDescription()
     {
-        for (int i = 0; i < SchemaForImportDescription.Tables.Count; i++)
+        for (int i = 0; i < _schemaForImportDescription.Tables.Count; i++)
         {
-            for (int c = 0; c < SchemaForImportDescription.Tables[i].Columns.Count; c++)
+            for (int c = 0; c < _schemaForImportDescription.Tables[i].Columns.Count; c++)
             {
                 var str = @"
 IF EXISTS (
@@ -523,9 +408,9 @@ END;";
                 using SqlConnection con = new SqlConnection(connStrBox.Text);
                 using SqlCommand cmd = new SqlCommand(str, con);
                 con.Open();
-                cmd.Parameters.AddWithValue("@TableName", SchemaForImportDescription.Tables[i].TableName);
-                cmd.Parameters.AddWithValue("@ColumnName", SchemaForImportDescription.Tables[i].Columns[c].ColumnName);
-                cmd.Parameters.AddWithValue("@ColumnDescription", SchemaForImportDescription.Tables[i].Columns[c].ColumnDescription);
+                cmd.Parameters.AddWithValue("@TableName", _schemaForImportDescription.Tables[i].TableName);
+                cmd.Parameters.AddWithValue("@ColumnName", _schemaForImportDescription.Tables[i].Columns[c].ColumnName);
+                cmd.Parameters.AddWithValue("@ColumnDescription", _schemaForImportDescription.Tables[i].Columns[c].ColumnDescription);
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
@@ -539,7 +424,7 @@ END;";
     {
         try
         {
-            if (Conn == null)
+            if (conn == null)
             {
                 throw new Exception("請先輸入連線字串 並執行連線測試");
             }
@@ -561,8 +446,8 @@ END;";
     {
         try
         {
-            Conn = new ConnService(connStrBox.Text, SchemaName);
-            Conn.SetTable();
+            conn = new ConnService(connStrBox.Text, SchemaName);
+            conn.SetTable();
         }
         catch (Exception es)
         {
@@ -574,8 +459,8 @@ END;";
         errorTextLbl.Text = $"產製中請稍後";
         try
         {
-            Conn.SetColumn();
-            var Schema = Conn.Schema;
+            conn.SetColumn();
+            var Schema = conn.Schema;
             var modelDir = Path.Combine(Directory.GetCurrentDirectory(),
                 "Model");
             if (!Directory.Exists(modelDir))
@@ -595,8 +480,8 @@ public class {Schema?.Tables[i].TableName}
 
                 for (int j = 0; j < Schema?.Tables[i].Columns?.Count; j++)
                 {
-                    string csharpType = Conn.MapSqlTypeToCSharpType(Schema?.Tables[i]?.Columns[j]);
-                    string defaultValue = Conn.DefaultInitialValue(Schema?.Tables[i]?.Columns[j]);
+                    string csharpType = conn.MapSqlTypeToCSharpType(Schema?.Tables[i]?.Columns[j]);
+                    string defaultValue = conn.DefaultInitialValue(Schema?.Tables[i]?.Columns[j]);
                     if (isSummary.Checked)
                     {
                         content += @$"

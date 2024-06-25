@@ -232,6 +232,8 @@ public class ExportWordService
     {
         TableRow tr = new TableRow();
         var cells = new List<TableCell>();
+
+        cells.Add(GetCellFont10FilledColor("Column"));
         if (FormControl.IsSortShow)
         {
             cells.Add(GetCellFont10FilledColor("Sort"));
@@ -282,7 +284,7 @@ public class ExportWordService
     {
         TableRow tr = new TableRow();
         var cells = new List<TableCell>();
-
+        cells.Add(GetCellFont10(column.ColumnName));
         if (FormControl.IsSortShow)
         {
             cells.Add(GetCellFont10(column.Sort));

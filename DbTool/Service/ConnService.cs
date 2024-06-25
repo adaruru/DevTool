@@ -28,6 +28,7 @@ public class ConnService
 		AND p.minor_id = 0
 		AND p.name = 'MS_Description'
     WHERE st.name != 'sysdiagrams'
+      and st.name !='dtproperties'
 	ORDER BY st.name";
 
         using SqlConnection con = new SqlConnection(ConnString);
