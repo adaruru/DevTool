@@ -106,7 +106,8 @@ public partial class DbToolForm : Form
             {
                 message = _exportExcelService.ExportExcelSchemaWithTemplate(conn.Schema, connStrBox.Text, isForImportTemplate);
             }
-            else {
+            else
+            {
                 message = _exportExcelService.ExportExcelSchema(conn.Schema, connStrBox.Text);
             }
 
