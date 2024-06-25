@@ -88,7 +88,8 @@ public partial class DbToolForm : Form
     private void exportSchemaEvent(object sender, EventArgs e)
     {
         Button btn = sender as Button;
-        var isTemplate = btn != null && btn == downloadTemplateBtn;
+        var message = string.Empty;
+        var isForImportTemplate = btn != null && btn == downloadTemplateBtn;
         try
         {
             errorTextLbl.Text = "檔案產製中請稍後";
@@ -100,9 +101,15 @@ public partial class DbToolForm : Form
             conn = new ConnService(connStrBox.Text, SchemaName);
             conn.SetTable();
             conn.SetColumn();
-            SetControl(isTemplate);//控制範本或規格 Excel 顯示欄位
+            SetControl(isForImportTemplate);//控制範本或規格 Excel 顯示欄位
+            if (isForImportTemplate)
+            {
+                message = _exportExcelService.ExportExcelSchemaWithTemplate(conn.Schema, connStrBox.Text, isForImportTemplate);
+            }
+            else {
+                message = _exportExcelService.ExportExcelSchema(conn.Schema, connStrBox.Text);
+            }
 
-            var message = _exportExcelService.ExportExcelSchema(conn.Schema, connStrBox.Text, isTemplate);
 
             errorTextLbl.Text = message;
         }
@@ -111,7 +118,7 @@ public partial class DbToolForm : Form
             errorTextLbl.Text = $"出現其他異常錯誤:{es.Message}";
         }
 
-        if (isTemplate)
+        if (isForImportTemplate)
             SetControl(false);//還原 control 來自使用者設定
     }
 
