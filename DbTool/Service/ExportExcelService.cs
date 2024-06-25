@@ -1,6 +1,4 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.Wordprocessing;
-using OfficeOpenXml;
+﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System.Diagnostics;
 using System.Reflection;
@@ -188,6 +186,7 @@ public class ExportExcelService
         });
         return destinationPath;
     }
+
     public string ExportExcelSchemaWithTemplate(Schema Schema, string connStrBox, bool isTemplate)
     {
         //範本或規格 Excel 檔案名稱

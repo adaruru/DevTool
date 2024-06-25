@@ -435,7 +435,7 @@ END;";
             {
                 throw new Exception("請先輸入連線字串 並執行連線測試");
             }
-            if (tabControl1.SelectedTab == modelTool)
+            if (tabControl1.SelectedTab == modelToolTab)
             {
                 modelToolSwitchEvent(sender, e);
             }

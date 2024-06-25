@@ -34,14 +34,14 @@ partial class DbToolForm
         connStrLabel = new Label();
         dbTestBtn = new Button();
         tabControl1 = new TabControl();
-        connTool = new TabPage();
-        modelTool = new TabPage();
+        connToolTab = new TabPage();
+        modelToolTab = new TabPage();
         isSummary = new CheckBox();
         isKey = new CheckBox();
         IsRequired = new CheckBox();
         IsDisplay = new CheckBox();
         modelGenBtn = new Button();
-        schmaTool = new TabPage();
+        schmaToolTab = new TabPage();
         downloadSchemaWordPerTableBtn = new Button();
         isWordWithToc = new CheckBox();
         downloadSchemaWordBtn = new Button();
@@ -62,9 +62,9 @@ partial class DbToolForm
         resetBtn = new Button();
         errorTextLbl = new TextBox();
         tabControl1.SuspendLayout();
-        connTool.SuspendLayout();
-        modelTool.SuspendLayout();
-        schmaTool.SuspendLayout();
+        modelToolTab.SuspendLayout();
+        connToolTab.SuspendLayout();
+        schmaToolTab.SuspendLayout();
         settingTab.SuspendLayout();
         SuspendLayout();
         // 
@@ -124,9 +124,10 @@ partial class DbToolForm
         // 
         // tabControl1
         // 
-        tabControl1.Controls.Add(connTool);
-        tabControl1.Controls.Add(modelTool);
-        tabControl1.Controls.Add(schmaTool);
+        tabControl1.TabPages.Clear();
+        tabControl1.Controls.Add(connToolTab);
+        tabControl1.Controls.Add(modelToolTab);
+        tabControl1.Controls.Add(schmaToolTab);
         tabControl1.Controls.Add(settingTab);
         tabControl1.Location = new Point(0, 2);
         tabControl1.Margin = new Padding(2);
@@ -136,36 +137,36 @@ partial class DbToolForm
         tabControl1.TabIndex = 7;
         tabControl1.SelectedIndexChanged += tabControlChanged;
         // 
-        // connTool
+        // connToolTab
         // 
-        connTool.Controls.Add(connStrLabel);
-        connTool.Controls.Add(dbTestBtn);
-        connTool.Controls.Add(connStrBox);
-        connTool.Controls.Add(demoCommBtn);
-        connTool.Location = new Point(4, 28);
-        connTool.Margin = new Padding(2);
-        connTool.Name = "connTool";
-        connTool.Padding = new Padding(2);
-        connTool.Size = new Size(528, 223);
-        connTool.TabIndex = 0;
-        connTool.Text = "資料庫連線";
-        connTool.UseVisualStyleBackColor = true;
+        connToolTab.Controls.Add(connStrLabel);
+        connToolTab.Controls.Add(dbTestBtn);
+        connToolTab.Controls.Add(connStrBox);
+        connToolTab.Controls.Add(demoCommBtn);
+        connToolTab.Location = new Point(4, 28);
+        connToolTab.Margin = new Padding(2);
+        connToolTab.Name = "connToolTab";
+        connToolTab.Padding = new Padding(2);
+        connToolTab.Size = new Size(528, 223);
+        connToolTab.TabIndex = 0;
+        connToolTab.Text = "資料庫連線";
+        connToolTab.UseVisualStyleBackColor = true;
         // 
-        // modelTool
+        // modelToolTab
         // 
-        modelTool.Controls.Add(isSummary);
-        modelTool.Controls.Add(isKey);
-        modelTool.Controls.Add(IsRequired);
-        modelTool.Controls.Add(IsDisplay);
-        modelTool.Controls.Add(modelGenBtn);
-        modelTool.Location = new Point(4, 28);
-        modelTool.Margin = new Padding(2);
-        modelTool.Name = "modelTool";
-        modelTool.Padding = new Padding(2);
-        modelTool.Size = new Size(528, 223);
-        modelTool.TabIndex = 1;
-        modelTool.Text = "model產檔";
-        modelTool.UseVisualStyleBackColor = true;
+        modelToolTab.Controls.Add(isSummary);
+        modelToolTab.Controls.Add(isKey);
+        modelToolTab.Controls.Add(IsRequired);
+        modelToolTab.Controls.Add(IsDisplay);
+        modelToolTab.Controls.Add(modelGenBtn);
+        modelToolTab.Location = new Point(4, 28);
+        modelToolTab.Margin = new Padding(2);
+        modelToolTab.Name = "modelToolTab";
+        modelToolTab.Padding = new Padding(2);
+        modelToolTab.Size = new Size(528, 223);
+        modelToolTab.TabIndex = 2;
+        modelToolTab.Text = "model產檔";
+        modelToolTab.UseVisualStyleBackColor = true;
         // 
         // isSummary
         // 
@@ -226,33 +227,33 @@ partial class DbToolForm
         modelGenBtn.UseVisualStyleBackColor = true;
         modelGenBtn.Click += modelGenEvent;
         // 
-        // schmaTool
+        // schmaToolTab
         // 
-        schmaTool.Controls.Add(downloadSchemaWordPerTableBtn);
-        schmaTool.Controls.Add(isWordWithToc);
-        schmaTool.Controls.Add(downloadSchemaWordBtn);
-        schmaTool.Controls.Add(ImportDescription);
-        schmaTool.Controls.Add(IsScaleShow);
-        schmaTool.Controls.Add(IsPrecisionShow);
-        schmaTool.Controls.Add(IsLengthShow);
-        schmaTool.Controls.Add(IsNotNullShow);
-        schmaTool.Controls.Add(IsPrimaryKeyShow);
-        schmaTool.Controls.Add(IsIdentityShow);
-        schmaTool.Controls.Add(IsDefaultValueShow);
-        schmaTool.Controls.Add(IsDataTypeShow);
-        schmaTool.Controls.Add(IsSortShow);
-        schmaTool.Controls.Add(IsColumnDescriptionShow);
-        schmaTool.Controls.Add(IsTableDescriptionShow);
-        schmaTool.Controls.Add(downloadTemplateBtn);
-        schmaTool.Controls.Add(downloadSchemaBtn);
-        schmaTool.Location = new Point(4, 28);
-        schmaTool.Margin = new Padding(2);
-        schmaTool.Name = "schmaTool";
-        schmaTool.Padding = new Padding(2);
-        schmaTool.Size = new Size(528, 223);
-        schmaTool.TabIndex = 2;
-        schmaTool.Text = "資料庫規格";
-        schmaTool.UseVisualStyleBackColor = true;
+        schmaToolTab.Controls.Add(downloadSchemaWordPerTableBtn);
+        schmaToolTab.Controls.Add(isWordWithToc);
+        schmaToolTab.Controls.Add(downloadSchemaWordBtn);
+        schmaToolTab.Controls.Add(ImportDescription);
+        schmaToolTab.Controls.Add(IsScaleShow);
+        schmaToolTab.Controls.Add(IsPrecisionShow);
+        schmaToolTab.Controls.Add(IsLengthShow);
+        schmaToolTab.Controls.Add(IsNotNullShow);
+        schmaToolTab.Controls.Add(IsPrimaryKeyShow);
+        schmaToolTab.Controls.Add(IsIdentityShow);
+        schmaToolTab.Controls.Add(IsDefaultValueShow);
+        schmaToolTab.Controls.Add(IsDataTypeShow);
+        schmaToolTab.Controls.Add(IsSortShow);
+        schmaToolTab.Controls.Add(IsColumnDescriptionShow);
+        schmaToolTab.Controls.Add(IsTableDescriptionShow);
+        schmaToolTab.Controls.Add(downloadTemplateBtn);
+        schmaToolTab.Controls.Add(downloadSchemaBtn);
+        schmaToolTab.Location = new Point(4, 28);
+        schmaToolTab.Margin = new Padding(2);
+        schmaToolTab.Name = "schmaToolTab";
+        schmaToolTab.Padding = new Padding(2);
+        schmaToolTab.Size = new Size(528, 223);
+        schmaToolTab.TabIndex = 1;
+        schmaToolTab.Text = "資料庫規格";
+        schmaToolTab.UseVisualStyleBackColor = true;
         // 
         // downloadSchemaWordPerTableBtn
         // 
@@ -467,7 +468,7 @@ partial class DbToolForm
         // 
         // resetBtn
         // 
-        resetBtn.Location = new Point(16, 19);
+        resetBtn.Location = new Point(19, 179);
         resetBtn.Margin = new Padding(2);
         resetBtn.Name = "resetBtn";
         resetBtn.Size = new Size(92, 28);
@@ -499,15 +500,21 @@ partial class DbToolForm
         Margin = new Padding(2);
         Name = "DbToolForm";
         Text = "資料庫工具";
+
         Load += DbToolFormLoad;
         tabControl1.ResumeLayout(false);
-        connTool.ResumeLayout(false);
-        connTool.PerformLayout();
-        modelTool.ResumeLayout(false);
-        modelTool.PerformLayout();
-        schmaTool.ResumeLayout(false);
-        schmaTool.PerformLayout();
+        
+        connToolTab.ResumeLayout(false);
+        connToolTab.PerformLayout();
+
+        schmaToolTab.ResumeLayout(false);
+        schmaToolTab.PerformLayout();
+
+        modelToolTab.ResumeLayout(false);
+        modelToolTab.PerformLayout();
+
         settingTab.ResumeLayout(false);
+       
         ResumeLayout(false);
         PerformLayout();
     }
@@ -520,9 +527,12 @@ partial class DbToolForm
     private Button downloadSchemaBtn;
     private Button dbTestBtn;
     private TabControl tabControl1;
-    private TabPage connTool;
-    private TabPage modelTool;
-    private TabPage schmaTool;
+
+    private TabPage connToolTab;
+    private TabPage schmaToolTab;
+    private TabPage modelToolTab;
+    private TabPage settingTab;
+
     private Button downloadTemplateBtn;
     private CheckBox IsTableDescriptionShow;
     private CheckBox IsDataTypeShow;
@@ -544,7 +554,6 @@ partial class DbToolForm
     private CheckBox IsRequired;
     private CheckBox isKey;
     private CheckBox isSummary;
-    private TabPage settingTab;
     private Button resetBtn;
     private Button downloadSchemaWordBtn;
     private CheckBox isWordWithToc;
