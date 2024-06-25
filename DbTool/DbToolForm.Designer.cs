@@ -44,7 +44,6 @@ partial class DbToolForm
         modelGenBtn = new Button();
         settingTab = new TabPage();
         modelGenBtnSettingLabel = new Label();
-        connWordSettingLabel = new Label();
         connSettingLabel = new Label();
         isWordWithToc = new CheckBox();
         IsScaleShow = new CheckBox();
@@ -64,6 +63,7 @@ partial class DbToolForm
         IsDisplay = new CheckBox();
         resetBtn = new Button();
         errorTextLbl = new TextBox();
+        isUseExcelTemplate = new CheckBox();
         tabControl1.SuspendLayout();
         connToolTab.SuspendLayout();
         schmaToolTab.SuspendLayout();
@@ -239,8 +239,8 @@ partial class DbToolForm
         // 
         // settingTab
         // 
+        settingTab.Controls.Add(isUseExcelTemplate);
         settingTab.Controls.Add(modelGenBtnSettingLabel);
-        settingTab.Controls.Add(connWordSettingLabel);
         settingTab.Controls.Add(connSettingLabel);
         settingTab.Controls.Add(isWordWithToc);
         settingTab.Controls.Add(IsScaleShow);
@@ -277,16 +277,6 @@ partial class DbToolForm
         modelGenBtnSettingLabel.TabIndex = 19;
         modelGenBtnSettingLabel.Text = "下載 model .cs 檔顯示設置";
         // 
-        // connWordSettingLabel
-        // 
-        connWordSettingLabel.AutoSize = true;
-        connWordSettingLabel.Location = new Point(11, 129);
-        connWordSettingLabel.Margin = new Padding(2, 0, 2, 0);
-        connWordSettingLabel.Name = "connWordSettingLabel";
-        connWordSettingLabel.Size = new Size(144, 19);
-        connWordSettingLabel.TabIndex = 18;
-        connWordSettingLabel.Text = "下載 word 目錄顯示";
-        // 
         // connSettingLabel
         // 
         connSettingLabel.AutoSize = true;
@@ -300,19 +290,19 @@ partial class DbToolForm
         // isWordWithToc
         // 
         isWordWithToc.AutoSize = true;
-        isWordWithToc.Location = new Point(36, 150);
+        isWordWithToc.Location = new Point(35, 123);
         isWordWithToc.Margin = new Padding(2);
         isWordWithToc.Name = "isWordWithToc";
-        isWordWithToc.Size = new Size(146, 23);
+        isWordWithToc.Size = new Size(101, 23);
         isWordWithToc.TabIndex = 16;
-        isWordWithToc.Text = "Word是否有目錄";
+        isWordWithToc.Text = "Word目錄";
         isWordWithToc.UseVisualStyleBackColor = true;
         isWordWithToc.CheckedChanged += isWordWithTocChanged;
         // 
         // IsScaleShow
         // 
         IsScaleShow.AutoSize = true;
-        IsScaleShow.Location = new Point(255, 87);
+        IsScaleShow.Location = new Point(255, 94);
         IsScaleShow.Margin = new Padding(2);
         IsScaleShow.Name = "IsScaleShow";
         IsScaleShow.Size = new Size(76, 23);
@@ -324,7 +314,7 @@ partial class DbToolForm
         // IsPrecisionShow
         // 
         IsPrecisionShow.AutoSize = true;
-        IsPrecisionShow.Location = new Point(185, 87);
+        IsPrecisionShow.Location = new Point(169, 94);
         IsPrecisionShow.Margin = new Padding(2);
         IsPrecisionShow.Name = "IsPrecisionShow";
         IsPrecisionShow.Size = new Size(61, 23);
@@ -336,7 +326,7 @@ partial class DbToolForm
         // IsLengthShow
         // 
         IsLengthShow.AutoSize = true;
-        IsLengthShow.Location = new Point(99, 87);
+        IsLengthShow.Location = new Point(106, 94);
         IsLengthShow.Margin = new Padding(2);
         IsLengthShow.Name = "IsLengthShow";
         IsLengthShow.Size = new Size(61, 23);
@@ -350,7 +340,7 @@ partial class DbToolForm
         IsNotNullShow.AutoSize = true;
         IsNotNullShow.Checked = true;
         IsNotNullShow.CheckState = CheckState.Checked;
-        IsNotNullShow.Location = new Point(36, 87);
+        IsNotNullShow.Location = new Point(33, 94);
         IsNotNullShow.Margin = new Padding(2);
         IsNotNullShow.Name = "IsNotNullShow";
         IsNotNullShow.Size = new Size(61, 23);
@@ -364,7 +354,7 @@ partial class DbToolForm
         IsPrimaryKeyShow.AutoSize = true;
         IsPrimaryKeyShow.Checked = true;
         IsPrimaryKeyShow.CheckState = CheckState.Checked;
-        IsPrimaryKeyShow.Location = new Point(333, 60);
+        IsPrimaryKeyShow.Location = new Point(338, 64);
         IsPrimaryKeyShow.Margin = new Padding(2);
         IsPrimaryKeyShow.Name = "IsPrimaryKeyShow";
         IsPrimaryKeyShow.Size = new Size(61, 23);
@@ -378,7 +368,7 @@ partial class DbToolForm
         IsIdentityShow.AutoSize = true;
         IsIdentityShow.Checked = true;
         IsIdentityShow.CheckState = CheckState.Checked;
-        IsIdentityShow.Location = new Point(255, 60);
+        IsIdentityShow.Location = new Point(261, 64);
         IsIdentityShow.Margin = new Padding(2);
         IsIdentityShow.Name = "IsIdentityShow";
         IsIdentityShow.Size = new Size(61, 23);
@@ -392,7 +382,7 @@ partial class DbToolForm
         IsDefaultValueShow.AutoSize = true;
         IsDefaultValueShow.Checked = true;
         IsDefaultValueShow.CheckState = CheckState.Checked;
-        IsDefaultValueShow.Location = new Point(185, 60);
+        IsDefaultValueShow.Location = new Point(182, 64);
         IsDefaultValueShow.Margin = new Padding(2);
         IsDefaultValueShow.Name = "IsDefaultValueShow";
         IsDefaultValueShow.Size = new Size(76, 23);
@@ -406,7 +396,7 @@ partial class DbToolForm
         IsDataTypeShow.AutoSize = true;
         IsDataTypeShow.Checked = true;
         IsDataTypeShow.CheckState = CheckState.Checked;
-        IsDataTypeShow.Location = new Point(99, 60);
+        IsDataTypeShow.Location = new Point(96, 64);
         IsDataTypeShow.Margin = new Padding(2);
         IsDataTypeShow.Name = "IsDataTypeShow";
         IsDataTypeShow.Size = new Size(91, 23);
@@ -420,7 +410,7 @@ partial class DbToolForm
         IsSortShow.AutoSize = true;
         IsSortShow.Checked = true;
         IsSortShow.CheckState = CheckState.Checked;
-        IsSortShow.Location = new Point(36, 60);
+        IsSortShow.Location = new Point(33, 64);
         IsSortShow.Margin = new Padding(2);
         IsSortShow.Name = "IsSortShow";
         IsSortShow.Size = new Size(61, 23);
@@ -432,7 +422,7 @@ partial class DbToolForm
         // IsColumnDescriptionShow
         // 
         IsColumnDescriptionShow.AutoSize = true;
-        IsColumnDescriptionShow.Location = new Point(333, 87);
+        IsColumnDescriptionShow.Location = new Point(334, 94);
         IsColumnDescriptionShow.Margin = new Padding(2);
         IsColumnDescriptionShow.Name = "IsColumnDescriptionShow";
         IsColumnDescriptionShow.Size = new Size(76, 23);
@@ -444,7 +434,7 @@ partial class DbToolForm
         // IsTableDescriptionShow
         // 
         IsTableDescriptionShow.AutoSize = true;
-        IsTableDescriptionShow.Location = new Point(36, 33);
+        IsTableDescriptionShow.Location = new Point(32, 33);
         IsTableDescriptionShow.Margin = new Padding(2);
         IsTableDescriptionShow.Name = "IsTableDescriptionShow";
         IsTableDescriptionShow.Size = new Size(76, 23);
@@ -525,6 +515,18 @@ partial class DbToolForm
         errorTextLbl.TabIndex = 8;
         errorTextLbl.DoubleClick += errorTextDoubleClick;
         // 
+        // isUseExcelTemplate
+        // 
+        isUseExcelTemplate.AutoSize = true;
+        isUseExcelTemplate.Location = new Point(33, 150);
+        isUseExcelTemplate.Margin = new Padding(2);
+        isUseExcelTemplate.Name = "isUseExcelTemplate";
+        isUseExcelTemplate.Size = new Size(101, 23);
+        isUseExcelTemplate.TabIndex = 20;
+        isUseExcelTemplate.Text = "是否使用樣式";
+        isUseExcelTemplate.UseVisualStyleBackColor = true;
+        isUseExcelTemplate.CheckedChanged += isUseExcelTemplateChanged;
+        // 
         // DbToolForm
         // 
         AutoScaleDimensions = new SizeF(9F, 19F);
@@ -587,6 +589,6 @@ partial class DbToolForm
     private CheckBox isWordWithToc;
     private Button downloadSchemaWordPerTableBtn;
     private Label connSettingLabel;
-    private Label connWordSettingLabel;
     private Label modelGenBtnSettingLabel;
+    private CheckBox isUseExcelTemplate;
 }

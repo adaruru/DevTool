@@ -59,4 +59,10 @@
     /// Word 規格產製使否包含目錄
     /// </summary>
     public static bool isWordWithToc { get; set; } = true;
+
+
+    /// <summary>
+    /// Excel 產製是否使用自製範本
+    /// </summary>
+    public static bool isUseExcelTemplate { get; set; } = true;
 }

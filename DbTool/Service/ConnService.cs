@@ -238,4 +238,97 @@ ORDER BY st.name
         // If the column can be null, return an empty string (no default value specified)
         return "";
     }
+
+    public void InsertTableDescription(Schema Schema)
+    {
+
+        for (int i = 0; i < Schema.Tables.Count; i++)
+        {
+            if (!string.IsNullOrEmpty(Schema.Tables[i].TableDescription))
+            {
+
+                var str = @"
+-- Check if the description already exists
+IF EXISTS (
+    SELECT *
+    FROM sys.extended_properties
+    WHERE major_id = OBJECT_ID(@TableName) 
+      AND minor_id = 0
+      AND name = 'MS_Description'
+)
+BEGIN
+    -- Update the existing description
+    EXEC sp_updateextendedproperty 
+      @name = N'MS_Description',
+      @value = @TableDescription,
+      @level0type = N'SCHEMA', @level0name = 'dbo',
+      @level1type = N'TABLE',  @level1name = @TableName;
+END
+ELSE
+BEGIN
+    -- Add a new description if it doesn't exist
+    EXEC sp_addextendedproperty 
+      @name = N'MS_Description',
+      @value = @TableDescription,
+      @level0type = N'SCHEMA', @level0name = 'dbo',
+      @level1type = N'TABLE',  @level1name = @TableName;
+END;";
+                using SqlConnection con = new SqlConnection(ConnString);
+                using SqlCommand cmd = new SqlCommand(str, con);
+                con.Open();
+                cmd.Parameters.AddWithValue("@TableName", Schema.Tables[i].TableName);
+                cmd.Parameters.AddWithValue("@TableDescription", Schema.Tables[i].TableDescription);
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+    }
+
+    public void InsertColumnDescription(Schema Schema)
+    {
+        for (int i = 0; i < Schema.Tables.Count; i++)
+        {
+            for (int c = 0; c < Schema.Tables[i].Columns.Count; c++)
+            {
+                var str = @"
+IF EXISTS (
+    SELECT *
+    FROM sys.extended_properties
+    WHERE major_id = OBJECT_ID(@TableName)
+      AND minor_id = (
+          SELECT column_id
+          FROM sys.columns
+          WHERE object_id = OBJECT_ID(@TableName)
+            AND name = @ColumnName
+      )
+      AND name = 'MS_Description'
+)
+BEGIN
+    EXEC sp_updateextendedproperty 
+      @name = N'MS_Description',
+      @value = @ColumnDescription,
+      @level0type = N'SCHEMA', @level0name = 'dbo',
+      @level1type = N'TABLE',  @level1name = @TableName,
+      @level2type = N'COLUMN', @level2name = @ColumnName;
+END
+ELSE
+BEGIN
+    EXEC sp_addextendedproperty 
+      @name = N'MS_Description',
+      @value = @ColumnDescription,
+      @level0type = N'SCHEMA', @level0name = 'dbo',
+      @level1type = N'TABLE',  @level1name = @TableName,
+      @level2type = N'COLUMN', @level2name = @ColumnName;
+END;";
+                using SqlConnection con = new SqlConnection(ConnString);
+                using SqlCommand cmd = new SqlCommand(str, con);
+                con.Open();
+                cmd.Parameters.AddWithValue("@TableName", Schema.Tables[i].TableName);
+                cmd.Parameters.AddWithValue("@ColumnName", Schema.Tables[i].Columns[c].ColumnName);
+                cmd.Parameters.AddWithValue("@ColumnDescription", Schema.Tables[i].Columns[c].ColumnDescription);
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+    }
 }

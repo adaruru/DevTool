@@ -323,105 +323,13 @@ public partial class DbToolForm : Form
                     }
                 }
             }
-            InsertTableDescription();
-            InsertColumnDescription();
+            conn.InsertTableDescription(_schemaForImportDescription);
+            conn.InsertColumnDescription(_schemaForImportDescription);
             errorTextLbl.Text = "匯入完成";
         }
         catch (Exception es)
         {
             errorTextLbl.Text = $"出現其他異常錯誤:{es.Message}";
-        }
-    }
-
-    private void InsertTableDescription()
-    {
-        for (int i = 0; i < _schemaForImportDescription.Tables.Count; i++)
-        {
-            if (!string.IsNullOrEmpty(_schemaForImportDescription.Tables[i].TableDescription))
-            {
-
-                var str = @"
--- Check if the description already exists
-IF EXISTS (
-    SELECT *
-    FROM sys.extended_properties
-    WHERE major_id = OBJECT_ID(@TableName) 
-      AND minor_id = 0
-      AND name = 'MS_Description'
-)
-BEGIN
-    -- Update the existing description
-    EXEC sp_updateextendedproperty 
-      @name = N'MS_Description',
-      @value = @TableDescription,
-      @level0type = N'SCHEMA', @level0name = 'dbo',
-      @level1type = N'TABLE',  @level1name = @TableName;
-END
-ELSE
-BEGIN
-    -- Add a new description if it doesn't exist
-    EXEC sp_addextendedproperty 
-      @name = N'MS_Description',
-      @value = @TableDescription,
-      @level0type = N'SCHEMA', @level0name = 'dbo',
-      @level1type = N'TABLE',  @level1name = @TableName;
-END;";
-                using SqlConnection con = new SqlConnection(connStrBox.Text);
-                using SqlCommand cmd = new SqlCommand(str, con);
-                con.Open();
-                cmd.Parameters.AddWithValue("@TableName", _schemaForImportDescription.Tables[i].TableName);
-                cmd.Parameters.AddWithValue("@TableDescription", _schemaForImportDescription.Tables[i].TableDescription);
-                cmd.ExecuteNonQuery();
-                con.Close();
-            }
-        }
-    }
-
-    private void InsertColumnDescription()
-    {
-        for (int i = 0; i < _schemaForImportDescription.Tables.Count; i++)
-        {
-            for (int c = 0; c < _schemaForImportDescription.Tables[i].Columns.Count; c++)
-            {
-                var str = @"
-IF EXISTS (
-    SELECT *
-    FROM sys.extended_properties
-    WHERE major_id = OBJECT_ID(@TableName)
-      AND minor_id = (
-          SELECT column_id
-          FROM sys.columns
-          WHERE object_id = OBJECT_ID(@TableName)
-            AND name = @ColumnName
-      )
-      AND name = 'MS_Description'
-)
-BEGIN
-    EXEC sp_updateextendedproperty 
-      @name = N'MS_Description',
-      @value = @ColumnDescription,
-      @level0type = N'SCHEMA', @level0name = 'dbo',
-      @level1type = N'TABLE',  @level1name = @TableName,
-      @level2type = N'COLUMN', @level2name = @ColumnName;
-END
-ELSE
-BEGIN
-    EXEC sp_addextendedproperty 
-      @name = N'MS_Description',
-      @value = @ColumnDescription,
-      @level0type = N'SCHEMA', @level0name = 'dbo',
-      @level1type = N'TABLE',  @level1name = @TableName,
-      @level2type = N'COLUMN', @level2name = @ColumnName;
-END;";
-                using SqlConnection con = new SqlConnection(connStrBox.Text);
-                using SqlCommand cmd = new SqlCommand(str, con);
-                con.Open();
-                cmd.Parameters.AddWithValue("@TableName", _schemaForImportDescription.Tables[i].TableName);
-                cmd.Parameters.AddWithValue("@ColumnName", _schemaForImportDescription.Tables[i].Columns[c].ColumnName);
-                cmd.Parameters.AddWithValue("@ColumnDescription", _schemaForImportDescription.Tables[i].Columns[c].ColumnDescription);
-                cmd.ExecuteNonQuery();
-                con.Close();
-            }
         }
     }
 
@@ -651,6 +559,12 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
     {
         Settings.Default.isWordWithToc = isWordWithToc.Checked;
         FormControl.isWordWithToc = isWordWithToc.Checked;
+        Settings.Default.Save();
+    }
+    private void isUseExcelTemplateChanged(object sender, EventArgs e)
+    {
+        Settings.Default.isUseExcelTemplate = isUseExcelTemplate.Checked;
+        FormControl.isUseExcelTemplate = isUseExcelTemplate.Checked;
         Settings.Default.Save();
     }
     #endregion ==System Default Setting event==
