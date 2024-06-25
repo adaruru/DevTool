@@ -35,12 +35,6 @@ partial class DbToolForm
         dbTestBtn = new Button();
         tabControl1 = new TabControl();
         connToolTab = new TabPage();
-        modelToolTab = new TabPage();
-        isSummary = new CheckBox();
-        isKey = new CheckBox();
-        IsRequired = new CheckBox();
-        IsDisplay = new CheckBox();
-        modelGenBtn = new Button();
         schmaToolTab = new TabPage();
         downloadSchemaWordPerTableBtn = new Button();
         isWordWithToc = new CheckBox();
@@ -58,13 +52,19 @@ partial class DbToolForm
         IsColumnDescriptionShow = new CheckBox();
         IsTableDescriptionShow = new CheckBox();
         downloadTemplateBtn = new Button();
+        modelToolTab = new TabPage();
+        modelGenBtn = new Button();
         settingTab = new TabPage();
+        isSummary = new CheckBox();
+        isKey = new CheckBox();
+        IsRequired = new CheckBox();
+        IsDisplay = new CheckBox();
         resetBtn = new Button();
         errorTextLbl = new TextBox();
         tabControl1.SuspendLayout();
-        modelToolTab.SuspendLayout();
         connToolTab.SuspendLayout();
         schmaToolTab.SuspendLayout();
+        modelToolTab.SuspendLayout();
         settingTab.SuspendLayout();
         SuspendLayout();
         // 
@@ -151,98 +151,11 @@ partial class DbToolForm
         connToolTab.Text = "資料庫連線";
         connToolTab.UseVisualStyleBackColor = true;
         // 
-        // modelToolTab
-        // 
-        modelToolTab.Controls.Add(isSummary);
-        modelToolTab.Controls.Add(isKey);
-        modelToolTab.Controls.Add(IsRequired);
-        modelToolTab.Controls.Add(IsDisplay);
-        modelToolTab.Controls.Add(modelGenBtn);
-        modelToolTab.Location = new Point(4, 28);
-        modelToolTab.Margin = new Padding(2);
-        modelToolTab.Name = "modelToolTab";
-        modelToolTab.Padding = new Padding(2);
-        modelToolTab.Size = new Size(528, 223);
-        modelToolTab.TabIndex = 2;
-        modelToolTab.Text = "model產檔";
-        modelToolTab.UseVisualStyleBackColor = true;
-        // 
-        // isSummary
-        // 
-        isSummary.AutoSize = true;
-        isSummary.Location = new Point(7, 24);
-        isSummary.Margin = new Padding(2);
-        isSummary.Name = "isSummary";
-        isSummary.Size = new Size(99, 23);
-        isSummary.TabIndex = 11;
-        isSummary.Text = "Summary";
-        isSummary.UseVisualStyleBackColor = true;
-        isSummary.CheckedChanged += isSummaryChanged;
-        // 
-        // isKey
-        // 
-        isKey.AutoSize = true;
-        isKey.Location = new Point(298, 24);
-        isKey.Margin = new Padding(2);
-        isKey.Name = "isKey";
-        isKey.Size = new Size(56, 23);
-        isKey.TabIndex = 10;
-        isKey.Text = "Key";
-        isKey.UseVisualStyleBackColor = true;
-        isKey.CheckedChanged += isKeyChanged;
-        // 
-        // IsRequired
-        // 
-        IsRequired.AutoSize = true;
-        IsRequired.Location = new Point(200, 24);
-        IsRequired.Margin = new Padding(2);
-        IsRequired.Name = "IsRequired";
-        IsRequired.Size = new Size(96, 23);
-        IsRequired.TabIndex = 9;
-        IsRequired.Text = "Required";
-        IsRequired.UseVisualStyleBackColor = true;
-        IsRequired.CheckedChanged += IsRequiredChanged;
-        // 
-        // IsDisplay
-        // 
-        IsDisplay.AutoSize = true;
-        IsDisplay.Location = new Point(107, 24);
-        IsDisplay.Margin = new Padding(2);
-        IsDisplay.Name = "IsDisplay";
-        IsDisplay.Size = new Size(82, 23);
-        IsDisplay.TabIndex = 8;
-        IsDisplay.Text = "Display";
-        IsDisplay.UseVisualStyleBackColor = true;
-        IsDisplay.CheckedChanged += IsDisplayChanged;
-        // 
-        // modelGenBtn
-        // 
-        modelGenBtn.Location = new Point(7, 59);
-        modelGenBtn.Margin = new Padding(2);
-        modelGenBtn.Name = "modelGenBtn";
-        modelGenBtn.Size = new Size(124, 26);
-        modelGenBtn.TabIndex = 7;
-        modelGenBtn.Text = "所有model產檔";
-        modelGenBtn.UseVisualStyleBackColor = true;
-        modelGenBtn.Click += modelGenEvent;
-        // 
         // schmaToolTab
         // 
         schmaToolTab.Controls.Add(downloadSchemaWordPerTableBtn);
-        schmaToolTab.Controls.Add(isWordWithToc);
         schmaToolTab.Controls.Add(downloadSchemaWordBtn);
         schmaToolTab.Controls.Add(ImportDescription);
-        schmaToolTab.Controls.Add(IsScaleShow);
-        schmaToolTab.Controls.Add(IsPrecisionShow);
-        schmaToolTab.Controls.Add(IsLengthShow);
-        schmaToolTab.Controls.Add(IsNotNullShow);
-        schmaToolTab.Controls.Add(IsPrimaryKeyShow);
-        schmaToolTab.Controls.Add(IsIdentityShow);
-        schmaToolTab.Controls.Add(IsDefaultValueShow);
-        schmaToolTab.Controls.Add(IsDataTypeShow);
-        schmaToolTab.Controls.Add(IsSortShow);
-        schmaToolTab.Controls.Add(IsColumnDescriptionShow);
-        schmaToolTab.Controls.Add(IsTableDescriptionShow);
         schmaToolTab.Controls.Add(downloadTemplateBtn);
         schmaToolTab.Controls.Add(downloadSchemaBtn);
         schmaToolTab.Location = new Point(4, 28);
@@ -454,8 +367,47 @@ partial class DbToolForm
         downloadTemplateBtn.UseVisualStyleBackColor = true;
         downloadTemplateBtn.Click += exportSchemaEvent;
         // 
+        // modelToolTab
+        // 
+        modelToolTab.Controls.Add(modelGenBtn);
+        modelToolTab.Location = new Point(4, 28);
+        modelToolTab.Margin = new Padding(2);
+        modelToolTab.Name = "modelToolTab";
+        modelToolTab.Padding = new Padding(2);
+        modelToolTab.Size = new Size(528, 223);
+        modelToolTab.TabIndex = 2;
+        modelToolTab.Text = "model產檔";
+        modelToolTab.UseVisualStyleBackColor = true;
+        // 
+        // modelGenBtn
+        // 
+        modelGenBtn.Location = new Point(17, 19);
+        modelGenBtn.Margin = new Padding(2);
+        modelGenBtn.Name = "modelGenBtn";
+        modelGenBtn.Size = new Size(124, 26);
+        modelGenBtn.TabIndex = 7;
+        modelGenBtn.Text = "所有model產檔";
+        modelGenBtn.UseVisualStyleBackColor = true;
+        modelGenBtn.Click += modelGenEvent;
+        // 
         // settingTab
         // 
+        settingTab.Controls.Add(isWordWithToc);
+        settingTab.Controls.Add(IsScaleShow);
+        settingTab.Controls.Add(IsPrecisionShow);
+        settingTab.Controls.Add(IsLengthShow);
+        settingTab.Controls.Add(IsNotNullShow);
+        settingTab.Controls.Add(IsPrimaryKeyShow);
+        settingTab.Controls.Add(IsIdentityShow);
+        settingTab.Controls.Add(IsDefaultValueShow);
+        settingTab.Controls.Add(IsDataTypeShow);
+        settingTab.Controls.Add(IsSortShow);
+        settingTab.Controls.Add(IsColumnDescriptionShow);
+        settingTab.Controls.Add(IsTableDescriptionShow);
+        settingTab.Controls.Add(isSummary);
+        settingTab.Controls.Add(isKey);
+        settingTab.Controls.Add(IsRequired);
+        settingTab.Controls.Add(IsDisplay);
         settingTab.Controls.Add(resetBtn);
         settingTab.Location = new Point(4, 28);
         settingTab.Name = "settingTab";
@@ -464,6 +416,54 @@ partial class DbToolForm
         settingTab.TabIndex = 3;
         settingTab.Text = "設定";
         settingTab.UseVisualStyleBackColor = true;
+        // 
+        // isSummary
+        // 
+        isSummary.AutoSize = true;
+        isSummary.Location = new Point(23, 116);
+        isSummary.Margin = new Padding(2);
+        isSummary.Name = "isSummary";
+        isSummary.Size = new Size(99, 23);
+        isSummary.TabIndex = 11;
+        isSummary.Text = "Summary";
+        isSummary.UseVisualStyleBackColor = true;
+        isSummary.CheckedChanged += isSummaryChanged;
+        // 
+        // isKey
+        // 
+        isKey.AutoSize = true;
+        isKey.Location = new Point(314, 116);
+        isKey.Margin = new Padding(2);
+        isKey.Name = "isKey";
+        isKey.Size = new Size(56, 23);
+        isKey.TabIndex = 10;
+        isKey.Text = "Key";
+        isKey.UseVisualStyleBackColor = true;
+        isKey.CheckedChanged += isKeyChanged;
+        // 
+        // IsRequired
+        // 
+        IsRequired.AutoSize = true;
+        IsRequired.Location = new Point(216, 116);
+        IsRequired.Margin = new Padding(2);
+        IsRequired.Name = "IsRequired";
+        IsRequired.Size = new Size(96, 23);
+        IsRequired.TabIndex = 9;
+        IsRequired.Text = "Required";
+        IsRequired.UseVisualStyleBackColor = true;
+        IsRequired.CheckedChanged += IsRequiredChanged;
+        // 
+        // IsDisplay
+        // 
+        IsDisplay.AutoSize = true;
+        IsDisplay.Location = new Point(123, 116);
+        IsDisplay.Margin = new Padding(2);
+        IsDisplay.Name = "IsDisplay";
+        IsDisplay.Size = new Size(82, 23);
+        IsDisplay.TabIndex = 8;
+        IsDisplay.Text = "Display";
+        IsDisplay.UseVisualStyleBackColor = true;
+        IsDisplay.CheckedChanged += IsDisplayChanged;
         // 
         // resetBtn
         // 
@@ -499,21 +499,15 @@ partial class DbToolForm
         Margin = new Padding(2);
         Name = "DbToolForm";
         Text = "資料庫工具";
-
         Load += DbToolFormLoad;
         tabControl1.ResumeLayout(false);
-        
         connToolTab.ResumeLayout(false);
         connToolTab.PerformLayout();
-
         schmaToolTab.ResumeLayout(false);
         schmaToolTab.PerformLayout();
-
         modelToolTab.ResumeLayout(false);
-        modelToolTab.PerformLayout();
-
         settingTab.ResumeLayout(false);
-       
+        settingTab.PerformLayout();
         ResumeLayout(false);
         PerformLayout();
     }
