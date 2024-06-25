@@ -124,10 +124,9 @@ partial class DbToolForm
         // 
         // tabControl1
         // 
-        tabControl1.TabPages.Clear();
         tabControl1.Controls.Add(connToolTab);
-        tabControl1.Controls.Add(modelToolTab);
         tabControl1.Controls.Add(schmaToolTab);
+        tabControl1.Controls.Add(modelToolTab);
         tabControl1.Controls.Add(settingTab);
         tabControl1.Location = new Point(0, 2);
         tabControl1.Margin = new Padding(2);
