@@ -36,14 +36,15 @@ partial class DbToolForm
         tabControl1 = new TabControl();
         connToolTab = new TabPage();
         schmaToolTab = new TabPage();
-        downloadExcelStyleTemplateBtn = new Button();
+        downloadTemplateBtn = new Button();
         downloadSchemaWordPerTableBtn = new Button();
         downloadSchemaWordBtn = new Button();
         ImportDescription = new Button();
-        downloadTemplateBtn = new Button();
         modelToolTab = new TabPage();
         modelGenBtn = new Button();
         settingTab = new TabPage();
+        CustomThemelabel = new Label();
+        CustomThemeNameSelect = new ComboBox();
         modelGenBtnSettingLabel = new Label();
         connSettingLabel = new Label();
         isWordWithToc = new CheckBox();
@@ -63,8 +64,8 @@ partial class DbToolForm
         IsRequired = new CheckBox();
         IsDisplay = new CheckBox();
         resetBtn = new Button();
+        downloadExcelStyleTemplateBtn = new Button();
         errorTextLbl = new TextBox();
-        CustomThemeNameSelect = new ComboBox();
         tabControl1.SuspendLayout();
         connToolTab.SuspendLayout();
         schmaToolTab.SuspendLayout();
@@ -157,11 +158,10 @@ partial class DbToolForm
         // 
         // schmaToolTab
         // 
-        schmaToolTab.Controls.Add(downloadExcelStyleTemplateBtn);
+        schmaToolTab.Controls.Add(downloadTemplateBtn);
         schmaToolTab.Controls.Add(downloadSchemaWordPerTableBtn);
         schmaToolTab.Controls.Add(downloadSchemaWordBtn);
         schmaToolTab.Controls.Add(ImportDescription);
-        schmaToolTab.Controls.Add(downloadTemplateBtn);
         schmaToolTab.Controls.Add(downloadSchemaBtn);
         schmaToolTab.Location = new Point(4, 28);
         schmaToolTab.Margin = new Padding(2);
@@ -172,16 +172,16 @@ partial class DbToolForm
         schmaToolTab.Text = "資料庫規格";
         schmaToolTab.UseVisualStyleBackColor = true;
         // 
-        // downloadExcelStyleTemplateBtn
+        // downloadTemplateBtn
         // 
-        downloadExcelStyleTemplateBtn.Location = new Point(268, 17);
-        downloadExcelStyleTemplateBtn.Margin = new Padding(2);
-        downloadExcelStyleTemplateBtn.Name = "downloadExcelStyleTemplateBtn";
-        downloadExcelStyleTemplateBtn.Size = new Size(156, 28);
-        downloadExcelStyleTemplateBtn.TabIndex = 18;
-        downloadExcelStyleTemplateBtn.Text = "下載 Excel 自定樣式";
-        downloadExcelStyleTemplateBtn.UseVisualStyleBackColor = true;
-        downloadExcelStyleTemplateBtn.Click += downloadExcelStyleTemplate;
+        downloadTemplateBtn.Location = new Point(21, 163);
+        downloadTemplateBtn.Margin = new Padding(2);
+        downloadTemplateBtn.Name = "downloadTemplateBtn";
+        downloadTemplateBtn.Size = new Size(155, 28);
+        downloadTemplateBtn.TabIndex = 2;
+        downloadTemplateBtn.Text = "下載匯入描述範本";
+        downloadTemplateBtn.UseVisualStyleBackColor = true;
+        downloadTemplateBtn.Click += exportSchemaEvent;
         // 
         // downloadSchemaWordPerTableBtn
         // 
@@ -216,17 +216,6 @@ partial class DbToolForm
         ImportDescription.UseVisualStyleBackColor = true;
         ImportDescription.Click += ImportDescriptionEvent;
         // 
-        // downloadTemplateBtn
-        // 
-        downloadTemplateBtn.Location = new Point(21, 163);
-        downloadTemplateBtn.Margin = new Padding(2);
-        downloadTemplateBtn.Name = "downloadTemplateBtn";
-        downloadTemplateBtn.Size = new Size(155, 28);
-        downloadTemplateBtn.TabIndex = 2;
-        downloadTemplateBtn.Text = "下載匯入描述範本";
-        downloadTemplateBtn.UseVisualStyleBackColor = true;
-        downloadTemplateBtn.Click += exportSchemaEvent;
-        // 
         // modelToolTab
         // 
         modelToolTab.Controls.Add(modelGenBtn);
@@ -252,6 +241,7 @@ partial class DbToolForm
         // 
         // settingTab
         // 
+        settingTab.Controls.Add(CustomThemelabel);
         settingTab.Controls.Add(CustomThemeNameSelect);
         settingTab.Controls.Add(modelGenBtnSettingLabel);
         settingTab.Controls.Add(connSettingLabel);
@@ -272,6 +262,7 @@ partial class DbToolForm
         settingTab.Controls.Add(IsRequired);
         settingTab.Controls.Add(IsDisplay);
         settingTab.Controls.Add(resetBtn);
+        settingTab.Controls.Add(downloadExcelStyleTemplateBtn);
         settingTab.Location = new Point(4, 28);
         settingTab.Name = "settingTab";
         settingTab.Padding = new Padding(3);
@@ -279,6 +270,25 @@ partial class DbToolForm
         settingTab.TabIndex = 3;
         settingTab.Text = "設定";
         settingTab.UseVisualStyleBackColor = true;
+        // 
+        // CustomThemelabel
+        // 
+        CustomThemelabel.AutoSize = true;
+        CustomThemelabel.Location = new Point(11, 147);
+        CustomThemelabel.Margin = new Padding(2, 0, 2, 0);
+        CustomThemelabel.Name = "CustomThemelabel";
+        CustomThemelabel.Size = new Size(126, 19);
+        CustomThemelabel.TabIndex = 21;
+        CustomThemelabel.Text = "自定義 Excel 樣式";
+        // 
+        // CustomThemeNameSelect
+        // 
+        CustomThemeNameSelect.FormattingEnabled = true;
+        CustomThemeNameSelect.Location = new Point(139, 144);
+        CustomThemeNameSelect.Name = "CustomThemeNameSelect";
+        CustomThemeNameSelect.Size = new Size(224, 27);
+        CustomThemeNameSelect.TabIndex = 20;
+        CustomThemeNameSelect.SelectedIndexChanged += CustomThemeNameSelectChanged;
         // 
         // modelGenBtnSettingLabel
         // 
@@ -515,6 +525,17 @@ partial class DbToolForm
         resetBtn.UseVisualStyleBackColor = true;
         resetBtn.Click += resetBtnClick;
         // 
+        // downloadExcelStyleTemplateBtn
+        // 
+        downloadExcelStyleTemplateBtn.Location = new Point(369, 143);
+        downloadExcelStyleTemplateBtn.Margin = new Padding(2);
+        downloadExcelStyleTemplateBtn.Name = "downloadExcelStyleTemplateBtn";
+        downloadExcelStyleTemplateBtn.Size = new Size(151, 28);
+        downloadExcelStyleTemplateBtn.TabIndex = 18;
+        downloadExcelStyleTemplateBtn.Text = "下載 Excel 自定樣式";
+        downloadExcelStyleTemplateBtn.UseVisualStyleBackColor = true;
+        downloadExcelStyleTemplateBtn.Click += downloadExcelStyleTemplate;
+        // 
         // errorTextLbl
         // 
         errorTextLbl.BackColor = SystemColors.Control;
@@ -527,15 +548,6 @@ partial class DbToolForm
         errorTextLbl.Size = new Size(522, 60);
         errorTextLbl.TabIndex = 8;
         errorTextLbl.DoubleClick += errorTextDoubleClick;
-        // 
-        // CustomThemeNameSelect
-        // 
-        CustomThemeNameSelect.FormattingEnabled = true;
-        CustomThemeNameSelect.Location = new Point(137, 139);
-        CustomThemeNameSelect.Name = "CustomThemeNameSelect";
-        CustomThemeNameSelect.Size = new Size(151, 27);
-        CustomThemeNameSelect.TabIndex = 20;
-        CustomThemeNameSelect.SelectedIndexChanged += CustomThemeNameSelectChanged;
         // 
         // DbToolForm
         // 
@@ -602,4 +614,5 @@ partial class DbToolForm
     private Label modelGenBtnSettingLabel;
     private Button downloadExcelStyleTemplateBtn;
     private ComboBox CustomThemeNameSelect;
+    private Label CustomThemelabel;
 }

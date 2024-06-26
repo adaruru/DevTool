@@ -576,6 +576,6 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
 
     private void CustomThemeNameSelectChanged(object sender, EventArgs e)
     {
-
+        FormControl.CustomThemeName = CustomThemeNameSelect.SelectedValue.ToString();
     }
 }

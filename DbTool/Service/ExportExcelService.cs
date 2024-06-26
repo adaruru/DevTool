@@ -9,20 +9,21 @@ public class ExportExcelService
 {
     public string ExportExcelSchema(Schema Schema, string connStrBox)
     {
-        string message =string.Empty;
+        string message = string.Empty;
 
-
-        var isUseCustomTheme = true;
-        if (isUseCustomTheme) {
+        if (!string.IsNullOrEmpty(FormControl.CustomThemeName))
+        {
             //use custom template
-            Stream resourceStream = new FileStream(Path.Combine(Directory.GetCurrentDirectory(), "CustomTheme/CustomTheme5001.xlsx"), FileMode.Open, FileAccess.Read);
+            Stream resourceStream = new FileStream(Path.Combine(Directory.GetCurrentDirectory(), $"CustomTheme/{FormControl.CustomThemeName}"), FileMode.Open, FileAccess.Read);
             if (resourceStream == null)
             {
-                MessageBox.Show($"Embedded resource CustomTheme5001.xlsx not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"resource {FormControl.CustomThemeName} not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return message;
             }
             message += ProcessPackageSet(Schema, connStrBox, resourceStream);
-        } else {
+        }
+        else
+        {
             //use default template
             string resourceName = "DbTool.Template.StyleTemplate.xlsx";
             Assembly assembly = Assembly.GetExecutingAssembly();
@@ -38,7 +39,7 @@ public class ExportExcelService
 
         return message;
     }
-    public string ProcessPackageSet(Schema Schema, string connStrBox,Stream resourceStream)
+    public string ProcessPackageSet(Schema Schema, string connStrBox, Stream resourceStream)
     {
         //Excel 檔案名稱
         string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), $"{Schema.SchemaName}Schema_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx");
@@ -196,7 +197,7 @@ public class ExportExcelService
         return message;
     }
 
-        public string ExportExcelSchemaWithTemplate(Schema Schema, string connStrBox, bool isTemplate)
+    public string ExportExcelSchemaWithTemplate(Schema Schema, string connStrBox, bool isTemplate)
     {
         //範本或規格 Excel 檔案名稱
         string destinationPath = isTemplate ?
