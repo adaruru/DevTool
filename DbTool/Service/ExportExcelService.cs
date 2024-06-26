@@ -1,5 +1,4 @@
-﻿using DocumentFormat.OpenXml.Presentation;
-using OfficeOpenXml;
+﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System.Diagnostics;
 using System.Reflection;
@@ -25,22 +24,15 @@ public class ExportExcelService
             return message;
         }
 
-        ExcelStyle tableListHeaderStyle;
-        ExcelStyle tableListStyle;
-        ExcelStyle columnTableNameStyle;
-        ExcelStyle columnHeaderStyle;
-        ExcelStyle columnStyle;
-        using (var templatePack = new ExcelPackage(resourceStream))
-        {
-            var styleSheet = templatePack.Workbook.Worksheets["StyleTemplate"];
-            tableListHeaderStyle = styleSheet.Cells[1, 1].Style;
-            tableListStyle = styleSheet.Cells[2, 1].Style;
-            columnTableNameStyle = styleSheet.Cells[3, 1].Style;
-            columnHeaderStyle = styleSheet.Cells[4, 1].Style;
-            columnStyle = styleSheet.Cells[5, 1].Style;
-        }
+        var package = new ExcelPackage(resourceStream);
 
-        using var package = new ExcelPackage();
+        var styleSheet = package.Workbook.Worksheets["StyleTemplate"];
+        var tableListHeaderStyle = styleSheet.Cells[1, 1];
+        var tableListStyle = styleSheet.Cells[2, 1];
+        var columnTableNameStyle = styleSheet.Cells[3, 1];
+        var columnHeaderStyle = styleSheet.Cells[4, 1];
+        var columnStyle = styleSheet.Cells[5, 1];
+
         var tocSheet = package.Workbook.Worksheets.Add("TableLists");
         for (int i = 0; i < Schema.Tables.Count; i++)
         {
@@ -139,70 +131,39 @@ public class ExportExcelService
                     columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ColumnDescription;
                 }
 
-                columnSheet.Cells.AutoFitColumns(); //調整欄寬
+                columnSheet.Cells.AutoFitColumns(); // 調整欄寬
                 columnSheet.View.TabSelected = false;// 設置為不選取狀態
 
-                //設置table樣式
+                //設置 table 樣式
                 using (var range = columnSheet.Cells[1, 1, 1, 2])
                 {
-                    //range.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    //range.Style.Fill.BackgroundColor.SetColor(Color.Lavender);
+                    columnTableNameStyle.CopyStyles(range);
                 }
                 using (var range = columnSheet.Cells[2, 1, 2, column])
                 {
-                    //range.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    //range.Style.Fill.BackgroundColor.SetColor(Color.LightBlue);
+                    columnHeaderStyle.CopyStyles(range);
                 }
                 using (var range = columnSheet.Cells[3, 1, Schema.Tables[i].Columns.Count + 2, column])
                 {
-                    //range.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    //range.Style.Fill.BackgroundColor.SetColor(Color.LightCyan);
-                }
-
-                using (var range = columnSheet.Cells[1, 1, Schema.Tables[i].Columns.Count + 2, column])
-                {
-                    // Set the border for the range
-                    //range.Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                    //range.Style.Border.Left.Style = ExcelBorderStyle.Thin;
-                    //range.Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                    //range.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-
-                    //range.Style.Border.Top.Color.SetColor(Color.Black);
-                    //range.Style.Border.Left.Color.SetColor(Color.Black);
-                    //range.Style.Border.Right.Color.SetColor(Color.Black);
-                    //range.Style.Border.Bottom.Color.SetColor(Color.Black);
+                    columnStyle.CopyStyles(range);
                 }
             }
         }
 
         tocSheet.Cells.AutoFitColumns();//調整欄寬
+        //設置 toc 樣式
         using (var range = tocSheet.Cells[1, 1, 1, 2])
         {
-            //range.Style.Fill.PatternType = ExcelFillStyle.Solid;
-            //range.Style.Fill.BackgroundColor.SetColor(Color.LightBlue);
+            tableListHeaderStyle.CopyStyles(range);
         }
         using (var range = tocSheet.Cells[2, 1, Schema.Tables.Count + 1, 2])
         {
-            //range.Style.Fill.PatternType = ExcelFillStyle.Solid;
-            //range.Style.Fill.BackgroundColor.SetColor(Color.LightCyan);
-        }
-
-        using (var range = tocSheet.Cells[1, 1, Schema.Tables.Count + 1, 2])
-        {
-            // Set the border for the range
-            //range.Style.Border.Top.Style = ExcelBorderStyle.Thin;
-            //range.Style.Border.Left.Style = ExcelBorderStyle.Thin;
-            //range.Style.Border.Right.Style = ExcelBorderStyle.Thin;
-            //range.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-
-            //range.Style.Border.Top.Color.SetColor(Color.Black);
-            //range.Style.Border.Left.Color.SetColor(Color.Black);
-            //range.Style.Border.Right.Color.SetColor(Color.Black);
-            //range.Style.Border.Bottom.Color.SetColor(Color.Black);
+            tableListStyle.CopyStyles(range);
         }
 
         // 開啟時只選取TableLists
         package.Workbook.View.ActiveTab = 0;
+        package.Workbook.Worksheets.Delete("StyleTemplate");
 
         package.SaveAs(new FileInfo(destinationPath));
         Process.Start(new ProcessStartInfo
