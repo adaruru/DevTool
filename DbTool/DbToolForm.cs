@@ -158,6 +158,22 @@ public partial class DbToolForm : Form
         if (!Directory.Exists(themeDir))
         {
             Directory.CreateDirectory(themeDir);
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            string[] resourceNames = assembly.GetManifestResourceNames();
+            var themeResources = resourceNames.Where(name => name.StartsWith("DbTool.Template.ThemeSample") && name.EndsWith(".xlsx"));
+            foreach (var resourceName in themeResources)
+            {
+                using Stream resourceStream = assembly.GetManifestResourceStream(resourceName);
+                if (resourceStream != null)
+                {
+                    var fileName = resourceName.Replace("DbTool.Template.ThemeSample.", "");
+                    string destinationPath = Path.Combine(themeDir, fileName);
+                    using (FileStream fileStream = new FileStream(destinationPath, FileMode.Create, FileAccess.Write))
+                    {
+                        resourceStream.CopyTo(fileStream);
+                    }
+                }
+            }
         }
         CustomThemeNameSelect.DataSource = Directory.GetFiles(themeDir, "*.xlsx").Select(x => Path.GetFileName(x)).ToList();
     }
