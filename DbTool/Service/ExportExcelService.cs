@@ -1,9 +1,6 @@
 ﻿using OfficeOpenXml;
-using OfficeOpenXml.Style;
 using System.Diagnostics;
 using System.Reflection;
-using System.Windows.Forms;
-using Color = System.Drawing.Color;
 
 public class ExportExcelService
 {
@@ -35,8 +32,6 @@ public class ExportExcelService
             }
             message += ProcessPackageSet(Schema, connStrBox, resourceStream);
         }
-
-
         return message;
     }
     public string ProcessPackageSet(Schema Schema, string connStrBox, Stream resourceStream)

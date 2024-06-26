@@ -39,33 +39,33 @@ partial class DbToolForm
         downloadTemplateBtn = new Button();
         downloadSchemaWordPerTableBtn = new Button();
         downloadSchemaWordBtn = new Button();
-        ImportDescription = new Button();
+        importDescriptionBtn = new Button();
         modelToolTab = new TabPage();
         modelGenBtn = new Button();
         settingTab = new TabPage();
-        CustomThemelabel = new Label();
+        customThemelabel = new Label();
         CustomThemeNameSelect = new ComboBox();
         modelGenBtnSettingLabel = new Label();
         connSettingLabel = new Label();
         isWordWithToc = new CheckBox();
-        IsScaleShow = new CheckBox();
-        IsPrecisionShow = new CheckBox();
-        IsLengthShow = new CheckBox();
-        IsNotNullShow = new CheckBox();
-        IsPrimaryKeyShow = new CheckBox();
-        IsIdentityShow = new CheckBox();
-        IsDefaultValueShow = new CheckBox();
-        IsDataTypeShow = new CheckBox();
-        IsSortShow = new CheckBox();
-        IsColumnDescriptionShow = new CheckBox();
-        IsTableDescriptionShow = new CheckBox();
+        isScaleShow = new CheckBox();
+        isPrecisionShow = new CheckBox();
+        isLengthShow = new CheckBox();
+        isNotNullShow = new CheckBox();
+        isPrimaryKeyShow = new CheckBox();
+        isIdentityShow = new CheckBox();
+        isDefaultValueShow = new CheckBox();
+        isDataTypeShow = new CheckBox();
+        isSortShow = new CheckBox();
+        isColumnDescriptionShow = new CheckBox();
+        isTableDescriptionShow = new CheckBox();
         isSummary = new CheckBox();
         isKey = new CheckBox();
-        IsRequired = new CheckBox();
-        IsDisplay = new CheckBox();
+        isRequired = new CheckBox();
+        isDisplay = new CheckBox();
         resetBtn = new Button();
         downloadExcelStyleTemplateBtn = new Button();
-        errorTextLbl = new TextBox();
+        errorTextBox = new TextBox();
         tabControl1.SuspendLayout();
         connToolTab.SuspendLayout();
         schmaToolTab.SuspendLayout();
@@ -125,7 +125,7 @@ partial class DbToolForm
         dbTestBtn.TabIndex = 6;
         dbTestBtn.Text = "連線測試";
         dbTestBtn.UseVisualStyleBackColor = true;
-        dbTestBtn.Click += dbTestEvent;
+        dbTestBtn.Click += DbTestConnClick;
         // 
         // tabControl1
         // 
@@ -161,7 +161,7 @@ partial class DbToolForm
         schmaToolTab.Controls.Add(downloadTemplateBtn);
         schmaToolTab.Controls.Add(downloadSchemaWordPerTableBtn);
         schmaToolTab.Controls.Add(downloadSchemaWordBtn);
-        schmaToolTab.Controls.Add(ImportDescription);
+        schmaToolTab.Controls.Add(importDescriptionBtn);
         schmaToolTab.Controls.Add(downloadSchemaBtn);
         schmaToolTab.Location = new Point(4, 28);
         schmaToolTab.Margin = new Padding(2);
@@ -207,14 +207,14 @@ partial class DbToolForm
         // 
         // ImportDescription
         // 
-        ImportDescription.Location = new Point(21, 211);
-        ImportDescription.Margin = new Padding(2);
-        ImportDescription.Name = "ImportDescription";
-        ImportDescription.Size = new Size(92, 28);
-        ImportDescription.TabIndex = 14;
-        ImportDescription.Text = "匯入描述";
-        ImportDescription.UseVisualStyleBackColor = true;
-        ImportDescription.Click += ImportDescriptionEvent;
+        importDescriptionBtn.Location = new Point(21, 211);
+        importDescriptionBtn.Margin = new Padding(2);
+        importDescriptionBtn.Name = "ImportDescription";
+        importDescriptionBtn.Size = new Size(92, 28);
+        importDescriptionBtn.TabIndex = 14;
+        importDescriptionBtn.Text = "匯入描述";
+        importDescriptionBtn.UseVisualStyleBackColor = true;
+        importDescriptionBtn.Click += ImportDescriptionClick;
         // 
         // modelToolTab
         // 
@@ -241,26 +241,26 @@ partial class DbToolForm
         // 
         // settingTab
         // 
-        settingTab.Controls.Add(CustomThemelabel);
+        settingTab.Controls.Add(customThemelabel);
         settingTab.Controls.Add(CustomThemeNameSelect);
         settingTab.Controls.Add(modelGenBtnSettingLabel);
         settingTab.Controls.Add(connSettingLabel);
         settingTab.Controls.Add(isWordWithToc);
-        settingTab.Controls.Add(IsScaleShow);
-        settingTab.Controls.Add(IsPrecisionShow);
-        settingTab.Controls.Add(IsLengthShow);
-        settingTab.Controls.Add(IsNotNullShow);
-        settingTab.Controls.Add(IsPrimaryKeyShow);
-        settingTab.Controls.Add(IsIdentityShow);
-        settingTab.Controls.Add(IsDefaultValueShow);
-        settingTab.Controls.Add(IsDataTypeShow);
-        settingTab.Controls.Add(IsSortShow);
-        settingTab.Controls.Add(IsColumnDescriptionShow);
-        settingTab.Controls.Add(IsTableDescriptionShow);
+        settingTab.Controls.Add(isScaleShow);
+        settingTab.Controls.Add(isPrecisionShow);
+        settingTab.Controls.Add(isLengthShow);
+        settingTab.Controls.Add(isNotNullShow);
+        settingTab.Controls.Add(isPrimaryKeyShow);
+        settingTab.Controls.Add(isIdentityShow);
+        settingTab.Controls.Add(isDefaultValueShow);
+        settingTab.Controls.Add(isDataTypeShow);
+        settingTab.Controls.Add(isSortShow);
+        settingTab.Controls.Add(isColumnDescriptionShow);
+        settingTab.Controls.Add(isTableDescriptionShow);
         settingTab.Controls.Add(isSummary);
         settingTab.Controls.Add(isKey);
-        settingTab.Controls.Add(IsRequired);
-        settingTab.Controls.Add(IsDisplay);
+        settingTab.Controls.Add(isRequired);
+        settingTab.Controls.Add(isDisplay);
         settingTab.Controls.Add(resetBtn);
         settingTab.Controls.Add(downloadExcelStyleTemplateBtn);
         settingTab.Location = new Point(4, 28);
@@ -271,16 +271,16 @@ partial class DbToolForm
         settingTab.Text = "設定";
         settingTab.UseVisualStyleBackColor = true;
         // 
-        // CustomThemelabel
+        // customThemelabel
         // 
-        CustomThemelabel.AutoSize = true;
-        CustomThemelabel.Location = new Point(11, 150);
-        CustomThemelabel.Margin = new Padding(2, 0, 2, 0);
-        CustomThemelabel.Name = "CustomThemelabel";
-        CustomThemelabel.Size = new Size(126, 19);
-        CustomThemelabel.TabIndex = 21;
-        CustomThemelabel.Text = "自定義 Excel 樣式";
-        CustomThemelabel.DoubleClick += ReloadThemeBinding;
+        customThemelabel.AutoSize = true;
+        customThemelabel.Location = new Point(11, 150);
+        customThemelabel.Margin = new Padding(2, 0, 2, 0);
+        customThemelabel.Name = "customThemelabel";
+        customThemelabel.Size = new Size(126, 19);
+        customThemelabel.TabIndex = 21;
+        customThemelabel.Text = "自定義 Excel 樣式";
+        customThemelabel.DoubleClick += ReloadThemeBinding;
         // 
         // CustomThemeNameSelect
         // 
@@ -323,149 +323,149 @@ partial class DbToolForm
         isWordWithToc.UseVisualStyleBackColor = true;
         isWordWithToc.CheckedChanged += isWordWithTocChanged;
         // 
-        // IsScaleShow
+        // isScaleShow
         // 
-        IsScaleShow.AutoSize = true;
-        IsScaleShow.Location = new Point(254, 87);
-        IsScaleShow.Margin = new Padding(2);
-        IsScaleShow.Name = "IsScaleShow";
-        IsScaleShow.Size = new Size(76, 23);
-        IsScaleShow.TabIndex = 13;
-        IsScaleShow.Text = "小位數";
-        IsScaleShow.UseVisualStyleBackColor = true;
-        IsScaleShow.CheckedChanged += IsScaleShowChanged;
+        isScaleShow.AutoSize = true;
+        isScaleShow.Location = new Point(254, 87);
+        isScaleShow.Margin = new Padding(2);
+        isScaleShow.Name = "isScaleShow";
+        isScaleShow.Size = new Size(76, 23);
+        isScaleShow.TabIndex = 13;
+        isScaleShow.Text = "小位數";
+        isScaleShow.UseVisualStyleBackColor = true;
+        isScaleShow.CheckedChanged += IsScaleShowChanged;
         // 
-        // IsPrecisionShow
+        // isPrecisionShow
         // 
-        IsPrecisionShow.AutoSize = true;
-        IsPrecisionShow.Location = new Point(181, 87);
-        IsPrecisionShow.Margin = new Padding(2);
-        IsPrecisionShow.Name = "IsPrecisionShow";
-        IsPrecisionShow.Size = new Size(61, 23);
-        IsPrecisionShow.TabIndex = 12;
-        IsPrecisionShow.Text = "精度";
-        IsPrecisionShow.UseVisualStyleBackColor = true;
-        IsPrecisionShow.CheckedChanged += IsPrecisionShowChanged;
+        isPrecisionShow.AutoSize = true;
+        isPrecisionShow.Location = new Point(181, 87);
+        isPrecisionShow.Margin = new Padding(2);
+        isPrecisionShow.Name = "isPrecisionShow";
+        isPrecisionShow.Size = new Size(61, 23);
+        isPrecisionShow.TabIndex = 12;
+        isPrecisionShow.Text = "精度";
+        isPrecisionShow.UseVisualStyleBackColor = true;
+        isPrecisionShow.CheckedChanged += IsPrecisionShowChanged;
         // 
-        // IsLengthShow
+        // isLengthShow
         // 
-        IsLengthShow.AutoSize = true;
-        IsLengthShow.Location = new Point(97, 87);
-        IsLengthShow.Margin = new Padding(2);
-        IsLengthShow.Name = "IsLengthShow";
-        IsLengthShow.Size = new Size(61, 23);
-        IsLengthShow.TabIndex = 11;
-        IsLengthShow.Text = "長度";
-        IsLengthShow.UseVisualStyleBackColor = true;
-        IsLengthShow.CheckedChanged += IsLengthShowChanged;
+        isLengthShow.AutoSize = true;
+        isLengthShow.Location = new Point(97, 87);
+        isLengthShow.Margin = new Padding(2);
+        isLengthShow.Name = "isLengthShow";
+        isLengthShow.Size = new Size(61, 23);
+        isLengthShow.TabIndex = 11;
+        isLengthShow.Text = "長度";
+        isLengthShow.UseVisualStyleBackColor = true;
+        isLengthShow.CheckedChanged += IsLengthShowChanged;
         // 
-        // IsNotNullShow
+        // isNotNullShow
         // 
-        IsNotNullShow.AutoSize = true;
-        IsNotNullShow.Checked = true;
-        IsNotNullShow.CheckState = CheckState.Checked;
-        IsNotNullShow.Location = new Point(32, 87);
-        IsNotNullShow.Margin = new Padding(2);
-        IsNotNullShow.Name = "IsNotNullShow";
-        IsNotNullShow.Size = new Size(61, 23);
-        IsNotNullShow.TabIndex = 10;
-        IsNotNullShow.Text = "必填";
-        IsNotNullShow.UseVisualStyleBackColor = true;
-        IsNotNullShow.CheckedChanged += IsNotNullShowChanged;
+        isNotNullShow.AutoSize = true;
+        isNotNullShow.Checked = true;
+        isNotNullShow.CheckState = CheckState.Checked;
+        isNotNullShow.Location = new Point(32, 87);
+        isNotNullShow.Margin = new Padding(2);
+        isNotNullShow.Name = "isNotNullShow";
+        isNotNullShow.Size = new Size(61, 23);
+        isNotNullShow.TabIndex = 10;
+        isNotNullShow.Text = "必填";
+        isNotNullShow.UseVisualStyleBackColor = true;
+        isNotNullShow.CheckedChanged += IsNotNullShowChanged;
         // 
-        // IsPrimaryKeyShow
+        // isPrimaryKeyShow
         // 
-        IsPrimaryKeyShow.AutoSize = true;
-        IsPrimaryKeyShow.Checked = true;
-        IsPrimaryKeyShow.CheckState = CheckState.Checked;
-        IsPrimaryKeyShow.Location = new Point(330, 60);
-        IsPrimaryKeyShow.Margin = new Padding(2);
-        IsPrimaryKeyShow.Name = "IsPrimaryKeyShow";
-        IsPrimaryKeyShow.Size = new Size(61, 23);
-        IsPrimaryKeyShow.TabIndex = 9;
-        IsPrimaryKeyShow.Text = "主鍵";
-        IsPrimaryKeyShow.UseVisualStyleBackColor = true;
-        IsPrimaryKeyShow.CheckedChanged += IsPrimaryKeyShowChanged;
+        isPrimaryKeyShow.AutoSize = true;
+        isPrimaryKeyShow.Checked = true;
+        isPrimaryKeyShow.CheckState = CheckState.Checked;
+        isPrimaryKeyShow.Location = new Point(330, 60);
+        isPrimaryKeyShow.Margin = new Padding(2);
+        isPrimaryKeyShow.Name = "isPrimaryKeyShow";
+        isPrimaryKeyShow.Size = new Size(61, 23);
+        isPrimaryKeyShow.TabIndex = 9;
+        isPrimaryKeyShow.Text = "主鍵";
+        isPrimaryKeyShow.UseVisualStyleBackColor = true;
+        isPrimaryKeyShow.CheckedChanged += IsPrimaryKeyShowChanged;
         // 
-        // IsIdentityShow
+        // isIdentityShow
         // 
-        IsIdentityShow.AutoSize = true;
-        IsIdentityShow.Checked = true;
-        IsIdentityShow.CheckState = CheckState.Checked;
-        IsIdentityShow.Location = new Point(255, 60);
-        IsIdentityShow.Margin = new Padding(2);
-        IsIdentityShow.Name = "IsIdentityShow";
-        IsIdentityShow.Size = new Size(61, 23);
-        IsIdentityShow.TabIndex = 8;
-        IsIdentityShow.Text = "識別";
-        IsIdentityShow.UseVisualStyleBackColor = true;
-        IsIdentityShow.CheckedChanged += IsIdentityShowChanged;
+        isIdentityShow.AutoSize = true;
+        isIdentityShow.Checked = true;
+        isIdentityShow.CheckState = CheckState.Checked;
+        isIdentityShow.Location = new Point(255, 60);
+        isIdentityShow.Margin = new Padding(2);
+        isIdentityShow.Name = "isIdentityShow";
+        isIdentityShow.Size = new Size(61, 23);
+        isIdentityShow.TabIndex = 8;
+        isIdentityShow.Text = "識別";
+        isIdentityShow.UseVisualStyleBackColor = true;
+        isIdentityShow.CheckedChanged += IsIdentityShowChanged;
         // 
-        // IsDefaultValueShow
+        // isDefaultValueShow
         // 
-        IsDefaultValueShow.AutoSize = true;
-        IsDefaultValueShow.Checked = true;
-        IsDefaultValueShow.CheckState = CheckState.Checked;
-        IsDefaultValueShow.Location = new Point(181, 60);
-        IsDefaultValueShow.Margin = new Padding(2);
-        IsDefaultValueShow.Name = "IsDefaultValueShow";
-        IsDefaultValueShow.Size = new Size(76, 23);
-        IsDefaultValueShow.TabIndex = 7;
-        IsDefaultValueShow.Text = "預設值";
-        IsDefaultValueShow.UseVisualStyleBackColor = true;
-        IsDefaultValueShow.CheckedChanged += IsDefaultValueShowChanged;
+        isDefaultValueShow.AutoSize = true;
+        isDefaultValueShow.Checked = true;
+        isDefaultValueShow.CheckState = CheckState.Checked;
+        isDefaultValueShow.Location = new Point(181, 60);
+        isDefaultValueShow.Margin = new Padding(2);
+        isDefaultValueShow.Name = "isDefaultValueShow";
+        isDefaultValueShow.Size = new Size(76, 23);
+        isDefaultValueShow.TabIndex = 7;
+        isDefaultValueShow.Text = "預設值";
+        isDefaultValueShow.UseVisualStyleBackColor = true;
+        isDefaultValueShow.CheckedChanged += IsDefaultValueShowChanged;
         // 
-        // IsDataTypeShow
+        // isDataTypeShow
         // 
-        IsDataTypeShow.AutoSize = true;
-        IsDataTypeShow.Checked = true;
-        IsDataTypeShow.CheckState = CheckState.Checked;
-        IsDataTypeShow.Location = new Point(97, 60);
-        IsDataTypeShow.Margin = new Padding(2);
-        IsDataTypeShow.Name = "IsDataTypeShow";
-        IsDataTypeShow.Size = new Size(91, 23);
-        IsDataTypeShow.TabIndex = 6;
-        IsDataTypeShow.Text = "資料型別";
-        IsDataTypeShow.UseVisualStyleBackColor = true;
-        IsDataTypeShow.CheckedChanged += IsDataTypeShowChanged;
+        isDataTypeShow.AutoSize = true;
+        isDataTypeShow.Checked = true;
+        isDataTypeShow.CheckState = CheckState.Checked;
+        isDataTypeShow.Location = new Point(97, 60);
+        isDataTypeShow.Margin = new Padding(2);
+        isDataTypeShow.Name = "isDataTypeShow";
+        isDataTypeShow.Size = new Size(91, 23);
+        isDataTypeShow.TabIndex = 6;
+        isDataTypeShow.Text = "資料型別";
+        isDataTypeShow.UseVisualStyleBackColor = true;
+        isDataTypeShow.CheckedChanged += IsDataTypeShowChanged;
         // 
         // IsSortShow
         // 
-        IsSortShow.AutoSize = true;
-        IsSortShow.Checked = true;
-        IsSortShow.CheckState = CheckState.Checked;
-        IsSortShow.Location = new Point(32, 60);
-        IsSortShow.Margin = new Padding(2);
-        IsSortShow.Name = "IsSortShow";
-        IsSortShow.Size = new Size(61, 23);
-        IsSortShow.TabIndex = 5;
-        IsSortShow.Text = "排序";
-        IsSortShow.UseVisualStyleBackColor = true;
-        IsSortShow.CheckedChanged += IsSortShowChanged;
+        isSortShow.AutoSize = true;
+        isSortShow.Checked = true;
+        isSortShow.CheckState = CheckState.Checked;
+        isSortShow.Location = new Point(32, 60);
+        isSortShow.Margin = new Padding(2);
+        isSortShow.Name = "IsSortShow";
+        isSortShow.Size = new Size(61, 23);
+        isSortShow.TabIndex = 5;
+        isSortShow.Text = "排序";
+        isSortShow.UseVisualStyleBackColor = true;
+        isSortShow.CheckedChanged += IsSortShowChanged;
         // 
         // IsColumnDescriptionShow
         // 
-        IsColumnDescriptionShow.AutoSize = true;
-        IsColumnDescriptionShow.Location = new Point(330, 87);
-        IsColumnDescriptionShow.Margin = new Padding(2);
-        IsColumnDescriptionShow.Name = "IsColumnDescriptionShow";
-        IsColumnDescriptionShow.Size = new Size(76, 23);
-        IsColumnDescriptionShow.TabIndex = 4;
-        IsColumnDescriptionShow.Text = "欄描述";
-        IsColumnDescriptionShow.UseVisualStyleBackColor = true;
-        IsColumnDescriptionShow.CheckedChanged += IsColumnDescriptionShowChanged;
+        isColumnDescriptionShow.AutoSize = true;
+        isColumnDescriptionShow.Location = new Point(330, 87);
+        isColumnDescriptionShow.Margin = new Padding(2);
+        isColumnDescriptionShow.Name = "IsColumnDescriptionShow";
+        isColumnDescriptionShow.Size = new Size(76, 23);
+        isColumnDescriptionShow.TabIndex = 4;
+        isColumnDescriptionShow.Text = "欄描述";
+        isColumnDescriptionShow.UseVisualStyleBackColor = true;
+        isColumnDescriptionShow.CheckedChanged += IsColumnDescriptionShowChanged;
         // 
         // IsTableDescriptionShow
         // 
-        IsTableDescriptionShow.AutoSize = true;
-        IsTableDescriptionShow.Location = new Point(32, 33);
-        IsTableDescriptionShow.Margin = new Padding(2);
-        IsTableDescriptionShow.Name = "IsTableDescriptionShow";
-        IsTableDescriptionShow.Size = new Size(76, 23);
-        IsTableDescriptionShow.TabIndex = 3;
-        IsTableDescriptionShow.Text = "表描述";
-        IsTableDescriptionShow.UseVisualStyleBackColor = true;
-        IsTableDescriptionShow.CheckedChanged += IsTableDescriptionShowChanged;
+        isTableDescriptionShow.AutoSize = true;
+        isTableDescriptionShow.Location = new Point(32, 33);
+        isTableDescriptionShow.Margin = new Padding(2);
+        isTableDescriptionShow.Name = "IsTableDescriptionShow";
+        isTableDescriptionShow.Size = new Size(76, 23);
+        isTableDescriptionShow.TabIndex = 3;
+        isTableDescriptionShow.Text = "表描述";
+        isTableDescriptionShow.UseVisualStyleBackColor = true;
+        isTableDescriptionShow.CheckedChanged += IsTableDescriptionShowChanged;
         // 
         // isSummary
         // 
@@ -493,27 +493,27 @@ partial class DbToolForm
         // 
         // IsRequired
         // 
-        IsRequired.AutoSize = true;
-        IsRequired.Location = new Point(230, 213);
-        IsRequired.Margin = new Padding(2);
-        IsRequired.Name = "IsRequired";
-        IsRequired.Size = new Size(96, 23);
-        IsRequired.TabIndex = 9;
-        IsRequired.Text = "Required";
-        IsRequired.UseVisualStyleBackColor = true;
-        IsRequired.CheckedChanged += IsRequiredChanged;
+        isRequired.AutoSize = true;
+        isRequired.Location = new Point(230, 213);
+        isRequired.Margin = new Padding(2);
+        isRequired.Name = "IsRequired";
+        isRequired.Size = new Size(96, 23);
+        isRequired.TabIndex = 9;
+        isRequired.Text = "Required";
+        isRequired.UseVisualStyleBackColor = true;
+        isRequired.CheckedChanged += IsRequiredChanged;
         // 
         // IsDisplay
         // 
-        IsDisplay.AutoSize = true;
-        IsDisplay.Location = new Point(137, 213);
-        IsDisplay.Margin = new Padding(2);
-        IsDisplay.Name = "IsDisplay";
-        IsDisplay.Size = new Size(82, 23);
-        IsDisplay.TabIndex = 8;
-        IsDisplay.Text = "Display";
-        IsDisplay.UseVisualStyleBackColor = true;
-        IsDisplay.CheckedChanged += IsDisplayChanged;
+        isDisplay.AutoSize = true;
+        isDisplay.Location = new Point(137, 213);
+        isDisplay.Margin = new Padding(2);
+        isDisplay.Name = "IsDisplay";
+        isDisplay.Size = new Size(82, 23);
+        isDisplay.TabIndex = 8;
+        isDisplay.Text = "Display";
+        isDisplay.UseVisualStyleBackColor = true;
+        isDisplay.CheckedChanged += IsDisplayChanged;
         // 
         // resetBtn
         // 
@@ -539,23 +539,23 @@ partial class DbToolForm
         // 
         // errorTextLbl
         // 
-        errorTextLbl.BackColor = SystemColors.Control;
-        errorTextLbl.BorderStyle = BorderStyle.None;
-        errorTextLbl.Location = new Point(7, 318);
-        errorTextLbl.Margin = new Padding(2);
-        errorTextLbl.Multiline = true;
-        errorTextLbl.Name = "errorTextLbl";
-        errorTextLbl.ReadOnly = true;
-        errorTextLbl.Size = new Size(522, 73);
-        errorTextLbl.TabIndex = 8;
-        errorTextLbl.DoubleClick += errorTextDoubleClick;
+        errorTextBox.BackColor = SystemColors.Control;
+        errorTextBox.BorderStyle = BorderStyle.None;
+        errorTextBox.Location = new Point(7, 318);
+        errorTextBox.Margin = new Padding(2);
+        errorTextBox.Multiline = true;
+        errorTextBox.Name = "errorTextLbl";
+        errorTextBox.ReadOnly = true;
+        errorTextBox.Size = new Size(522, 73);
+        errorTextBox.TabIndex = 8;
+        errorTextBox.DoubleClick += ErrorTextClearDoubleClick;
         // 
         // DbToolForm
         // 
         AutoScaleDimensions = new SizeF(9F, 19F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(535, 399);
-        Controls.Add(errorTextLbl);
+        Controls.Add(errorTextBox);
         Controls.Add(tabControl1);
         Margin = new Padding(2);
         Name = "DbToolForm";
@@ -587,24 +587,24 @@ partial class DbToolForm
     private TabPage settingTab;
 
     private Button downloadTemplateBtn;
-    private CheckBox IsTableDescriptionShow;
-    private CheckBox IsDataTypeShow;
-    private CheckBox IsSortShow;
-    private CheckBox IsColumnDescriptionShow;
-    private CheckBox IsDefaultValueShow;
-    private CheckBox IsIdentityShow;
-    private CheckBox IsLengthShow;
-    private CheckBox IsNotNullShow;
-    private CheckBox IsPrimaryKeyShow;
-    private CheckBox IsScaleShow;
-    private CheckBox IsPrecisionShow;
-    private Button ImportDescription;
-    private TextBox errorTextLbl;
+    private CheckBox isTableDescriptionShow;
+    private CheckBox isDataTypeShow;
+    private CheckBox isSortShow;
+    private CheckBox isColumnDescriptionShow;
+    private CheckBox isDefaultValueShow;
+    private CheckBox isIdentityShow;
+    private CheckBox isLengthShow;
+    private CheckBox isNotNullShow;
+    private CheckBox isPrimaryKeyShow;
+    private CheckBox isScaleShow;
+    private CheckBox isPrecisionShow;
+    private Button importDescriptionBtn;
+    private TextBox errorTextBox;
     private Button modelGenBtn;
     #endregion
 
-    private CheckBox IsDisplay;
-    private CheckBox IsRequired;
+    private CheckBox isDisplay;
+    private CheckBox isRequired;
     private CheckBox isKey;
     private CheckBox isSummary;
     private Button resetBtn;
@@ -615,5 +615,5 @@ partial class DbToolForm
     private Label modelGenBtnSettingLabel;
     private Button downloadExcelStyleTemplateBtn;
     private ComboBox CustomThemeNameSelect;
-    private Label CustomThemelabel;
+    private Label customThemelabel;
 }

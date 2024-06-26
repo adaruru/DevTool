@@ -46,7 +46,7 @@ public partial class DbToolForm : Form
             FileName = destinationPath,
             UseShellExecute = true
         });
-        errorTextLbl.Text = $"檔案產製完成儲存於{ThemeDir}";
+        errorTextBox.Text = $"檔案產製完成儲存於{ThemeDir}";
     }
 
     private void exportSchemaWordBtnClick(object sender, EventArgs e)
@@ -56,7 +56,7 @@ public partial class DbToolForm : Form
         var isPerTable = btn != null && btn == downloadSchemaWordPerTableBtn;
         try
         {
-            errorTextLbl.Text = "檔案產製中請稍後";
+            errorTextBox.Text = "檔案產製中請稍後";
             if (string.IsNullOrEmpty(connStrBox.Text))
             {
                 throw new Exception("請輸入連線字串");
@@ -70,11 +70,11 @@ public partial class DbToolForm : Form
             { destinationPath = _exportWordService.ExportWordSchemaPerTable(conn.Schema, connStrBox.Text); }
             else
             { destinationPath = _exportWordService.ExportWordSchema(conn.Schema, connStrBox.Text); }
-            errorTextLbl.Text = $"檔案產製完成儲存於{destinationPath}";
+            errorTextBox.Text = $"檔案產製完成儲存於{destinationPath}";
         }
         catch (Exception es)
         {
-            errorTextLbl.Text = $"出現其他異常錯誤:{es.Message}";
+            errorTextBox.Text = $"出現其他異常錯誤:{es.Message}";
         }
     }
 
@@ -90,7 +90,7 @@ public partial class DbToolForm : Form
         var isForImportTemplate = btn != null && btn == downloadTemplateBtn;
         try
         {
-            errorTextLbl.Text = "檔案產製中請稍後";
+            errorTextBox.Text = "檔案產製中請稍後";
             if (string.IsNullOrEmpty(connStrBox.Text))
             {
                 throw new Exception("請輸入連線字串");
@@ -109,28 +109,28 @@ public partial class DbToolForm : Form
             }
 
 
-            errorTextLbl.Text = message;
+            errorTextBox.Text = message;
         }
         catch (Exception es)
         {
-            errorTextLbl.Text = $"出現其他異常錯誤:{es.Message}";
+            errorTextBox.Text = $"出現其他異常錯誤:{es.Message}";
         }
     }
 
     private void SetControl(bool isTemplate)
     {
         //下載資料庫規格 依照使用者設定
-        FormControl.IsTableDescriptionShow = IsTableDescriptionShow.Checked;
-        FormControl.IsColumnDescriptionShow = IsColumnDescriptionShow.Checked;
-        FormControl.IsSortShow = IsSortShow.Checked;
-        FormControl.IsDataTypeShow = IsDataTypeShow.Checked;
-        FormControl.IsDefaultValueShow = IsDefaultValueShow.Checked;
-        FormControl.IsIdentityShow = IsIdentityShow.Checked;
-        FormControl.IsPrimaryKeyShow = IsPrimaryKeyShow.Checked;
-        FormControl.IsNotNullShow = IsNotNullShow.Checked;
-        FormControl.IsLengthShow = IsLengthShow.Checked;
-        FormControl.IsPrecisionShow = IsPrecisionShow.Checked;
-        FormControl.IsScaleShow = IsScaleShow.Checked;
+        FormControl.IsTableDescriptionShow = isTableDescriptionShow.Checked;
+        FormControl.IsColumnDescriptionShow = isColumnDescriptionShow.Checked;
+        FormControl.IsSortShow = isSortShow.Checked;
+        FormControl.IsDataTypeShow = isDataTypeShow.Checked;
+        FormControl.IsDefaultValueShow = isDefaultValueShow.Checked;
+        FormControl.IsIdentityShow = isIdentityShow.Checked;
+        FormControl.IsPrimaryKeyShow = isPrimaryKeyShow.Checked;
+        FormControl.IsNotNullShow = isNotNullShow.Checked;
+        FormControl.IsLengthShow = isLengthShow.Checked;
+        FormControl.IsPrecisionShow = isPrecisionShow.Checked;
+        FormControl.IsScaleShow = isScaleShow.Checked;
     }
 
     private void connStrBoxEvent(object sender, EventArgs e)
@@ -180,24 +180,24 @@ public partial class DbToolForm : Form
 
         #region  ==genModel用==
         isSummary.Checked = Settings.Default.isSummary; // true  表描述
-        IsDisplay.Checked = Settings.Default.IsDisplay; // false 預設
-        IsRequired.Checked = Settings.Default.IsRequired; // false 預設
+        isDisplay.Checked = Settings.Default.IsDisplay; // false 預設
+        isRequired.Checked = Settings.Default.IsRequired; // false 預設
         isKey.Checked = Settings.Default.isKey; // false 預設
         #endregion  ==genModel用==
 
-        IsTableDescriptionShow.Checked = Settings.Default.IsTableDescriptionShow; // true 表描述
+        isTableDescriptionShow.Checked = Settings.Default.IsTableDescriptionShow; // true 表描述
 
-        IsSortShow.Checked = Settings.Default.IsSortShow; // true 排序
-        IsDataTypeShow.Checked = Settings.Default.IsDataTypeShow; // true 資料型別
-        IsDefaultValueShow.Checked = Settings.Default.IsDefaultValueShow; // true 預設值
-        IsIdentityShow.Checked = Settings.Default.IsIdentityShow; // true 識別
-        IsPrimaryKeyShow.Checked = Settings.Default.IsPrimaryKeyShow; // true 主鍵
+        isSortShow.Checked = Settings.Default.IsSortShow; // true 排序
+        isDataTypeShow.Checked = Settings.Default.IsDataTypeShow; // true 資料型別
+        isDefaultValueShow.Checked = Settings.Default.IsDefaultValueShow; // true 預設值
+        isIdentityShow.Checked = Settings.Default.IsIdentityShow; // true 識別
+        isPrimaryKeyShow.Checked = Settings.Default.IsPrimaryKeyShow; // true 主鍵
 
-        IsNotNullShow.Checked = Settings.Default.IsNotNullShow; // true 必填
-        IsLengthShow.Checked = Settings.Default.IsLengthShow; // false 長度
-        IsPrecisionShow.Checked = Settings.Default.IsPrecisionShow; // false 精度
-        IsScaleShow.Checked = Settings.Default.IsScaleShow; // false 小位數
-        IsColumnDescriptionShow.Checked = Settings.Default.IsColumnDescriptionShow; // true 欄描述
+        isNotNullShow.Checked = Settings.Default.IsNotNullShow; // true 必填
+        isLengthShow.Checked = Settings.Default.IsLengthShow; // false 長度
+        isPrecisionShow.Checked = Settings.Default.IsPrecisionShow; // false 精度
+        isScaleShow.Checked = Settings.Default.IsScaleShow; // false 小位數
+        isColumnDescriptionShow.Checked = Settings.Default.IsColumnDescriptionShow; // true 欄描述
 
         /// genWorld用
         isWordWithToc.Checked = Settings.Default.isWordWithToc; //true 產製word規格是否有目錄
@@ -206,12 +206,12 @@ public partial class DbToolForm : Form
     /// <summary>
     /// 雙擊清除錯誤訊息
     /// </summary>
-    private void errorTextDoubleClick(object sender, EventArgs e)
+    private void ErrorTextClearDoubleClick(object sender, EventArgs e)
     {
-        errorTextLbl.Text = "";
+        errorTextBox.Text = "";
     }
 
-    private void dbTestEvent(object sender, EventArgs e)
+    private void DbTestConnClick(object sender, EventArgs e)
     {
         try
         {
@@ -221,22 +221,22 @@ public partial class DbToolForm : Form
             var result = conn.GetValueStr(query);
             if (!string.IsNullOrEmpty(result))
             {
-                errorTextLbl.Text = result + "資料庫順利連線";
+                errorTextBox.Text = result + "資料庫順利連線";
                 Schema.SchemaName = result;
                 SchemaName = result;
             }
         }
         catch (Exception es)
         {
-            errorTextLbl.Text = $"出現其他異常錯誤:{es.Message}";
+            errorTextBox.Text = $"出現其他異常錯誤:{es.Message}";
         }
     }
 
-    private void ImportDescriptionEvent(object sender, EventArgs e)
+    private void ImportDescriptionClick(object sender, EventArgs e)
     {
         try
         {
-            errorTextLbl.Text = "描述匯入中請稍後";
+            errorTextBox.Text = "描述匯入中請稍後";
             if (conn == null)
             {
                 throw new Exception("請輸入連線字串");
@@ -298,7 +298,7 @@ public partial class DbToolForm : Form
                         var tableName = tableSheet.Cells[1, 1].Text;
                         if (tableName != _schemaForImportDescription.Tables[i].TableName)
                         {
-                            errorTextLbl.Text = $"tableName: {_schemaForImportDescription.Tables[i].TableName} 匯入有異常，重新下載匯入範本";
+                            errorTextBox.Text = $"tableName: {_schemaForImportDescription.Tables[i].TableName} 匯入有異常，重新下載匯入範本";
                             continue;
                         }
                         for (int row = 3; row <= tableSheet.Dimension.End.Row; row++)
@@ -324,11 +324,11 @@ public partial class DbToolForm : Form
             }
             conn.InsertTableDescription(_schemaForImportDescription);
             conn.InsertColumnDescription(_schemaForImportDescription);
-            errorTextLbl.Text = "匯入完成";
+            errorTextBox.Text = "匯入完成";
         }
         catch (Exception es)
         {
-            errorTextLbl.Text = $"出現其他異常錯誤:{es.Message}";
+            errorTextBox.Text = $"出現其他異常錯誤:{es.Message}";
         }
     }
 
@@ -350,7 +350,7 @@ public partial class DbToolForm : Form
         }
         catch (Exception es)
         {
-            errorTextLbl.Text = $"{es.Message}";
+            errorTextBox.Text = $"{es.Message}";
         }
     }
 
@@ -366,12 +366,12 @@ public partial class DbToolForm : Form
         }
         catch (Exception es)
         {
-            errorTextLbl.Text = $"出現其他異常錯誤: {es.Message}";
+            errorTextBox.Text = $"出現其他異常錯誤: {es.Message}";
         }
     }
     private void GenerateModel(object sender, EventArgs e)
     {
-        errorTextLbl.Text = $"產製中請稍後";
+        errorTextBox.Text = $"產製中請稍後";
         try
         {
             conn.SetColumn();
@@ -416,21 +416,21 @@ public class {Schema?.Tables[i].TableName}
 [Key]";
                     };
                     if (Schema?.Tables[i].Columns[j].NotNull == "Y"
-                        && IsRequired.Checked)
+                        && isRequired.Checked)
                     {
                         content += @"
 [Required]";
                     };
                     if (!string.IsNullOrEmpty(Schema?.Tables[i].Columns[j].ColumnDescription)
                         && !string.IsNullOrEmpty(Schema?.Tables[i].Columns[j].Length)
-                        && IsDisplay.Checked)
+                        && isDisplay.Checked)
                     {
                         content += @$"
 [Display(Name = ""{Schema?.Tables[i].Columns[j].ColumnDescription}""), MaxLength({Schema?.Tables[i].Columns[j].Length})]";
                     };
                     if (!string.IsNullOrEmpty(Schema?.Tables[i].Columns[j].ColumnDescription)
                         && string.IsNullOrEmpty(Schema?.Tables[i].Columns[j].Length)
-                        && IsDisplay.Checked)
+                        && isDisplay.Checked)
                     {
                         content += @$"
 [Display(Name = ""{Schema?.Tables[i].Columns[j].ColumnDescription}"")]";
@@ -443,11 +443,11 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
                 content += "}";
                 File.WriteAllText(destinationPath, content);
             }
-            errorTextLbl.Text = $"檔案產製完成儲存於{Directory.CreateDirectory(modelDir)}";
+            errorTextBox.Text = $"檔案產製完成儲存於{Directory.CreateDirectory(modelDir)}";
         }
         catch (Exception es)
         {
-            errorTextLbl.Text = $"出現其他異常錯誤:{es.Message}";
+            errorTextBox.Text = $"出現其他異常錯誤:{es.Message}";
         }
 
     }
@@ -461,13 +461,13 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
 
     private void IsDisplayChanged(object sender, EventArgs e)
     {
-        Settings.Default.IsDisplay = IsDisplay.Checked;
+        Settings.Default.IsDisplay = isDisplay.Checked;
         Settings.Default.Save();
     }
 
     private void IsRequiredChanged(object sender, EventArgs e)
     {
-        Settings.Default.IsRequired = IsRequired.Checked;
+        Settings.Default.IsRequired = isRequired.Checked;
         Settings.Default.Save();
     }
 
@@ -479,78 +479,78 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
 
     private void IsTableDescriptionShowChanged(object sender, EventArgs e)
     {
-        Settings.Default.IsTableDescriptionShow = IsTableDescriptionShow.Checked;
-        FormControl.IsTableDescriptionShow = IsTableDescriptionShow.Checked;
+        Settings.Default.IsTableDescriptionShow = isTableDescriptionShow.Checked;
+        FormControl.IsTableDescriptionShow = isTableDescriptionShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsSortShowChanged(object sender, EventArgs e)
     {
-        Settings.Default.IsSortShow = IsSortShow.Checked;
-        FormControl.IsSortShow = IsSortShow.Checked;
+        Settings.Default.IsSortShow = isSortShow.Checked;
+        FormControl.IsSortShow = isSortShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsDataTypeShowChanged(object sender, EventArgs e)
     {
-        Settings.Default.IsDataTypeShow = IsDataTypeShow.Checked;
-        FormControl.IsDataTypeShow = IsDataTypeShow.Checked;
+        Settings.Default.IsDataTypeShow = isDataTypeShow.Checked;
+        FormControl.IsDataTypeShow = isDataTypeShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsDefaultValueShowChanged(object sender, EventArgs e)
     {
-        Settings.Default.IsDefaultValueShow = IsDefaultValueShow.Checked;
-        FormControl.IsDefaultValueShow = IsDefaultValueShow.Checked;
+        Settings.Default.IsDefaultValueShow = isDefaultValueShow.Checked;
+        FormControl.IsDefaultValueShow = isDefaultValueShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsIdentityShowChanged(object sender, EventArgs e)
     {
-        Settings.Default.IsIdentityShow = IsIdentityShow.Checked;
-        FormControl.IsIdentityShow = IsIdentityShow.Checked;
+        Settings.Default.IsIdentityShow = isIdentityShow.Checked;
+        FormControl.IsIdentityShow = isIdentityShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsPrimaryKeyShowChanged(object sender, EventArgs e)
     {
-        Settings.Default.IsPrimaryKeyShow = IsPrimaryKeyShow.Checked;
-        FormControl.IsPrimaryKeyShow = IsPrimaryKeyShow.Checked;
+        Settings.Default.IsPrimaryKeyShow = isPrimaryKeyShow.Checked;
+        FormControl.IsPrimaryKeyShow = isPrimaryKeyShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsNotNullShowChanged(object sender, EventArgs e)
     {
-        Settings.Default.IsNotNullShow = IsNotNullShow.Checked;
-        FormControl.IsNotNullShow = IsNotNullShow.Checked;
+        Settings.Default.IsNotNullShow = isNotNullShow.Checked;
+        FormControl.IsNotNullShow = isNotNullShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsLengthShowChanged(object sender, EventArgs e)
     {
-        Settings.Default.IsLengthShow = IsLengthShow.Checked;
-        FormControl.IsLengthShow = IsLengthShow.Checked;
+        Settings.Default.IsLengthShow = isLengthShow.Checked;
+        FormControl.IsLengthShow = isLengthShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsPrecisionShowChanged(object sender, EventArgs e)
     {
-        Settings.Default.IsPrecisionShow = IsPrecisionShow.Checked;
-        FormControl.IsPrecisionShow = IsPrecisionShow.Checked;
+        Settings.Default.IsPrecisionShow = isPrecisionShow.Checked;
+        FormControl.IsPrecisionShow = isPrecisionShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsScaleShowChanged(object sender, EventArgs e)
     {
-        Settings.Default.IsScaleShow = IsScaleShow.Checked;
-        FormControl.IsScaleShow = IsScaleShow.Checked;
+        Settings.Default.IsScaleShow = isScaleShow.Checked;
+        FormControl.IsScaleShow = isScaleShow.Checked;
         Settings.Default.Save();
     }
 
     private void IsColumnDescriptionShowChanged(object sender, EventArgs e)
     {
-        Settings.Default.IsColumnDescriptionShow = IsColumnDescriptionShow.Checked;
-        FormControl.IsColumnDescriptionShow = IsColumnDescriptionShow.Checked;
+        Settings.Default.IsColumnDescriptionShow = isColumnDescriptionShow.Checked;
+        FormControl.IsColumnDescriptionShow = isColumnDescriptionShow.Checked;
         Settings.Default.Save();
     }
 
