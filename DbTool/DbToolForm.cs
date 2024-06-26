@@ -171,6 +171,12 @@ public partial class DbToolForm : Form
 
     private void DbToolFormLoad(object sender, EventArgs e)
     {
+        var themeDir = Path.Combine(Directory.GetCurrentDirectory(), "CustomTheme");
+        if (!Directory.Exists(themeDir))
+        {
+            Directory.CreateDirectory(themeDir);
+        }
+        CustomThemeNameSelect.DataSource = Directory.GetFiles(themeDir, "*.xlsx").Select(x => Path.GetFileName(x)).ToList();
         LoadSettings();
     }
 
