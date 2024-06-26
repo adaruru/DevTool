@@ -62,7 +62,7 @@
 
 
     /// <summary>
-    /// Excel 產製是否使用自製範本
+    /// Excel 產製使用自製範本名稱 
     /// </summary>
-    public static bool isUseExcelTemplate { get; set; } = true;
+    public static string CustomThemeName { get; set; }
 }

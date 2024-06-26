@@ -226,17 +226,5 @@ namespace DbTool.Properties {
                 this["isWordWithToc"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool isUseExcelTemplate {
-            get {
-                return ((bool)(this["isUseExcelTemplate"]));
-            }
-            set {
-                this["isUseExcelTemplate"] = value;
-            }
-        }
     }
 }

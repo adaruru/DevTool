@@ -31,7 +31,7 @@ public partial class DbToolForm : Form
     {
         string resourceName = "DbTool.Template.StyleTemplate.xlsx";
         Assembly assembly = Assembly.GetExecutingAssembly();
-        var ThemeDir = Path.Combine(Directory.GetCurrentDirectory(),"CustomTheme");
+        var ThemeDir = Path.Combine(Directory.GetCurrentDirectory(), "CustomTheme");
         if (!Directory.Exists(ThemeDir))
         {
             Directory.CreateDirectory(ThemeDir);
@@ -566,11 +566,10 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
         FormControl.isWordWithToc = isWordWithToc.Checked;
         Settings.Default.Save();
     }
-    private void isUseExcelTemplateChanged(object sender, EventArgs e)
-    {
-        Settings.Default.isUseExcelTemplate = isUseExcelTemplate.Checked;
-        FormControl.isUseExcelTemplate = isUseExcelTemplate.Checked;
-        Settings.Default.Save();
-    }
     #endregion ==System Default Setting event==
+
+    private void CustomThemeNameSelectChanged(object sender, EventArgs e)
+    {
+
+    }
 }
