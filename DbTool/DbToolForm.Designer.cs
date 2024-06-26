@@ -280,6 +280,7 @@ partial class DbToolForm
         CustomThemelabel.Size = new Size(126, 19);
         CustomThemelabel.TabIndex = 21;
         CustomThemelabel.Text = "自定義 Excel 樣式";
+        CustomThemelabel.DoubleClick += ReloadThemeBinding;
         // 
         // CustomThemeNameSelect
         // 
