@@ -197,12 +197,10 @@ public class ExportExcelService
         return message;
     }
 
-    public string ExportExcelSchemaWithTemplate(Schema Schema, string connStrBox, bool isTemplate)
+    public string DownloadImportDescriptionTemplate(Schema Schema, string connStrBox)
     {
         //範本或規格 Excel 檔案名稱
-        string destinationPath = isTemplate ?
-            Path.Combine(Directory.GetCurrentDirectory(), "ImportDescription.xlsx") :
-            Path.Combine(Directory.GetCurrentDirectory(), $"{Schema.SchemaName}Schema_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx");
+        string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), "ImportDescription.xlsx");
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
         string message = $"檔案產製完成儲存於{destinationPath}";
@@ -229,96 +227,22 @@ public class ExportExcelService
                 tocSheet.Cells[1, 2].Value = "Description";
                 tocSheet.Cells[i + 2, 2].Value = Schema.Tables[i].TableDescription;
             }
-
-            if (isTemplate && Schema.Tables[i].TableName.Length > 31)
-            {
-                message += $"{Schema.Tables[i].TableName}名稱超過31字元，不支援excel匯入，請自行修改資料庫描述";
-                continue;
-            }
-            var columnSheet = package.Workbook.Worksheets[Schema.Tables[i].TableName];
-            if (columnSheet == null)
-            {
-                columnSheet = package.Workbook.Worksheets.Copy("ColumnSample", Schema.Tables[i].TableName);
-            }
-            else
-            {
-                //處理sheet超出31字元同名的情況
-                columnSheet = package.Workbook.Worksheets.Copy("ColumnSample", $"{i}-{Schema.Tables[i].TableName}");
-            }
+            var columnSheet = package.Workbook.Worksheets.Copy("ColumnSample", $"{i + 1}");
 
             for (int r = 0; r < Schema.Tables[i].Columns.Count(); r++)
             {
                 var column = 0;
                 columnSheet.Cells[1, 1].Value = Schema.Tables[i].TableName;
-                if (FormControl.IsTableDescriptionShow)
-                {
-                    columnSheet.Cells[1, 2].Value = Schema.Tables[i].TableDescription;
-                }
+                columnSheet.Cells[1, 2].Value = Schema.Tables[i].TableDescription;
 
-                if (FormControl.IsSortShow)
-                {
-                    column++;
-                    columnSheet.Cells[2, column].Value = "Sort";
-                    columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Sort;
-                }
                 column++;
                 columnSheet.Cells[2, column].Value = "Column";
                 columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ColumnName;
 
-                if (FormControl.IsDataTypeShow)
-                {
-                    column++;
-                    columnSheet.Cells[2, column].Value = "DataType";
-                    columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].DataType;
-                }
-                if (FormControl.IsDefaultValueShow)
-                {
-                    column++;
-                    columnSheet.Cells[2, column].Value = "DefaultValue";
-                    columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].DefaultValue;
-                }
-                if (FormControl.IsIdentityShow)
-                {
-                    column++;
-                    columnSheet.Cells[2, column].Value = "Identity";
-                    columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Identity;
-                }
-                if (FormControl.IsPrimaryKeyShow)
-                {
-                    column++;
-                    columnSheet.Cells[2, column].Value = "PrimaryKey";
-                    columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].PrimaryKey;
-                }
-                if (FormControl.IsNotNullShow)
-                {
-                    column++;
-                    columnSheet.Cells[2, column].Value = "NotNull";
-                    columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].NotNull;
-                }
-                if (FormControl.IsLengthShow)
-                {
-                    column++;
-                    columnSheet.Cells[2, column].Value = "Length";
-                    columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Length;
-                }
-                if (FormControl.IsPrecisionShow)
-                {
-                    column++;
-                    columnSheet.Cells[2, column].Value = "Precision";
-                    columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Precision;
-                }
-                if (FormControl.IsScaleShow)
-                {
-                    column++;
-                    columnSheet.Cells[2, column].Value = "Scale";
-                    columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Scale;
-                }
-                if (FormControl.IsColumnDescriptionShow)
-                {
-                    column++;
-                    columnSheet.Cells[2, column].Value = "Description";
-                    columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ColumnDescription;
-                }
+                column++;
+                columnSheet.Cells[2, column].Value = "Description";
+                columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ColumnDescription;
+
                 columnSheet.Cells.AutoFitColumns(); //調整欄寬
                 columnSheet.View.TabSelected = false;// 設置為不選取狀態
             }
@@ -335,43 +259,6 @@ public class ExportExcelService
             FileName = destinationPath,
             UseShellExecute = true
         });
-        return destinationPath;
-    }
-
-    private void CopyStyle(ExcelStyle source, ExcelStyle destination)
-    {
-        // Copy Fill
-        destination.Fill.PatternType = source.Fill.PatternType;
-        destination.Fill.BackgroundColor.SetColor(Color.AliceBlue);
-        destination.Fill.PatternColor.SetColor(Color.AliceBlue);
-
-        // Copy Font
-        destination.Font.Name = source.Font.Name;
-        destination.Font.Size = source.Font.Size;
-        destination.Font.Bold = source.Font.Bold;
-        destination.Font.Italic = source.Font.Italic;
-        destination.Font.UnderLine = source.Font.UnderLine;
-        destination.Font.Strike = source.Font.Strike;
-        destination.Font.Color.SetColor(Color.Black);
-
-        // Copy Border
-        CopyBorderStyle(source.Border.Top, destination.Border.Top);
-        CopyBorderStyle(source.Border.Bottom, destination.Border.Bottom);
-        CopyBorderStyle(source.Border.Left, destination.Border.Left);
-        CopyBorderStyle(source.Border.Right, destination.Border.Right);
-
-        // Copy Alignment
-        destination.HorizontalAlignment = source.HorizontalAlignment;
-        destination.VerticalAlignment = source.VerticalAlignment;
-        destination.WrapText = source.WrapText;
-        destination.TextRotation = source.TextRotation;
-        destination.Indent = source.Indent;
-        destination.ReadingOrder = source.ReadingOrder;
-    }
-
-    private void CopyBorderStyle(ExcelBorderItem source, ExcelBorderItem destination)
-    {
-        destination.Style = source.Style;
-        destination.Color.SetColor(Color.Black);
+        return message;
     }
 }

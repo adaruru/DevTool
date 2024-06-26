@@ -524,7 +524,7 @@ partial class DbToolForm
         resetBtn.TabIndex = 15;
         resetBtn.Text = "重置設定";
         resetBtn.UseVisualStyleBackColor = true;
-        resetBtn.Click += resetBtnClick;
+        resetBtn.Click += resetAllSetting;
         // 
         // downloadExcelStyleTemplateBtn
         // 

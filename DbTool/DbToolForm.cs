@@ -1,13 +1,7 @@
-using DbTool.Properties;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml;
 using OfficeOpenXml;
-using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Reflection;
-using Properties = DbTool.Properties;
 using Settings = DbTool.Properties.Settings;
-using DocumentFormat.OpenXml.Spreadsheet;
 
 public partial class DbToolForm : Form
 {
@@ -70,7 +64,6 @@ public partial class DbToolForm : Form
             conn = new ConnService(connStrBox.Text, SchemaName);
             conn.SetTable();
             conn.SetColumn();
-            SetControl(isTemplate: false);
 
             var destinationPath = string.Empty;
             if (isPerTable)
@@ -106,10 +99,9 @@ public partial class DbToolForm : Form
             conn = new ConnService(connStrBox.Text, SchemaName);
             conn.SetTable();
             conn.SetColumn();
-            SetControl(isForImportTemplate);//控制範本或規格 Excel 顯示欄位
             if (isForImportTemplate)
             {
-                message = _exportExcelService.ExportExcelSchemaWithTemplate(conn.Schema, connStrBox.Text, isForImportTemplate);
+                message = _exportExcelService.DownloadImportDescriptionTemplate(conn.Schema, connStrBox.Text);
             }
             else
             {
@@ -123,43 +115,22 @@ public partial class DbToolForm : Form
         {
             errorTextLbl.Text = $"出現其他異常錯誤:{es.Message}";
         }
-
-        if (isForImportTemplate)
-            SetControl(false);//還原 control 來自使用者設定
     }
 
     private void SetControl(bool isTemplate)
     {
-        if (isTemplate)
-        {
-            //下載匯入欄描述 必須固定描述欄的位置
-            FormControl.IsTableDescriptionShow = true;
-            FormControl.IsColumnDescriptionShow = true;
-            FormControl.IsSortShow = false;
-            FormControl.IsDataTypeShow = false;
-            FormControl.IsDefaultValueShow = false;
-            FormControl.IsIdentityShow = false;
-            FormControl.IsPrimaryKeyShow = false;
-            FormControl.IsNotNullShow = false;
-            FormControl.IsLengthShow = false;
-            FormControl.IsPrecisionShow = false;
-            FormControl.IsScaleShow = false;
-        }
-        else
-        {
-            //下載資料庫規格 依照使用者設定
-            FormControl.IsTableDescriptionShow = IsTableDescriptionShow.Checked;
-            FormControl.IsColumnDescriptionShow = IsColumnDescriptionShow.Checked;
-            FormControl.IsSortShow = IsSortShow.Checked;
-            FormControl.IsDataTypeShow = IsDataTypeShow.Checked;
-            FormControl.IsDefaultValueShow = IsDefaultValueShow.Checked;
-            FormControl.IsIdentityShow = IsIdentityShow.Checked;
-            FormControl.IsPrimaryKeyShow = IsPrimaryKeyShow.Checked;
-            FormControl.IsNotNullShow = IsNotNullShow.Checked;
-            FormControl.IsLengthShow = IsLengthShow.Checked;
-            FormControl.IsPrecisionShow = IsPrecisionShow.Checked;
-            FormControl.IsScaleShow = IsScaleShow.Checked;
-        }
+        //下載資料庫規格 依照使用者設定
+        FormControl.IsTableDescriptionShow = IsTableDescriptionShow.Checked;
+        FormControl.IsColumnDescriptionShow = IsColumnDescriptionShow.Checked;
+        FormControl.IsSortShow = IsSortShow.Checked;
+        FormControl.IsDataTypeShow = IsDataTypeShow.Checked;
+        FormControl.IsDefaultValueShow = IsDefaultValueShow.Checked;
+        FormControl.IsIdentityShow = IsIdentityShow.Checked;
+        FormControl.IsPrimaryKeyShow = IsPrimaryKeyShow.Checked;
+        FormControl.IsNotNullShow = IsNotNullShow.Checked;
+        FormControl.IsLengthShow = IsLengthShow.Checked;
+        FormControl.IsPrecisionShow = IsPrecisionShow.Checked;
+        FormControl.IsScaleShow = IsScaleShow.Checked;
     }
 
     private void connStrBoxEvent(object sender, EventArgs e)
@@ -181,7 +152,8 @@ public partial class DbToolForm : Form
         FormControl.CustomThemeName = CustomThemeNameSelect.SelectedValue.ToString();
     }
 
-    private void ThemeBinding() {
+    private void ThemeBinding()
+    {
         var themeDir = Path.Combine(Directory.GetCurrentDirectory(), "CustomTheme");
         if (!Directory.Exists(themeDir))
         {
@@ -190,7 +162,7 @@ public partial class DbToolForm : Form
         CustomThemeNameSelect.DataSource = Directory.GetFiles(themeDir, "*.xlsx").Select(x => Path.GetFileName(x)).ToList();
     }
 
-    private void resetBtnClick(object sender, EventArgs e)
+    private void resetAllSetting(object sender, EventArgs e)
     {
         var result = MessageBox.Show("你確定要重置所有設定嗎", "確認重置", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
         if (result == DialogResult.Yes)
@@ -297,7 +269,7 @@ public partial class DbToolForm : Form
                 {
                     throw new Exception("請下載匯入描述範本以編輯");
                 }
-                var checkSheet = package.Workbook.Worksheets[worksheet.Cells[2, 1].Text];
+                var checkSheet = package.Workbook.Worksheets["1"];
                 if (checkSheet.Cells[2, 1].Text != "Column")
                 {
                     throw new Exception("請下載匯入描述範本以編輯");
@@ -320,9 +292,15 @@ public partial class DbToolForm : Form
 
                 for (int i = 0; i < _schemaForImportDescription.Tables.Count; i++)
                 {
-                    ExcelWorksheet tableSheet = package.Workbook.Worksheets[_schemaForImportDescription.Tables[i].TableName];
+                    ExcelWorksheet tableSheet = package.Workbook.Worksheets[$"{i + 1}"];
                     if (tableSheet != null)
                     {
+                        var tableName = tableSheet.Cells[1, 1].Text;
+                        if (tableName != _schemaForImportDescription.Tables[i].TableName)
+                        {
+                            errorTextLbl.Text = $"tableName: {_schemaForImportDescription.Tables[i].TableName} 匯入有異常，重新下載匯入範本";
+                            continue;
+                        }
                         for (int row = 3; row <= tableSheet.Dimension.End.Row; row++)
                         {
 
