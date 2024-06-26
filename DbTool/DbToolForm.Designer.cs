@@ -274,7 +274,7 @@ partial class DbToolForm
         // CustomThemelabel
         // 
         CustomThemelabel.AutoSize = true;
-        CustomThemelabel.Location = new Point(11, 147);
+        CustomThemelabel.Location = new Point(11, 150);
         CustomThemelabel.Margin = new Padding(2, 0, 2, 0);
         CustomThemelabel.Name = "CustomThemelabel";
         CustomThemelabel.Size = new Size(126, 19);
@@ -285,7 +285,7 @@ partial class DbToolForm
         // CustomThemeNameSelect
         // 
         CustomThemeNameSelect.FormattingEnabled = true;
-        CustomThemeNameSelect.Location = new Point(139, 144);
+        CustomThemeNameSelect.Location = new Point(139, 147);
         CustomThemeNameSelect.Name = "CustomThemeNameSelect";
         CustomThemeNameSelect.Size = new Size(224, 27);
         CustomThemeNameSelect.TabIndex = 20;
@@ -294,7 +294,7 @@ partial class DbToolForm
         // modelGenBtnSettingLabel
         // 
         modelGenBtnSettingLabel.AutoSize = true;
-        modelGenBtnSettingLabel.Location = new Point(16, 190);
+        modelGenBtnSettingLabel.Location = new Point(11, 183);
         modelGenBtnSettingLabel.Margin = new Padding(2, 0, 2, 0);
         modelGenBtnSettingLabel.Name = "modelGenBtnSettingLabel";
         modelGenBtnSettingLabel.Size = new Size(188, 19);
@@ -528,7 +528,7 @@ partial class DbToolForm
         // 
         // downloadExcelStyleTemplateBtn
         // 
-        downloadExcelStyleTemplateBtn.Location = new Point(369, 143);
+        downloadExcelStyleTemplateBtn.Location = new Point(369, 146);
         downloadExcelStyleTemplateBtn.Margin = new Padding(2);
         downloadExcelStyleTemplateBtn.Name = "downloadExcelStyleTemplateBtn";
         downloadExcelStyleTemplateBtn.Size = new Size(151, 28);
@@ -541,12 +541,12 @@ partial class DbToolForm
         // 
         errorTextLbl.BackColor = SystemColors.Control;
         errorTextLbl.BorderStyle = BorderStyle.None;
-        errorTextLbl.Location = new Point(7, 331);
+        errorTextLbl.Location = new Point(7, 318);
         errorTextLbl.Margin = new Padding(2);
         errorTextLbl.Multiline = true;
         errorTextLbl.Name = "errorTextLbl";
         errorTextLbl.ReadOnly = true;
-        errorTextLbl.Size = new Size(522, 60);
+        errorTextLbl.Size = new Size(522, 73);
         errorTextLbl.TabIndex = 8;
         errorTextLbl.DoubleClick += errorTextDoubleClick;
         // 
