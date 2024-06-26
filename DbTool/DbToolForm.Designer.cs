@@ -429,38 +429,38 @@ partial class DbToolForm
         isDataTypeShow.UseVisualStyleBackColor = true;
         isDataTypeShow.CheckedChanged += IsDataTypeShowChanged;
         // 
-        // IsSortShow
+        // isSortShow
         // 
         isSortShow.AutoSize = true;
         isSortShow.Checked = true;
         isSortShow.CheckState = CheckState.Checked;
         isSortShow.Location = new Point(32, 60);
         isSortShow.Margin = new Padding(2);
-        isSortShow.Name = "IsSortShow";
+        isSortShow.Name = "isSortShow";
         isSortShow.Size = new Size(61, 23);
         isSortShow.TabIndex = 5;
         isSortShow.Text = "排序";
         isSortShow.UseVisualStyleBackColor = true;
         isSortShow.CheckedChanged += IsSortShowChanged;
         // 
-        // IsColumnDescriptionShow
+        // isColumnDescriptionShow
         // 
         isColumnDescriptionShow.AutoSize = true;
         isColumnDescriptionShow.Location = new Point(330, 87);
         isColumnDescriptionShow.Margin = new Padding(2);
-        isColumnDescriptionShow.Name = "IsColumnDescriptionShow";
+        isColumnDescriptionShow.Name = "isColumnDescriptionShow";
         isColumnDescriptionShow.Size = new Size(76, 23);
         isColumnDescriptionShow.TabIndex = 4;
         isColumnDescriptionShow.Text = "欄描述";
         isColumnDescriptionShow.UseVisualStyleBackColor = true;
         isColumnDescriptionShow.CheckedChanged += IsColumnDescriptionShowChanged;
         // 
-        // IsTableDescriptionShow
+        // isTableDescriptionShow
         // 
         isTableDescriptionShow.AutoSize = true;
         isTableDescriptionShow.Location = new Point(32, 33);
         isTableDescriptionShow.Margin = new Padding(2);
-        isTableDescriptionShow.Name = "IsTableDescriptionShow";
+        isTableDescriptionShow.Name = "isTableDescriptionShow";
         isTableDescriptionShow.Size = new Size(76, 23);
         isTableDescriptionShow.TabIndex = 3;
         isTableDescriptionShow.Text = "表描述";
@@ -491,24 +491,24 @@ partial class DbToolForm
         isKey.UseVisualStyleBackColor = true;
         isKey.CheckedChanged += isKeyChanged;
         // 
-        // IsRequired
+        // isRequired
         // 
         isRequired.AutoSize = true;
         isRequired.Location = new Point(230, 213);
         isRequired.Margin = new Padding(2);
-        isRequired.Name = "IsRequired";
+        isRequired.Name = "isRequired";
         isRequired.Size = new Size(96, 23);
         isRequired.TabIndex = 9;
         isRequired.Text = "Required";
         isRequired.UseVisualStyleBackColor = true;
         isRequired.CheckedChanged += IsRequiredChanged;
         // 
-        // IsDisplay
+        // isDisplay
         // 
         isDisplay.AutoSize = true;
         isDisplay.Location = new Point(137, 213);
         isDisplay.Margin = new Padding(2);
-        isDisplay.Name = "IsDisplay";
+        isDisplay.Name = "isDisplay";
         isDisplay.Size = new Size(82, 23);
         isDisplay.TabIndex = 8;
         isDisplay.Text = "Display";
