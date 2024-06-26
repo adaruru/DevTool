@@ -2,11 +2,43 @@
 using OfficeOpenXml.Style;
 using System.Diagnostics;
 using System.Reflection;
+using System.Windows.Forms;
 using Color = System.Drawing.Color;
 
 public class ExportExcelService
 {
     public string ExportExcelSchema(Schema Schema, string connStrBox)
+    {
+        string message =string.Empty;
+
+
+        var isUseCustomTheme = true;
+        if (isUseCustomTheme) {
+            //use custom template
+            Stream resourceStream = new FileStream(Path.Combine(Directory.GetCurrentDirectory(), "CustomTheme/CustomTheme5001.xlsx"), FileMode.Open, FileAccess.Read);
+            if (resourceStream == null)
+            {
+                MessageBox.Show($"Embedded resource CustomTheme5001.xlsx not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return message;
+            }
+            message += ProcessPackageSet(Schema, connStrBox, resourceStream);
+        } else {
+            //use default template
+            string resourceName = "DbTool.Template.StyleTemplate.xlsx";
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            using Stream resourceStream = assembly.GetManifestResourceStream(resourceName);
+            if (resourceStream == null)
+            {
+                MessageBox.Show($"Embedded resource '{resourceName}' not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return message;
+            }
+            message += ProcessPackageSet(Schema, connStrBox, resourceStream);
+        }
+
+
+        return message;
+    }
+    public string ProcessPackageSet(Schema Schema, string connStrBox,Stream resourceStream)
     {
         //Excel 檔案名稱
         string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), $"{Schema.SchemaName}Schema_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx");
@@ -14,18 +46,7 @@ public class ExportExcelService
 
         string message = $"檔案產製完成儲存於{destinationPath}";
 
-        //use template
-        string resourceName = "DbTool.Template.StyleTemplate.xlsx";
-        Assembly assembly = Assembly.GetExecutingAssembly();
-        using Stream resourceStream = assembly.GetManifestResourceStream(resourceName);
-        if (resourceStream == null)
-        {
-            MessageBox.Show($"Embedded resource '{resourceName}' not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return message;
-        }
-
         var package = new ExcelPackage(resourceStream);
-
         var styleSheet = package.Workbook.Worksheets["StyleTemplate"];
         var tableListHeaderStyle = styleSheet.Cells[1, 1];
         var tableListStyle = styleSheet.Cells[2, 1];
@@ -161,7 +182,7 @@ public class ExportExcelService
             tableListStyle.CopyStyles(range);
         }
 
-        // 開啟時只選取TableLists
+        // 開啟時只選取 TableLists
         package.Workbook.View.ActiveTab = 0;
         package.Workbook.Worksheets.Delete("StyleTemplate");
 
@@ -171,10 +192,11 @@ public class ExportExcelService
             FileName = destinationPath,
             UseShellExecute = true
         });
-        return destinationPath;
+
+        return message;
     }
 
-    public string ExportExcelSchemaWithTemplate(Schema Schema, string connStrBox, bool isTemplate)
+        public string ExportExcelSchemaWithTemplate(Schema Schema, string connStrBox, bool isTemplate)
     {
         //範本或規格 Excel 檔案名稱
         string destinationPath = isTemplate ?

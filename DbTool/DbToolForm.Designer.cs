@@ -43,6 +43,7 @@ partial class DbToolForm
         modelToolTab = new TabPage();
         modelGenBtn = new Button();
         settingTab = new TabPage();
+        isUseExcelTemplate = new CheckBox();
         modelGenBtnSettingLabel = new Label();
         connSettingLabel = new Label();
         isWordWithToc = new CheckBox();
@@ -63,7 +64,7 @@ partial class DbToolForm
         IsDisplay = new CheckBox();
         resetBtn = new Button();
         errorTextLbl = new TextBox();
-        isUseExcelTemplate = new CheckBox();
+        downloadExcelStyleTemplateBtn = new Button();
         tabControl1.SuspendLayout();
         connToolTab.SuspendLayout();
         schmaToolTab.SuspendLayout();
@@ -156,6 +157,7 @@ partial class DbToolForm
         // 
         // schmaToolTab
         // 
+        schmaToolTab.Controls.Add(downloadExcelStyleTemplateBtn);
         schmaToolTab.Controls.Add(downloadSchemaWordPerTableBtn);
         schmaToolTab.Controls.Add(downloadSchemaWordBtn);
         schmaToolTab.Controls.Add(ImportDescription);
@@ -235,7 +237,7 @@ partial class DbToolForm
         modelGenBtn.TabIndex = 7;
         modelGenBtn.Text = "所有model產檔";
         modelGenBtn.UseVisualStyleBackColor = true;
-        modelGenBtn.Click += modelGenEvent;
+        modelGenBtn.Click += GenerateModel;
         // 
         // settingTab
         // 
@@ -267,6 +269,18 @@ partial class DbToolForm
         settingTab.Text = "設定";
         settingTab.UseVisualStyleBackColor = true;
         // 
+        // isUseExcelTemplate
+        // 
+        isUseExcelTemplate.AutoSize = true;
+        isUseExcelTemplate.Location = new Point(32, 141);
+        isUseExcelTemplate.Margin = new Padding(2);
+        isUseExcelTemplate.Name = "isUseExcelTemplate";
+        isUseExcelTemplate.Size = new Size(151, 23);
+        isUseExcelTemplate.TabIndex = 20;
+        isUseExcelTemplate.Text = "是否自訂使用樣式";
+        isUseExcelTemplate.UseVisualStyleBackColor = true;
+        isUseExcelTemplate.CheckedChanged += isUseExcelTemplateChanged;
+        // 
         // modelGenBtnSettingLabel
         // 
         modelGenBtnSettingLabel.AutoSize = true;
@@ -290,7 +304,7 @@ partial class DbToolForm
         // isWordWithToc
         // 
         isWordWithToc.AutoSize = true;
-        isWordWithToc.Location = new Point(35, 123);
+        isWordWithToc.Location = new Point(32, 114);
         isWordWithToc.Margin = new Padding(2);
         isWordWithToc.Name = "isWordWithToc";
         isWordWithToc.Size = new Size(101, 23);
@@ -302,7 +316,7 @@ partial class DbToolForm
         // IsScaleShow
         // 
         IsScaleShow.AutoSize = true;
-        IsScaleShow.Location = new Point(255, 94);
+        IsScaleShow.Location = new Point(254, 87);
         IsScaleShow.Margin = new Padding(2);
         IsScaleShow.Name = "IsScaleShow";
         IsScaleShow.Size = new Size(76, 23);
@@ -314,7 +328,7 @@ partial class DbToolForm
         // IsPrecisionShow
         // 
         IsPrecisionShow.AutoSize = true;
-        IsPrecisionShow.Location = new Point(169, 94);
+        IsPrecisionShow.Location = new Point(181, 87);
         IsPrecisionShow.Margin = new Padding(2);
         IsPrecisionShow.Name = "IsPrecisionShow";
         IsPrecisionShow.Size = new Size(61, 23);
@@ -326,7 +340,7 @@ partial class DbToolForm
         // IsLengthShow
         // 
         IsLengthShow.AutoSize = true;
-        IsLengthShow.Location = new Point(106, 94);
+        IsLengthShow.Location = new Point(97, 87);
         IsLengthShow.Margin = new Padding(2);
         IsLengthShow.Name = "IsLengthShow";
         IsLengthShow.Size = new Size(61, 23);
@@ -340,7 +354,7 @@ partial class DbToolForm
         IsNotNullShow.AutoSize = true;
         IsNotNullShow.Checked = true;
         IsNotNullShow.CheckState = CheckState.Checked;
-        IsNotNullShow.Location = new Point(33, 94);
+        IsNotNullShow.Location = new Point(32, 87);
         IsNotNullShow.Margin = new Padding(2);
         IsNotNullShow.Name = "IsNotNullShow";
         IsNotNullShow.Size = new Size(61, 23);
@@ -354,7 +368,7 @@ partial class DbToolForm
         IsPrimaryKeyShow.AutoSize = true;
         IsPrimaryKeyShow.Checked = true;
         IsPrimaryKeyShow.CheckState = CheckState.Checked;
-        IsPrimaryKeyShow.Location = new Point(338, 64);
+        IsPrimaryKeyShow.Location = new Point(330, 60);
         IsPrimaryKeyShow.Margin = new Padding(2);
         IsPrimaryKeyShow.Name = "IsPrimaryKeyShow";
         IsPrimaryKeyShow.Size = new Size(61, 23);
@@ -368,7 +382,7 @@ partial class DbToolForm
         IsIdentityShow.AutoSize = true;
         IsIdentityShow.Checked = true;
         IsIdentityShow.CheckState = CheckState.Checked;
-        IsIdentityShow.Location = new Point(261, 64);
+        IsIdentityShow.Location = new Point(255, 60);
         IsIdentityShow.Margin = new Padding(2);
         IsIdentityShow.Name = "IsIdentityShow";
         IsIdentityShow.Size = new Size(61, 23);
@@ -382,7 +396,7 @@ partial class DbToolForm
         IsDefaultValueShow.AutoSize = true;
         IsDefaultValueShow.Checked = true;
         IsDefaultValueShow.CheckState = CheckState.Checked;
-        IsDefaultValueShow.Location = new Point(182, 64);
+        IsDefaultValueShow.Location = new Point(181, 60);
         IsDefaultValueShow.Margin = new Padding(2);
         IsDefaultValueShow.Name = "IsDefaultValueShow";
         IsDefaultValueShow.Size = new Size(76, 23);
@@ -396,7 +410,7 @@ partial class DbToolForm
         IsDataTypeShow.AutoSize = true;
         IsDataTypeShow.Checked = true;
         IsDataTypeShow.CheckState = CheckState.Checked;
-        IsDataTypeShow.Location = new Point(96, 64);
+        IsDataTypeShow.Location = new Point(97, 60);
         IsDataTypeShow.Margin = new Padding(2);
         IsDataTypeShow.Name = "IsDataTypeShow";
         IsDataTypeShow.Size = new Size(91, 23);
@@ -410,7 +424,7 @@ partial class DbToolForm
         IsSortShow.AutoSize = true;
         IsSortShow.Checked = true;
         IsSortShow.CheckState = CheckState.Checked;
-        IsSortShow.Location = new Point(33, 64);
+        IsSortShow.Location = new Point(32, 60);
         IsSortShow.Margin = new Padding(2);
         IsSortShow.Name = "IsSortShow";
         IsSortShow.Size = new Size(61, 23);
@@ -422,7 +436,7 @@ partial class DbToolForm
         // IsColumnDescriptionShow
         // 
         IsColumnDescriptionShow.AutoSize = true;
-        IsColumnDescriptionShow.Location = new Point(334, 94);
+        IsColumnDescriptionShow.Location = new Point(330, 87);
         IsColumnDescriptionShow.Margin = new Padding(2);
         IsColumnDescriptionShow.Name = "IsColumnDescriptionShow";
         IsColumnDescriptionShow.Size = new Size(76, 23);
@@ -515,17 +529,16 @@ partial class DbToolForm
         errorTextLbl.TabIndex = 8;
         errorTextLbl.DoubleClick += errorTextDoubleClick;
         // 
-        // isUseExcelTemplate
+        // downloadExcelStyleTemplateBtn
         // 
-        isUseExcelTemplate.AutoSize = true;
-        isUseExcelTemplate.Location = new Point(33, 150);
-        isUseExcelTemplate.Margin = new Padding(2);
-        isUseExcelTemplate.Name = "isUseExcelTemplate";
-        isUseExcelTemplate.Size = new Size(101, 23);
-        isUseExcelTemplate.TabIndex = 20;
-        isUseExcelTemplate.Text = "是否使用樣式";
-        isUseExcelTemplate.UseVisualStyleBackColor = true;
-        isUseExcelTemplate.CheckedChanged += isUseExcelTemplateChanged;
+        downloadExcelStyleTemplateBtn.Location = new Point(268, 17);
+        downloadExcelStyleTemplateBtn.Margin = new Padding(2);
+        downloadExcelStyleTemplateBtn.Name = "downloadExcelStyleTemplateBtn";
+        downloadExcelStyleTemplateBtn.Size = new Size(156, 28);
+        downloadExcelStyleTemplateBtn.TabIndex = 18;
+        downloadExcelStyleTemplateBtn.Text = "下載 Excel 自定樣式";
+        downloadExcelStyleTemplateBtn.UseVisualStyleBackColor = true;
+        downloadExcelStyleTemplateBtn.Click += downloadExcelStyleTemplate;
         // 
         // DbToolForm
         // 
@@ -591,4 +604,5 @@ partial class DbToolForm
     private Label connSettingLabel;
     private Label modelGenBtnSettingLabel;
     private CheckBox isUseExcelTemplate;
+    private Button downloadExcelStyleTemplateBtn;
 }

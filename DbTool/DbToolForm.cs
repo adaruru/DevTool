@@ -27,12 +27,16 @@ public partial class DbToolForm : Form
         connStrBox.Text = "Data Source=MSI;Initial Catalog=MvcCoreTraining_Amanda;user id=sa;password=ruru;";
     }
 
-    /// 保留資源範本 單純下載 測試用
-    private void exportTemplateEvent(object sender, EventArgs e)
+    private void downloadExcelStyleTemplate(object sender, EventArgs e)
     {
-        string resourceName = "DbTool.Template.Schema.xlsx";
+        string resourceName = "DbTool.Template.StyleTemplate.xlsx";
         Assembly assembly = Assembly.GetExecutingAssembly();
-        string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), "Schema.xlsx");
+        var ThemeDir = Path.Combine(Directory.GetCurrentDirectory(),"CustomTheme");
+        if (!Directory.Exists(ThemeDir))
+        {
+            Directory.CreateDirectory(ThemeDir);
+        }
+        string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), $"CustomTheme/CustomTheme{DateTime.Now.ToString("mmss")}.xlsx");
         using Stream resourceStream = assembly.GetManifestResourceStream(resourceName);
         if (resourceStream == null)
         {
@@ -48,6 +52,7 @@ public partial class DbToolForm : Form
             FileName = destinationPath,
             UseShellExecute = true
         });
+        errorTextLbl.Text = $"檔案產製完成儲存於{ThemeDir}";
     }
 
     private void exportSchemaWordBtnClick(object sender, EventArgs e)
@@ -370,7 +375,7 @@ public partial class DbToolForm : Form
             errorTextLbl.Text = $"出現其他異常錯誤: {es.Message}";
         }
     }
-    private void modelGenEvent(object sender, EventArgs e)
+    private void GenerateModel(object sender, EventArgs e)
     {
         errorTextLbl.Text = $"產製中請稍後";
         try
