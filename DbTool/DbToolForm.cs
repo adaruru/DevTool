@@ -149,7 +149,7 @@ public partial class DbToolForm : Form
     private void ReloadThemeBinding(object sender, EventArgs e)
     {
         ThemeBinding();
-        FormControl.CustomThemeName = CustomThemeNameSelect.SelectedValue.ToString();
+        FormControl.CustomThemeName = CustomThemeNameSelect.SelectedValue?.ToString();
     }
 
     private void ThemeBinding()
