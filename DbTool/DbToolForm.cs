@@ -108,7 +108,6 @@ public partial class DbToolForm : Form
                 message = _exportExcelService.ExportExcelSchema(conn.Schema, connStrBox.Text);
             }
 
-
             errorTextBox.Text = message;
         }
         catch (Exception es)
@@ -116,23 +115,6 @@ public partial class DbToolForm : Form
             errorTextBox.Text = $"出現其他異常錯誤:{es.Message}";
         }
     }
-
-    private void SetControl(bool isTemplate)
-    {
-        //下載資料庫規格 依照使用者設定
-        FormControl.IsTableDescriptionShow = isTableDescriptionShow.Checked;
-        FormControl.IsColumnDescriptionShow = isColumnDescriptionShow.Checked;
-        FormControl.IsSortShow = isSortShow.Checked;
-        FormControl.IsDataTypeShow = isDataTypeShow.Checked;
-        FormControl.IsDefaultValueShow = isDefaultValueShow.Checked;
-        FormControl.IsIdentityShow = isIdentityShow.Checked;
-        FormControl.IsPrimaryKeyShow = isPrimaryKeyShow.Checked;
-        FormControl.IsNotNullShow = isNotNullShow.Checked;
-        FormControl.IsLengthShow = isLengthShow.Checked;
-        FormControl.IsPrecisionShow = isPrecisionShow.Checked;
-        FormControl.IsScaleShow = isScaleShow.Checked;
-    }
-
     private void connStrBoxEvent(object sender, EventArgs e)
     {
         string conn = connStrBox.Text;
@@ -143,13 +125,23 @@ public partial class DbToolForm : Form
     private void DbToolFormLoad(object sender, EventArgs e)
     {
         ThemeBinding();
+        LanguageBinding();
         LoadSettings();
     }
 
+    private void LanguageBinding()
+    {
+        var languages = new Dictionary<int, string>();
+        languages = Enum.GetValues(typeof(LanguageEnum))
+              .Cast<LanguageEnum>()
+              .ToDictionary(e => Convert.ToInt32(e), e => e.ToString());
+        languageSelect.ValueMember = "Value";
+        languageSelect.DataSource = new BindingSource(languages, null); ;
+    }
     private void ReloadThemeBinding(object sender, EventArgs e)
     {
         ThemeBinding();
-        FormControl.CustomThemeName = CustomThemeNameSelect.SelectedValue?.ToString();
+        FormControl.CustomThemeName = customThemeNameSelect.SelectedValue?.ToString();
     }
 
     private void ThemeBinding()
@@ -175,7 +167,7 @@ public partial class DbToolForm : Form
                 }
             }
         }
-        CustomThemeNameSelect.DataSource = Directory.GetFiles(themeDir, "*.xlsx").Select(x => Path.GetFileName(x)).ToList();
+        customThemeNameSelect.DataSource = Directory.GetFiles(themeDir, "*.xlsx").Select(x => Path.GetFileName(x)).ToList();
     }
 
     private void resetAllSetting(object sender, EventArgs e)
@@ -201,6 +193,7 @@ public partial class DbToolForm : Form
         isKey.Checked = Settings.Default.isKey; // false 預設
         #endregion  ==genModel用==
 
+        #region  ==genWorld/Excel用==
         isTableDescriptionShow.Checked = Settings.Default.IsTableDescriptionShow; // true 表描述
 
         isSortShow.Checked = Settings.Default.IsSortShow; // true 排序
@@ -214,9 +207,11 @@ public partial class DbToolForm : Form
         isPrecisionShow.Checked = Settings.Default.IsPrecisionShow; // false 精度
         isScaleShow.Checked = Settings.Default.IsScaleShow; // false 小位數
         isColumnDescriptionShow.Checked = Settings.Default.IsColumnDescriptionShow; // true 欄描述
+        #endregion  ==genWorld/Excel用==
 
-        /// genWorld用
+        #region  ==genWorld用==
         isWordWithToc.Checked = Settings.Default.isWordWithToc; //true 產製word規格是否有目錄
+        #endregion  ==genWorld用==
     }
 
     /// <summary>
@@ -576,10 +571,14 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
         FormControl.isWordWithToc = isWordWithToc.Checked;
         Settings.Default.Save();
     }
+    private void customThemeNameSelectChanged(object sender, EventArgs e)
+    {
+        FormControl.CustomThemeName = customThemeNameSelect.SelectedValue.ToString();
+    }
     #endregion ==System Default Setting event==
 
-    private void CustomThemeNameSelectChanged(object sender, EventArgs e)
+    private void languageSelectChanged(object sender, EventArgs e)
     {
-        FormControl.CustomThemeName = CustomThemeNameSelect.SelectedValue.ToString();
+
     }
 }
