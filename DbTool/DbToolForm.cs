@@ -8,12 +8,54 @@ public partial class DbToolForm : Form
     public DbToolForm()
     {
         InitializeComponent();
-        LanguageService.LoadLanguage("zh_TW");  // 載入默認語言
+        LanguageManager.LoadLanguage("zh_TW");  // 載入默認語言
         UpdateUI();
+    }
+    private void DbToolFormLoad(object sender, EventArgs e)
+    {
+        ThemeBinding();
+        LanguageBinding();
+        LoadSettings();
     }
     private void UpdateUI()
     {
-        Text = LanguageService.GetString("DbTool");
+        Text = LanguageManager.GetString("DbTool");
+
+        demoCommBtn.Text = LanguageManager.GetString("ShowExample");
+        downloadSchemaBtn.Text = LanguageManager.GetString("DownloadDatabaseSpecExcel");
+        connStrLabel.Text = LanguageManager.GetString("ConnectionString");
+        dbTestBtn.Text = LanguageManager.GetString("ConnectionTest");
+        connToolTab.Text = LanguageManager.GetString("DatabaseConnectionTab");
+        schmaToolTab.Text = LanguageManager.GetString("DatabaseSpecTab");
+        downloadSchemaWordBtn.Text = LanguageManager.GetString("DownloadDatabaseSpecWord");
+        downloadSchemaWordPerTableBtn.Text = LanguageManager.GetString("DownloadDatabaseSpecWordPerTable");
+        importDescriptionBtn.Text = LanguageManager.GetString("ImportDescription");
+        downloadTemplateBtn.Text = LanguageManager.GetString("DownloadImportTemplate");
+        modelToolTab.Text = LanguageManager.GetString("ModelToolTab");
+        modelGenBtn.Text = LanguageManager.GetString("GenerateAllModels");
+        settingTab.Text = LanguageManager.GetString("SettingsTab");
+        downloadExcelStyleTemplateBtn.Text = LanguageManager.GetString("DownloadExcelStyleTemplate");
+        resetBtn.Text = LanguageManager.GetString("ResetSettings");
+        languageTab.Text = LanguageManager.GetString("LanguageTab");
+        customThemelabel.Text = LanguageManager.GetString("CustomExcelStyle");
+        modelGenBtnSettingLabel.Text = LanguageManager.GetString("ModelGenSettings");
+        connSettingLabel.Text = LanguageManager.GetString("ConnSettingsLabel");
+        isWordWithToc.Text = LanguageManager.GetString("WordWithToc");
+        isScaleShow.Text = LanguageManager.GetString("ShowScale");
+        isPrecisionShow.Text = LanguageManager.GetString("ShowPrecision");
+        isLengthShow.Text = LanguageManager.GetString("ShowLength");
+        isNotNullShow.Text = LanguageManager.GetString("ShowNotNull");
+        isPrimaryKeyShow.Text = LanguageManager.GetString("ShowPrimaryKey");
+        isIdentityShow.Text = LanguageManager.GetString("ShowIdentity");
+        isDefaultValueShow.Text = LanguageManager.GetString("ShowDefaultValue");
+        isDataTypeShow.Text = LanguageManager.GetString("ShowDataType");
+        isSortShow.Text = LanguageManager.GetString("ShowSort");
+        isColumnDescriptionShow.Text = LanguageManager.GetString("ShowColumnDescription");
+        isTableDescriptionShow.Text = LanguageManager.GetString("ShowTableDescription");
+        isSummary.Text = LanguageManager.GetString("ShowSummary");
+        isKey.Text = LanguageManager.GetString("ShowKey");
+        isRequired.Text = LanguageManager.GetString("ShowRequired");
+        isDisplay.Text = LanguageManager.GetString("ShowDisplay");
     }
     private readonly ExportWordService _exportWordService = new ExportWordService();
     private readonly ExportExcelService _exportExcelService = new ExportExcelService();
@@ -125,13 +167,6 @@ public partial class DbToolForm : Form
         string conn = connStrBox.Text;
         Settings.Default.ConnString = conn;
         Settings.Default.Save();
-    }
-
-    private void DbToolFormLoad(object sender, EventArgs e)
-    {
-        ThemeBinding();
-        LanguageBinding();
-        LoadSettings();
     }
 
     private void LanguageBinding()
@@ -585,7 +620,7 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
     private void languageSelectChanged(object sender, EventArgs e)
     {
         var language = languageSelect.SelectedValue.ToString();
-        LanguageService.ChangeLanguage(language);
+        LanguageManager.ChangeLanguage(language);
         UpdateUI();
     }
 }

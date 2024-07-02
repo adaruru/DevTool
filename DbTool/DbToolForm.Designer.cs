@@ -66,8 +66,8 @@ partial class DbToolForm
         resetBtn = new Button();
         downloadExcelStyleTemplateBtn = new Button();
         languageTab = new TabPage();
-        errorTextBox = new TextBox();
         languageSelect = new ComboBox();
+        errorTextBox = new TextBox();
         tabControl1.SuspendLayout();
         connToolTab.SuspendLayout();
         schmaToolTab.SuspendLayout();
@@ -78,33 +78,31 @@ partial class DbToolForm
         // 
         // demoCommBtn
         // 
-        demoCommBtn.Location = new Point(165, 212);
+        demoCommBtn.Location = new Point(257, 175);
         demoCommBtn.Margin = new Padding(2);
         demoCommBtn.Name = "demoCommBtn";
-        demoCommBtn.Size = new Size(112, 34);
+        demoCommBtn.Size = new Size(186, 28);
         demoCommBtn.TabIndex = 0;
-        demoCommBtn.Text = "顯示範例";
         demoCommBtn.UseVisualStyleBackColor = true;
         demoCommBtn.Click += demoCommBtnEvent;
         // 
         // downloadSchemaBtn
         // 
-        downloadSchemaBtn.Location = new Point(24, 21);
+        downloadSchemaBtn.Location = new Point(20, 17);
         downloadSchemaBtn.Margin = new Padding(2);
         downloadSchemaBtn.Name = "downloadSchemaBtn";
-        downloadSchemaBtn.Size = new Size(208, 34);
+        downloadSchemaBtn.Size = new Size(298, 28);
         downloadSchemaBtn.TabIndex = 1;
-        downloadSchemaBtn.Text = "下載資料庫規格 Excel";
         downloadSchemaBtn.UseVisualStyleBackColor = true;
         downloadSchemaBtn.Click += exportSchemaEvent;
         // 
         // connStrBox
         // 
-        connStrBox.Location = new Point(29, 56);
+        connStrBox.Location = new Point(24, 46);
         connStrBox.Margin = new Padding(2);
         connStrBox.Multiline = true;
         connStrBox.Name = "connStrBox";
-        connStrBox.Size = new Size(530, 135);
+        connStrBox.Size = new Size(434, 112);
         connStrBox.TabIndex = 2;
         connStrBox.Text = "Data Source=MSI;Initial Catalog=MvcCoreTraining_Amanda;user id=sa;password=ruru";
         connStrBox.TextChanged += connStrBoxEvent;
@@ -112,21 +110,19 @@ partial class DbToolForm
         // connStrLabel
         // 
         connStrLabel.AutoSize = true;
-        connStrLabel.Location = new Point(24, 18);
+        connStrLabel.Location = new Point(20, 15);
         connStrLabel.Margin = new Padding(2, 0, 2, 0);
         connStrLabel.Name = "connStrLabel";
-        connStrLabel.Size = new Size(82, 23);
+        connStrLabel.Size = new Size(0, 19);
         connStrLabel.TabIndex = 3;
-        connStrLabel.Text = "連線字串";
         // 
         // dbTestBtn
         // 
-        dbTestBtn.Location = new Point(29, 212);
+        dbTestBtn.Location = new Point(24, 175);
         dbTestBtn.Margin = new Padding(2);
         dbTestBtn.Name = "dbTestBtn";
-        dbTestBtn.Size = new Size(112, 34);
+        dbTestBtn.Size = new Size(173, 28);
         dbTestBtn.TabIndex = 6;
-        dbTestBtn.Text = "連線測試";
         dbTestBtn.UseVisualStyleBackColor = true;
         dbTestBtn.Click += DbTestConnClick;
         // 
@@ -141,7 +137,7 @@ partial class DbToolForm
         tabControl1.Margin = new Padding(2);
         tabControl1.Name = "tabControl1";
         tabControl1.SelectedIndex = 0;
-        tabControl1.Size = new Size(655, 378);
+        tabControl1.Size = new Size(790, 312);
         tabControl1.TabIndex = 7;
         tabControl1.SelectedIndexChanged += tabControlChanged;
         // 
@@ -151,13 +147,12 @@ partial class DbToolForm
         connToolTab.Controls.Add(dbTestBtn);
         connToolTab.Controls.Add(connStrBox);
         connToolTab.Controls.Add(demoCommBtn);
-        connToolTab.Location = new Point(4, 32);
+        connToolTab.Location = new Point(4, 28);
         connToolTab.Margin = new Padding(2);
         connToolTab.Name = "connToolTab";
         connToolTab.Padding = new Padding(2);
-        connToolTab.Size = new Size(647, 342);
+        connToolTab.Size = new Size(782, 280);
         connToolTab.TabIndex = 0;
-        connToolTab.Text = "資料庫連線";
         connToolTab.UseVisualStyleBackColor = true;
         // 
         // schmaToolTab
@@ -167,79 +162,72 @@ partial class DbToolForm
         schmaToolTab.Controls.Add(downloadSchemaWordBtn);
         schmaToolTab.Controls.Add(importDescriptionBtn);
         schmaToolTab.Controls.Add(downloadSchemaBtn);
-        schmaToolTab.Location = new Point(4, 32);
+        schmaToolTab.Location = new Point(4, 28);
         schmaToolTab.Margin = new Padding(2);
         schmaToolTab.Name = "schmaToolTab";
         schmaToolTab.Padding = new Padding(2);
-        schmaToolTab.Size = new Size(647, 342);
+        schmaToolTab.Size = new Size(782, 280);
         schmaToolTab.TabIndex = 1;
-        schmaToolTab.Text = "資料庫規格";
         schmaToolTab.UseVisualStyleBackColor = true;
         // 
         // downloadTemplateBtn
         // 
-        downloadTemplateBtn.Location = new Point(26, 197);
+        downloadTemplateBtn.Location = new Point(21, 163);
         downloadTemplateBtn.Margin = new Padding(2);
         downloadTemplateBtn.Name = "downloadTemplateBtn";
-        downloadTemplateBtn.Size = new Size(189, 34);
+        downloadTemplateBtn.Size = new Size(297, 28);
         downloadTemplateBtn.TabIndex = 2;
-        downloadTemplateBtn.Text = "下載匯入描述範本";
         downloadTemplateBtn.UseVisualStyleBackColor = true;
         downloadTemplateBtn.Click += exportSchemaEvent;
         // 
         // downloadSchemaWordPerTableBtn
         // 
-        downloadSchemaWordPerTableBtn.Location = new Point(24, 138);
+        downloadSchemaWordPerTableBtn.Location = new Point(20, 114);
         downloadSchemaWordPerTableBtn.Margin = new Padding(2);
         downloadSchemaWordPerTableBtn.Name = "downloadSchemaWordPerTableBtn";
-        downloadSchemaWordPerTableBtn.Size = new Size(297, 34);
+        downloadSchemaWordPerTableBtn.Size = new Size(445, 28);
         downloadSchemaWordPerTableBtn.TabIndex = 17;
-        downloadSchemaWordPerTableBtn.Text = "下載資料庫規格 Word (一表一檔)";
         downloadSchemaWordPerTableBtn.UseVisualStyleBackColor = true;
         downloadSchemaWordPerTableBtn.Click += exportSchemaWordBtnClick;
         // 
         // downloadSchemaWordBtn
         // 
-        downloadSchemaWordBtn.Location = new Point(26, 80);
+        downloadSchemaWordBtn.Location = new Point(21, 66);
         downloadSchemaWordBtn.Margin = new Padding(2);
         downloadSchemaWordBtn.Name = "downloadSchemaWordBtn";
-        downloadSchemaWordBtn.Size = new Size(208, 34);
+        downloadSchemaWordBtn.Size = new Size(297, 28);
         downloadSchemaWordBtn.TabIndex = 15;
-        downloadSchemaWordBtn.Text = "下載資料庫規格 Word";
         downloadSchemaWordBtn.UseVisualStyleBackColor = true;
         downloadSchemaWordBtn.Click += exportSchemaWordBtnClick;
         // 
         // importDescriptionBtn
         // 
-        importDescriptionBtn.Location = new Point(26, 255);
+        importDescriptionBtn.Location = new Point(21, 211);
         importDescriptionBtn.Margin = new Padding(2);
         importDescriptionBtn.Name = "importDescriptionBtn";
-        importDescriptionBtn.Size = new Size(112, 34);
+        importDescriptionBtn.Size = new Size(297, 28);
         importDescriptionBtn.TabIndex = 14;
-        importDescriptionBtn.Text = "匯入描述";
         importDescriptionBtn.UseVisualStyleBackColor = true;
         importDescriptionBtn.Click += ImportDescriptionClick;
         // 
         // modelToolTab
         // 
         modelToolTab.Controls.Add(modelGenBtn);
-        modelToolTab.Location = new Point(4, 32);
+        modelToolTab.Location = new Point(4, 28);
         modelToolTab.Margin = new Padding(2);
         modelToolTab.Name = "modelToolTab";
         modelToolTab.Padding = new Padding(2);
-        modelToolTab.Size = new Size(647, 342);
+        modelToolTab.Size = new Size(782, 280);
         modelToolTab.TabIndex = 2;
-        modelToolTab.Text = "model產檔";
         modelToolTab.UseVisualStyleBackColor = true;
         // 
         // modelGenBtn
         // 
-        modelGenBtn.Location = new Point(21, 23);
+        modelGenBtn.Location = new Point(17, 19);
         modelGenBtn.Margin = new Padding(2);
         modelGenBtn.Name = "modelGenBtn";
-        modelGenBtn.Size = new Size(152, 31);
+        modelGenBtn.Size = new Size(124, 26);
         modelGenBtn.TabIndex = 7;
-        modelGenBtn.Text = "所有model產檔";
         modelGenBtn.UseVisualStyleBackColor = true;
         modelGenBtn.Click += GenerateModel;
         // 
@@ -267,101 +255,91 @@ partial class DbToolForm
         settingTab.Controls.Add(isDisplay);
         settingTab.Controls.Add(resetBtn);
         settingTab.Controls.Add(downloadExcelStyleTemplateBtn);
-        settingTab.Location = new Point(4, 32);
-        settingTab.Margin = new Padding(4);
+        settingTab.Location = new Point(4, 28);
         settingTab.Name = "settingTab";
-        settingTab.Padding = new Padding(4);
-        settingTab.Size = new Size(647, 342);
+        settingTab.Padding = new Padding(3);
+        settingTab.Size = new Size(782, 280);
         settingTab.TabIndex = 3;
-        settingTab.Text = "設定";
         settingTab.UseVisualStyleBackColor = true;
         // 
         // customThemelabel
         // 
         customThemelabel.AutoSize = true;
-        customThemelabel.Location = new Point(13, 182);
+        customThemelabel.Location = new Point(11, 150);
         customThemelabel.Margin = new Padding(2, 0, 2, 0);
         customThemelabel.Name = "customThemelabel";
-        customThemelabel.Size = new Size(153, 23);
+        customThemelabel.Size = new Size(0, 19);
         customThemelabel.TabIndex = 21;
-        customThemelabel.Text = "自定義 Excel 樣式";
         customThemelabel.DoubleClick += ReloadThemeBinding;
         // 
         // customThemeNameSelect
         // 
         customThemeNameSelect.FormattingEnabled = true;
-        customThemeNameSelect.Location = new Point(170, 178);
-        customThemeNameSelect.Margin = new Padding(4);
+        customThemeNameSelect.Location = new Point(179, 147);
         customThemeNameSelect.Name = "customThemeNameSelect";
-        customThemeNameSelect.Size = new Size(273, 31);
+        customThemeNameSelect.Size = new Size(224, 27);
         customThemeNameSelect.TabIndex = 20;
         customThemeNameSelect.SelectedIndexChanged += customThemeNameSelectChanged;
         // 
         // modelGenBtnSettingLabel
         // 
         modelGenBtnSettingLabel.AutoSize = true;
-        modelGenBtnSettingLabel.Location = new Point(13, 222);
+        modelGenBtnSettingLabel.Location = new Point(11, 183);
         modelGenBtnSettingLabel.Margin = new Padding(2, 0, 2, 0);
         modelGenBtnSettingLabel.Name = "modelGenBtnSettingLabel";
-        modelGenBtnSettingLabel.Size = new Size(226, 23);
+        modelGenBtnSettingLabel.Size = new Size(0, 19);
         modelGenBtnSettingLabel.TabIndex = 19;
-        modelGenBtnSettingLabel.Text = "下載 model .cs 檔顯示設置";
         // 
         // connSettingLabel
         // 
         connSettingLabel.AutoSize = true;
-        connSettingLabel.Location = new Point(13, 10);
+        connSettingLabel.Location = new Point(11, 8);
         connSettingLabel.Margin = new Padding(2, 0, 2, 0);
         connSettingLabel.Name = "connSettingLabel";
-        connSettingLabel.Size = new Size(258, 23);
+        connSettingLabel.Size = new Size(0, 19);
         connSettingLabel.TabIndex = 17;
-        connSettingLabel.Text = "下載 excel/word 規格顯示欄位";
         // 
         // isWordWithToc
         // 
         isWordWithToc.AutoSize = true;
-        isWordWithToc.Location = new Point(39, 138);
+        isWordWithToc.Location = new Point(32, 114);
         isWordWithToc.Margin = new Padding(2);
         isWordWithToc.Name = "isWordWithToc";
-        isWordWithToc.Size = new Size(119, 27);
+        isWordWithToc.Size = new Size(18, 17);
         isWordWithToc.TabIndex = 16;
-        isWordWithToc.Text = "Word目錄";
         isWordWithToc.UseVisualStyleBackColor = true;
         isWordWithToc.CheckedChanged += isWordWithTocChanged;
         // 
         // isScaleShow
         // 
         isScaleShow.AutoSize = true;
-        isScaleShow.Location = new Point(310, 105);
+        isScaleShow.Location = new Point(353, 87);
         isScaleShow.Margin = new Padding(2);
         isScaleShow.Name = "isScaleShow";
-        isScaleShow.Size = new Size(90, 27);
+        isScaleShow.Size = new Size(18, 17);
         isScaleShow.TabIndex = 13;
-        isScaleShow.Text = "小位數";
         isScaleShow.UseVisualStyleBackColor = true;
         isScaleShow.CheckedChanged += IsScaleShowChanged;
         // 
         // isPrecisionShow
         // 
         isPrecisionShow.AutoSize = true;
-        isPrecisionShow.Location = new Point(221, 105);
+        isPrecisionShow.Location = new Point(234, 87);
         isPrecisionShow.Margin = new Padding(2);
         isPrecisionShow.Name = "isPrecisionShow";
-        isPrecisionShow.Size = new Size(72, 27);
+        isPrecisionShow.Size = new Size(18, 17);
         isPrecisionShow.TabIndex = 12;
-        isPrecisionShow.Text = "精度";
         isPrecisionShow.UseVisualStyleBackColor = true;
         isPrecisionShow.CheckedChanged += IsPrecisionShowChanged;
         // 
         // isLengthShow
         // 
         isLengthShow.AutoSize = true;
-        isLengthShow.Location = new Point(119, 105);
+        isLengthShow.Location = new Point(133, 87);
         isLengthShow.Margin = new Padding(2);
         isLengthShow.Name = "isLengthShow";
-        isLengthShow.Size = new Size(72, 27);
+        isLengthShow.Size = new Size(18, 17);
         isLengthShow.TabIndex = 11;
-        isLengthShow.Text = "長度";
         isLengthShow.UseVisualStyleBackColor = true;
         isLengthShow.CheckedChanged += IsLengthShowChanged;
         // 
@@ -370,12 +348,11 @@ partial class DbToolForm
         isNotNullShow.AutoSize = true;
         isNotNullShow.Checked = true;
         isNotNullShow.CheckState = CheckState.Checked;
-        isNotNullShow.Location = new Point(39, 105);
+        isNotNullShow.Location = new Point(32, 87);
         isNotNullShow.Margin = new Padding(2);
         isNotNullShow.Name = "isNotNullShow";
-        isNotNullShow.Size = new Size(72, 27);
+        isNotNullShow.Size = new Size(18, 17);
         isNotNullShow.TabIndex = 10;
-        isNotNullShow.Text = "必填";
         isNotNullShow.UseVisualStyleBackColor = true;
         isNotNullShow.CheckedChanged += IsNotNullShowChanged;
         // 
@@ -384,12 +361,11 @@ partial class DbToolForm
         isPrimaryKeyShow.AutoSize = true;
         isPrimaryKeyShow.Checked = true;
         isPrimaryKeyShow.CheckState = CheckState.Checked;
-        isPrimaryKeyShow.Location = new Point(403, 73);
+        isPrimaryKeyShow.Location = new Point(453, 60);
         isPrimaryKeyShow.Margin = new Padding(2);
         isPrimaryKeyShow.Name = "isPrimaryKeyShow";
-        isPrimaryKeyShow.Size = new Size(72, 27);
+        isPrimaryKeyShow.Size = new Size(18, 17);
         isPrimaryKeyShow.TabIndex = 9;
-        isPrimaryKeyShow.Text = "主鍵";
         isPrimaryKeyShow.UseVisualStyleBackColor = true;
         isPrimaryKeyShow.CheckedChanged += IsPrimaryKeyShowChanged;
         // 
@@ -398,12 +374,11 @@ partial class DbToolForm
         isIdentityShow.AutoSize = true;
         isIdentityShow.Checked = true;
         isIdentityShow.CheckState = CheckState.Checked;
-        isIdentityShow.Location = new Point(312, 73);
+        isIdentityShow.Location = new Point(354, 60);
         isIdentityShow.Margin = new Padding(2);
         isIdentityShow.Name = "isIdentityShow";
-        isIdentityShow.Size = new Size(72, 27);
+        isIdentityShow.Size = new Size(18, 17);
         isIdentityShow.TabIndex = 8;
-        isIdentityShow.Text = "識別";
         isIdentityShow.UseVisualStyleBackColor = true;
         isIdentityShow.CheckedChanged += IsIdentityShowChanged;
         // 
@@ -412,12 +387,11 @@ partial class DbToolForm
         isDefaultValueShow.AutoSize = true;
         isDefaultValueShow.Checked = true;
         isDefaultValueShow.CheckState = CheckState.Checked;
-        isDefaultValueShow.Location = new Point(221, 73);
+        isDefaultValueShow.Location = new Point(234, 60);
         isDefaultValueShow.Margin = new Padding(2);
         isDefaultValueShow.Name = "isDefaultValueShow";
-        isDefaultValueShow.Size = new Size(90, 27);
+        isDefaultValueShow.Size = new Size(18, 17);
         isDefaultValueShow.TabIndex = 7;
-        isDefaultValueShow.Text = "預設值";
         isDefaultValueShow.UseVisualStyleBackColor = true;
         isDefaultValueShow.CheckedChanged += IsDefaultValueShowChanged;
         // 
@@ -426,12 +400,11 @@ partial class DbToolForm
         isDataTypeShow.AutoSize = true;
         isDataTypeShow.Checked = true;
         isDataTypeShow.CheckState = CheckState.Checked;
-        isDataTypeShow.Location = new Point(119, 73);
+        isDataTypeShow.Location = new Point(133, 60);
         isDataTypeShow.Margin = new Padding(2);
         isDataTypeShow.Name = "isDataTypeShow";
-        isDataTypeShow.Size = new Size(108, 27);
+        isDataTypeShow.Size = new Size(18, 17);
         isDataTypeShow.TabIndex = 6;
-        isDataTypeShow.Text = "資料型別";
         isDataTypeShow.UseVisualStyleBackColor = true;
         isDataTypeShow.CheckedChanged += IsDataTypeShowChanged;
         // 
@@ -440,153 +413,142 @@ partial class DbToolForm
         isSortShow.AutoSize = true;
         isSortShow.Checked = true;
         isSortShow.CheckState = CheckState.Checked;
-        isSortShow.Location = new Point(39, 73);
+        isSortShow.Location = new Point(32, 60);
         isSortShow.Margin = new Padding(2);
         isSortShow.Name = "isSortShow";
-        isSortShow.Size = new Size(72, 27);
+        isSortShow.Size = new Size(18, 17);
         isSortShow.TabIndex = 5;
-        isSortShow.Text = "排序";
         isSortShow.UseVisualStyleBackColor = true;
         isSortShow.CheckedChanged += IsSortShowChanged;
         // 
         // isColumnDescriptionShow
         // 
         isColumnDescriptionShow.AutoSize = true;
-        isColumnDescriptionShow.Location = new Point(403, 105);
+        isColumnDescriptionShow.Location = new Point(453, 87);
         isColumnDescriptionShow.Margin = new Padding(2);
         isColumnDescriptionShow.Name = "isColumnDescriptionShow";
-        isColumnDescriptionShow.Size = new Size(90, 27);
+        isColumnDescriptionShow.Size = new Size(18, 17);
         isColumnDescriptionShow.TabIndex = 4;
-        isColumnDescriptionShow.Text = "欄描述";
         isColumnDescriptionShow.UseVisualStyleBackColor = true;
         isColumnDescriptionShow.CheckedChanged += IsColumnDescriptionShowChanged;
         // 
         // isTableDescriptionShow
         // 
         isTableDescriptionShow.AutoSize = true;
-        isTableDescriptionShow.Location = new Point(39, 40);
+        isTableDescriptionShow.Location = new Point(32, 33);
         isTableDescriptionShow.Margin = new Padding(2);
         isTableDescriptionShow.Name = "isTableDescriptionShow";
-        isTableDescriptionShow.Size = new Size(90, 27);
+        isTableDescriptionShow.Size = new Size(18, 17);
         isTableDescriptionShow.TabIndex = 3;
-        isTableDescriptionShow.Text = "表描述";
         isTableDescriptionShow.UseVisualStyleBackColor = true;
         isTableDescriptionShow.CheckedChanged += IsTableDescriptionShowChanged;
         // 
         // isSummary
         // 
         isSummary.AutoSize = true;
-        isSummary.Location = new Point(45, 258);
+        isSummary.Location = new Point(37, 213);
         isSummary.Margin = new Padding(2);
         isSummary.Name = "isSummary";
-        isSummary.Size = new Size(117, 27);
+        isSummary.Size = new Size(18, 17);
         isSummary.TabIndex = 11;
-        isSummary.Text = "Summary";
         isSummary.UseVisualStyleBackColor = true;
         isSummary.CheckedChanged += isSummaryChanged;
         // 
         // isKey
         // 
         isKey.AutoSize = true;
-        isKey.Location = new Point(401, 258);
+        isKey.Location = new Point(328, 213);
         isKey.Margin = new Padding(2);
         isKey.Name = "isKey";
-        isKey.Size = new Size(66, 27);
+        isKey.Size = new Size(18, 17);
         isKey.TabIndex = 10;
-        isKey.Text = "Key";
         isKey.UseVisualStyleBackColor = true;
         isKey.CheckedChanged += isKeyChanged;
         // 
         // isRequired
         // 
         isRequired.AutoSize = true;
-        isRequired.Location = new Point(281, 258);
+        isRequired.Location = new Point(230, 213);
         isRequired.Margin = new Padding(2);
         isRequired.Name = "isRequired";
-        isRequired.Size = new Size(113, 27);
+        isRequired.Size = new Size(18, 17);
         isRequired.TabIndex = 9;
-        isRequired.Text = "Required";
         isRequired.UseVisualStyleBackColor = true;
         isRequired.CheckedChanged += IsRequiredChanged;
         // 
         // isDisplay
         // 
         isDisplay.AutoSize = true;
-        isDisplay.Location = new Point(167, 258);
+        isDisplay.Location = new Point(137, 213);
         isDisplay.Margin = new Padding(2);
         isDisplay.Name = "isDisplay";
-        isDisplay.Size = new Size(98, 27);
+        isDisplay.Size = new Size(18, 17);
         isDisplay.TabIndex = 8;
-        isDisplay.Text = "Display";
         isDisplay.UseVisualStyleBackColor = true;
         isDisplay.CheckedChanged += IsDisplayChanged;
         // 
         // resetBtn
         // 
-        resetBtn.Location = new Point(23, 295);
+        resetBtn.Location = new Point(19, 244);
         resetBtn.Margin = new Padding(2);
         resetBtn.Name = "resetBtn";
-        resetBtn.Size = new Size(112, 34);
+        resetBtn.Size = new Size(92, 28);
         resetBtn.TabIndex = 15;
-        resetBtn.Text = "重置設定";
         resetBtn.UseVisualStyleBackColor = true;
         resetBtn.Click += resetAllSetting;
         // 
         // downloadExcelStyleTemplateBtn
         // 
-        downloadExcelStyleTemplateBtn.Location = new Point(451, 177);
+        downloadExcelStyleTemplateBtn.Location = new Point(408, 147);
         downloadExcelStyleTemplateBtn.Margin = new Padding(2);
         downloadExcelStyleTemplateBtn.Name = "downloadExcelStyleTemplateBtn";
-        downloadExcelStyleTemplateBtn.Size = new Size(185, 34);
+        downloadExcelStyleTemplateBtn.Size = new Size(264, 28);
         downloadExcelStyleTemplateBtn.TabIndex = 18;
-        downloadExcelStyleTemplateBtn.Text = "下載 Excel 自定樣式";
         downloadExcelStyleTemplateBtn.UseVisualStyleBackColor = true;
         downloadExcelStyleTemplateBtn.Click += downloadExcelStyleTemplate;
         // 
         // languageTab
         // 
         languageTab.Controls.Add(languageSelect);
-        languageTab.Location = new Point(4, 32);
+        languageTab.Location = new Point(4, 28);
+        languageTab.Margin = new Padding(2);
         languageTab.Name = "languageTab";
-        languageTab.Padding = new Padding(3);
-        languageTab.Size = new Size(647, 342);
+        languageTab.Padding = new Padding(2);
+        languageTab.Size = new Size(782, 280);
         languageTab.TabIndex = 4;
-        languageTab.Text = "語言";
         languageTab.UseVisualStyleBackColor = true;
+        // 
+        // languageSelect
+        // 
+        languageSelect.FormattingEnabled = true;
+        languageSelect.Location = new Point(22, 17);
+        languageSelect.Name = "languageSelect";
+        languageSelect.Size = new Size(163, 27);
+        languageSelect.TabIndex = 21;
+        languageSelect.SelectedIndexChanged += languageSelectChanged;
         // 
         // errorTextBox
         // 
         errorTextBox.BackColor = SystemColors.Control;
         errorTextBox.BorderStyle = BorderStyle.None;
-        errorTextBox.Location = new Point(9, 385);
+        errorTextBox.Location = new Point(7, 318);
         errorTextBox.Margin = new Padding(2);
         errorTextBox.Multiline = true;
         errorTextBox.Name = "errorTextBox";
         errorTextBox.ReadOnly = true;
-        errorTextBox.Size = new Size(638, 88);
+        errorTextBox.Size = new Size(522, 73);
         errorTextBox.TabIndex = 8;
         errorTextBox.DoubleClick += ErrorTextClearDoubleClick;
         // 
-        // languageSelect
-        // 
-        languageSelect.FormattingEnabled = true;
-        languageSelect.Location = new Point(27, 20);
-        languageSelect.Margin = new Padding(4);
-        languageSelect.Name = "languageSelect";
-        languageSelect.Size = new Size(90, 31);
-        languageSelect.TabIndex = 21;
-        languageSelect.SelectedIndexChanged += languageSelectChanged;
-        // 
         // DbToolForm
         // 
-        AutoScaleDimensions = new SizeF(11F, 23F);
+        AutoScaleDimensions = new SizeF(9F, 19F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(654, 483);
+        ClientSize = new Size(784, 399);
         Controls.Add(errorTextBox);
         Controls.Add(tabControl1);
         Margin = new Padding(2);
         Name = "DbToolForm";
-        Text = "資料庫工具";
         Load += DbToolFormLoad;
         tabControl1.ResumeLayout(false);
         connToolTab.ResumeLayout(false);

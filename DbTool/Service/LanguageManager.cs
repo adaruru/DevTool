@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
 
-public class LanguageService
+public class LanguageManager
 {
     private static Dictionary<string, Dictionary<string, string>> _languages = new Dictionary<string, Dictionary<string, string>>();
     private static string _currentLanguage = "zh_TW";  // 默認語言
