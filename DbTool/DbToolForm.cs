@@ -21,18 +21,21 @@ public partial class DbToolForm : Form
     {
         Text = LanguageManager.GetString("DbTool");
 
+        connToolTab.Text = LanguageManager.GetString("DatabaseConnectionTab");
         demoCommBtn.Text = LanguageManager.GetString("ShowExample");
-        downloadSchemaBtn.Text = LanguageManager.GetString("DownloadDatabaseSpecExcel");
         connStrLabel.Text = LanguageManager.GetString("ConnectionString");
         dbTestBtn.Text = LanguageManager.GetString("ConnectionTest");
-        connToolTab.Text = LanguageManager.GetString("DatabaseConnectionTab");
+
         schmaToolTab.Text = LanguageManager.GetString("DatabaseSpecTab");
+        downloadSchemaBtn.Text = LanguageManager.GetString("DownloadDatabaseSpecExcel");
         downloadSchemaWordBtn.Text = LanguageManager.GetString("DownloadDatabaseSpecWord");
         downloadSchemaWordPerTableBtn.Text = LanguageManager.GetString("DownloadDatabaseSpecWordPerTable");
         importDescriptionBtn.Text = LanguageManager.GetString("ImportDescription");
         downloadTemplateBtn.Text = LanguageManager.GetString("DownloadImportTemplate");
+
         modelToolTab.Text = LanguageManager.GetString("ModelToolTab");
         modelGenBtn.Text = LanguageManager.GetString("GenerateAllModels");
+
         settingTab.Text = LanguageManager.GetString("SettingsTab");
         downloadExcelStyleTemplateBtn.Text = LanguageManager.GetString("DownloadExcelStyleTemplate");
         resetBtn.Text = LanguageManager.GetString("ResetSettings");
@@ -40,6 +43,7 @@ public partial class DbToolForm : Form
         customThemelabel.Text = LanguageManager.GetString("CustomExcelStyle");
         modelGenBtnSettingLabel.Text = LanguageManager.GetString("ModelGenSettings");
         connSettingLabel.Text = LanguageManager.GetString("ConnSettingsLabel");
+
         isWordWithToc.Text = LanguageManager.GetString("WordWithToc");
         isScaleShow.Text = LanguageManager.GetString("ShowScale");
         isPrecisionShow.Text = LanguageManager.GetString("ShowPrecision");
@@ -53,6 +57,7 @@ public partial class DbToolForm : Form
         isColumnDescriptionShow.Text = LanguageManager.GetString("ShowColumnDescription");
         isTableDescriptionShow.Text = LanguageManager.GetString("ShowTableDescription");
         isSummary.Text = LanguageManager.GetString("ShowSummary");
+
         isKey.Text = LanguageManager.GetString("ShowKey");
         isRequired.Text = LanguageManager.GetString("ShowRequired");
         isDisplay.Text = LanguageManager.GetString("ShowDisplay");
