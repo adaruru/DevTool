@@ -4,7 +4,7 @@ using System.IO;
 public class LanguageManager
 {
     private static Dictionary<string, Dictionary<string, string>> _languages = new Dictionary<string, Dictionary<string, string>>();
-    private static string _currentLanguage = "zh_TW";  // 默認語言
+    private static string _currentLanguage = "zh_TW";
 
     public static void LoadLanguage(string languageCode)
     {
@@ -31,7 +31,7 @@ public class LanguageManager
         {
             return _languages[_currentLanguage][key];
         }
-        return key;  // 如果找不到翻譯，返回鍵名
+        return key;
     }
 
     public static void ChangeLanguage(string languageCode)
