@@ -8,7 +8,12 @@ public partial class DbToolForm : Form
     public DbToolForm()
     {
         InitializeComponent();
-
+        LanguageService.LoadLanguage("zh_TW");  // 載入默認語言
+        UpdateUI();
+    }
+    private void UpdateUI()
+    {
+        Text = LanguageService.GetString("DbTool");
     }
     private readonly ExportWordService _exportWordService = new ExportWordService();
     private readonly ExportExcelService _exportExcelService = new ExportExcelService();
@@ -579,6 +584,8 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
 
     private void languageSelectChanged(object sender, EventArgs e)
     {
-
+        var language = languageSelect.SelectedValue.ToString();
+        LanguageService.ChangeLanguage(language);
+        UpdateUI();
     }
 }
