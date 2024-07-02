@@ -17,7 +17,7 @@
   "ResetSettings": "重置設定",
   "LanguageTab": "語言",
   "CustomExcelStyle": "自定義 Excel 樣式",
-  "ModelGenSettings": "下載 model .cs 檔顯示設置",
+  "ModelGenSettings": "下載 model.cs 檔顯示設置",
   "ConnSettingsLabel": "下載 excel/word 規格顯示欄位",
   "WordWithToc": "Word目錄",
   "ShowScale": "小位數",
