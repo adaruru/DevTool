@@ -6,8 +6,12 @@ public class LanguageManager
     private static Dictionary<string, Dictionary<string, string>> _languages = new Dictionary<string, Dictionary<string, string>>();
     private static string _currentLanguage = "zh_TW";
 
-    public static void LoadLanguage(string languageCode)
+    public static void LoadLanguage(string? languageCode)
     {
+        if (string.IsNullOrEmpty(languageCode))
+        {
+            languageCode = _currentLanguage;
+        }
         if (!_languages.ContainsKey(languageCode))
         {
             string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Languages", $"{languageCode}.json");
@@ -32,10 +36,5 @@ public class LanguageManager
             return _languages[_currentLanguage][key];
         }
         return key;
-    }
-
-    public static void ChangeLanguage(string languageCode)
-    {
-        LoadLanguage(languageCode);
     }
 }

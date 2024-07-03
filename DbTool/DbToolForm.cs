@@ -8,7 +8,7 @@ public partial class DbToolForm : Form
     public DbToolForm()
     {
         InitializeComponent();
-        LanguageManager.LoadLanguage("zh_TW");  // 載入默認語言
+        LanguageManager.LoadLanguage(null);
         UpdateUI();
     }
     private void DbToolFormLoad(object sender, EventArgs e)
@@ -625,7 +625,7 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
     private void languageSelectChanged(object sender, EventArgs e)
     {
         var language = languageSelect.SelectedValue.ToString();
-        LanguageManager.ChangeLanguage(language);
+        LanguageManager.LoadLanguage(language);
         UpdateUI();
     }
 }
