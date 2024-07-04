@@ -226,7 +226,7 @@ partial class DbToolForm
         modelGenBtn.Location = new Point(17, 19);
         modelGenBtn.Margin = new Padding(2);
         modelGenBtn.Name = "modelGenBtn";
-        modelGenBtn.Size = new Size(124, 26);
+        modelGenBtn.Size = new Size(180, 26);
         modelGenBtn.TabIndex = 7;
         modelGenBtn.UseVisualStyleBackColor = true;
         modelGenBtn.Click += GenerateModel;

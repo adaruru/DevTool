@@ -8,7 +8,7 @@ public partial class DbToolForm : Form
     public DbToolForm()
     {
         InitializeComponent();
-        LanguageManager.LoadLanguage(null);
+        Lan.LoadLanguage(null);
         UpdateUI();
     }
     private void DbToolFormLoad(object sender, EventArgs e)
@@ -19,48 +19,48 @@ public partial class DbToolForm : Form
     }
     private void UpdateUI()
     {
-        Text = LanguageManager.GetString("DbTool");
+        Text = Lan.Get("DbTool");
 
-        connToolTab.Text = LanguageManager.GetString("DatabaseConnectionTab");
-        demoCommBtn.Text = LanguageManager.GetString("ShowExample");
-        connStrLabel.Text = LanguageManager.GetString("ConnectionString");
-        dbTestBtn.Text = LanguageManager.GetString("ConnectionTest");
+        connToolTab.Text = Lan.Get("DatabaseConnectionTab");
+        demoCommBtn.Text = Lan.Get("ShowExample");
+        connStrLabel.Text = Lan.Get("ConnectionString");
+        dbTestBtn.Text = Lan.Get("ConnectionTest");
 
-        schmaToolTab.Text = LanguageManager.GetString("DatabaseSpecTab");
-        downloadSchemaBtn.Text = LanguageManager.GetString("DownloadDatabaseSpecExcel");
-        downloadSchemaWordBtn.Text = LanguageManager.GetString("DownloadDatabaseSpecWord");
-        downloadSchemaWordPerTableBtn.Text = LanguageManager.GetString("DownloadDatabaseSpecWordPerTable");
-        importDescriptionBtn.Text = LanguageManager.GetString("ImportDescription");
-        downloadTemplateBtn.Text = LanguageManager.GetString("DownloadImportTemplate");
+        schmaToolTab.Text = Lan.Get("DatabaseSpecTab");
+        downloadSchemaBtn.Text = Lan.Get("DownloadDatabaseSpecExcel");
+        downloadSchemaWordBtn.Text = Lan.Get("DownloadDatabaseSpecWord");
+        downloadSchemaWordPerTableBtn.Text = Lan.Get("DownloadDatabaseSpecWordPerTable");
+        importDescriptionBtn.Text = Lan.Get("ImportDescription");
+        downloadTemplateBtn.Text = Lan.Get("DownloadImportTemplate");
 
-        modelToolTab.Text = LanguageManager.GetString("ModelToolTab");
-        modelGenBtn.Text = LanguageManager.GetString("GenerateAllModels");
+        modelToolTab.Text = Lan.Get("ModelToolTab");
+        modelGenBtn.Text = Lan.Get("GenerateAllModels");
 
-        settingTab.Text = LanguageManager.GetString("SettingsTab");
-        downloadExcelStyleTemplateBtn.Text = LanguageManager.GetString("DownloadExcelStyleTemplate");
-        resetBtn.Text = LanguageManager.GetString("ResetSettings");
-        languageTab.Text = LanguageManager.GetString("LanguageTab");
-        customThemelabel.Text = LanguageManager.GetString("CustomExcelStyle");
-        modelGenBtnSettingLabel.Text = LanguageManager.GetString("ModelGenSettings");
-        connSettingLabel.Text = LanguageManager.GetString("ConnSettingsLabel");
+        settingTab.Text = Lan.Get("SettingsTab");
+        downloadExcelStyleTemplateBtn.Text = Lan.Get("DownloadExcelStyleTemplate");
+        resetBtn.Text = Lan.Get("ResetSettings");
+        languageTab.Text = Lan.Get("LanguageTab");
+        customThemelabel.Text = Lan.Get("CustomExcelStyle");
+        modelGenBtnSettingLabel.Text = Lan.Get("ModelGenSettings");
+        connSettingLabel.Text = Lan.Get("ConnSettingsLabel");
 
-        isWordWithToc.Text = LanguageManager.GetString("WordWithToc");
-        isScaleShow.Text = LanguageManager.GetString("ShowScale");
-        isPrecisionShow.Text = LanguageManager.GetString("ShowPrecision");
-        isLengthShow.Text = LanguageManager.GetString("ShowLength");
-        isNotNullShow.Text = LanguageManager.GetString("ShowNotNull");
-        isPrimaryKeyShow.Text = LanguageManager.GetString("ShowPrimaryKey");
-        isIdentityShow.Text = LanguageManager.GetString("ShowIdentity");
-        isDefaultValueShow.Text = LanguageManager.GetString("ShowDefaultValue");
-        isDataTypeShow.Text = LanguageManager.GetString("ShowDataType");
-        isSortShow.Text = LanguageManager.GetString("ShowSort");
-        isColumnDescriptionShow.Text = LanguageManager.GetString("ShowColumnDescription");
-        isTableDescriptionShow.Text = LanguageManager.GetString("ShowTableDescription");
-        isSummary.Text = LanguageManager.GetString("ShowSummary");
+        isWordWithToc.Text = Lan.Get("WordWithToc");
+        isScaleShow.Text = Lan.Get("Scale");
+        isPrecisionShow.Text = Lan.Get("Precision");
+        isLengthShow.Text = Lan.Get("Length");
+        isNotNullShow.Text = Lan.Get("NotNull");
+        isPrimaryKeyShow.Text = Lan.Get("PrimaryKey");
+        isIdentityShow.Text = Lan.Get("Identity");
+        isDefaultValueShow.Text = Lan.Get("DefaultValue");
+        isDataTypeShow.Text = Lan.Get("DataType");
+        isSortShow.Text = Lan.Get("Sort");
+        isColumnDescriptionShow.Text = Lan.Get("ColumnDescription");
+        isTableDescriptionShow.Text = Lan.Get("TableDescription");
+        isSummary.Text = Lan.Get("Summary");
 
-        isKey.Text = LanguageManager.GetString("ShowKey");
-        isRequired.Text = LanguageManager.GetString("ShowRequired");
-        isDisplay.Text = LanguageManager.GetString("ShowDisplay");
+        isKey.Text = Lan.Get("Key");
+        isRequired.Text = Lan.Get("Required");
+        isDisplay.Text = Lan.Get("Display");
     }
     private readonly ExportWordService _exportWordService = new ExportWordService();
     private readonly ExportExcelService _exportExcelService = new ExportExcelService();
@@ -625,7 +625,7 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
     private void languageSelectChanged(object sender, EventArgs e)
     {
         var language = languageSelect.SelectedValue.ToString();
-        LanguageManager.LoadLanguage(language);
+        Lan.LoadLanguage(language);
         UpdateUI();
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
 
-public class LanguageManager
+public class Lan
 {
     private static Dictionary<string, Dictionary<string, string>> _languages = new Dictionary<string, Dictionary<string, string>>();
     private static string _currentLanguage = "zh_TW";
@@ -29,7 +29,7 @@ public class LanguageManager
         _currentLanguage = languageCode;
     }
 
-    public static string GetString(string key)
+    public static string Get(string key)
     {
         if (_languages.ContainsKey(_currentLanguage) && _languages[_currentLanguage].ContainsKey(key))
         {
