@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EncryptTool", "EncryptTool\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerTool", "ServerTool\ServerTool.csproj", "{048DD88F-8FC8-4615-8552-5F2932D842BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTPTool", "FTPTool\FTPTool.csproj", "{31F29AF8-14F9-4685-9899-1F7AE69FE5F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FTPTool", "FTPTool\FTPTool.csproj", "{31F29AF8-14F9-4685-9899-1F7AE69FE5F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickSpec", "QuickSpec\QuickSpec.csproj", "{C5F04E99-D42E-485A-A602-FEE46960356A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{31F29AF8-14F9-4685-9899-1F7AE69FE5F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31F29AF8-14F9-4685-9899-1F7AE69FE5F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31F29AF8-14F9-4685-9899-1F7AE69FE5F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5F04E99-D42E-485A-A602-FEE46960356A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5F04E99-D42E-485A-A602-FEE46960356A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5F04E99-D42E-485A-A602-FEE46960356A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5F04E99-D42E-485A-A602-FEE46960356A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
