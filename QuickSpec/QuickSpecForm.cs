@@ -14,7 +14,7 @@ namespace QuickSpec
 
         private void GenQuickSpecClick(object sender, EventArgs e)
         {
-            using var connection = new SqliteConnection("Data Source=QuickSpec.db");
+            using var connection = new SqliteConnection("Data Source=QuickSpec");
 
             connection.Open();
 
