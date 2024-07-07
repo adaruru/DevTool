@@ -19,48 +19,48 @@ public partial class DbToolForm : Form
     }
     private void UpdateUI()
     {
-        Text = Lan.Get("DbTool");
+        Text = Lan.currentLan.DbTool;
 
-        connToolTab.Text = Lan.Get("DatabaseConnectionTab");
-        demoCommBtn.Text = Lan.Get("ShowExample");
-        connStrLabel.Text = Lan.Get("ConnectionString");
-        dbTestBtn.Text = Lan.Get("ConnectionTest");
+        connToolTab.Text = Lan.currentLan.DatabaseConnectionTab;
+        demoCommBtn.Text = Lan.currentLan.ShowExample;
+        connStrLabel.Text = Lan.currentLan.ConnectionString;
+        dbTestBtn.Text = Lan.currentLan.ConnectionTest;
 
-        schmaToolTab.Text = Lan.Get("DatabaseSpecTab");
-        downloadSchemaBtn.Text = Lan.Get("DownloadDatabaseSpecExcel");
-        downloadSchemaWordBtn.Text = Lan.Get("DownloadDatabaseSpecWord");
-        downloadSchemaWordPerTableBtn.Text = Lan.Get("DownloadDatabaseSpecWordPerTable");
-        importDescriptionBtn.Text = Lan.Get("ImportDescription");
-        downloadTemplateBtn.Text = Lan.Get("DownloadImportTemplate");
+        schmaToolTab.Text = Lan.currentLan.DatabaseSpecTab;
+        downloadSchemaBtn.Text = Lan.currentLan.DownloadDatabaseSpecExcel;
+        downloadSchemaWordBtn.Text = Lan.currentLan.DownloadDatabaseSpecWord;
+        downloadSchemaWordPerTableBtn.Text = Lan.currentLan.DownloadDatabaseSpecWordPerTable;
+        importDescriptionBtn.Text = Lan.currentLan.ImportDescription;
+        downloadTemplateBtn.Text = Lan.currentLan.DownloadImportTemplate;
 
-        modelToolTab.Text = Lan.Get("ModelToolTab");
-        modelGenBtn.Text = Lan.Get("GenerateAllModels");
+        modelToolTab.Text = Lan.currentLan.ModelToolTab;
+        modelGenBtn.Text = Lan.currentLan.GenerateAllModels;
 
-        settingTab.Text = Lan.Get("SettingsTab");
-        downloadExcelStyleTemplateBtn.Text = Lan.Get("DownloadExcelStyleTemplate");
-        resetBtn.Text = Lan.Get("ResetSettings");
-        languageTab.Text = Lan.Get("LanguageTab");
-        customThemelabel.Text = Lan.Get("CustomExcelStyle");
-        modelGenBtnSettingLabel.Text = Lan.Get("ModelGenSettings");
-        connSettingLabel.Text = Lan.Get("ConnSettingsLabel");
+        settingTab.Text = Lan.currentLan.SettingsTab;
+        downloadExcelStyleTemplateBtn.Text = Lan.currentLan.DownloadExcelStyleTemplate;
+        resetBtn.Text = Lan.currentLan.ResetSettings;
+        languageTab.Text = Lan.currentLan.LanguageTab;
+        customThemelabel.Text = Lan.currentLan.CustomExcelStyle;
+        modelGenBtnSettingLabel.Text = Lan.currentLan.ModelGenSettings;
+        connSettingLabel.Text = Lan.currentLan.ConnSettingsLabel;
 
-        isWordWithToc.Text = Lan.Get("WordWithToc");
-        isScaleShow.Text = Lan.Get("Scale");
-        isPrecisionShow.Text = Lan.Get("Precision");
-        isLengthShow.Text = Lan.Get("Length");
-        isNotNullShow.Text = Lan.Get("NotNull");
-        isPrimaryKeyShow.Text = Lan.Get("PrimaryKey");
-        isIdentityShow.Text = Lan.Get("Identity");
-        isDefaultValueShow.Text = Lan.Get("DefaultValue");
-        isDataTypeShow.Text = Lan.Get("DataType");
-        isSortShow.Text = Lan.Get("Sort");
-        isColumnDescriptionShow.Text = Lan.Get("ColumnDescription");
-        isTableDescriptionShow.Text = Lan.Get("TableDescription");
-        isSummary.Text = Lan.Get("Summary");
+        isWordWithToc.Text = Lan.currentLan.WordWithToc;
+        isScaleShow.Text = Lan.currentLan.Scale;
+        isPrecisionShow.Text = Lan.currentLan.Precision;
+        isLengthShow.Text = Lan.currentLan.Length;
+        isNotNullShow.Text = Lan.currentLan.NotNull;
+        isPrimaryKeyShow.Text = Lan.currentLan.PrimaryKey;
+        isIdentityShow.Text = Lan.currentLan.Identity;
+        isDefaultValueShow.Text = Lan.currentLan.DefaultValue;
+        isDataTypeShow.Text = Lan.currentLan.DataType;
+        isSortShow.Text = Lan.currentLan.Sort;
+        isColumnDescriptionShow.Text = Lan.currentLan.ColumnDescription;
+        isTableDescriptionShow.Text = Lan.currentLan.TableDescription;
+        isSummary.Text = Lan.currentLan.Summary;
 
-        isKey.Text = Lan.Get("Key");
-        isRequired.Text = Lan.Get("Required");
-        isDisplay.Text = Lan.Get("Display");
+        isKey.Text = Lan.currentLan.Key;
+        isRequired.Text = Lan.currentLan.Required;
+        isDisplay.Text = Lan.currentLan.Display;
     }
     private readonly ExportWordService _exportWordService = new ExportWordService();
     private readonly ExportExcelService _exportExcelService = new ExportExcelService();
