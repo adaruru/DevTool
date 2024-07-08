@@ -50,15 +50,15 @@ public class ExportExcelService
         var columnHeaderStyle = styleSheet.Cells[4, 1];
         var columnStyle = styleSheet.Cells[5, 1];
 
-        var tocSheet = package.Workbook.Worksheets.Add(Lan.Get("TableLists"));
+        var tocSheet = package.Workbook.Worksheets.Add(Lan.currentLan.TableLists);
         for (int i = 0; i < Schema.Tables.Count; i++)
         {
-            tocSheet.Cells[1, 1].Value = Lan.Get("Table");
+            tocSheet.Cells[1, 1].Value = Lan.currentLan.Table;
             tocSheet.Cells[i + 2, 1].Value = Schema.Tables[i].TableName;
 
             if (FormControl.IsTableDescriptionShow)
             {
-                tocSheet.Cells[1, 2].Value = Lan.Get("TableDescription");
+                tocSheet.Cells[1, 2].Value = Lan.currentLan.TableDescription;
                 tocSheet.Cells[i + 2, 2].Value = Schema.Tables[i].TableDescription;
             }
 
@@ -86,65 +86,65 @@ public class ExportExcelService
                 if (FormControl.IsSortShow)
                 {
                     column++;
-                    columnSheet.Cells[2, column].Value = Lan.Get("Sort");
+                    columnSheet.Cells[2, column].Value = Lan.currentLan.Sort;
                     columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Sort;
                 }
                 column++;
-                columnSheet.Cells[2, column].Value = Lan.Get("Column");
+                columnSheet.Cells[2, column].Value = Lan.currentLan.Column;
                 columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ColumnName;
 
                 if (FormControl.IsDataTypeShow)
                 {
                     column++;
-                    columnSheet.Cells[2, column].Value = Lan.Get("DataType");
+                    columnSheet.Cells[2, column].Value = Lan.currentLan.DataType;
                     columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].DataType;
                 }
                 if (FormControl.IsDefaultValueShow)
                 {
                     column++;
-                    columnSheet.Cells[2, column].Value = Lan.Get("DefaultValue");
+                    columnSheet.Cells[2, column].Value = Lan.currentLan.DefaultValue;
                     columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].DefaultValue;
                 }
                 if (FormControl.IsIdentityShow)
                 {
                     column++;
-                    columnSheet.Cells[2, column].Value = Lan.Get("Identity");
+                    columnSheet.Cells[2, column].Value = Lan.currentLan.Identity;
                     columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Identity;
                 }
                 if (FormControl.IsPrimaryKeyShow)
                 {
                     column++;
-                    columnSheet.Cells[2, column].Value = Lan.Get("PrimaryKey");
+                    columnSheet.Cells[2, column].Value = Lan.currentLan.PrimaryKey;
                     columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].PrimaryKey;
                 }
                 if (FormControl.IsNotNullShow)
                 {
                     column++;
-                    columnSheet.Cells[2, column].Value = Lan.Get("NotNull");
+                    columnSheet.Cells[2, column].Value = Lan.currentLan.NotNull;
                     columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].NotNull;
                 }
                 if (FormControl.IsLengthShow)
                 {
                     column++;
-                    columnSheet.Cells[2, column].Value = Lan.Get("Length");
+                    columnSheet.Cells[2, column].Value = Lan.currentLan.Length;
                     columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Length;
                 }
                 if (FormControl.IsPrecisionShow)
                 {
                     column++;
-                    columnSheet.Cells[2, column].Value = Lan.Get("Precision");
+                    columnSheet.Cells[2, column].Value = Lan.currentLan.Precision;
                     columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Precision;
                 }
                 if (FormControl.IsScaleShow)
                 {
                     column++;
-                    columnSheet.Cells[2, column].Value = Lan.Get("Scale");
+                    columnSheet.Cells[2, column].Value = Lan.currentLan.Scale;
                     columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].Scale;
                 }
                 if (FormControl.IsColumnDescriptionShow)
                 {
                     column++;
-                    columnSheet.Cells[2, column].Value = Lan.Get("ColumnDescription");
+                    columnSheet.Cells[2, column].Value = Lan.currentLan.ColumnDescription;
                     columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ColumnDescription;
                 }
 
