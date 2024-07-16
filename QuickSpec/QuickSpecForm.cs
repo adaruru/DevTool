@@ -23,15 +23,20 @@ namespace QuickSpec
             // 獲取所有 Class
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = "SELECT ClassName, ClassId FROM Class";
+                command.CommandText = "SELECT ClassName, ClassId FROM Class where ClassId <26";
+                command.CommandText = "SELECT ClassName, ClassId ,Folder FROM Class where Folder in ('BatchServices') ";
+                command.CommandText = "SELECT ClassName, ClassId ,Folder FROM Class where Folder in ('DomainServices') ";
+                command.CommandText = "SELECT ClassName, ClassId ,Folder FROM Class where Folder in ('EntityServices') ";
+                //command.CommandText = "SELECT ClassName, ClassId FROM Class where ClassId >=46 and ClassId <=55  and Folder ='EntityServices' ";
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
                         classes.Add(new Class
                         {
-                            ClassId = reader.GetInt32(1),
                             ClassName = reader.GetString(0),
+                            ClassId = reader.GetInt32(1),
+                            Folder = reader.GetString(2),
                             Funcs = new List<Func>()
                         });
                     }

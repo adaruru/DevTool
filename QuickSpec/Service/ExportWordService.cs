@@ -46,15 +46,17 @@ public class ExportWordService
 
             var BorderSingle = BorderValues.Single;
 
+            var p0 = GetParagraphHeading1($"4.EntityServices");
+            mainPart.Document.Body.AppendChild(p0);
             for (int i = 0; i < classObject.Count; i++)
             {
-                var p1 = GetParagraphHeading1($"1.{i + 1}{classObject[i].ClassName}");
+                var p1 = GetParagraphHeading2($"4.{i + 1}{classObject[i].ClassName}");
                 mainPart.Document.Body.AppendChild(p1);
 
                 var funcs = classObject[i].Funcs;
                 for (int j = 0; j < funcs.Count; j++)
                 {
-                    var p2 = GetParagraphHeading2($"1.{i + 1}.{j + 1}{funcs[j].FuncName}");
+                    var p2 = GetParagraphHeading3($"4.{i + 1}.{j + 1}{funcs[j].FuncName}");
                     mainPart.Document.Body.AppendChild(p2);
 
                     WordTable table = new WordTable();
@@ -167,7 +169,7 @@ public class ExportWordService
         var titleParagraph = new Paragraph(titleRun);
 
         // Split content by newlines
-        var lines = content.Split(new[] { "\r\n", "\n" }, StringSplitOptions.TrimEntries);
+        var lines = content.Split(new[] { "\r\n", "\n" ,"\\n"}, StringSplitOptions.TrimEntries);
 
         // 创建内容文本
         // Create content paragraphs for each line
@@ -197,7 +199,28 @@ public class ExportWordService
         var paragraph = new Paragraph(run);
         return new TableCell(paragraph);
     }
+    private Paragraph GetParagraphHeading3(string text)
+    {
+        // Create a run with the specified text
+        Run run = new Run(new Text(text));
 
+        // Set run properties to apply the desired font
+        run.RunProperties = new RunProperties(
+            new RunFonts { Ascii = "Calibri", EastAsia = "標楷體" }  // Set the font
+        );
+
+        // Create a paragraph and add the run
+        Paragraph paragraph = new Paragraph(run);
+
+        // Create paragraph properties and set the style to Heading1
+        ParagraphProperties pPr = new ParagraphProperties();
+        ParagraphStyleId paragraphStyleId = new ParagraphStyleId() { Val = "Heading3" };
+        pPr.Append(paragraphStyleId);
+
+        // Add the paragraph properties to the paragraph
+        paragraph.PrependChild(pPr);
+        return paragraph;
+    }
     private Paragraph GetParagraphHeading2(string text)
     {
         // Create a run with the specified text
