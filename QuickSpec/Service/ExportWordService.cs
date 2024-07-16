@@ -1,7 +1,6 @@
 ﻿using DbTool.Service;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
-using DocumentFormat.OpenXml;
 using System.Diagnostics;
 using System.Reflection;
 using WordTable = DocumentFormat.OpenXml.Wordprocessing.Table;

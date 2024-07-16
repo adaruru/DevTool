@@ -33,22 +33,22 @@
             // 
             // GenQuickSpecBtn
             // 
-            GenQuickSpecBtn.Location = new Point(152, 82);
+            GenQuickSpecBtn.Location = new Point(76, 12);
             GenQuickSpecBtn.Name = "GenQuickSpecBtn";
-            GenQuickSpecBtn.Size = new Size(94, 29);
+            GenQuickSpecBtn.Size = new Size(131, 29);
             GenQuickSpecBtn.TabIndex = 0;
             GenQuickSpecBtn.Text = "GenQuickSpec";
             GenQuickSpecBtn.UseVisualStyleBackColor = true;
             GenQuickSpecBtn.Click += GenQuickSpecClick;
             // 
-            // Form1
+            // QuickSpecForm
             // 
             AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(374, 191);
+            ClientSize = new Size(283, 52);
             Controls.Add(GenQuickSpecBtn);
-            Name = "Form1";
-            Text = "Form1";
+            Name = "QuickSpecForm";
+            Text = "QuickSpec";
             ResumeLayout(false);
         }
 
