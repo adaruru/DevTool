@@ -21,15 +21,19 @@ public class ConnService
     public void SetTable()
     {
         var query = @"
-	SELECT st.name [TableName]
-		,ISNULL(p.value, '') [TableDescription]
-	FROM sys.tables st
-		LEFT JOIN sys.extended_properties p ON p.major_id = st.object_id
-		AND p.minor_id = 0
-		AND p.name = 'MS_Description'
-    WHERE st.name != 'sysdiagrams'
-      and st.name !='dtproperties'
-	ORDER BY st.name";
+SELECT st.name AS TableName,
+       ISNULL(p.value, '') AS TableDescription
+FROM sys.tables st
+JOIN INFORMATION_SCHEMA.TABLES ist
+     ON st.name = ist.TABLE_NAME
+LEFT JOIN sys.extended_properties p 
+       ON p.major_id = st.object_id
+       AND p.minor_id = 0
+       --AND p.name = 'MS_Description'
+WHERE ist.TABLE_TYPE = 'BASE TABLE'
+    --AND st.name != 'sysdiagrams'
+    --AND st.name !='dtproperties'
+ORDER BY st.name";
 
         using SqlConnection con = new SqlConnection(ConnString);
         using SqlCommand cmd = new SqlCommand(query, con);
