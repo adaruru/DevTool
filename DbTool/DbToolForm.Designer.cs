@@ -68,6 +68,7 @@ partial class DbToolForm
         languageTab = new TabPage();
         languageSelect = new ComboBox();
         errorTextBox = new TextBox();
+        namespaceBox = new TextBox();
         tabControl1.SuspendLayout();
         connToolTab.SuspendLayout();
         schmaToolTab.SuspendLayout();
@@ -212,6 +213,7 @@ partial class DbToolForm
         // 
         // modelToolTab
         // 
+        modelToolTab.Controls.Add(namespaceBox);
         modelToolTab.Controls.Add(modelGenBtn);
         modelToolTab.Location = new Point(4, 28);
         modelToolTab.Margin = new Padding(2);
@@ -540,6 +542,16 @@ partial class DbToolForm
         errorTextBox.TabIndex = 8;
         errorTextBox.DoubleClick += ErrorTextClearDoubleClick;
         // 
+        // namespaceBox
+        // 
+        namespaceBox.Location = new Point(120, 58);
+        namespaceBox.Margin = new Padding(2);
+        namespaceBox.Multiline = true;
+        namespaceBox.Name = "namespaceBox";
+        namespaceBox.Size = new Size(292, 30);
+        namespaceBox.TabIndex = 8;
+        namespaceBox.TextChanged += namespaceBoxChanged;
+        // 
         // DbToolForm
         // 
         AutoScaleDimensions = new SizeF(9F, 19F);
@@ -555,6 +567,7 @@ partial class DbToolForm
         connToolTab.PerformLayout();
         schmaToolTab.ResumeLayout(false);
         modelToolTab.ResumeLayout(false);
+        modelToolTab.PerformLayout();
         settingTab.ResumeLayout(false);
         settingTab.PerformLayout();
         languageTab.ResumeLayout(false);
@@ -608,4 +621,5 @@ partial class DbToolForm
     private Label customThemelabel;
     private TabPage languageTab;
     private ComboBox languageSelect;
+    private TextBox namespaceBox;
 }

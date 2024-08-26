@@ -1,6 +1,7 @@
 using OfficeOpenXml;
 using System.Diagnostics;
 using System.Reflection;
+using Humanizer;
 using Settings = DbTool.Properties.Settings;
 
 public partial class DbToolForm : Form
@@ -440,12 +441,15 @@ public partial class DbToolForm : Form
             }
             for (int i = 0; i < Schema?.Tables?.Count; i++)
             {
-                string destinationPath = Path.Combine(modelDir, $"{Schema?.Tables[i].TableName}.cs");
+                string tableName = Schema?.Tables[i].TableName;
+                if (tableName?.Pluralize() == tableName)
+                { tableName = tableName.Singularize(); }
+                string destinationPath = Path.Combine(modelDir, $"{tableName}.cs");
                 var content = @$"
 /// <summary>
 /// {Schema?.Tables[i].TableDescription}
 /// </summary>
-public class {Schema?.Tables[i].TableName}
+public class {tableName}
 ";
                 content += "{";
 
@@ -460,7 +464,6 @@ public class {Schema?.Tables[i].TableName}
 /// {Schema?.Tables[i].Columns[j].ColumnDescription}
 /// </summary>";
                     };
-                    string tableName = Schema?.Tables[i].TableName;
                     string columnName = Schema?.Tables[i].Columns[j].ColumnName;
                     string modifiedTableName = tableName?.TrimEnd('s', 'S') ?? string.Empty;
 
@@ -627,5 +630,10 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
         var language = languageSelect.SelectedValue.ToString();
         Lan.LoadLanguage(language);
         UpdateUI();
+    }
+
+    private void namespaceBoxChanged(object sender, EventArgs e)
+    {
+
     }
 }
