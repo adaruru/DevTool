@@ -1,10 +1,20 @@
-﻿using Newtonsoft.Json;
-using System.IO;
+﻿// DevTool 1.1 
+// Copyright (C) 2024, Adaruru
+
+using Newtonsoft.Json;
 
 public class Languages
 {
-    private static Dictionary<string, Dictionary<string, string>> _languages = new Dictionary<string, Dictionary<string, string>>();
     private static string _currentLanguage = "zh_TW";
+    private static Dictionary<string, Dictionary<string, string>> _languages = new Dictionary<string, Dictionary<string, string>>();
+    public static string Get(string key)
+    {
+        if (_languages.ContainsKey(_currentLanguage) && _languages[_currentLanguage].ContainsKey(key))
+        {
+            return _languages[_currentLanguage][key];
+        }
+        return key;
+    }
 
     public static void LoadLanguage(string? languageCode)
     {
@@ -27,14 +37,5 @@ public class Languages
             }
         }
         _currentLanguage = languageCode;
-    }
-
-    public static string Get(string key)
-    {
-        if (_languages.ContainsKey(_currentLanguage) && _languages[_currentLanguage].ContainsKey(key))
-        {
-            return _languages[_currentLanguage][key];
-        }
-        return key;
     }
 }

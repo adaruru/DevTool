@@ -1,4 +1,7 @@
-﻿using System.Security.Cryptography;
+﻿// DevTool 1.1 
+// Copyright (C) 2024, Adaruru
+
+using System.Security.Cryptography;
 using System.Text;
 
 /// <summary>

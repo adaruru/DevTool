@@ -1,9 +1,12 @@
-﻿using DbTool.Service;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Wordprocessing;
-using DocumentFormat.OpenXml;
+﻿// DevTool 1.1 
+// Copyright (C) 2024, Adaruru
+
 using System.Diagnostics;
 using System.Reflection;
+using DbTool.Service;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
 using WordTable = DocumentFormat.OpenXml.Wordprocessing.Table;
 
 public class ExportWordService
@@ -180,54 +183,41 @@ public class ExportWordService
         return schemaDir;
     }
 
-    /// <summary>
-    /// 新建wrod參考
-    /// </summary>
-    public void UseWord()
+    public TableCell GetCellFont10(string text)
     {
-        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "test.docx");
-        //新建檔案
-        using (WordprocessingDocument wordDoc = WordprocessingDocument.Create(filePath, WordprocessingDocumentType.Document))
-        {
-            // Add a main document part
-            MainDocumentPart mainPart = wordDoc.AddMainDocumentPart();
-            mainPart.Document = new Document();
-            Body body = mainPart.Document.AppendChild(new Body());
-            WordTable table = new WordTable();
-            var r1 = GetTableRow();
-            table.Append(r1);
-            mainPart.Document.Body.AppendChild(table);
-            mainPart.Document.Save();
-        }
+        var run = new Run(new Text(text));
+        run.RunProperties = new RunProperties(new FontSize { Val = "20" });
+        var paragraph = new Paragraph(run);
+        return new TableCell(paragraph);
     }
-    public TableRow GetTableRow()
+
+    public TableCell GetCellFont10FilledColor(string text)
     {
-        var tr = new TableRow();
-        var c1 = GetCellFont12("TableName");
-        var c2 = GetCellFont12("TableDescription");
+        var run = new Run(new Text(text));
+        run.RunProperties = new RunProperties(new FontSize { Val = "20" });
+        var paragraph = new Paragraph(run);
+        var cell = new TableCell(paragraph);
+
         // Set cell properties
-        var tcp1 = new TableCellProperties(
-            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "2500" }
-            );
-        c1.Append(tcp1);
-        tr.Append(c1);
-        tr.Append(c2);
-        return tr;
+        TableCellProperties tcp = new TableCellProperties(
+            new Shading()
+            {
+                Color = "auto",
+                Fill = "#82B3D4",//blue //"D9EAD3", green
+                Val = ShadingPatternValues.Clear
+            });
+        cell.Append(tcp);
+        return cell;
     }
-    public TableRow GetTableDescriptionRow(Table schemaTable)
+
+    public TableCell GetCellFont12(string text)
     {
-        var tr = new TableRow();
-        var c3 = GetCellFont12(schemaTable.TableName);
-        var c4 = GetCellFont12(schemaTable.TableDescription);
-        // Set cell properties
-        var tcp2 = new TableCellProperties(
-            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "2500" }
-            );
-        c3.Append(tcp2);
-        tr.Append(c3);
-        tr.Append(c4);
-        return tr;
+        var run = new Run(new Text(text));
+        run.RunProperties = new RunProperties(new FontSize { Val = "24" });
+        var paragraph = new Paragraph(run);
+        return new TableCell(paragraph);
     }
+
     public TableRow GetColumnHeaderRow()
     {
         TableRow tr = new TableRow();
@@ -280,6 +270,7 @@ public class ExportWordService
         }
         return tr;
     }
+
     public TableRow GetColumnValueRow(Column column)
     {
         TableRow tr = new TableRow();
@@ -331,47 +322,57 @@ public class ExportWordService
         }
         return tr;
     }
-    public TableCell GetCellFont10FilledColor(string text)
-    {
-        var run = new Run(new Text(text));
-        run.RunProperties = new RunProperties(new FontSize { Val = "20" });
-        var paragraph = new Paragraph(run);
-        var cell = new TableCell(paragraph);
 
+    public TableRow GetTableDescriptionRow(Table schemaTable)
+    {
+        var tr = new TableRow();
+        var c3 = GetCellFont12(schemaTable.TableName);
+        var c4 = GetCellFont12(schemaTable.TableDescription);
         // Set cell properties
-        TableCellProperties tcp = new TableCellProperties(
-            new Shading()
-            {
-                Color = "auto",
-                Fill = "#82B3D4",//blue //"D9EAD3", green
-                Val = ShadingPatternValues.Clear
-            });
-        cell.Append(tcp);
-        return cell;
+        var tcp2 = new TableCellProperties(
+            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "2500" }
+            );
+        c3.Append(tcp2);
+        tr.Append(c3);
+        tr.Append(c4);
+        return tr;
     }
 
-    public TableCell GetCellFont10(string text)
+    public TableRow GetTableRow()
     {
-        var run = new Run(new Text(text));
-        run.RunProperties = new RunProperties(new FontSize { Val = "20" });
-        var paragraph = new Paragraph(run);
-        return new TableCell(paragraph);
-    }
-    public TableCell GetCellFont12(string text)
-    {
-        var run = new Run(new Text(text));
-        run.RunProperties = new RunProperties(new FontSize { Val = "24" });
-        var paragraph = new Paragraph(run);
-        return new TableCell(paragraph);
-    }
-    private void SetStyle(Paragraph paragraph, string styleId)
-    {
-        ParagraphProperties pPr = new ParagraphProperties();
-        ParagraphStyleId paragraphStyleId = new ParagraphStyleId() { Val = styleId };
-        pPr.Append(paragraphStyleId);
-        paragraph.PrependChild(pPr);
+        var tr = new TableRow();
+        var c1 = GetCellFont12("TableName");
+        var c2 = GetCellFont12("TableDescription");
+        // Set cell properties
+        var tcp1 = new TableCellProperties(
+            new TableCellWidth { Type = TableWidthUnitValues.Pct, Width = "2500" }
+            );
+        c1.Append(tcp1);
+        tr.Append(c1);
+        tr.Append(c2);
+        return tr;
     }
 
+    /// <summary>
+    /// 新建wrod參考
+    /// </summary>
+    public void UseWord()
+    {
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "test.docx");
+        //新建檔案
+        using (WordprocessingDocument wordDoc = WordprocessingDocument.Create(filePath, WordprocessingDocumentType.Document))
+        {
+            // Add a main document part
+            MainDocumentPart mainPart = wordDoc.AddMainDocumentPart();
+            mainPart.Document = new Document();
+            Body body = mainPart.Document.AppendChild(new Body());
+            WordTable table = new WordTable();
+            var r1 = GetTableRow();
+            table.Append(r1);
+            mainPart.Document.Body.AppendChild(table);
+            mainPart.Document.Save();
+        }
+    }
     private void AddHeadingStyles(MainDocumentPart mainPart)
     {
         StyleDefinitionsPart styleDefinitionsPart = mainPart.StyleDefinitionsPart;
@@ -417,9 +418,18 @@ public class ExportWordService
             new OutlineLevel() { Val = 2 }));
         styles.Append(heading2);
     }
+
     private void AddNewLine(MainDocumentPart mainPart)
     {
         Paragraph emptyParagraph = new Paragraph(new Run(new Text("")));
         mainPart.Document.Body.AppendChild(emptyParagraph);
+    }
+
+    private void SetStyle(Paragraph paragraph, string styleId)
+    {
+        ParagraphProperties pPr = new ParagraphProperties();
+        ParagraphStyleId paragraphStyleId = new ParagraphStyleId() { Val = styleId };
+        pPr.Append(paragraphStyleId);
+        paragraph.PrependChild(pPr);
     }
 }

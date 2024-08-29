@@ -1,3 +1,6 @@
+﻿// DevTool 1.1 
+// Copyright (C) 2024, Adaruru
+
 namespace ServerTool
 {
     internal static class Program

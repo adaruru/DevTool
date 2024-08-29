@@ -1,4 +1,7 @@
-﻿/// <summary>
+﻿// DevTool 1.1 
+// Copyright (C) 2024, Adaruru
+
+/// <summary>
 /// 
 /// </summary>
 public class Schema
@@ -10,4 +13,3 @@ public class Schema
     public string SchemaName { get; set; } = "";
     public List<Table>? Tables { get; set; } = new List<Table>();
 }
-

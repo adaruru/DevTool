@@ -1,4 +1,7 @@
-﻿using System.Diagnostics;
+﻿// DevTool 1.1 
+// Copyright (C) 2024, Adaruru
+
+using System.Diagnostics;
 
 public partial class ServerToolForm : Form
 {
@@ -6,21 +9,6 @@ public partial class ServerToolForm : Form
     {
         InitializeComponent();
     }
-    private void installSmtp(object sender, EventArgs e)
-    {
-        string powershellCommand = $"Install-WindowsFeature -Name -IncludeAllSubFeature -IncludeManagementTools; Install-WindowsFeature -Name SMTP-Server";
-        ProcessStartInfo processStartInfo = new ProcessStartInfo
-        {
-            FileName = "powershell.exe",
-            Arguments = $"-NoProfile -ExecutionPolicy Bypass -Command \"{powershellCommand}\"",
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-            CreateNoWindow = true,
-            Verb = "runas" // 提升權限
-        };
-    }
-
     private void instalIIS(object sender, EventArgs e)
     {
         // Command to install IIS
@@ -134,5 +122,20 @@ public partial class ServerToolForm : Form
             MessageBox.Show("執行安裝時發生錯誤: " + ex.Message);
         }
         MessageBox.Show("done");
+    }
+
+    private void installSmtp(object sender, EventArgs e)
+    {
+        string powershellCommand = $"Install-WindowsFeature -Name -IncludeAllSubFeature -IncludeManagementTools; Install-WindowsFeature -Name SMTP-Server";
+        ProcessStartInfo processStartInfo = new ProcessStartInfo
+        {
+            FileName = "powershell.exe",
+            Arguments = $"-NoProfile -ExecutionPolicy Bypass -Command \"{powershellCommand}\"",
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            UseShellExecute = false,
+            CreateNoWindow = true,
+            Verb = "runas" // 提升權限
+        };
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿// DevTool 1.1 
+// Copyright (C) 2024, Adaruru
 
 class Program
 {

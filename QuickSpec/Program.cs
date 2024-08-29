@@ -1,3 +1,6 @@
+﻿// DevTool 1.1 
+// Copyright (C) 2024, Adaruru
+
 using SQLitePCL;
 
 namespace QuickSpec;

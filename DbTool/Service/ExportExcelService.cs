@@ -1,9 +1,77 @@
-﻿using OfficeOpenXml;
+﻿// DevTool 1.1 
+// Copyright (C) 2024, Adaruru
+
 using System.Diagnostics;
 using System.Reflection;
+using OfficeOpenXml;
 
 public class ExportExcelService
 {
+    public string DownloadImportDescriptionTemplate(Schema Schema, string connStrBox)
+    {
+        //範本或規格 Excel 檔案名稱
+        string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), "ImportDescription.xlsx");
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+        string message = $"檔案產製完成儲存於{destinationPath}";
+
+        //use template
+        string resourceName = "DbTool.Template.Schema.xlsx";
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        using Stream resourceStream = assembly.GetManifestResourceStream(resourceName);
+        if (resourceStream == null)
+        {
+            MessageBox.Show($"Embedded resource '{resourceName}' not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return message;
+        }
+
+        using var package = new ExcelPackage(resourceStream);
+        var tocSheet = package.Workbook.Worksheets["TableLists"];
+        for (int i = 0; i < Schema.Tables.Count; i++)
+        {
+            tocSheet.Cells[1, 1].Value = "Table";
+            tocSheet.Cells[i + 2, 1].Value = Schema.Tables[i].TableName;
+
+            if (FormControl.IsTableDescriptionShow)
+            {
+                tocSheet.Cells[1, 2].Value = "Description";
+                tocSheet.Cells[i + 2, 2].Value = Schema.Tables[i].TableDescription;
+            }
+            var columnSheet = package.Workbook.Worksheets.Copy("ColumnSample", $"{i + 1}");
+
+            for (int r = 0; r < Schema.Tables[i].Columns.Count(); r++)
+            {
+                var column = 0;
+                columnSheet.Cells[1, 1].Value = Schema.Tables[i].TableName;
+                columnSheet.Cells[1, 2].Value = Schema.Tables[i].TableDescription;
+
+                column++;
+                columnSheet.Cells[2, column].Value = "Column";
+                columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ColumnName;
+
+                column++;
+                columnSheet.Cells[2, column].Value = "Description";
+                columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ColumnDescription;
+
+                columnSheet.Cells.AutoFitColumns(); //調整欄寬
+                columnSheet.View.TabSelected = false;// 設置為不選取狀態
+            }
+        }
+        tocSheet.Cells.AutoFitColumns();//調整欄寬
+        package.Workbook.Worksheets.Delete("ColumnSample");
+
+        // 開啟時只選取TableLists
+        package.Workbook.View.ActiveTab = 0;
+
+        package.SaveAs(new FileInfo(destinationPath));
+        Process.Start(new ProcessStartInfo
+        {
+            FileName = destinationPath,
+            UseShellExecute = true
+        });
+        return message;
+    }
+
     public string ExportExcelSchema(Schema Schema, string connStrBox)
     {
         string message = string.Empty;
@@ -189,71 +257,6 @@ public class ExportExcelService
             UseShellExecute = true
         });
 
-        return message;
-    }
-
-    public string DownloadImportDescriptionTemplate(Schema Schema, string connStrBox)
-    {
-        //範本或規格 Excel 檔案名稱
-        string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), "ImportDescription.xlsx");
-        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
-        string message = $"檔案產製完成儲存於{destinationPath}";
-
-        //use template
-        string resourceName = "DbTool.Template.Schema.xlsx";
-        Assembly assembly = Assembly.GetExecutingAssembly();
-        using Stream resourceStream = assembly.GetManifestResourceStream(resourceName);
-        if (resourceStream == null)
-        {
-            MessageBox.Show($"Embedded resource '{resourceName}' not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return message;
-        }
-
-        using var package = new ExcelPackage(resourceStream);
-        var tocSheet = package.Workbook.Worksheets["TableLists"];
-        for (int i = 0; i < Schema.Tables.Count; i++)
-        {
-            tocSheet.Cells[1, 1].Value = "Table";
-            tocSheet.Cells[i + 2, 1].Value = Schema.Tables[i].TableName;
-
-            if (FormControl.IsTableDescriptionShow)
-            {
-                tocSheet.Cells[1, 2].Value = "Description";
-                tocSheet.Cells[i + 2, 2].Value = Schema.Tables[i].TableDescription;
-            }
-            var columnSheet = package.Workbook.Worksheets.Copy("ColumnSample", $"{i + 1}");
-
-            for (int r = 0; r < Schema.Tables[i].Columns.Count(); r++)
-            {
-                var column = 0;
-                columnSheet.Cells[1, 1].Value = Schema.Tables[i].TableName;
-                columnSheet.Cells[1, 2].Value = Schema.Tables[i].TableDescription;
-
-                column++;
-                columnSheet.Cells[2, column].Value = "Column";
-                columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ColumnName;
-
-                column++;
-                columnSheet.Cells[2, column].Value = "Description";
-                columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ColumnDescription;
-
-                columnSheet.Cells.AutoFitColumns(); //調整欄寬
-                columnSheet.View.TabSelected = false;// 設置為不選取狀態
-            }
-        }
-        tocSheet.Cells.AutoFitColumns();//調整欄寬
-        package.Workbook.Worksheets.Delete("ColumnSample");
-
-        // 開啟時只選取TableLists
-        package.Workbook.View.ActiveTab = 0;
-
-        package.SaveAs(new FileInfo(destinationPath));
-        Process.Start(new ProcessStartInfo
-        {
-            FileName = destinationPath,
-            UseShellExecute = true
-        });
         return message;
     }
 }

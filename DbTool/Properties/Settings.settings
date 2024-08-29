@@ -53,5 +53,8 @@
     <Setting Name="isWordWithToc" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="namespaceModel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SetYouNameSpace</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

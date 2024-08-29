@@ -1,8 +1,11 @@
-﻿using DbTool.Service;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Wordprocessing;
+﻿// DevTool 1.1 
+// Copyright (C) 2024, Adaruru
+
 using System.Diagnostics;
 using System.Reflection;
+using DbTool.Service;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
 using WordTable = DocumentFormat.OpenXml.Wordprocessing.Table;
 
 public class ExportWordService
@@ -114,15 +117,6 @@ public class ExportWordService
     }
 
 
-    public TableRow GetColumnHeaderRow(string h)
-    {
-        TableRow tr = new TableRow();
-        var cells = new List<TableCell>();
-        cells.Add(GetCellFont10FilledColor(h));
-        tr.Append(cells);
-        return tr;
-    }
-
     public TableCell GetCellFont10FilledColor(string text)
     {
         // 創建 Run 並設置字體大小和粗體
@@ -156,6 +150,22 @@ public class ExportWordService
         return cell;
     }
 
+    public TableCell GetCellFont12(string text)
+    {
+        var run = new Run(new Text(text));
+        run.RunProperties = new RunProperties(new FontSize { Val = "24" });
+        var paragraph = new Paragraph(run);
+        return new TableCell(paragraph);
+    }
+
+    public TableRow GetColumnHeaderRow(string h)
+    {
+        TableRow tr = new TableRow();
+        var cells = new List<TableCell>();
+        cells.Add(GetCellFont10FilledColor(h));
+        tr.Append(cells);
+        return tr;
+    }
     public TableRow GetTableRow(string title, string content)
     {
         TableRow tr = new TableRow();
@@ -168,7 +178,7 @@ public class ExportWordService
         var titleParagraph = new Paragraph(titleRun);
 
         // Split content by newlines
-        var lines = content.Split(new[] { "\r\n", "\n" ,"\\n"}, StringSplitOptions.TrimEntries);
+        var lines = content.Split(new[] { "\r\n", "\n", "\\n" }, StringSplitOptions.TrimEntries);
 
         // 创建内容文本
         // Create content paragraphs for each line
@@ -190,81 +200,6 @@ public class ExportWordService
         tr.Append(cell);
         return tr;
     }
-
-    public TableCell GetCellFont12(string text)
-    {
-        var run = new Run(new Text(text));
-        run.RunProperties = new RunProperties(new FontSize { Val = "24" });
-        var paragraph = new Paragraph(run);
-        return new TableCell(paragraph);
-    }
-    private Paragraph GetParagraphHeading3(string text)
-    {
-        // Create a run with the specified text
-        Run run = new Run(new Text(text));
-
-        // Set run properties to apply the desired font
-        run.RunProperties = new RunProperties(
-            new RunFonts { Ascii = "Calibri", EastAsia = "標楷體" }  // Set the font
-        );
-
-        // Create a paragraph and add the run
-        Paragraph paragraph = new Paragraph(run);
-
-        // Create paragraph properties and set the style to Heading1
-        ParagraphProperties pPr = new ParagraphProperties();
-        ParagraphStyleId paragraphStyleId = new ParagraphStyleId() { Val = "Heading3" };
-        pPr.Append(paragraphStyleId);
-
-        // Add the paragraph properties to the paragraph
-        paragraph.PrependChild(pPr);
-        return paragraph;
-    }
-    private Paragraph GetParagraphHeading2(string text)
-    {
-        // Create a run with the specified text
-        Run run = new Run(new Text(text));
-
-        // Set run properties to apply the desired font
-        run.RunProperties = new RunProperties(
-            new RunFonts { Ascii = "Calibri", EastAsia = "標楷體" }  // Set the font
-        );
-
-        // Create a paragraph and add the run
-        Paragraph paragraph = new Paragraph(run);
-
-        // Create paragraph properties and set the style to Heading1
-        ParagraphProperties pPr = new ParagraphProperties();
-        ParagraphStyleId paragraphStyleId = new ParagraphStyleId() { Val = "Heading2" };
-        pPr.Append(paragraphStyleId);
-
-        // Add the paragraph properties to the paragraph
-        paragraph.PrependChild(pPr);
-        return paragraph;
-    }
-    private Paragraph GetParagraphHeading1(string text)
-    {
-        // Create a run with the specified text
-        Run run = new Run(new Text(text));
-
-        // Set run properties to apply the desired font
-        run.RunProperties = new RunProperties(
-            new RunFonts { Ascii = "Calibri", EastAsia = "標楷體" }  // Set the font
-        );
-
-        // Create a paragraph and add the run
-        Paragraph paragraph = new Paragraph(run);
-
-        // Create paragraph properties and set the style to Heading1
-        ParagraphProperties pPr = new ParagraphProperties();
-        ParagraphStyleId paragraphStyleId = new ParagraphStyleId() { Val = "Heading1" };
-        pPr.Append(paragraphStyleId);
-
-        // Add the paragraph properties to the paragraph
-        paragraph.PrependChild(pPr);
-        return paragraph;
-    }
-
     private void AddHeadingStyles(MainDocumentPart mainPart)
     {
         StyleDefinitionsPart styleDefinitionsPart = mainPart.StyleDefinitionsPart;
@@ -310,9 +245,79 @@ public class ExportWordService
             new OutlineLevel() { Val = 2 }));
         styles.Append(heading2);
     }
+
     private void AddNewLine(MainDocumentPart mainPart)
     {
         Paragraph emptyParagraph = new Paragraph(new Run(new Text("")));
         mainPart.Document.Body.AppendChild(emptyParagraph);
+    }
+
+    private Paragraph GetParagraphHeading1(string text)
+    {
+        // Create a run with the specified text
+        Run run = new Run(new Text(text));
+
+        // Set run properties to apply the desired font
+        run.RunProperties = new RunProperties(
+            new RunFonts { Ascii = "Calibri", EastAsia = "標楷體" }  // Set the font
+        );
+
+        // Create a paragraph and add the run
+        Paragraph paragraph = new Paragraph(run);
+
+        // Create paragraph properties and set the style to Heading1
+        ParagraphProperties pPr = new ParagraphProperties();
+        ParagraphStyleId paragraphStyleId = new ParagraphStyleId() { Val = "Heading1" };
+        pPr.Append(paragraphStyleId);
+
+        // Add the paragraph properties to the paragraph
+        paragraph.PrependChild(pPr);
+        return paragraph;
+    }
+
+    private Paragraph GetParagraphHeading2(string text)
+    {
+        // Create a run with the specified text
+        Run run = new Run(new Text(text));
+
+        // Set run properties to apply the desired font
+        run.RunProperties = new RunProperties(
+            new RunFonts { Ascii = "Calibri", EastAsia = "標楷體" }  // Set the font
+        );
+
+        // Create a paragraph and add the run
+        Paragraph paragraph = new Paragraph(run);
+
+        // Create paragraph properties and set the style to Heading1
+        ParagraphProperties pPr = new ParagraphProperties();
+        ParagraphStyleId paragraphStyleId = new ParagraphStyleId() { Val = "Heading2" };
+        pPr.Append(paragraphStyleId);
+
+        // Add the paragraph properties to the paragraph
+        paragraph.PrependChild(pPr);
+        return paragraph;
+    }
+
+    private Paragraph GetParagraphHeading3(string text)
+    {
+        // Create a run with the specified text
+        Run run = new Run(new Text(text));
+
+        // Set run properties to apply the desired font
+        run.RunProperties = new RunProperties(
+            new RunFonts { Ascii = "Calibri", EastAsia = "標楷體" }  // Set the font
+        );
+
+        // Create a paragraph and add the run
+        Paragraph paragraph = new Paragraph(run);
+
+        // Create paragraph properties and set the style to Heading1
+        ParagraphProperties pPr = new ParagraphProperties();
+        ParagraphStyleId paragraphStyleId = new ParagraphStyleId() { Val = "Heading3" };
+        pPr.Append(paragraphStyleId);
+
+        // Add the paragraph properties to the paragraph
+        paragraph.PrependChild(pPr);
+        return paragraph;
     }
 }

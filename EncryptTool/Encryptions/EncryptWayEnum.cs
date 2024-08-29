@@ -1,4 +1,7 @@
-﻿public enum EncryptWayEnum
+﻿// DevTool 1.1 
+// Copyright (C) 2024, Adaruru
+
+public enum EncryptWayEnum
 {
     AES = 0,
     DES_Unsafe = 1,

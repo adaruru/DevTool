@@ -1,17 +1,18 @@
-using DocumentFormat.OpenXml.Drawing.Charts;
+Ôªø// DevTool 1.1 
+// Copyright (C) 2024, Adaruru
+
 using Microsoft.Data.Sqlite;
 
 namespace QuickSpec
 {
     public partial class QuickSpecForm : Form
     {
+        private SqliteConnection sqlite;
+
         public QuickSpecForm()
         {
             InitializeComponent();
         }
-
-        private SqliteConnection sqlite;
-
         private void GenQuickSpecClick(object sender, EventArgs e)
         {
             using var connection = new SqliteConnection("Data Source=QuickSpec");
@@ -20,7 +21,7 @@ namespace QuickSpec
 
             var classes = new List<Class>();
             var funcs = new List<Func>();
-            // ¿Ú®˙©“¶≥ Class
+            // Áç≤ÂèñÊâÄÊúâ Class
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = "SELECT ClassName, ClassId FROM Class where ClassId <26";
@@ -43,7 +44,7 @@ namespace QuickSpec
                 }
             }
 
-            // ¿Ú®˙©“¶≥ Func
+            // Áç≤ÂèñÊâÄÊúâ Func
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = "SELECT FuncName, Brif, UseRole, Flow, InputCon, OutputCon, SpecDes, ClassId FROM Funcs";
@@ -64,7 +65,7 @@ namespace QuickSpec
                         };
                         funcs.Add(func);
 
-                        // ±N Func ≤K•[®ÏπÔ¿≥™∫ Class
+                        // Â∞á Func Ê∑ªÂä†Âà∞Â∞çÊáâÁöÑ Class
                         var parentClass = classes.Find(c => c.ClassId == func.ClassId);
                         if (parentClass != null)
                         {
