@@ -41,6 +41,7 @@ partial class DbToolForm
         downloadSchemaWordBtn = new Button();
         importDescriptionBtn = new Button();
         modelToolTab = new TabPage();
+        namespaceBox = new TextBox();
         modelGenBtn = new Button();
         settingTab = new TabPage();
         customThemelabel = new Label();
@@ -68,7 +69,6 @@ partial class DbToolForm
         languageTab = new TabPage();
         languageSelect = new ComboBox();
         errorTextBox = new TextBox();
-        namespaceBox = new TextBox();
         tabControl1.SuspendLayout();
         connToolTab.SuspendLayout();
         schmaToolTab.SuspendLayout();
@@ -206,7 +206,7 @@ partial class DbToolForm
         importDescriptionBtn.Location = new Point(21, 211);
         importDescriptionBtn.Margin = new Padding(2);
         importDescriptionBtn.Name = "importDescriptionBtn";
-        importDescriptionBtn.Size = new Size(297, 28);
+        importDescriptionBtn.Size = new Size(444, 28);
         importDescriptionBtn.TabIndex = 14;
         importDescriptionBtn.UseVisualStyleBackColor = true;
         importDescriptionBtn.Click += ImportDescriptionClick;
@@ -222,6 +222,16 @@ partial class DbToolForm
         modelToolTab.Size = new Size(782, 280);
         modelToolTab.TabIndex = 2;
         modelToolTab.UseVisualStyleBackColor = true;
+        // 
+        // namespaceBox
+        // 
+        namespaceBox.Location = new Point(120, 58);
+        namespaceBox.Margin = new Padding(2);
+        namespaceBox.Multiline = true;
+        namespaceBox.Name = "namespaceBox";
+        namespaceBox.Size = new Size(292, 30);
+        namespaceBox.TabIndex = 8;
+        namespaceBox.TextChanged += namespaceBoxChanged;
         // 
         // modelGenBtn
         // 
@@ -541,16 +551,6 @@ partial class DbToolForm
         errorTextBox.Size = new Size(522, 73);
         errorTextBox.TabIndex = 8;
         errorTextBox.DoubleClick += ErrorTextClearDoubleClick;
-        // 
-        // namespaceBox
-        // 
-        namespaceBox.Location = new Point(120, 58);
-        namespaceBox.Margin = new Padding(2);
-        namespaceBox.Multiline = true;
-        namespaceBox.Name = "namespaceBox";
-        namespaceBox.Size = new Size(292, 30);
-        namespaceBox.TabIndex = 8;
-        namespaceBox.TextChanged += namespaceBoxChanged;
         // 
         // DbToolForm
         // 

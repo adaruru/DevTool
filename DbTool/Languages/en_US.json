@@ -10,7 +10,7 @@
   "DatabaseSpecTab": "Database Specification",
   "DownloadDatabaseSpecWord": "Download Database Spec Word",
   "DownloadDatabaseSpecWordPerTable": "Download Database Spec Word (One File Per Table)",
-  "ImportDescription": "Import Description",
+  "ImportDescription": "Import Description (from required template above)",
   "DownloadImportTemplate": "Download Import Description Template",
   "ModelToolTab": "Model Generation",
   "GenerateAllModels": "Generate All Models",
