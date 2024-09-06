@@ -249,8 +249,12 @@ public partial class DbToolForm : Form
             for (int i = 0; i < Schema?.Tables?.Count; i++)
             {
                 string tableName = Schema?.Tables[i].TableName;
+
                 if (tableName?.Pluralize() == tableName)
-                { tableName = tableName.Singularize(); }
+                {
+                    tableName = tableName.Singularize();
+                }
+
                 string destinationPath = Path.Combine(modelDir, $"{tableName}.cs");
 
                 var content = @$"
@@ -275,11 +279,11 @@ public class {tableName}
 /// {Schema?.Tables[i].Columns[j].ColumnDescription}
 /// </summary>";
                     };
-                    string columnName = Schema?.Tables[i].Columns[j].ColumnName;
+                    string columnName = Schema?.Tables[i]?.Columns[j]?.ColumnName ?? string.Empty;
                     string modifiedTableName = tableName?.TrimEnd('s', 'S') ?? string.Empty;
 
-                    if ((modifiedTableName + "id").ToLower() ==
-                        (Schema?.Tables[i].Columns[j].ColumnName).ToLower()
+                    if ((tableName + "id".ToLower() == columnName.ToLower() || //單數化後 +id 等於欄位名稱
+                        (modifiedTableName + "id").ToLower() == columnName.ToLower()) //純去尾 s 後 +id 等於欄位名稱
                         && isKey.Checked)
                     {
                         content += @"
@@ -291,6 +295,14 @@ public class {tableName}
                         content += @"
 [Required]";
                     };
+
+                    if (Schema?.Tables[i].Columns[j].Identity == "Y"
+                      && isKey.Checked) //先假設 isKey.Checked model用途用於 code first
+                    {
+                        content += @$"
+[DatabaseGenerated(DatabaseGeneratedOption.Identity)]";
+                    };
+
                     if (!string.IsNullOrEmpty(Schema?.Tables[i].Columns[j].ColumnDescription)
                         && !string.IsNullOrEmpty(Schema?.Tables[i].Columns[j].Length)
                         && isDisplay.Checked)
@@ -298,6 +310,7 @@ public class {tableName}
                         content += @$"
 [Display(Name = ""{Schema?.Tables[i].Columns[j].ColumnDescription}""), MaxLength({Schema?.Tables[i].Columns[j].Length})]";
                     };
+
                     if (!string.IsNullOrEmpty(Schema?.Tables[i].Columns[j].ColumnDescription)
                         && string.IsNullOrEmpty(Schema?.Tables[i].Columns[j].Length)
                         && isDisplay.Checked)

@@ -185,33 +185,48 @@ END;";
 
         // Extract the base type (e.g., "nvarchar" from "nvarchar(length)")
         string baseType = column.DataType.Split('(')[0].ToLower();
+        string nullable = column.NotNull == "Y" ? "" : "?";
+
         switch (baseType)
         {
             case "int":
-                return "int" + (column.NotNull == "Y" ? "" : "?");
+                return "int" + nullable;
             case "decimal":
-                return "decimal" + (column.NotNull == "Y" ? "" : "?");
+            case "money":
+            case "smallmoney":
+                return "decimal" + nullable;
             case "nvarchar":
             case "varchar":
             case "text":
+            case "nchar":
+            case "char":
+            case "xml":
                 return "string";
             case "bit":
-                return "bool" + (column.NotNull == "Y" ? "" : "?");
+                return "bool" + nullable;
             case "datetime":
             case "date":
-            case "time":
             case "datetime2":
-                return "DateTime" + (column.NotNull == "Y" ? "" : "?");
+            case "smalldatetime":
+                return "DateTime" + nullable;
+            case "time":
+                return "TimeSpan" + nullable;
             case "float":
-                return "double" + (column.NotNull == "Y" ? "" : "?");
+                return "double" + nullable;
             case "real":
-                return "float" + (column.NotNull == "Y" ? "" : "?");
+                return "float" + nullable;
             case "uniqueidentifier":
-                return "Guid" + (column.NotNull == "Y" ? "" : "?");
+                return "Guid" + nullable;
             case "smallint":
-                return "short" + (column.NotNull == "Y" ? "" : "?");
+                return "short" + nullable;
             case "tinyint":
-                return "byte" + (column.NotNull == "Y" ? "" : "?");
+                return "byte" + nullable;
+            case "bigint":
+                return "long" + nullable;
+            case "binary":
+            case "varbinary":
+            case "image":
+                return "byte[]";
             default:
                 return "object"; // Default to object if the type is unknown
         }
