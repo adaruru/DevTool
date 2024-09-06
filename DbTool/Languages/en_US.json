@@ -11,7 +11,7 @@
   "DownloadDatabaseSpecWord": "Download Database Spec Word",
   "DownloadDatabaseSpecWordPerTable": "Download Database Spec Word (One File Per Table)",
   "ImportDescription": "Import Description (Must use template above)",
-  "DownloadImportTemplate": "Download Import Description Template",
+  "DownloadImportTemplate": "Download Import Template (Search for \"Please enter...\")",
   "ModelToolTab": "Model Generation",
   "GenerateAllModels": "Generate All Models",
   "SettingsTab": "Settings",

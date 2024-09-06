@@ -11,7 +11,7 @@
   "DownloadDatabaseSpecWord": "下載資料庫規格 Word",
   "DownloadDatabaseSpecWordPerTable": "下載資料庫規格 Word (一表一檔)",
   "ImportDescription": "匯入描述(必須來自上方範本下載)",
-  "DownloadImportTemplate": "下載匯入描述範本",
+  "DownloadImportTemplate": "下載匯入描述範本(可搜尋\"請輸入...\")",
   "ModelToolTab": "model 產檔",
   "GenerateAllModels": "所有 model 產檔",
   "SettingsTab": "設定",

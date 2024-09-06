@@ -176,7 +176,7 @@ partial class DbToolForm
         downloadTemplateBtn.Location = new Point(21, 163);
         downloadTemplateBtn.Margin = new Padding(2);
         downloadTemplateBtn.Name = "downloadTemplateBtn";
-        downloadTemplateBtn.Size = new Size(297, 28);
+        downloadTemplateBtn.Size = new Size(444, 28);
         downloadTemplateBtn.TabIndex = 2;
         downloadTemplateBtn.UseVisualStyleBackColor = true;
         downloadTemplateBtn.Click += exportSchemaEvent;

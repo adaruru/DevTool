@@ -416,7 +416,12 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
                                 column.ColumnDescription != "請輸入..." &&
                                 column.ColumnDescription != "Please enter...")
                             {
-                                // Add the table to the schema
+                                _schemaForImportDescription.Tables[i].Columns?.Add(column);
+                            }
+                            else if (column.ColumnDescription != "請輸入..." ||
+                                     column.ColumnDescription != "Please enter...")
+                            {
+                                column.ColumnDescription = string.Empty;
                                 _schemaForImportDescription.Tables[i].Columns?.Add(column);
                             }
                         }
