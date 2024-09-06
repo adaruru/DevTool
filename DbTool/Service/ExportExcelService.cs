@@ -52,6 +52,10 @@ public class ExportExcelService
                 column++;
                 columnSheet.Cells[2, column].Value = "Description";
                 columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ColumnDescription;
+                if (string.IsNullOrWhiteSpace(Schema.Tables[i].Columns[r].ColumnDescription))
+                {
+                    columnSheet.Cells[r + 3, column].Value = Lan.currentLan.PleaseEnter;
+                }
 
                 columnSheet.Cells.AutoFitColumns(); //調整欄寬
                 columnSheet.View.TabSelected = false;// 設置為不選取狀態

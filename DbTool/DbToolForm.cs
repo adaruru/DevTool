@@ -412,7 +412,9 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
                                 ColumnName = tableSheet.Cells[row, 1].Text,
                                 ColumnDescription = tableSheet.Cells[row, 2].Text
                             };
-                            if (!string.IsNullOrEmpty(tableSheet.Cells[row, 2].Text))
+                            if (!string.IsNullOrWhiteSpace(column.ColumnDescription) &&
+                                column.ColumnDescription != "請輸入..." &&
+                                column.ColumnDescription != "Please enter...")
                             {
                                 // Add the table to the schema
                                 _schemaForImportDescription.Tables[i].Columns?.Add(column);
@@ -489,12 +491,14 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
     private void resetAllSetting(object sender, EventArgs e)
     {
         var result = MessageBox.Show("你確定要重置所有設定嗎", "確認重置", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+        var keepConnStr = connStrBox.Text;
         if (result == DialogResult.Yes)
         {
             Settings.Default.Reset();
             Settings.Default.Save();
             LoadSettings();
         }
+        connStrBox.Text = keepConnStr;//重置設定不重置連線字串
     }
 
     private void UpdateUI()

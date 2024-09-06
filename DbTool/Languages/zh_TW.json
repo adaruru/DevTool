@@ -46,5 +46,6 @@
   "EnterConnectionString": "請輸入連線字串",
   "DatabaseSchema": "資料庫規格",
   "DatabaseTableSchema": "資料表規格",
-  "DateTimeFormat": "yyyy 年 MM 月 dd 日 HH:mm:ss"
+  "DateTimeFormat": "yyyy 年 MM 月 dd 日 HH:mm:ss",
+  "PleaseEnter": "請輸入..."
 }

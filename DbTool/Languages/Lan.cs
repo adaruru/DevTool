@@ -78,4 +78,5 @@ public class LanguageObj
     public string TableDescription { get; set; }
     public string TableLists { get; set; }
     public string WordWithToc { get; set; }
+    public string PleaseEnter { get; set; }
 }

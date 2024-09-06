@@ -10,7 +10,7 @@
   "DatabaseSpecTab": "Database Specification",
   "DownloadDatabaseSpecWord": "Download Database Spec Word",
   "DownloadDatabaseSpecWordPerTable": "Download Database Spec Word (One File Per Table)",
-  "ImportDescription": "Import Description (from required template above)",
+  "ImportDescription": "Import Description (Must use template above)",
   "DownloadImportTemplate": "Download Import Description Template",
   "ModelToolTab": "Model Generation",
   "GenerateAllModels": "Generate All Models",
@@ -46,5 +46,6 @@
   "EnterConnectionString": "Please enter connection string",
   "DatabaseSchema": "Database Schema",
   "DatabaseTableSchema": "Database Table Schema",
-  "DateTimeFormat": "yyyy/MM/dd HH:mm:ss"
+  "DateTimeFormat": "yyyy/MM/dd HH:mm:ss",
+  "PleaseEnter": "Please enter..."
 }
