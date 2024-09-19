@@ -13,7 +13,7 @@ public class ExportExcelService
         string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), "ImportDescription.xlsx");
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-        string message = $"檔案產製完成儲存於{destinationPath}";
+        string message = $"{Lan.currentLan.FileGenerationCompleted}{destinationPath}";
 
         //use template
         string resourceName = "DbTool.Template.Schema.xlsx";
@@ -112,7 +112,7 @@ public class ExportExcelService
         string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), $"{Schema.SchemaName}Schema_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx");
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-        string message = $"檔案產製完成儲存於{destinationPath}";
+        string message = $"{Lan.currentLan.FileGenerationCompleted}{destinationPath}";
 
         var package = new ExcelPackage(resourceStream);
         var styleSheet = package.Workbook.Worksheets["StyleTemplate"];

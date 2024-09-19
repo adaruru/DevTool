@@ -3,13 +3,14 @@
 
 using System.Diagnostics;
 using System.Reflection;
+using DocumentFormat.OpenXml.Drawing.Diagrams;
 using Humanizer;
 using OfficeOpenXml;
 using Settings = DbTool.Properties.Settings;
 
 public partial class DbToolForm : Form
 {
-    public ConnService conn;
+    public ConnService Conn;
 
     public string SchemaName = "";
 
@@ -31,15 +32,25 @@ public partial class DbToolForm : Form
         Settings.Default.ConnString = conn;
         Settings.Default.Save();
     }
+    private void ModelDllPathBoxChanged(object sender, EventArgs e)
+    {
+        Settings.Default.dalDllPath = dalDllPathBox.Text;
+        Settings.Default.Save();
+    }
+    private void dbContextBoxChanged(object sender, EventArgs e)
+    {
+        Settings.Default.dbContext = dbContextBox.Text;
+        Settings.Default.Save();
+    }
 
     private void DbTestConnClick(object sender, EventArgs e)
     {
         try
         {
-            conn = new ConnService(connStrBox.Text, SchemaName);
-            var Schema = conn.Schema;
+            Conn = new ConnService(connStrBox.Text, SchemaName);
+            var Schema = Conn.Schema;
             var query = "select DB_NAME()";
-            var result = conn.GetValueStr(query);
+            var result = Conn.GetValueStr(query);
             if (!string.IsNullOrEmpty(result))
             {
                 errorTextBox.Text = result + "資料庫順利連線";
@@ -105,6 +116,11 @@ public partial class DbToolForm : Form
         isKey.Checked = Settings.Default.isKey; // false 預設
         #endregion  ==genModel用==
 
+        #region  ==genScript用==
+        dalDllPathBox.Text = Settings.Default.dalDllPath;
+        dbContextBox.Text = Settings.Default.dbContext;
+        #endregion  ==genScript用==
+
         #region  ==genWorld/Excel用==
         isTableDescriptionShow.Checked = Settings.Default.IsTableDescriptionShow; // true 表描述
 
@@ -155,7 +171,9 @@ public partial class DbToolForm : Form
             FileName = destinationPath,
             UseShellExecute = true
         });
-        errorTextBox.Text = $"檔案產製完成儲存於{ThemeDir}";
+        ThemeBinding();
+
+        errorTextBox.Text = $"{Lan.currentLan.FileGenerationCompleted}{ThemeDir}";
     }
 
     /// <summary>
@@ -184,16 +202,16 @@ public partial class DbToolForm : Form
                 throw new Exception("請輸入連線字串");
             }
 
-            conn = new ConnService(connStrBox.Text, SchemaName);
-            conn.SetTable();
-            conn.SetColumn();
+            Conn = new ConnService(connStrBox.Text, SchemaName);
+            Conn.SetTable();
+            Conn.SetColumn();
             if (isForImportTemplate)
             {
-                message = _exportExcelService.DownloadImportDescriptionTemplate(conn.Schema, connStrBox.Text);
+                message = _exportExcelService.DownloadImportDescriptionTemplate(Conn.Schema, connStrBox.Text);
             }
             else
             {
-                message = _exportExcelService.ExportExcelSchema(conn.Schema, connStrBox.Text);
+                message = _exportExcelService.ExportExcelSchema(Conn.Schema, connStrBox.Text);
             }
 
             errorTextBox.Text = message;
@@ -216,16 +234,16 @@ public partial class DbToolForm : Form
             {
                 throw new Exception("請輸入連線字串");
             }
-            conn = new ConnService(connStrBox.Text, SchemaName);
-            conn.SetTable();
-            conn.SetColumn();
+            Conn = new ConnService(connStrBox.Text, SchemaName);
+            Conn.SetTable();
+            Conn.SetColumn();
 
             var destinationPath = string.Empty;
             if (isPerTable)
-            { destinationPath = _exportWordService.ExportWordSchemaPerTable(conn.Schema, connStrBox.Text); }
+            { destinationPath = _exportWordService.ExportWordSchemaPerTable(Conn.Schema, connStrBox.Text); }
             else
-            { destinationPath = _exportWordService.ExportWordSchema(conn.Schema, connStrBox.Text); }
-            errorTextBox.Text = $"檔案產製完成儲存於{destinationPath}";
+            { destinationPath = _exportWordService.ExportWordSchema(Conn.Schema, connStrBox.Text); }
+            errorTextBox.Text = $"{Lan.currentLan.FileGenerationCompleted}{destinationPath}";
         }
         catch (Exception es)
         {
@@ -238,8 +256,8 @@ public partial class DbToolForm : Form
         errorTextBox.Text = $"產製中請稍後";
         try
         {
-            conn.SetColumn();
-            var Schema = conn.Schema;
+            Conn.SetColumn();
+            var Schema = Conn.Schema;
             var modelDir = Path.Combine(Directory.GetCurrentDirectory(),
                 "Model");
             if (!Directory.Exists(modelDir))
@@ -270,8 +288,8 @@ public class {tableName}
 
                 for (int j = 0; j < Schema?.Tables[i].Columns?.Count; j++)
                 {
-                    string csharpType = conn.MapSqlTypeToCSharpType(Schema?.Tables[i]?.Columns[j]);
-                    string defaultValue = conn.DefaultInitialValue(Schema?.Tables[i]?.Columns[j]);
+                    string csharpType = Conn.MapSqlTypeToCSharpType(Schema?.Tables[i]?.Columns[j]);
+                    string defaultValue = Conn.DefaultInitialValue(Schema?.Tables[i]?.Columns[j]);
                     if (isSummary.Checked)
                     {
                         content += @$"
@@ -326,7 +344,7 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
                 content += "}";
                 File.WriteAllText(destinationPath, content);
             }
-            errorTextBox.Text = $"檔案產製完成儲存於{Directory.CreateDirectory(modelDir)}";
+            errorTextBox.Text = $"{Lan.currentLan.FileGenerationCompleted}{Directory.CreateDirectory(modelDir)}";
         }
         catch (Exception es)
         {
@@ -340,7 +358,7 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
         try
         {
             errorTextBox.Text = "描述匯入中請稍後";
-            if (conn == null)
+            if (Conn == null)
             {
                 throw new Exception("請輸入連線字串");
             }
@@ -432,8 +450,8 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
                     }
                 }
             }
-            conn.InsertTableDescription(_schemaForImportDescription);
-            conn.InsertColumnDescription(_schemaForImportDescription);
+            Conn.InsertTableDescription(_schemaForImportDescription);
+            Conn.InsertColumnDescription(_schemaForImportDescription);
             errorTextBox.Text = "匯入完成";
         }
         catch (Exception es)
@@ -456,8 +474,8 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
     {
         try
         {
-            conn = new ConnService(connStrBox.Text, SchemaName);
-            conn.SetTable();
+            Conn = new ConnService(connStrBox.Text, SchemaName);
+            Conn.SetTable();
         }
         catch (Exception es)
         {
@@ -472,7 +490,7 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
     {
         try
         {
-            if (conn == null)
+            if (Conn == null)
             {
                 throw new Exception("請先輸入連線字串 並執行連線測試");
             }
@@ -524,6 +542,14 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
 
         modelToolTab.Text = Lan.currentLan.ModelToolTab;
         modelGenBtn.Text = Lan.currentLan.GenerateAllModels;
+        nameSpaceLabel.Text = Lan.currentLan.NamespaceLabel;
+
+        scriptGenTab.Text = Lan.currentLan.ScriptGenTab;
+        genScriptFromDllBtn.Text = Lan.currentLan.GenScriptFromDllBtn;
+        sourceDbConnTestBtn.Text = Lan.currentLan.ConnectionTest;
+        upDataDBSchemaBtn.Text = Lan.currentLan.UpDataDBSchemaBtn;
+        dalDllLabel.Text = Lan.currentLan.DalDllLabel;
+        sourceDbConnStrLabel.Text = Lan.currentLan.SourceDbConnStrLabel;
 
         settingTab.Text = Lan.currentLan.SettingsTab;
         downloadExcelStyleTemplateBtn.Text = Lan.currentLan.DownloadExcelStyleTemplate;
@@ -670,4 +696,52 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
         Settings.Default.Save();
     }
     #endregion ==System Default Setting event==
+
+    private void GenScriptFromDll(object sender, EventArgs e)
+    {
+        var dllPath = dalDllPathBox.Text;
+        var dbContext = dbContextBox.Text;
+
+        //檢查dllPath副檔名是不是dll
+        if (Path.GetExtension(dllPath) != ".dll")
+        {
+            errorTextBox.Text = "請輸入正確的dll路徑";
+            return;
+        }
+        if (string.IsNullOrEmpty(dbContext))
+        {
+            errorTextBox.Text = "請輸入DbContext";
+            return;
+        }
+        if (!File.Exists(dllPath) || Path.GetFileName(dllPath) != "DAL.dll")
+        {
+            errorTextBox.Text = "找不到 DAL.dll 檔案";
+            return;
+        }
+
+        var scriptService = new ScriptService();
+        var assembly = Assembly.LoadFrom(dllPath);
+        var path = scriptService.GenColumnDescScriptFromDal(dbContext, dllPath);
+        errorTextBox.Text = $"{Lan.currentLan.FileGenerationCompleted}{path}";
+    }
+
+    private void UpDataDBSchemaBtn_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void button1_Click_1(object sender, EventArgs e)
+    {
+
+    }
+
+    private void dbContextLabel_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void sourceDbConnStrLabel_Click(object sender, EventArgs e)
+    {
+
+    }
 }

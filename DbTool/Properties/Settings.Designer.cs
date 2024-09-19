@@ -238,5 +238,41 @@ namespace DbTool.Properties {
                 this["namespaceModel"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string sourceDBConnString {
+            get {
+                return ((string)(this["sourceDBConnString"]));
+            }
+            set {
+                this["sourceDBConnString"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string dalDllPath {
+            get {
+                return ((string)(this["dalDllPath"]));
+            }
+            set {
+                this["dalDllPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string dbContext {
+            get {
+                return ((string)(this["dbContext"]));
+            }
+            set {
+                this["dbContext"] = value;
+            }
+        }
     }
 }

@@ -79,4 +79,10 @@ public class LanguageObj
     public string TableLists { get; set; }
     public string WordWithToc { get; set; }
     public string PleaseEnter { get; set; }
+    public string NamespaceLabel { get; set; }
+    public string ScriptGenTab { get; set; }
+    public string GenScriptFromDllBtn { get; set; } 
+    public string UpDataDBSchemaBtn { get; set; }
+    public string DalDllLabel { get; set; }
+    public string SourceDbConnStrLabel { get; set; }
 }

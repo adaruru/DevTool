@@ -56,5 +56,14 @@
     <Setting Name="namespaceModel" Type="System.String" Scope="User">
       <Value Profile="(Default)">SetYouNameSpace</Value>
     </Setting>
+    <Setting Name="sourceDBConnString" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="dalDllPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="dbContext" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
