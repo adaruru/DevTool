@@ -16,12 +16,8 @@ public class ScriptService
     }
 
 
-    public string GenColumnDescScriptFromDal(string dbContextName, string modelAssembly)
+    public string GenColumnDescScriptFromDal(Type dbContextType)
     {
-        var assembly = Assembly.LoadFrom(modelAssembly);
-        var outputPath = Directory.GetCurrentDirectory();
-
-        var dbContextType = assembly.GetType(dbContextName);
         Dictionary<string, Type> listType = new Dictionary<string, Type>();
         var types = dbContextType.GetProperties()
             .Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>));
@@ -61,13 +57,8 @@ public class ScriptService
         }
         List<string> updateDescriptionTSQLs = fieldInfos.Select((FieldInfo r) => r.getUpdateDescriptionTSQL()).ToList();
         string ans = string.Join("\r\n", updateDescriptionTSQLs);
-        DirectoryInfo d = new DirectoryInfo(outputPath);
-        if (!d.Exists)
-        {
-            d.Create();
-        }
 
-        var path = Path.Combine(outputPath, $"description_{DateTime.Now.ToString("yyyyMMddHHmmss")}.sql");
+        var path = Path.Combine(Directory.GetCurrentDirectory(), $"description_{DateTime.Now.ToString("yyyyMMddHHmmss")}.sql");
         File.WriteAllText(path, ans);
         return path;
     }

@@ -718,30 +718,25 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
             errorTextBox.Text = "找不到 DAL.dll 檔案";
             return;
         }
-
-        var scriptService = new ScriptService();
         var assembly = Assembly.LoadFrom(dllPath);
-        var path = scriptService.GenColumnDescScriptFromDal(dbContext, dllPath);
+        var entityType = assembly.GetType(dbContext);
+        if (assembly == null || entityType == null)
+        {
+            errorTextBox.Text = "DAL.dll 檔案找不到指定 dbContext ";
+            return;
+        }
+        var scriptService = new ScriptService();
+        var path = scriptService.GenColumnDescScriptFromDal(entityType);
         errorTextBox.Text = $"{Lan.currentLan.FileGenerationCompleted}{path}";
     }
 
-    private void UpDataDBSchemaBtn_Click(object sender, EventArgs e)
+    private void SourceDbConnTestBtnClick(object sender, EventArgs e)
+    {
+
+    }
+    private void UpDataDBSchemaBtnClick(object sender, EventArgs e)
     {
 
     }
 
-    private void button1_Click_1(object sender, EventArgs e)
-    {
-
-    }
-
-    private void dbContextLabel_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    private void sourceDbConnStrLabel_Click(object sender, EventArgs e)
-    {
-
-    }
 }

@@ -306,7 +306,6 @@ partial class DbToolForm
         dbContextLabel.Size = new Size(81, 19);
         dbContextLabel.TabIndex = 16;
         dbContextLabel.Text = "dbContext";
-        dbContextLabel.Click += dbContextLabel_Click;
         // 
         // dbContextBox
         // 
@@ -326,7 +325,7 @@ partial class DbToolForm
         sourceDbConnTestBtn.TabIndex = 14;
         sourceDbConnTestBtn.Text = "sourceDbConnTestBtn";
         sourceDbConnTestBtn.UseVisualStyleBackColor = true;
-        sourceDbConnTestBtn.Click += button1_Click_1;
+        sourceDbConnTestBtn.Click += SourceDbConnTestBtnClick;
         // 
         // upDataDBSchemaBtn
         // 
@@ -336,7 +335,7 @@ partial class DbToolForm
         upDataDBSchemaBtn.TabIndex = 13;
         upDataDBSchemaBtn.Text = "upDataDBSchemaBtn";
         upDataDBSchemaBtn.UseVisualStyleBackColor = true;
-        upDataDBSchemaBtn.Click += UpDataDBSchemaBtn_Click;
+        upDataDBSchemaBtn.Click += UpDataDBSchemaBtnClick;
         // 
         // genScriptFromDllBtn
         // 
