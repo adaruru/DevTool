@@ -15,7 +15,13 @@ public class ScriptService
     {
     }
 
-
+    /// <summary>
+    /// 優先取 DisplayAttribute Name
+    /// 若沒有，欄位找 <summary> 值
+    /// 若為 Enum 會繼續找 Enum 值 ex: (0=無法連線FTP,4=代碼對應失敗,5=檔案格式錯誤)
+    /// </summary>
+    /// <param name="dbContextType"></param>
+    /// <returns></returns>
     public string GenColumnDescScriptFromDal(Type dbContextType)
     {
         Dictionary<string, Type> listType = new Dictionary<string, Type>();
@@ -63,6 +69,10 @@ public class ScriptService
         return path;
     }
 
+    /// <summary>
+    /// 優先取 DisplayAttribute Name
+    /// <param name="propertyInfo"></param>
+    /// <returns></returns>
     public string GetDisplayName(PropertyInfo propertyInfo)
     {
         CustomAttributeData displayAttribute = propertyInfo.CustomAttributes.FirstOrDefault((CustomAttributeData r) => r.AttributeType == typeof(DisplayAttribute));
@@ -83,6 +93,13 @@ public class ScriptService
         }
         return namedArgument.TypedValue.Value.ToString();
     }
+
+
+    /// <summary>
+    /// 欄位找 <summary> 值
+    /// </summary>
+    /// <param name="pInfio"></param>
+    /// <returns></returns>
     public string GetSummary(PropertyInfo pInfio)
     {
         return pInfio.GetXmlDocsSummary();
@@ -107,6 +124,10 @@ public class FieldInfo
         this.displayName = displayName;
     }
 
+    /// <summary>
+    /// 組裝 displayName 與 enum 的值合成最後的 db 欄位 description
+    /// </summary>
+    /// <returns></returns>
     public string getDescription()
     {
         if (fieldType.IsSubclassOf(typeof(Enum)))
