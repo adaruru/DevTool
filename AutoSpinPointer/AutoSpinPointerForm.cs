@@ -14,61 +14,76 @@ namespace AutoSpinPointer
 
         [DllImport("user32.dll")]
         static extern bool SetCursorPos(int X, int Y);
+        private bool isSpinning = false;
+        private Thread spinThread;
 
-        private static Thread cursorThread;
-        private static bool isRunning = false;
 
         private void pointSpinBtnClick(object sender, EventArgs e)
         {
-            if (isRunning)
-                return; // 防止重複啟動
-
-            isRunning = true;
-            int centerX = Cursor.Position.X;
-            int centerY = Cursor.Position.Y;
-            int radius = 100; // 旋轉半徑
-            int angle = 0; // 起始角度
-
-            cursorThread = new Thread(() =>
-            {
-                while (isRunning)
-                {
-                    // 計算新位置
-                    int x = centerX + (int)(radius * Math.Cos(angle * Math.PI / 180));
-                    int y = centerY + (int)(radius * Math.Sin(angle * Math.PI / 180));
-
-                    // 設置滑鼠位置
-                    SetCursorPos(x, y);
-
-                    // 更新角度
-                    angle = (angle + 5) % 360;
-
-                    // 延遲以達到旋轉效果
-                    Thread.Sleep(50);
-                }
-            });
-
-            cursorThread.Start();
-        }
-        private void pointSpinStopBtnClick(object sender, EventArgs e)
-        {
-            if (!isRunning)
-                return; // 如果未運行，則不操作
-
-            isRunning = false;
-            cursorThread.Join(); // 等待執行緒結束
+            starSpin();
         }
 
         private void AutoSpinPointerForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!isRunning)
-                return; // 如果未運行，則不操作
-
-            isRunning = false;
-            if (cursorThread != null && cursorThread.IsAlive)
+            if (e.KeyCode == Keys.Space)
             {
-                cursorThread.Join(); // 等待執行緒結束
+                if (isSpinning)
+                {
+                    stopSpin();
+                }
+                else
+                {
+                    starSpin();
+                }
+
+                e.Handled = true; // 標記事件已處理 另 Space KeyDown 來模擬click效果
             }
+        }
+        private void stopSpin()
+        {
+            isSpinning = false;
+            if (spinThread != null && spinThread.IsAlive)
+            {
+                spinThread.Join();
+            }
+        }
+        private void starSpin()
+        {
+
+            if (isSpinning)
+                return;
+
+            isSpinning = true;
+            spinThread = new Thread(() =>
+            {
+                const double radius = 10; // 半徑為3公分（約10像素）
+                double angle = 0;
+
+                while (isSpinning)
+                {
+                    double x = radius * Math.Cos(angle);
+                    double y = radius * Math.Sin(angle);
+
+                    Invoke(new Action(() =>
+                    {
+                        // 設定滑鼠位置
+                        SetCursorPos(Cursor.Position.X + (int)x, Cursor.Position.Y + (int)y);
+                    }));
+
+                    angle += Math.PI / 30; // 每次增加角度，形成5秒轉一圈
+                    if (angle >= 2 * Math.PI)
+                        angle -= 2 * Math.PI;
+
+                    Thread.Sleep(30);//30毫秒
+                }
+            });
+            spinThread.IsBackground = true;
+            spinThread.Start();
+        }
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            stopSpin();
+            base.OnFormClosing(e);
         }
     }
 }
