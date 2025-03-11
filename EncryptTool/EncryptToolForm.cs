@@ -54,7 +54,7 @@ public partial class EncryptToolForm : Form
                 switch ((EncryptWayEnum)encryptWayBox.SelectedIndex)
                 {
                     case EncryptWayEnum.AES:
-                        beforeBox.Text = AES.Decrypt(raw, key, iv, (CipherMode)CipherModeBox.SelectedValue);
+                        beforeBox.Text = AES.Decrypt(raw, key, iv, (CipherMode)CipherModeBox.SelectedValue, (PaddingMode)PaddingModeBox.SelectedValue);
                         break;
                     case EncryptWayEnum.DES_Unsafe:
                         beforeBox.Text = DES.Decrypt(raw, key, iv);
@@ -94,7 +94,7 @@ public partial class EncryptToolForm : Form
                 switch ((EncryptWayEnum)encryptWayBox.SelectedValue)
                 {
                     case EncryptWayEnum.AES:
-                        afterBox.Text = AES.Encrypt(raw, key, iv, (CipherMode)CipherModeBox.SelectedValue);
+                        afterBox.Text = AES.Encrypt(raw, key, iv, (CipherMode)CipherModeBox.SelectedValue, (PaddingMode)PaddingModeBox.SelectedValue);
                         break;
                     case EncryptWayEnum.DES_Unsafe:
                         afterBox.Text = DES.Encrypt(raw, key, iv);
@@ -241,6 +241,10 @@ public partial class EncryptToolForm : Form
             CipherModeBox.ValueMember = "Key";
             var dic = GetEnumDictionary<CipherMode>().Where(d => (CipherMode)d.Key != CipherMode.OFB && (CipherMode)d.Key != CipherMode.CTS); //排除 3、5
             CipherModeBox.DataSource = new BindingSource(dic, null);
+
+            PaddingModeBox.ValueMember = "Key";
+            var dicPadding = GetEnumDictionary<PaddingMode>().Where(d => (PaddingMode)d.Key != PaddingMode.None); //排除 1
+            PaddingModeBox.DataSource = new BindingSource(dicPadding, null);
         }
         else
         {

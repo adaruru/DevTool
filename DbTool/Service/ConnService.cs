@@ -19,6 +19,7 @@ public class ConnService
     }
 
     public Schema Schema { get; set; }
+
     /// <summary>
     /// 創建 model 有預設值 asign 
     /// </summary>
@@ -232,6 +233,9 @@ END;";
         }
     }
 
+    /// <summary>
+    /// Schema Tables 寫入 Column
+    /// </summary>
     public void SetColumn()
     {
         for (int i = 0; i < Schema.Tables.Count; i++)
@@ -313,6 +317,9 @@ ORDER BY st.name
         }
     }
 
+    /// <summary>
+    /// Schema 寫入 Tables
+    /// </summary>
     public void SetTable()
     {
         var query = @"

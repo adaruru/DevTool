@@ -134,14 +134,16 @@ public class ExportExcelService
                 tocSheet.Cells[i + 2, 2].Value = Schema.Tables[i].TableDescription;
             }
 
+            //檢查table分頁存在
             var columnSheet = package.Workbook.Worksheets[Schema.Tables[i].TableName];
             if (columnSheet == null)
             {
+                // 分頁不存在，新增分頁
                 columnSheet = package.Workbook.Worksheets.Add(Schema.Tables[i].TableName);
             }
             else
             {
-                //處理sheet超出31字元同名的情況
+                // 分頁存在是因為前31字元相同，處理sheet超出31字元同名的情況，加入序號命名已區分
                 columnSheet = package.Workbook.Worksheets.Add($"{i}-{Schema.Tables[i].TableName}");
             }
 

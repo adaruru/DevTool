@@ -12,7 +12,7 @@ public class AES
     /// <summary>
     /// 解密
     /// </summary>
-    public static string Decrypt(string encrypt, string key, string iv, CipherMode mode)
+    public static string Decrypt(string encrypt, string key, string iv, CipherMode cipher, PaddingMode padding)
     {
         try
         {
@@ -21,7 +21,8 @@ public class AES
             var byteIv = Encoding.ASCII.GetBytes(iv);
             aes.Key = byteKey;
             aes.IV = byteIv;
-            aes.Mode = mode;
+            aes.Mode = cipher;
+            aes.Padding = padding;
 
             var dataByteArray = Convert.FromBase64String(encrypt);
             using (MemoryStream ms = new MemoryStream())
@@ -45,14 +46,15 @@ public class AES
     /// <summary>
     /// 解密
     /// </summary>
-    public static string Decrypt(string encrypt, byte[] key, byte[] iv, CipherMode mode)
+    public static string Decrypt(string encrypt, byte[] key, byte[] iv, CipherMode cipher, PaddingMode padding)
     {
         try
         {
             var aes = new AesCryptoServiceProvider();
             aes.Key = key;
             aes.IV = iv;
-            aes.Mode = mode;
+            aes.Mode = cipher;
+            aes.Padding = padding;
 
             var dataByteArray = Convert.FromBase64String(encrypt);
             using (var ms = new MemoryStream())
@@ -76,7 +78,8 @@ public class AES
     /// <summary>
     /// 加密
     /// </summary>
-    public static string Encrypt(string source, string key, string iv, CipherMode mode)
+    ///  public static string Encrypt(string source, string key, string iv, CipherMode mode, PaddingMode padding)
+    public static string Encrypt(string source, string key, string iv, CipherMode cipher, PaddingMode padding)
     {
         try
         {
@@ -87,7 +90,8 @@ public class AES
 
             aes.Key = byteKey;
             aes.IV = byteIv;
-            aes.Mode = mode;
+            aes.Mode = cipher;
+            aes.Padding = padding;
 
             var encrypt = "";
             using (var ms = new MemoryStream())
@@ -109,7 +113,7 @@ public class AES
     /// <summary>
     /// 加密
     /// </summary>
-    public static string Encrypt(string source, byte[] key, byte[] iv, CipherMode mode)
+    public static string Encrypt(string source, byte[] key, byte[] iv, CipherMode cipher, PaddingMode padding)
     {
         try
         {
@@ -118,7 +122,8 @@ public class AES
 
             aes.Key = key;
             aes.IV = iv;
-            aes.Mode = mode;
+            aes.Mode = cipher;
+            aes.Padding = padding;
 
             var encrypt = "";
             using (var ms = new MemoryStream())
