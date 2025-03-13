@@ -36,7 +36,7 @@ public class ExportExcelService
             tocSheet.Cells[1, 1].Value = "Table";
             tocSheet.Cells[i + 2, 1].Value = Schema.Tables[i].TableName;
 
-            if (true) //FormControl.IsTableNameGenLink
+            if (FormControl.isTableNameAsLink)
             {
                 tocSheet.Cells[i + 2, 1].Hyperlink = new ExcelHyperLink($"'{i + 1}'!A1", Schema.Tables[i].TableName);
                 tocSheet.Cells[i + 2, 1].Style.Font.UnderLine = true;
@@ -73,7 +73,7 @@ public class ExportExcelService
                 columnSheet.Cells.AutoFitColumns(); //調整欄寬
                 columnSheet.View.TabSelected = false;// 設置為不選取狀態
             }
-            if (true) //FormControl.IsTableNameGenLink
+            if (FormControl.isTableNameAsLink)
             {
                 columnSheet.Cells[Schema.Tables[i].Columns.Count() + 3, 1].Value = Lan.currentLan.TableLists;
                 columnSheet.Cells[Schema.Tables[i].Columns.Count() + 3, 1].Hyperlink = new ExcelHyperLink($"'TableLists'!A1", Lan.currentLan.TableLists);
@@ -167,7 +167,7 @@ public class ExportExcelService
                 columnSheet = package.Workbook.Worksheets.Add($"{i}-{Schema.Tables[i].TableName}");
             }
 
-            if (true) //FormControl.IsTableNameGenLink
+            if (FormControl.isTableNameAsLink)
             {
                 var sheetName = columnSheet.Name;
                 tocSheet.Cells[i + 2, 1].Hyperlink = new ExcelHyperLink($"'{sheetName}'!A1", Schema.Tables[i].TableName);
@@ -248,7 +248,7 @@ public class ExportExcelService
                     columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ColumnDescription;
                 }
 
-                if (true) //FormControl.IsTableNameGenLink
+                if (FormControl.isTableNameAsLink)
                 {
                     columnSheet.Cells[Schema.Tables[i].Columns.Count() + 3, 1].Value = Lan.currentLan.TableLists;
                     columnSheet.Cells[Schema.Tables[i].Columns.Count() + 3, 1].Hyperlink = new ExcelHyperLink($"'{Lan.currentLan.TableLists}'!A1", Lan.currentLan.TableLists);
@@ -270,7 +270,7 @@ public class ExportExcelService
                 {
                     columnStyle.CopyStyles(range);
                 }
-                if (true) //FormControl.IsTableNameGenLink
+                if (FormControl.isTableNameAsLink)
                 {
                     // 回到目錄樣式
                     using (var range = columnSheet.Cells[Schema.Tables[i].Columns.Count + 3, 1])
@@ -292,7 +292,7 @@ public class ExportExcelService
             tableListStyle.CopyStyles(range);
         }
 
-        if (true) //FormControl.IsTableNameGenLink
+        if (FormControl.isTableNameAsLink)
         {
             for (int i = 0; i < Schema.Tables.Count; i++)
             {

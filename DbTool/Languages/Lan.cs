@@ -85,4 +85,5 @@ public class LanguageObj
     public string UpDataDBSchemaBtn { get; set; }
     public string DalDllLabel { get; set; }
     public string SourceDbConnStrLabel { get; set; }
+    public string TableNameAsLink { get; set; }
 }

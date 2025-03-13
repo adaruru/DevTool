@@ -35,6 +35,7 @@
   "Key": "Key",
   "Required": "Required",
   "Display": "Display",
+  "TableNameAsLink": "Toc Table Name As Link",
   "ColumnDescription": "Column Description",
   "TableDescription": "Table Description",
   "Column": "Column",

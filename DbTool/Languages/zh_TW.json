@@ -35,6 +35,7 @@
   "Key": "Key",
   "Required": "Required",
   "Display": "Display",
+  "TableNameAsLink": "目錄表名顯示連結",
   "ColumnDescription": "欄描述",
   "TableDescription": "表描述",
   "Column": "名稱",

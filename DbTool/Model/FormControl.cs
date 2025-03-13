@@ -14,6 +14,11 @@ public static class FormControl
     public static bool IsColumnDescriptionShow { get; set; } = true;
 
     /// <summary>
+    ///  目錄欄位名顯示連結
+    /// </summary>
+    public static bool isTableNameAsLink { get; set; } = true;
+
+    /// <summary>
     /// 資料型別
     /// </summary>
     public static bool IsDataTypeShow { get; set; } = true;

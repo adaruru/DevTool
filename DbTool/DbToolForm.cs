@@ -123,6 +123,7 @@ public partial class DbToolForm : Form
 
         #region  ==genWorld/Excel用==
         isTableDescriptionShow.Checked = Settings.Default.IsTableDescriptionShow; // true 表描述
+        isTableNameAsLink.Checked = Settings.Default.isTableNameAsLink; // true 表描述
 
         isSortShow.Checked = Settings.Default.IsSortShow; // true 排序
         isDataTypeShow.Checked = Settings.Default.IsDataTypeShow; // true 資料型別
@@ -570,6 +571,7 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
         isDataTypeShow.Text = Lan.currentLan.DataType;
         isSortShow.Text = Lan.currentLan.Sort;
         isColumnDescriptionShow.Text = Lan.currentLan.ColumnDescription;
+        isTableNameAsLink.Text = Lan.currentLan.TableNameAsLink;
         isTableDescriptionShow.Text = Lan.currentLan.TableDescription;
         isSummary.Text = Lan.currentLan.Summary;
 
@@ -589,6 +591,14 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
         FormControl.IsColumnDescriptionShow = isColumnDescriptionShow.Checked;
         Settings.Default.Save();
     }
+
+    private void isTableNameAsLinkChanged(object sender, EventArgs e)
+    {
+        Settings.Default.isTableNameAsLink = isTableNameAsLink.Checked;
+        FormControl.isTableNameAsLink = isTableNameAsLink.Checked;
+        Settings.Default.Save();
+    }
+
 
     private void IsDataTypeShowChanged(object sender, EventArgs e)
     {
