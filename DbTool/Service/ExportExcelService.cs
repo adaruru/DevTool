@@ -1,8 +1,10 @@
 ﻿// DevTool 1.1 
 // Copyright (C) 2024, Adaruru
 
+using System;
 using System.Diagnostics;
 using System.Reflection;
+using DocumentFormat.OpenXml.Spreadsheet;
 using OfficeOpenXml;
 
 public class ExportExcelService
@@ -27,18 +29,29 @@ public class ExportExcelService
 
         using var package = new ExcelPackage(resourceStream);
         var tocSheet = package.Workbook.Worksheets["TableLists"];
+
+        // 處理每個 table sheet
         for (int i = 0; i < Schema.Tables.Count; i++)
         {
             tocSheet.Cells[1, 1].Value = "Table";
             tocSheet.Cells[i + 2, 1].Value = Schema.Tables[i].TableName;
+
+            if (true) //FormControl.IsTableNameGenLink
+            {
+                tocSheet.Cells[i + 2, 1].Hyperlink = new ExcelHyperLink($"'{i + 1}'!A1", Schema.Tables[i].TableName);
+                tocSheet.Cells[i + 2, 1].Style.Font.UnderLine = true;
+                tocSheet.Cells[i + 2, 1].Style.Font.Color.SetColor(System.Drawing.Color.Blue);
+            }
 
             if (FormControl.IsTableDescriptionShow)
             {
                 tocSheet.Cells[1, 2].Value = "Description";
                 tocSheet.Cells[i + 2, 2].Value = Schema.Tables[i].TableDescription;
             }
+
             var columnSheet = package.Workbook.Worksheets.Copy("ColumnSample", $"{i + 1}");
 
+            //處理 table sheet 每個 column
             for (int r = 0; r < Schema.Tables[i].Columns.Count(); r++)
             {
                 var column = 0;
@@ -59,6 +72,13 @@ public class ExportExcelService
 
                 columnSheet.Cells.AutoFitColumns(); //調整欄寬
                 columnSheet.View.TabSelected = false;// 設置為不選取狀態
+            }
+            if (true) //FormControl.IsTableNameGenLink
+            {
+                columnSheet.Cells[Schema.Tables[i].Columns.Count() + 3, 1].Value = Lan.currentLan.TableLists;
+                columnSheet.Cells[Schema.Tables[i].Columns.Count() + 3, 1].Hyperlink = new ExcelHyperLink($"'TableLists'!A1", Lan.currentLan.TableLists);
+                columnSheet.Cells[Schema.Tables[i].Columns.Count() + 3, 1].Style.Font.UnderLine = true;
+                columnSheet.Cells[Schema.Tables[i].Columns.Count() + 3, 1].Style.Font.Color.SetColor(System.Drawing.Color.Blue);
             }
         }
         tocSheet.Cells.AutoFitColumns();//調整欄寬
@@ -147,6 +167,12 @@ public class ExportExcelService
                 columnSheet = package.Workbook.Worksheets.Add($"{i}-{Schema.Tables[i].TableName}");
             }
 
+            if (true) //FormControl.IsTableNameGenLink
+            {
+                var sheetName = columnSheet.Name;
+                tocSheet.Cells[i + 2, 1].Hyperlink = new ExcelHyperLink($"'{sheetName}'!A1", Schema.Tables[i].TableName);
+            }
+
             for (int r = 0; r < Schema.Tables[i].Columns.Count(); r++)
             {
                 var column = 0;
@@ -222,8 +248,14 @@ public class ExportExcelService
                     columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ColumnDescription;
                 }
 
+                if (true) //FormControl.IsTableNameGenLink
+                {
+                    columnSheet.Cells[Schema.Tables[i].Columns.Count() + 3, 1].Value = Lan.currentLan.TableLists;
+                    columnSheet.Cells[Schema.Tables[i].Columns.Count() + 3, 1].Hyperlink = new ExcelHyperLink($"'{Lan.currentLan.TableLists}'!A1", Lan.currentLan.TableLists);
+                }
+
                 columnSheet.Cells.AutoFitColumns(); // 調整欄寬
-                columnSheet.View.TabSelected = false;// 設置為不選取狀態
+                columnSheet.View.TabSelected = false; // 設置為不選取狀態
 
                 //設置 table 樣式
                 using (var range = columnSheet.Cells[1, 1, 1, 2])
@@ -238,6 +270,14 @@ public class ExportExcelService
                 {
                     columnStyle.CopyStyles(range);
                 }
+                if (true) //FormControl.IsTableNameGenLink
+                {
+                    // 回到目錄樣式
+                    using (var range = columnSheet.Cells[Schema.Tables[i].Columns.Count + 3, 1])
+                    {
+                        columnTableNameStyle.CopyStyles(range);
+                    }
+                }
             }
         }
 
@@ -251,6 +291,17 @@ public class ExportExcelService
         {
             tableListStyle.CopyStyles(range);
         }
+
+        if (true) //FormControl.IsTableNameGenLink
+        {
+            for (int i = 0; i < Schema.Tables.Count; i++)
+            {
+                var tocSheetTableNameCell = tocSheet.Cells[i + 2, 1];
+                tocSheetTableNameCell.Style.Font.UnderLine = true;
+                tocSheetTableNameCell.Style.Font.Color.SetColor(System.Drawing.Color.Blue);
+            }
+        }
+
 
         // 開啟時只選取 TableLists
         package.Workbook.View.ActiveTab = 0;
