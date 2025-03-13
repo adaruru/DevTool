@@ -377,28 +377,28 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
 
                 if (openFileDialog.SafeFileName != "ImportDescription.xlsx")
                 {
-                    throw new Exception("請下載匯入描述範本以編輯");
+                    throw new Exception("請勿變更檔名，並請下載匯入描述範本以編輯");
                 }
                 if (worksheet == null)
                 {
-                    throw new Exception("請下載匯入描述範本以編輯");
+                    throw new Exception("找不到任何工作表，請下載匯入描述範本以編輯");
                 }
                 if (worksheet.Cells[1, 1].Text != "Table")
                 {
-                    throw new Exception("請下載匯入描述範本以編輯");
+                    throw new Exception("請勿變更工作表欄位名稱，請下載匯入描述範本以編輯");
                 }
                 if (worksheet.Cells[1, 2].Text != "Description")
                 {
-                    throw new Exception("請下載匯入描述範本以編輯");
+                    throw new Exception("請勿變更工作表欄位名稱，請下載匯入描述範本以編輯");
                 }
                 var checkSheet = package.Workbook.Worksheets["1"];
                 if (checkSheet.Cells[2, 1].Text != "Column")
                 {
-                    throw new Exception("請下載匯入描述範本以編輯");
+                    throw new Exception("請勿變更工作表欄位名稱，請下載匯入描述範本以編輯");
                 }
                 if (checkSheet.Cells[2, 2].Text != "Description")
                 {
-                    throw new Exception("請下載匯入描述範本以編輯");
+                    throw new Exception("請勿變更工作表欄位名稱，請下載匯入描述範本以編輯");
                 }
 
                 for (int row = 2; row <= worksheet.Dimension.End.Row; row++)
