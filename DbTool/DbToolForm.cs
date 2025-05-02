@@ -423,7 +423,8 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
                             errorTextBox.Text = $"tableName: {_schemaForImportDescription.Tables[i].TableName} 匯入有異常，重新下載匯入範本";
                             continue;
                         }
-                        for (int row = 3; row <= tableSheet.Dimension.End.Row; row++)
+                        var endMinus1 = tableSheet.Dimension.End.Row - 1;//最後一筆是目錄跳回 不要 import
+                        for (int row = 3; row <= endMinus1; row++)
                         {
 
                             Column column = new Column
