@@ -555,9 +555,10 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
         Text = Lan.currentLan.DbTool;
 
         connToolTab.Text = Lan.currentLan.DatabaseConnectionTab;
-        demoCommBtn.Text = Lan.currentLan.ShowExample;
         connStrLabel.Text = Lan.currentLan.ConnectionString;
         dbTestBtn.Text = Lan.currentLan.ConnectionTest;
+        demoCommBtn.Text = Lan.currentLan.ShowExample;
+        connHistoryLabel.Text = Lan.currentLan.connHistoryLabel;
 
         schmaToolTab.Text = Lan.currentLan.DatabaseSpecTab;
         downloadSchemaBtn.Text = Lan.currentLan.DownloadDatabaseSpecExcel;
@@ -579,7 +580,6 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
 
         settingTab.Text = Lan.currentLan.SettingsTab;
         downloadExcelStyleTemplateBtn.Text = Lan.currentLan.DownloadExcelStyleTemplate;
-        resetBtn.Text = Lan.currentLan.ResetSettings;
         languageTab.Text = Lan.currentLan.LanguageTab;
         customThemelabel.Text = Lan.currentLan.CustomExcelStyle;
         modelGenBtnSettingLabel.Text = Lan.currentLan.ModelGenSettings;
@@ -598,11 +598,13 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
         isColumnDescriptionShow.Text = Lan.currentLan.ColumnDescription;
         isTableNameAsLink.Text = Lan.currentLan.TableNameAsLink;
         isTableDescriptionShow.Text = Lan.currentLan.TableDescription;
-        isSummary.Text = Lan.currentLan.Summary;
 
-        isKey.Text = Lan.currentLan.Key;
-        isRequired.Text = Lan.currentLan.Required;
+        isSummary.Text = Lan.currentLan.Summary;
         isDisplay.Text = Lan.currentLan.Display;
+        isRequired.Text = Lan.currentLan.Required;
+        isKey.Text = Lan.currentLan.Key;
+        resetBtn.Text = Lan.currentLan.ResetSettings;
+        clearConnHistoryBtn.Text = Lan.currentLan.clearConnHistoryBtn;
     }
     #region ==System Default Setting event==
     private void customThemeNameSelectChanged(object sender, EventArgs e)

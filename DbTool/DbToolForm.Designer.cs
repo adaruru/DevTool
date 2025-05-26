@@ -38,7 +38,7 @@ partial class DbToolForm
         dbTestBtn = new Button();
         tabControl1 = new TabControl();
         connToolTab = new TabPage();
-        connHiatoryLabel = new Label();
+        connHistoryLabel = new Label();
         connHiatorySelect = new ComboBox();
         schmaToolTab = new TabPage();
         downloadTemplateBtn = new Button();
@@ -162,7 +162,7 @@ partial class DbToolForm
         // 
         // connToolTab
         // 
-        connToolTab.Controls.Add(connHiatoryLabel);
+        connToolTab.Controls.Add(connHistoryLabel);
         connToolTab.Controls.Add(connHiatorySelect);
         connToolTab.Controls.Add(connStrLabel);
         connToolTab.Controls.Add(dbTestBtn);
@@ -176,21 +176,21 @@ partial class DbToolForm
         connToolTab.Text = "connToolTab";
         connToolTab.UseVisualStyleBackColor = true;
         // 
-        // connHiatoryLabel
+        // connHistoryLabel
         // 
-        connHiatoryLabel.AutoSize = true;
-        connHiatoryLabel.Location = new Point(30, 276);
-        connHiatoryLabel.Name = "connHiatoryLabel";
-        connHiatoryLabel.Size = new Size(160, 23);
-        connHiatoryLabel.TabIndex = 23;
-        connHiatoryLabel.Text = "connHiatoryLabel";
+        connHistoryLabel.AutoSize = true;
+        connHistoryLabel.Location = new Point(30, 276);
+        connHistoryLabel.Name = "connHistoryLabel";
+        connHistoryLabel.Size = new Size(158, 23);
+        connHistoryLabel.TabIndex = 23;
+        connHistoryLabel.Text = "connHistoryLabel";
         // 
         // connHiatorySelect
         // 
         connHiatorySelect.FormattingEnabled = true;
-        connHiatorySelect.Location = new Point(207, 273);
+        connHiatorySelect.Location = new Point(151, 273);
         connHiatorySelect.Name = "connHiatorySelect";
-        connHiatorySelect.Size = new Size(581, 31);
+        connHiatorySelect.Size = new Size(739, 31);
         connHiatorySelect.TabIndex = 22;
         connHiatorySelect.SelectedIndexChanged += connHiatorySelectedIndexChanged;
         // 
@@ -428,11 +428,11 @@ partial class DbToolForm
         // 
         // clearConnHistoryBtn
         // 
-        clearConnHistoryBtn.Location = new Point(168, 296);
+        clearConnHistoryBtn.Location = new Point(145, 296);
         clearConnHistoryBtn.Name = "clearConnHistoryBtn";
-        clearConnHistoryBtn.Size = new Size(212, 34);
-        clearConnHistoryBtn.TabIndex = 23;
         clearConnHistoryBtn.Text = "clearConnHistoryBtn";
+        clearConnHistoryBtn.Size = new Size(193, 34);
+        clearConnHistoryBtn.TabIndex = 23;
         clearConnHistoryBtn.UseVisualStyleBackColor = true;
         clearConnHistoryBtn.Click += ClearConnHistoryBtnClick;
         // 
@@ -809,7 +809,7 @@ partial class DbToolForm
     private TextBox dbContextBox;
     private Label dbContextLabel;
     private CheckBox isTableNameAsLink;
-    private Label connHiatoryLabel;
+    private Label connHistoryLabel;
     private ComboBox connHiatorySelect;
     private Button clearConnHistoryBtn;
 }

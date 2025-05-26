@@ -54,5 +54,7 @@
   "GenScriptFromDllBtn": "Column Desc Script from dll",
   "UpDataDBSchemaBtn": "Sync Source DB Script",
   "DalDllLabel": "DAL.dll path",
-  "SourceDbConnStrLabel": "Source DB Conn String"
+  "SourceDbConnStrLabel": "Source DB Conn String",
+  "connHistoryLabel": "Conn History",
+  "clearConnHistoryBtn": "Clear Conn History"
 }

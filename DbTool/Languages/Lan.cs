@@ -86,4 +86,6 @@ public class LanguageObj
     public string DalDllLabel { get; set; }
     public string SourceDbConnStrLabel { get; set; }
     public string TableNameAsLink { get; set; }
+    public string connHistoryLabel { get; set; }
+    public string clearConnHistoryBtn { get; set; }
 }
