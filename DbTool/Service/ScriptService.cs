@@ -128,7 +128,7 @@ public class FieldInfo
     /// 組裝 displayName 與 enum 的值合成最後的 db 欄位 description
     /// </summary>
     /// <returns></returns>
-    public string getDescription()
+    public string GetDescription()
     {
         if (fieldType.IsSubclassOf(typeof(Enum)))
         {
@@ -162,6 +162,6 @@ public class FieldInfo
     public string getUpdateDescriptionTSQL()
     {
         string template = "IF not exists(SELECT * FROM ::fn_listextendedproperty (NULL, 'user', 'dbo', 'table', '{0}', 'column', '{1}')) BEGIN exec sp_addextendedproperty 'MS_Description', '{2}', 'user', 'dbo', 'table', '{0}', 'column', '{1}' END ELSE BEGIN  exec sp_updateextendedproperty 'MS_Description', '{2}', 'user', 'dbo', 'table', '{0}', 'column', '{1}' END";
-        return string.Format(template, tableName, fieldName, getDescription());
+        return string.Format(template, tableName, fieldName, GetDescription());
     }
 }

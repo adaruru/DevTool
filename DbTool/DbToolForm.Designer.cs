@@ -1,6 +1,8 @@
 ﻿// DevTool 1.1 
 // Copyright (C) 2024, Adaruru
 
+using DbTool.Properties;
+
 partial class DbToolForm
 {
     /// <summary>
@@ -36,6 +38,8 @@ partial class DbToolForm
         dbTestBtn = new Button();
         tabControl1 = new TabControl();
         connToolTab = new TabPage();
+        connHiatoryLabel = new Label();
+        connHiatorySelect = new ComboBox();
         schmaToolTab = new TabPage();
         downloadTemplateBtn = new Button();
         downloadSchemaWordPerTableBtn = new Button();
@@ -56,6 +60,7 @@ partial class DbToolForm
         dalDllPathBox = new TextBox();
         dalDllLabel = new Label();
         settingTab = new TabPage();
+        isTableNameAsLink = new CheckBox();
         customThemelabel = new Label();
         customThemeNameSelect = new ComboBox();
         modelGenBtnSettingLabel = new Label();
@@ -81,7 +86,7 @@ partial class DbToolForm
         languageTab = new TabPage();
         languageSelect = new ComboBox();
         errorTextBox = new TextBox();
-        isTableNameAsLink = new CheckBox();
+        clearConnHistoryBtn = new Button();
         tabControl1.SuspendLayout();
         connToolTab.SuspendLayout();
         schmaToolTab.SuspendLayout();
@@ -93,10 +98,9 @@ partial class DbToolForm
         // 
         // demoCommBtn
         // 
-        demoCommBtn.Location = new Point(200, 138);
-        demoCommBtn.Margin = new Padding(2);
+        demoCommBtn.Location = new Point(314, 212);
         demoCommBtn.Name = "demoCommBtn";
-        demoCommBtn.Size = new Size(145, 22);
+        demoCommBtn.Size = new Size(228, 34);
         demoCommBtn.TabIndex = 0;
         demoCommBtn.Text = "demoCommBtn";
         demoCommBtn.UseVisualStyleBackColor = true;
@@ -104,10 +108,9 @@ partial class DbToolForm
         // 
         // downloadSchemaBtn
         // 
-        downloadSchemaBtn.Location = new Point(16, 13);
-        downloadSchemaBtn.Margin = new Padding(2);
+        downloadSchemaBtn.Location = new Point(25, 20);
         downloadSchemaBtn.Name = "downloadSchemaBtn";
-        downloadSchemaBtn.Size = new Size(232, 22);
+        downloadSchemaBtn.Size = new Size(365, 34);
         downloadSchemaBtn.TabIndex = 1;
         downloadSchemaBtn.Text = "downloadSchemaBtn";
         downloadSchemaBtn.UseVisualStyleBackColor = true;
@@ -115,11 +118,10 @@ partial class DbToolForm
         // 
         // connStrBox
         // 
-        connStrBox.Location = new Point(19, 36);
-        connStrBox.Margin = new Padding(2);
+        connStrBox.Location = new Point(30, 55);
         connStrBox.Multiline = true;
         connStrBox.Name = "connStrBox";
-        connStrBox.Size = new Size(338, 89);
+        connStrBox.Size = new Size(529, 134);
         connStrBox.TabIndex = 2;
         connStrBox.Text = "Data Source=MSI;Initial Catalog=MvcCoreTraining_Amanda;user id=sa;password=ruru";
         connStrBox.TextChanged += connStrBoxEvent;
@@ -127,19 +129,17 @@ partial class DbToolForm
         // connStrLabel
         // 
         connStrLabel.AutoSize = true;
-        connStrLabel.Location = new Point(16, 12);
-        connStrLabel.Margin = new Padding(2, 0, 2, 0);
+        connStrLabel.Location = new Point(25, 18);
         connStrLabel.Name = "connStrLabel";
-        connStrLabel.Size = new Size(81, 15);
+        connStrLabel.Size = new Size(121, 23);
         connStrLabel.TabIndex = 3;
         connStrLabel.Text = "connStrLabel";
         // 
         // dbTestBtn
         // 
-        dbTestBtn.Location = new Point(19, 138);
-        dbTestBtn.Margin = new Padding(2);
+        dbTestBtn.Location = new Point(30, 212);
         dbTestBtn.Name = "dbTestBtn";
-        dbTestBtn.Size = new Size(135, 22);
+        dbTestBtn.Size = new Size(212, 34);
         dbTestBtn.TabIndex = 6;
         dbTestBtn.Text = "dbTestBtn";
         dbTestBtn.UseVisualStyleBackColor = true;
@@ -153,28 +153,45 @@ partial class DbToolForm
         tabControl1.Controls.Add(scriptGenTab);
         tabControl1.Controls.Add(settingTab);
         tabControl1.Controls.Add(languageTab);
-        tabControl1.Location = new Point(0, 2);
-        tabControl1.Margin = new Padding(2);
+        tabControl1.Location = new Point(0, 3);
         tabControl1.Name = "tabControl1";
         tabControl1.SelectedIndex = 0;
-        tabControl1.Size = new Size(614, 246);
+        tabControl1.Size = new Size(965, 377);
         tabControl1.TabIndex = 7;
         tabControl1.SelectedIndexChanged += tabControlChanged;
         // 
         // connToolTab
         // 
+        connToolTab.Controls.Add(connHiatoryLabel);
+        connToolTab.Controls.Add(connHiatorySelect);
         connToolTab.Controls.Add(connStrLabel);
         connToolTab.Controls.Add(dbTestBtn);
         connToolTab.Controls.Add(connStrBox);
         connToolTab.Controls.Add(demoCommBtn);
-        connToolTab.Location = new Point(4, 24);
-        connToolTab.Margin = new Padding(2);
+        connToolTab.Location = new Point(4, 32);
         connToolTab.Name = "connToolTab";
-        connToolTab.Padding = new Padding(2);
-        connToolTab.Size = new Size(606, 218);
+        connToolTab.Padding = new Padding(3);
+        connToolTab.Size = new Size(957, 341);
         connToolTab.TabIndex = 0;
         connToolTab.Text = "connToolTab";
         connToolTab.UseVisualStyleBackColor = true;
+        // 
+        // connHiatoryLabel
+        // 
+        connHiatoryLabel.AutoSize = true;
+        connHiatoryLabel.Location = new Point(30, 276);
+        connHiatoryLabel.Name = "connHiatoryLabel";
+        connHiatoryLabel.Size = new Size(160, 23);
+        connHiatoryLabel.TabIndex = 23;
+        connHiatoryLabel.Text = "connHiatoryLabel";
+        // 
+        // connHiatorySelect
+        // 
+        connHiatorySelect.FormattingEnabled = true;
+        connHiatorySelect.Location = new Point(207, 273);
+        connHiatorySelect.Name = "connHiatorySelect";
+        connHiatorySelect.Size = new Size(581, 31);
+        connHiatorySelect.TabIndex = 22;
         // 
         // schmaToolTab
         // 
@@ -183,21 +200,19 @@ partial class DbToolForm
         schmaToolTab.Controls.Add(downloadSchemaWordBtn);
         schmaToolTab.Controls.Add(importDescriptionBtn);
         schmaToolTab.Controls.Add(downloadSchemaBtn);
-        schmaToolTab.Location = new Point(4, 24);
-        schmaToolTab.Margin = new Padding(2);
+        schmaToolTab.Location = new Point(4, 32);
         schmaToolTab.Name = "schmaToolTab";
-        schmaToolTab.Padding = new Padding(2);
-        schmaToolTab.Size = new Size(606, 218);
+        schmaToolTab.Padding = new Padding(3);
+        schmaToolTab.Size = new Size(957, 341);
         schmaToolTab.TabIndex = 1;
         schmaToolTab.Text = "schmaToolTab";
         schmaToolTab.UseVisualStyleBackColor = true;
         // 
         // downloadTemplateBtn
         // 
-        downloadTemplateBtn.Location = new Point(16, 129);
-        downloadTemplateBtn.Margin = new Padding(2);
+        downloadTemplateBtn.Location = new Point(25, 198);
         downloadTemplateBtn.Name = "downloadTemplateBtn";
-        downloadTemplateBtn.Size = new Size(345, 22);
+        downloadTemplateBtn.Size = new Size(542, 34);
         downloadTemplateBtn.TabIndex = 2;
         downloadTemplateBtn.Text = "downloadTemplateBtn";
         downloadTemplateBtn.UseVisualStyleBackColor = true;
@@ -205,10 +220,9 @@ partial class DbToolForm
         // 
         // downloadSchemaWordPerTableBtn
         // 
-        downloadSchemaWordPerTableBtn.Location = new Point(16, 90);
-        downloadSchemaWordPerTableBtn.Margin = new Padding(2);
+        downloadSchemaWordPerTableBtn.Location = new Point(25, 138);
         downloadSchemaWordPerTableBtn.Name = "downloadSchemaWordPerTableBtn";
-        downloadSchemaWordPerTableBtn.Size = new Size(346, 22);
+        downloadSchemaWordPerTableBtn.Size = new Size(544, 34);
         downloadSchemaWordPerTableBtn.TabIndex = 17;
         downloadSchemaWordPerTableBtn.Text = "downloadSchemaWordPerTableBtn";
         downloadSchemaWordPerTableBtn.UseVisualStyleBackColor = true;
@@ -216,10 +230,9 @@ partial class DbToolForm
         // 
         // downloadSchemaWordBtn
         // 
-        downloadSchemaWordBtn.Location = new Point(16, 52);
-        downloadSchemaWordBtn.Margin = new Padding(2);
+        downloadSchemaWordBtn.Location = new Point(25, 80);
         downloadSchemaWordBtn.Name = "downloadSchemaWordBtn";
-        downloadSchemaWordBtn.Size = new Size(231, 22);
+        downloadSchemaWordBtn.Size = new Size(363, 34);
         downloadSchemaWordBtn.TabIndex = 15;
         downloadSchemaWordBtn.Text = "downloadSchemaWordBtn";
         downloadSchemaWordBtn.UseVisualStyleBackColor = true;
@@ -227,10 +240,9 @@ partial class DbToolForm
         // 
         // importDescriptionBtn
         // 
-        importDescriptionBtn.Location = new Point(16, 167);
-        importDescriptionBtn.Margin = new Padding(2);
+        importDescriptionBtn.Location = new Point(25, 256);
         importDescriptionBtn.Name = "importDescriptionBtn";
-        importDescriptionBtn.Size = new Size(345, 22);
+        importDescriptionBtn.Size = new Size(542, 34);
         importDescriptionBtn.TabIndex = 14;
         importDescriptionBtn.Text = "importDescriptionBtn";
         importDescriptionBtn.UseVisualStyleBackColor = true;
@@ -241,11 +253,10 @@ partial class DbToolForm
         modelToolTab.Controls.Add(nameSpaceLabel);
         modelToolTab.Controls.Add(namespaceBox);
         modelToolTab.Controls.Add(modelGenBtn);
-        modelToolTab.Location = new Point(4, 24);
-        modelToolTab.Margin = new Padding(2);
+        modelToolTab.Location = new Point(4, 32);
         modelToolTab.Name = "modelToolTab";
-        modelToolTab.Padding = new Padding(2);
-        modelToolTab.Size = new Size(606, 218);
+        modelToolTab.Padding = new Padding(3);
+        modelToolTab.Size = new Size(957, 341);
         modelToolTab.TabIndex = 2;
         modelToolTab.Text = "modelToolTab";
         modelToolTab.UseVisualStyleBackColor = true;
@@ -253,29 +264,26 @@ partial class DbToolForm
         // nameSpaceLabel
         // 
         nameSpaceLabel.AutoSize = true;
-        nameSpaceLabel.Location = new Point(17, 47);
-        nameSpaceLabel.Margin = new Padding(2, 0, 2, 0);
+        nameSpaceLabel.Location = new Point(27, 72);
         nameSpaceLabel.Name = "nameSpaceLabel";
-        nameSpaceLabel.Size = new Size(105, 15);
+        nameSpaceLabel.Size = new Size(153, 23);
         nameSpaceLabel.TabIndex = 9;
         nameSpaceLabel.Text = "nameSpaceLabel";
         // 
         // namespaceBox
         // 
-        namespaceBox.Location = new Point(117, 46);
-        namespaceBox.Margin = new Padding(2);
+        namespaceBox.Location = new Point(184, 71);
         namespaceBox.Multiline = true;
         namespaceBox.Name = "namespaceBox";
-        namespaceBox.Size = new Size(228, 25);
+        namespaceBox.Size = new Size(356, 36);
         namespaceBox.TabIndex = 8;
         namespaceBox.TextChanged += namespaceBoxChanged;
         // 
         // modelGenBtn
         // 
-        modelGenBtn.Location = new Point(13, 15);
-        modelGenBtn.Margin = new Padding(2);
+        modelGenBtn.Location = new Point(20, 23);
         modelGenBtn.Name = "modelGenBtn";
-        modelGenBtn.Size = new Size(140, 21);
+        modelGenBtn.Size = new Size(220, 32);
         modelGenBtn.TabIndex = 7;
         modelGenBtn.Text = "modelGenBtn";
         modelGenBtn.UseVisualStyleBackColor = true;
@@ -292,11 +300,10 @@ partial class DbToolForm
         scriptGenTab.Controls.Add(sourceDbConnStrLabel);
         scriptGenTab.Controls.Add(dalDllPathBox);
         scriptGenTab.Controls.Add(dalDllLabel);
-        scriptGenTab.Location = new Point(4, 24);
-        scriptGenTab.Margin = new Padding(2, 2, 2, 2);
+        scriptGenTab.Location = new Point(4, 32);
         scriptGenTab.Name = "scriptGenTab";
-        scriptGenTab.Padding = new Padding(2, 2, 2, 2);
-        scriptGenTab.Size = new Size(606, 218);
+        scriptGenTab.Padding = new Padding(3);
+        scriptGenTab.Size = new Size(957, 341);
         scriptGenTab.TabIndex = 5;
         scriptGenTab.Text = "scriptGenTab";
         scriptGenTab.UseVisualStyleBackColor = true;
@@ -304,29 +311,26 @@ partial class DbToolForm
         // dbContextLabel
         // 
         dbContextLabel.AutoSize = true;
-        dbContextLabel.Location = new Point(25, 63);
-        dbContextLabel.Margin = new Padding(2, 0, 2, 0);
+        dbContextLabel.Location = new Point(39, 97);
         dbContextLabel.Name = "dbContextLabel";
-        dbContextLabel.Size = new Size(67, 15);
+        dbContextLabel.Size = new Size(99, 23);
         dbContextLabel.TabIndex = 16;
         dbContextLabel.Text = "dbContext";
         // 
         // dbContextBox
         // 
-        dbContextBox.Location = new Point(92, 61);
-        dbContextBox.Margin = new Padding(2);
+        dbContextBox.Location = new Point(145, 94);
         dbContextBox.Multiline = true;
         dbContextBox.Name = "dbContextBox";
-        dbContextBox.Size = new Size(273, 24);
+        dbContextBox.Size = new Size(427, 35);
         dbContextBox.TabIndex = 15;
         dbContextBox.TextChanged += dbContextBoxChanged;
         // 
         // sourceDbConnTestBtn
         // 
-        sourceDbConnTestBtn.Location = new Point(398, 165);
-        sourceDbConnTestBtn.Margin = new Padding(2, 2, 2, 2);
+        sourceDbConnTestBtn.Location = new Point(625, 253);
         sourceDbConnTestBtn.Name = "sourceDbConnTestBtn";
-        sourceDbConnTestBtn.Size = new Size(102, 23);
+        sourceDbConnTestBtn.Size = new Size(160, 35);
         sourceDbConnTestBtn.TabIndex = 14;
         sourceDbConnTestBtn.Text = "sourceDbConnTestBtn";
         sourceDbConnTestBtn.UseVisualStyleBackColor = true;
@@ -334,10 +338,9 @@ partial class DbToolForm
         // 
         // upDataDBSchemaBtn
         // 
-        upDataDBSchemaBtn.Location = new Point(398, 193);
-        upDataDBSchemaBtn.Margin = new Padding(2, 2, 2, 2);
+        upDataDBSchemaBtn.Location = new Point(625, 296);
         upDataDBSchemaBtn.Name = "upDataDBSchemaBtn";
-        upDataDBSchemaBtn.Size = new Size(199, 23);
+        upDataDBSchemaBtn.Size = new Size(313, 35);
         upDataDBSchemaBtn.TabIndex = 13;
         upDataDBSchemaBtn.Text = "upDataDBSchemaBtn";
         upDataDBSchemaBtn.UseVisualStyleBackColor = true;
@@ -345,10 +348,9 @@ partial class DbToolForm
         // 
         // genScriptFromDllBtn
         // 
-        genScriptFromDllBtn.Location = new Point(368, 59);
-        genScriptFromDllBtn.Margin = new Padding(2, 2, 2, 2);
+        genScriptFromDllBtn.Location = new Point(578, 90);
         genScriptFromDllBtn.Name = "genScriptFromDllBtn";
-        genScriptFromDllBtn.Size = new Size(180, 23);
+        genScriptFromDllBtn.Size = new Size(283, 35);
         genScriptFromDllBtn.TabIndex = 12;
         genScriptFromDllBtn.Text = "genScriptFromDllBtn";
         genScriptFromDllBtn.UseVisualStyleBackColor = true;
@@ -356,45 +358,42 @@ partial class DbToolForm
         // 
         // sourceDbConnStrBox
         // 
-        sourceDbConnStrBox.Location = new Point(6, 120);
-        sourceDbConnStrBox.Margin = new Padding(2);
+        sourceDbConnStrBox.Location = new Point(9, 184);
         sourceDbConnStrBox.Multiline = true;
         sourceDbConnStrBox.Name = "sourceDbConnStrBox";
-        sourceDbConnStrBox.Size = new Size(389, 96);
+        sourceDbConnStrBox.Size = new Size(609, 145);
         sourceDbConnStrBox.TabIndex = 11;
         // 
         // sourceDbConnStrLabel
         // 
         sourceDbConnStrLabel.AutoSize = true;
-        sourceDbConnStrLabel.Location = new Point(6, 101);
-        sourceDbConnStrLabel.Margin = new Padding(2, 0, 2, 0);
+        sourceDbConnStrLabel.Location = new Point(9, 155);
         sourceDbConnStrLabel.Name = "sourceDbConnStrLabel";
-        sourceDbConnStrLabel.Size = new Size(137, 15);
+        sourceDbConnStrLabel.Size = new Size(205, 23);
         sourceDbConnStrLabel.TabIndex = 10;
         sourceDbConnStrLabel.Text = "sourceDbConnStrLabel";
         // 
         // dalDllPathBox
         // 
-        dalDllPathBox.Location = new Point(92, 10);
-        dalDllPathBox.Margin = new Padding(2);
+        dalDllPathBox.Location = new Point(145, 15);
         dalDllPathBox.Multiline = true;
         dalDllPathBox.Name = "dalDllPathBox";
-        dalDllPathBox.Size = new Size(273, 41);
+        dalDllPathBox.Size = new Size(427, 61);
         dalDllPathBox.TabIndex = 9;
         dalDllPathBox.TextChanged += ModelDllPathBoxChanged;
         // 
         // dalDllLabel
         // 
         dalDllLabel.AutoSize = true;
-        dalDllLabel.Location = new Point(20, 22);
-        dalDllLabel.Margin = new Padding(2, 0, 2, 0);
+        dalDllLabel.Location = new Point(31, 34);
         dalDllLabel.Name = "dalDllLabel";
-        dalDllLabel.Size = new Size(71, 15);
+        dalDllLabel.Size = new Size(105, 23);
         dalDllLabel.TabIndex = 0;
         dalDllLabel.Text = "dalDllLabel";
         // 
         // settingTab
         // 
+        settingTab.Controls.Add(clearConnHistoryBtn);
         settingTab.Controls.Add(isTableNameAsLink);
         settingTab.Controls.Add(customThemelabel);
         settingTab.Controls.Add(customThemeNameSelect);
@@ -418,22 +417,33 @@ partial class DbToolForm
         settingTab.Controls.Add(isDisplay);
         settingTab.Controls.Add(resetBtn);
         settingTab.Controls.Add(downloadExcelStyleTemplateBtn);
-        settingTab.Location = new Point(4, 24);
-        settingTab.Margin = new Padding(2, 2, 2, 2);
+        settingTab.Location = new Point(4, 32);
         settingTab.Name = "settingTab";
-        settingTab.Padding = new Padding(2, 2, 2, 2);
-        settingTab.Size = new Size(606, 218);
+        settingTab.Padding = new Padding(3);
+        settingTab.Size = new Size(957, 341);
         settingTab.TabIndex = 3;
         settingTab.Text = "settingTab";
         settingTab.UseVisualStyleBackColor = true;
         // 
+        // isTableNameAsLink
+        // 
+        isTableNameAsLink.AutoSize = true;
+        isTableNameAsLink.Checked = true;
+        isTableNameAsLink.CheckState = CheckState.Checked;
+        isTableNameAsLink.Location = new Point(286, 40);
+        isTableNameAsLink.Name = "isTableNameAsLink";
+        isTableNameAsLink.Size = new Size(202, 27);
+        isTableNameAsLink.TabIndex = 22;
+        isTableNameAsLink.Text = "isTableNameAsLink";
+        isTableNameAsLink.UseVisualStyleBackColor = true;
+        isTableNameAsLink.CheckedChanged += isTableNameAsLinkChanged;
+        // 
         // customThemelabel
         // 
         customThemelabel.AutoSize = true;
-        customThemelabel.Location = new Point(9, 118);
-        customThemelabel.Margin = new Padding(2, 0, 2, 0);
+        customThemelabel.Location = new Point(14, 181);
         customThemelabel.Name = "customThemelabel";
-        customThemelabel.Size = new Size(115, 15);
+        customThemelabel.Size = new Size(172, 23);
         customThemelabel.TabIndex = 21;
         customThemelabel.Text = "customThemelabel";
         customThemelabel.DoubleClick += ReloadThemeBinding;
@@ -441,40 +451,36 @@ partial class DbToolForm
         // customThemeNameSelect
         // 
         customThemeNameSelect.FormattingEnabled = true;
-        customThemeNameSelect.Location = new Point(139, 116);
-        customThemeNameSelect.Margin = new Padding(2, 2, 2, 2);
+        customThemeNameSelect.Location = new Point(218, 178);
         customThemeNameSelect.Name = "customThemeNameSelect";
-        customThemeNameSelect.Size = new Size(175, 23);
+        customThemeNameSelect.Size = new Size(273, 31);
         customThemeNameSelect.TabIndex = 20;
         customThemeNameSelect.SelectedIndexChanged += customThemeNameSelectChanged;
         // 
         // modelGenBtnSettingLabel
         // 
         modelGenBtnSettingLabel.AutoSize = true;
-        modelGenBtnSettingLabel.Location = new Point(9, 144);
-        modelGenBtnSettingLabel.Margin = new Padding(2, 0, 2, 0);
+        modelGenBtnSettingLabel.Location = new Point(14, 221);
         modelGenBtnSettingLabel.Name = "modelGenBtnSettingLabel";
-        modelGenBtnSettingLabel.Size = new Size(156, 15);
+        modelGenBtnSettingLabel.Size = new Size(233, 23);
         modelGenBtnSettingLabel.TabIndex = 19;
         modelGenBtnSettingLabel.Text = "modelGenBtnSettingLabel";
         // 
         // connSettingLabel
         // 
         connSettingLabel.AutoSize = true;
-        connSettingLabel.Location = new Point(9, 6);
-        connSettingLabel.Margin = new Padding(2, 0, 2, 0);
+        connSettingLabel.Location = new Point(14, 9);
         connSettingLabel.Name = "connSettingLabel";
-        connSettingLabel.Size = new Size(106, 15);
+        connSettingLabel.Size = new Size(158, 23);
         connSettingLabel.TabIndex = 17;
         connSettingLabel.Text = "connSettingLabel";
         // 
         // isWordWithToc
         // 
         isWordWithToc.AutoSize = true;
-        isWordWithToc.Location = new Point(25, 90);
-        isWordWithToc.Margin = new Padding(2);
+        isWordWithToc.Location = new Point(39, 138);
         isWordWithToc.Name = "isWordWithToc";
-        isWordWithToc.Size = new Size(113, 19);
+        isWordWithToc.Size = new Size(167, 27);
         isWordWithToc.TabIndex = 16;
         isWordWithToc.Text = "isWordWithToc";
         isWordWithToc.UseVisualStyleBackColor = true;
@@ -483,10 +489,9 @@ partial class DbToolForm
         // isScaleShow
         // 
         isScaleShow.AutoSize = true;
-        isScaleShow.Location = new Point(275, 69);
-        isScaleShow.Margin = new Padding(2);
+        isScaleShow.Location = new Point(432, 106);
         isScaleShow.Name = "isScaleShow";
-        isScaleShow.Size = new Size(95, 19);
+        isScaleShow.Size = new Size(139, 27);
         isScaleShow.TabIndex = 13;
         isScaleShow.Text = "isScaleShow";
         isScaleShow.UseVisualStyleBackColor = true;
@@ -495,10 +500,9 @@ partial class DbToolForm
         // isPrecisionShow
         // 
         isPrecisionShow.AutoSize = true;
-        isPrecisionShow.Location = new Point(182, 69);
-        isPrecisionShow.Margin = new Padding(2);
+        isPrecisionShow.Location = new Point(286, 106);
         isPrecisionShow.Name = "isPrecisionShow";
-        isPrecisionShow.Size = new Size(115, 19);
+        isPrecisionShow.Size = new Size(172, 27);
         isPrecisionShow.TabIndex = 12;
         isPrecisionShow.Text = "isPrecisionShow";
         isPrecisionShow.UseVisualStyleBackColor = true;
@@ -507,10 +511,9 @@ partial class DbToolForm
         // isLengthShow
         // 
         isLengthShow.AutoSize = true;
-        isLengthShow.Location = new Point(103, 69);
-        isLengthShow.Margin = new Padding(2);
+        isLengthShow.Location = new Point(162, 106);
         isLengthShow.Name = "isLengthShow";
-        isLengthShow.Size = new Size(104, 19);
+        isLengthShow.Size = new Size(154, 27);
         isLengthShow.TabIndex = 11;
         isLengthShow.Text = "isLengthShow";
         isLengthShow.UseVisualStyleBackColor = true;
@@ -521,10 +524,9 @@ partial class DbToolForm
         isNotNullShow.AutoSize = true;
         isNotNullShow.Checked = true;
         isNotNullShow.CheckState = CheckState.Checked;
-        isNotNullShow.Location = new Point(25, 69);
-        isNotNullShow.Margin = new Padding(2);
+        isNotNullShow.Location = new Point(39, 106);
         isNotNullShow.Name = "isNotNullShow";
-        isNotNullShow.Size = new Size(110, 19);
+        isNotNullShow.Size = new Size(164, 27);
         isNotNullShow.TabIndex = 10;
         isNotNullShow.Text = "isNotNullShow";
         isNotNullShow.UseVisualStyleBackColor = true;
@@ -535,10 +537,9 @@ partial class DbToolForm
         isPrimaryKeyShow.AutoSize = true;
         isPrimaryKeyShow.Checked = true;
         isPrimaryKeyShow.CheckState = CheckState.Checked;
-        isPrimaryKeyShow.Location = new Point(352, 47);
-        isPrimaryKeyShow.Margin = new Padding(2);
+        isPrimaryKeyShow.Location = new Point(553, 72);
         isPrimaryKeyShow.Name = "isPrimaryKeyShow";
-        isPrimaryKeyShow.Size = new Size(127, 19);
+        isPrimaryKeyShow.Size = new Size(191, 27);
         isPrimaryKeyShow.TabIndex = 9;
         isPrimaryKeyShow.Text = "isPrimaryKeyShow";
         isPrimaryKeyShow.UseVisualStyleBackColor = true;
@@ -549,10 +550,9 @@ partial class DbToolForm
         isIdentityShow.AutoSize = true;
         isIdentityShow.Checked = true;
         isIdentityShow.CheckState = CheckState.Checked;
-        isIdentityShow.Location = new Point(275, 47);
-        isIdentityShow.Margin = new Padding(2);
+        isIdentityShow.Location = new Point(432, 72);
         isIdentityShow.Name = "isIdentityShow";
-        isIdentityShow.Size = new Size(107, 19);
+        isIdentityShow.Size = new Size(160, 27);
         isIdentityShow.TabIndex = 8;
         isIdentityShow.Text = "isIdentityShow";
         isIdentityShow.UseVisualStyleBackColor = true;
@@ -563,10 +563,9 @@ partial class DbToolForm
         isDefaultValueShow.AutoSize = true;
         isDefaultValueShow.Checked = true;
         isDefaultValueShow.CheckState = CheckState.Checked;
-        isDefaultValueShow.Location = new Point(182, 47);
-        isDefaultValueShow.Margin = new Padding(2);
+        isDefaultValueShow.Location = new Point(286, 72);
         isDefaultValueShow.Name = "isDefaultValueShow";
-        isDefaultValueShow.Size = new Size(138, 19);
+        isDefaultValueShow.Size = new Size(206, 27);
         isDefaultValueShow.TabIndex = 7;
         isDefaultValueShow.Text = "isDefaultValueShow";
         isDefaultValueShow.UseVisualStyleBackColor = true;
@@ -577,10 +576,9 @@ partial class DbToolForm
         isDataTypeShow.AutoSize = true;
         isDataTypeShow.Checked = true;
         isDataTypeShow.CheckState = CheckState.Checked;
-        isDataTypeShow.Location = new Point(103, 47);
-        isDataTypeShow.Margin = new Padding(2);
+        isDataTypeShow.Location = new Point(162, 72);
         isDataTypeShow.Name = "isDataTypeShow";
-        isDataTypeShow.Size = new Size(120, 19);
+        isDataTypeShow.Size = new Size(176, 27);
         isDataTypeShow.TabIndex = 6;
         isDataTypeShow.Text = "isDataTypeShow";
         isDataTypeShow.UseVisualStyleBackColor = true;
@@ -591,10 +589,9 @@ partial class DbToolForm
         isSortShow.AutoSize = true;
         isSortShow.Checked = true;
         isSortShow.CheckState = CheckState.Checked;
-        isSortShow.Location = new Point(25, 47);
-        isSortShow.Margin = new Padding(2);
+        isSortShow.Location = new Point(39, 72);
         isSortShow.Name = "isSortShow";
-        isSortShow.Size = new Size(88, 19);
+        isSortShow.Size = new Size(130, 27);
         isSortShow.TabIndex = 5;
         isSortShow.Text = "isSortShow";
         isSortShow.UseVisualStyleBackColor = true;
@@ -603,10 +600,9 @@ partial class DbToolForm
         // isColumnDescriptionShow
         // 
         isColumnDescriptionShow.AutoSize = true;
-        isColumnDescriptionShow.Location = new Point(352, 69);
-        isColumnDescriptionShow.Margin = new Padding(2);
+        isColumnDescriptionShow.Location = new Point(553, 106);
         isColumnDescriptionShow.Name = "isColumnDescriptionShow";
-        isColumnDescriptionShow.Size = new Size(173, 19);
+        isColumnDescriptionShow.Size = new Size(260, 27);
         isColumnDescriptionShow.TabIndex = 4;
         isColumnDescriptionShow.Text = "isColumnDescriptionShow";
         isColumnDescriptionShow.UseVisualStyleBackColor = true;
@@ -615,10 +611,9 @@ partial class DbToolForm
         // isTableDescriptionShow
         // 
         isTableDescriptionShow.AutoSize = true;
-        isTableDescriptionShow.Location = new Point(25, 26);
-        isTableDescriptionShow.Margin = new Padding(2);
+        isTableDescriptionShow.Location = new Point(39, 40);
         isTableDescriptionShow.Name = "isTableDescriptionShow";
-        isTableDescriptionShow.Size = new Size(161, 19);
+        isTableDescriptionShow.Size = new Size(239, 27);
         isTableDescriptionShow.TabIndex = 3;
         isTableDescriptionShow.Text = "isTableDescriptionShow";
         isTableDescriptionShow.UseVisualStyleBackColor = true;
@@ -627,10 +622,9 @@ partial class DbToolForm
         // isSummary
         // 
         isSummary.AutoSize = true;
-        isSummary.Location = new Point(29, 168);
-        isSummary.Margin = new Padding(2);
+        isSummary.Location = new Point(46, 258);
         isSummary.Name = "isSummary";
-        isSummary.Size = new Size(87, 19);
+        isSummary.Size = new Size(130, 27);
         isSummary.TabIndex = 11;
         isSummary.Text = "isSummary";
         isSummary.UseVisualStyleBackColor = true;
@@ -639,10 +633,9 @@ partial class DbToolForm
         // isKey
         // 
         isKey.AutoSize = true;
-        isKey.Location = new Point(255, 168);
-        isKey.Margin = new Padding(2);
+        isKey.Location = new Point(401, 258);
         isKey.Name = "isKey";
-        isKey.Size = new Size(54, 19);
+        isKey.Size = new Size(79, 27);
         isKey.TabIndex = 10;
         isKey.Text = "isKey";
         isKey.UseVisualStyleBackColor = true;
@@ -651,10 +644,9 @@ partial class DbToolForm
         // isRequired
         // 
         isRequired.AutoSize = true;
-        isRequired.Location = new Point(179, 168);
-        isRequired.Margin = new Padding(2);
+        isRequired.Location = new Point(281, 258);
         isRequired.Name = "isRequired";
-        isRequired.Size = new Size(86, 19);
+        isRequired.Size = new Size(126, 27);
         isRequired.TabIndex = 9;
         isRequired.Text = "isRequired";
         isRequired.UseVisualStyleBackColor = true;
@@ -663,10 +655,9 @@ partial class DbToolForm
         // isDisplay
         // 
         isDisplay.AutoSize = true;
-        isDisplay.Location = new Point(107, 168);
-        isDisplay.Margin = new Padding(2);
+        isDisplay.Location = new Point(168, 258);
         isDisplay.Name = "isDisplay";
-        isDisplay.Size = new Size(75, 19);
+        isDisplay.Size = new Size(111, 27);
         isDisplay.TabIndex = 8;
         isDisplay.Text = "isDisplay";
         isDisplay.UseVisualStyleBackColor = true;
@@ -674,10 +665,9 @@ partial class DbToolForm
         // 
         // resetBtn
         // 
-        resetBtn.Location = new Point(15, 193);
-        resetBtn.Margin = new Padding(2);
+        resetBtn.Location = new Point(24, 296);
         resetBtn.Name = "resetBtn";
-        resetBtn.Size = new Size(72, 22);
+        resetBtn.Size = new Size(113, 34);
         resetBtn.TabIndex = 15;
         resetBtn.Text = "resetBtn";
         resetBtn.UseVisualStyleBackColor = true;
@@ -685,10 +675,9 @@ partial class DbToolForm
         // 
         // downloadExcelStyleTemplateBtn
         // 
-        downloadExcelStyleTemplateBtn.Location = new Point(317, 116);
-        downloadExcelStyleTemplateBtn.Margin = new Padding(2);
+        downloadExcelStyleTemplateBtn.Location = new Point(498, 178);
         downloadExcelStyleTemplateBtn.Name = "downloadExcelStyleTemplateBtn";
-        downloadExcelStyleTemplateBtn.Size = new Size(205, 22);
+        downloadExcelStyleTemplateBtn.Size = new Size(322, 34);
         downloadExcelStyleTemplateBtn.TabIndex = 18;
         downloadExcelStyleTemplateBtn.Text = "downloadExcelStyleTemplateBtn";
         downloadExcelStyleTemplateBtn.UseVisualStyleBackColor = true;
@@ -697,11 +686,10 @@ partial class DbToolForm
         // languageTab
         // 
         languageTab.Controls.Add(languageSelect);
-        languageTab.Location = new Point(4, 24);
-        languageTab.Margin = new Padding(2);
+        languageTab.Location = new Point(4, 32);
         languageTab.Name = "languageTab";
-        languageTab.Padding = new Padding(2);
-        languageTab.Size = new Size(606, 218);
+        languageTab.Padding = new Padding(3);
+        languageTab.Size = new Size(957, 341);
         languageTab.TabIndex = 4;
         languageTab.Text = "languageTab";
         languageTab.UseVisualStyleBackColor = true;
@@ -709,10 +697,9 @@ partial class DbToolForm
         // languageSelect
         // 
         languageSelect.FormattingEnabled = true;
-        languageSelect.Location = new Point(17, 13);
-        languageSelect.Margin = new Padding(2, 2, 2, 2);
+        languageSelect.Location = new Point(27, 20);
         languageSelect.Name = "languageSelect";
-        languageSelect.Size = new Size(128, 23);
+        languageSelect.Size = new Size(199, 31);
         languageSelect.TabIndex = 21;
         languageSelect.SelectedIndexChanged += languageSelectChanged;
         // 
@@ -720,37 +707,31 @@ partial class DbToolForm
         // 
         errorTextBox.BackColor = SystemColors.Control;
         errorTextBox.BorderStyle = BorderStyle.None;
-        errorTextBox.Location = new Point(5, 251);
-        errorTextBox.Margin = new Padding(2);
+        errorTextBox.Location = new Point(8, 385);
         errorTextBox.Multiline = true;
         errorTextBox.Name = "errorTextBox";
         errorTextBox.ReadOnly = true;
-        errorTextBox.Size = new Size(406, 58);
+        errorTextBox.Size = new Size(638, 89);
         errorTextBox.TabIndex = 8;
         errorTextBox.DoubleClick += ErrorTextClearDoubleClick;
         // 
-        // isTableNameAsLink
+        // clearConnHistoryBtn
         // 
-        isTableNameAsLink.AutoSize = true;
-        isTableNameAsLink.Checked = true;
-        isTableNameAsLink.CheckState = CheckState.Checked;
-        isTableNameAsLink.Location = new Point(182, 26);
-        isTableNameAsLink.Margin = new Padding(2);
-        isTableNameAsLink.Name = "isTableNameAsLink";
-        isTableNameAsLink.Size = new Size(136, 19);
-        isTableNameAsLink.TabIndex = 22;
-        isTableNameAsLink.Text = "isTableNameAsLink";
-        isTableNameAsLink.UseVisualStyleBackColor = true;
-        isTableNameAsLink.CheckedChanged += isTableNameAsLinkChanged;
+        clearConnHistoryBtn.Location = new Point(168, 296);
+        clearConnHistoryBtn.Name = "clearConnHistoryBtn";
+        clearConnHistoryBtn.Size = new Size(212, 34);
+        clearConnHistoryBtn.TabIndex = 23;
+        clearConnHistoryBtn.Text = "clearConnHistoryBtn";
+        clearConnHistoryBtn.UseVisualStyleBackColor = true;
+        clearConnHistoryBtn.Click += ClearConnHistoryBtnClick;
         // 
         // DbToolForm
         // 
-        AutoScaleDimensions = new SizeF(7F, 15F);
+        AutoScaleDimensions = new SizeF(11F, 23F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(610, 315);
+        ClientSize = new Size(959, 483);
         Controls.Add(errorTextBox);
         Controls.Add(tabControl1);
-        Margin = new Padding(2);
         Name = "DbToolForm";
         Load += DbToolFormLoad;
         tabControl1.ResumeLayout(false);
@@ -827,4 +808,7 @@ partial class DbToolForm
     private TextBox dbContextBox;
     private Label dbContextLabel;
     private CheckBox isTableNameAsLink;
+    private Label connHiatoryLabel;
+    private ComboBox connHiatorySelect;
+    private Button clearConnHistoryBtn;
 }

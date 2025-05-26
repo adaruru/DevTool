@@ -57,6 +57,7 @@ public partial class DbToolForm : Form
                 Schema.SchemaName = result;
                 SchemaName = result;
             }
+            LoadConnHiatory(connStrBox.Text);
         }
         catch (Exception es)
         {
@@ -68,8 +69,24 @@ public partial class DbToolForm : Form
     {
         ThemeBinding();
         LanguageBinding();
+        LoadConnHiatory();
         LoadSettings();
     }
+    private void LoadConnHiatory(string conn = "")
+    {
+        if (Settings.Default.connHistory == null)
+        {
+            Settings.Default.connHistory = new System.Collections.Specialized.StringCollection();
+        }
+        if (!string.IsNullOrWhiteSpace(conn) &&
+            Settings.Default.connHistory.Contains(conn) == false)
+        {
+            Settings.Default.connHistory.Add(conn);
+        }
+        Settings.Default.Save();
+        connHiatorySelect.DataSource = Settings.Default.connHistory;
+    }
+
     private void ThemeBinding()
     {
         var themeDir = Path.Combine(Directory.GetCurrentDirectory(), "CustomTheme");
@@ -297,7 +314,8 @@ public class {tableName}
 /// <summary>
 /// {Schema?.Tables[i].Columns[j].ColumnDescription}
 /// </summary>";
-                    };
+                    }
+                    ;
                     string columnName = Schema?.Tables[i]?.Columns[j]?.ColumnName ?? string.Empty;
                     string modifiedTableName = tableName?.TrimEnd('s', 'S') ?? string.Empty;
 
@@ -307,20 +325,23 @@ public class {tableName}
                     {
                         content += @"
 [Key]";
-                    };
+                    }
+                    ;
                     if (Schema?.Tables[i].Columns[j].NotNull == "Y"
                         && isRequired.Checked)
                     {
                         content += @"
 [Required]";
-                    };
+                    }
+                    ;
 
                     if (Schema?.Tables[i].Columns[j].Identity == "Y"
                       && isKey.Checked) //先假設 isKey.Checked model用途用於 code first
                     {
                         content += @$"
 [DatabaseGenerated(DatabaseGeneratedOption.Identity)]";
-                    };
+                    }
+                    ;
 
                     if (!string.IsNullOrEmpty(Schema?.Tables[i].Columns[j].ColumnDescription)
                         && !string.IsNullOrEmpty(Schema?.Tables[i].Columns[j].Length)
@@ -328,7 +349,8 @@ public class {tableName}
                     {
                         content += @$"
 [Display(Name = ""{Schema?.Tables[i].Columns[j].ColumnDescription}""), MaxLength({Schema?.Tables[i].Columns[j].Length})]";
-                    };
+                    }
+                    ;
 
                     if (!string.IsNullOrEmpty(Schema?.Tables[i].Columns[j].ColumnDescription)
                         && string.IsNullOrEmpty(Schema?.Tables[i].Columns[j].Length)
@@ -336,7 +358,8 @@ public class {tableName}
                     {
                         content += @$"
 [Display(Name = ""{Schema?.Tables[i].Columns[j].ColumnDescription}"")]";
-                    };
+                    }
+                    ;
 
                     content += @$"
 public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {defaultValue}
@@ -750,4 +773,10 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
 
     }
 
+    private void ClearConnHistoryBtnClick(object sender, EventArgs e)
+    {
+        connHiatorySelect.DataSource = null;
+        Settings.Default.connHistory.Clear();
+        Settings.Default.Save();
+    }
 }
