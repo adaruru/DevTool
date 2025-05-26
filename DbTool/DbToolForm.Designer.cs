@@ -60,6 +60,7 @@ partial class DbToolForm
         dalDllPathBox = new TextBox();
         dalDllLabel = new Label();
         settingTab = new TabPage();
+        clearConnHistoryBtn = new Button();
         isTableNameAsLink = new CheckBox();
         customThemelabel = new Label();
         customThemeNameSelect = new ComboBox();
@@ -86,7 +87,6 @@ partial class DbToolForm
         languageTab = new TabPage();
         languageSelect = new ComboBox();
         errorTextBox = new TextBox();
-        clearConnHistoryBtn = new Button();
         tabControl1.SuspendLayout();
         connToolTab.SuspendLayout();
         schmaToolTab.SuspendLayout();
@@ -192,6 +192,7 @@ partial class DbToolForm
         connHiatorySelect.Name = "connHiatorySelect";
         connHiatorySelect.Size = new Size(581, 31);
         connHiatorySelect.TabIndex = 22;
+        connHiatorySelect.SelectedIndexChanged += connHiatorySelectedIndexChanged;
         // 
         // schmaToolTab
         // 
@@ -424,6 +425,16 @@ partial class DbToolForm
         settingTab.TabIndex = 3;
         settingTab.Text = "settingTab";
         settingTab.UseVisualStyleBackColor = true;
+        // 
+        // clearConnHistoryBtn
+        // 
+        clearConnHistoryBtn.Location = new Point(168, 296);
+        clearConnHistoryBtn.Name = "clearConnHistoryBtn";
+        clearConnHistoryBtn.Size = new Size(212, 34);
+        clearConnHistoryBtn.TabIndex = 23;
+        clearConnHistoryBtn.Text = "clearConnHistoryBtn";
+        clearConnHistoryBtn.UseVisualStyleBackColor = true;
+        clearConnHistoryBtn.Click += ClearConnHistoryBtnClick;
         // 
         // isTableNameAsLink
         // 
@@ -714,16 +725,6 @@ partial class DbToolForm
         errorTextBox.Size = new Size(638, 89);
         errorTextBox.TabIndex = 8;
         errorTextBox.DoubleClick += ErrorTextClearDoubleClick;
-        // 
-        // clearConnHistoryBtn
-        // 
-        clearConnHistoryBtn.Location = new Point(168, 296);
-        clearConnHistoryBtn.Name = "clearConnHistoryBtn";
-        clearConnHistoryBtn.Size = new Size(212, 34);
-        clearConnHistoryBtn.TabIndex = 23;
-        clearConnHistoryBtn.Text = "clearConnHistoryBtn";
-        clearConnHistoryBtn.UseVisualStyleBackColor = true;
-        clearConnHistoryBtn.Click += ClearConnHistoryBtnClick;
         // 
         // DbToolForm
         // 

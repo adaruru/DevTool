@@ -84,6 +84,7 @@ public partial class DbToolForm : Form
             Settings.Default.connHistory.Add(conn);
         }
         Settings.Default.Save();
+        connHiatorySelect.DataSource = null;
         connHiatorySelect.DataSource = Settings.Default.connHistory;
     }
 
@@ -778,5 +779,13 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
         connHiatorySelect.DataSource = null;
         Settings.Default.connHistory.Clear();
         Settings.Default.Save();
+    }
+
+    private void connHiatorySelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (connHiatorySelect.SelectedValue != null)
+        {
+            connStrBox.Text = connHiatorySelect.SelectedValue?.ToString() ?? string.Empty;
+        }
     }
 }
