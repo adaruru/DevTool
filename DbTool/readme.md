@@ -1,8 +1,8 @@
-# 2.2DbTool
+# 2.2.DbTool
 
  [_toc_]
 
-[工具下載DbTool.7z](https://github.com/adaruru/DevTool/releases/download/2.2DbTool/DbTool.7z)
+[工具下載DbTool.7z](https://github.com/adaruru/DevTool/releases/download/2.2.DbTool/DbTool.7z)
 
 ## 用途
 
