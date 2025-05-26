@@ -4,7 +4,7 @@
 
 ### DbTool
 
-[工具下載DbTool.7z](https://github.com/adaruru/DevTool/releases/download/1.2.DbTool/DbTool.7z)
+[工具下載DbTool.7z](https://github.com/adaruru/DevTool/releases/download/2.2DbTool/DbTool.7z)
 
 便攜資料庫規格工具，僅支援 MS SQL，輸入連線字串之後可進行資料庫規格下載(產置excel檔案)，匯入資料庫欄位描述、資料表描述，與下載 Model.cs 方便開發使用
 
