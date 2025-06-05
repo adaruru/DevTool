@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>app32.ico</ApplicationIcon>
   </PropertyGroup>
 
 	<ItemGroup>
@@ -17,6 +18,9 @@
 		<EmbeddedResource Include="Languages\**\*">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Include="app32.ico" />
 	</ItemGroup>
 
 	<ItemGroup>
