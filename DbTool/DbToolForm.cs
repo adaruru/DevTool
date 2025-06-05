@@ -4,6 +4,7 @@
 using System.Diagnostics;
 using System.Reflection;
 using DocumentFormat.OpenXml.Drawing.Diagrams;
+using DbTool.Properties;
 using Humanizer;
 using OfficeOpenXml;
 using Settings = DbTool.Properties.Settings;
@@ -25,6 +26,10 @@ public partial class DbToolForm : Form
         InitializeComponent();
         Lan.LoadLanguage(null);
         UpdateUI();
+        using (var ms = new MemoryStream(Resources.favicon))
+        {
+            Icon = new Icon(ms);
+        }
     }
     private void connStrBoxEvent(object sender, EventArgs e)
     {
