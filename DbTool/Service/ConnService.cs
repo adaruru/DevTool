@@ -1,13 +1,16 @@
-﻿// DevTool 1.1 
+// DevTool 2.1 
 // Copyright (C) 2024, Adaruru
 
 using System.Data;
-using System.Data.SqlClient;
 
 public class ConnService
 {
     public string? ConnString;
-    public ConnService(string connStr, string schemaName)
+    public Schema Schema { get; set; }
+
+    private readonly IDbConnector _connector;
+
+    public ConnService(string connStr, string schemaName, DbTypeEnum dbType = DbTypeEnum.SqlServer)
     {
         if (string.IsNullOrEmpty(connStr))
         {
@@ -16,160 +19,90 @@ public class ConnService
         ConnString = connStr;
         Schema = new Schema();
         Schema.SchemaName = schemaName;
+        _connector = DbConnectorFactory.Create(dbType);
     }
-
-    public Schema Schema { get; set; }
 
     /// <summary>
     /// 創建 model 有預設值 asign 
     /// </summary>
-    /// <param name="column"></param>
-    /// <returns></returns>
     public string DefaultInitialValue(Column? column)
     {
         if (column == null)
             return "";
-
-        if (column.NotNull == "Y")
-        {
-            // If the column cannot be null, return a non-null default value
-            switch (column.DataType.ToLower())
-            {
-                case "int":
-                case "decimal":
-                    return "= 0;";
-                case "float":
-                    return "= 0.0f;";
-                case "double":
-                    return "= 0.0;";
-                case "string":
-                case "nvarchar":
-                case "varchar":
-                case "char":
-                    return "= \"\";";
-                case "bool":
-                    return "= false;";
-                case "datetime":
-                case "date":
-                    return "= DateTime.MinValue;";
-                default:
-                    return "";
-            }
-        }
-
-        // If the column can be null, return an empty string (no default value specified)
-        return "";
+        return _connector.GetDefaultInitialValue(column);
     }
 
     /// <summary>
-    /// 執行資料庫連線
+    /// 執行資料庫查詢，取得單一值
     /// </summary>
-    /// <param name="query"></param>
-    /// <returns></returns>
     public string? GetValueStr(string query)
     {
-        using SqlConnection con = new SqlConnection(ConnString);
-        using SqlCommand cmd = new SqlCommand(query, con);
+        using var con = _connector.CreateConnection(ConnString);
+        using var cmd = con.CreateCommand();
+        cmd.CommandText = query;
         con.Open();
-        var exe = cmd.ExecuteScalar();
-
-        //Check if the result is not null
-        if (exe != null)
-        {
-            return exe.ToString();
-        }
-        return null;
+        var result = cmd.ExecuteScalar();
+        return result?.ToString();
     }
 
-    public void InsertColumnDescription(Schema Schema)
+    /// <summary>
+    /// 測試連線並取得資料庫名稱
+    /// </summary>
+    public string? TestConnection()
     {
-        for (int i = 0; i < Schema.Tables.Count; i++)
+        var query = _connector.GetTestConnectionQuery();
+        return GetValueStr(query);
+    }
+
+    /// <summary>
+    /// 新增/更新欄位描述
+    /// </summary>
+    public void InsertColumnDescription(Schema schema)
+    {
+        var queryTemplate = _connector.GetUpsertColumnDescriptionQuery();
+        if (string.IsNullOrEmpty(queryTemplate))
         {
-            for (int c = 0; c < Schema.Tables[i].Columns.Count; c++)
+            throw new NotSupportedException("此資料庫類型不支援更新欄位描述");
+        }
+
+        for (int i = 0; i < schema.Tables.Count; i++)
+        {
+            for (int c = 0; c < schema.Tables[i].Columns.Count; c++)
             {
-                var str = @"
-IF EXISTS (
-    SELECT *
-    FROM sys.extended_properties
-    WHERE major_id = OBJECT_ID(@TableName)
-      AND minor_id = (
-          SELECT column_id
-          FROM sys.columns
-          WHERE object_id = OBJECT_ID(@TableName)
-            AND name = @ColumnName
-      )
-      AND name = 'MS_Description'
-)
-BEGIN
-    EXEC sp_updateextendedproperty 
-      @name = N'MS_Description',
-      @value = @ColumnDescription,
-      @level0type = N'SCHEMA', @level0name = 'dbo',
-      @level1type = N'TABLE',  @level1name = @TableName,
-      @level2type = N'COLUMN', @level2name = @ColumnName;
-END
-ELSE
-BEGIN
-    EXEC sp_addextendedproperty 
-      @name = N'MS_Description',
-      @value = @ColumnDescription,
-      @level0type = N'SCHEMA', @level0name = 'dbo',
-      @level1type = N'TABLE',  @level1name = @TableName,
-      @level2type = N'COLUMN', @level2name = @ColumnName;
-END;";
-                using SqlConnection con = new SqlConnection(ConnString);
-                using SqlCommand cmd = new SqlCommand(str, con);
+                using var con = _connector.CreateConnection(ConnString);
+                using var cmd = con.CreateCommand();
+                cmd.CommandText = queryTemplate;
                 con.Open();
-                cmd.Parameters.AddWithValue("@TableName", Schema.Tables[i].TableName);
-                cmd.Parameters.AddWithValue("@ColumnName", Schema.Tables[i].Columns[c].ColumnName);
-                cmd.Parameters.AddWithValue("@ColumnDescription", Schema.Tables[i].Columns[c].ColumnDescription);
+
+                AddParameter(cmd, "@TableName", schema.Tables[i].TableName);
+                AddParameter(cmd, "@ColumnName", schema.Tables[i].Columns[c].ColumnName);
+                AddParameter(cmd, "@ColumnDescription", schema.Tables[i].Columns[c].ColumnDescription);
+
                 cmd.ExecuteNonQuery();
-                con.Close();
             }
         }
     }
 
-    public void InsertTableDescription(Schema Schema)
+    /// <summary>
+    /// 新增/更新資料表描述
+    /// </summary>
+    public void InsertTableDescription(Schema schema)
     {
+        var queryTemplate = _connector.GetUpsertTableDescriptionQuery();
 
-        for (int i = 0; i < Schema.Tables.Count; i++)
+        for (int i = 0; i < schema.Tables.Count; i++)
         {
-            if (!string.IsNullOrEmpty(Schema.Tables[i].TableDescription))
+            if (!string.IsNullOrEmpty(schema.Tables[i].TableDescription))
             {
-
-                var str = @"
--- Check if the description already exists
-IF EXISTS (
-    SELECT *
-    FROM sys.extended_properties
-    WHERE major_id = OBJECT_ID(@TableName) 
-      AND minor_id = 0
-      AND name = 'MS_Description'
-)
-BEGIN
-    -- Update the existing description
-    EXEC sp_updateextendedproperty 
-      @name = N'MS_Description',
-      @value = @TableDescription,
-      @level0type = N'SCHEMA', @level0name = 'dbo',
-      @level1type = N'TABLE',  @level1name = @TableName;
-END
-ELSE
-BEGIN
-    -- Add a new description if it doesn't exist
-    EXEC sp_addextendedproperty 
-      @name = N'MS_Description',
-      @value = @TableDescription,
-      @level0type = N'SCHEMA', @level0name = 'dbo',
-      @level1type = N'TABLE',  @level1name = @TableName;
-END;";
-                using SqlConnection con = new SqlConnection(ConnString);
-                using SqlCommand cmd = new SqlCommand(str, con);
+                using var con = _connector.CreateConnection(ConnString);
+                using var cmd = con.CreateCommand();
+                cmd.CommandText = queryTemplate;
                 con.Open();
-                cmd.Parameters.AddWithValue("@TableName", Schema.Tables[i].TableName);
-                cmd.Parameters.AddWithValue("@TableDescription", Schema.Tables[i].TableDescription);
+
+                AddParameter(cmd, "@TableName", schema.Tables[i].TableName);
+                AddParameter(cmd, "@TableDescription", schema.Tables[i].TableDescription);
+
                 cmd.ExecuteNonQuery();
-                con.Close();
             }
         }
     }
@@ -177,60 +110,11 @@ END;";
     /// <summary>
     /// 創建 model 型別轉換
     /// </summary>
-    /// <param name="column"></param>
-    /// <returns></returns>
     public string MapSqlTypeToCSharpType(Column? column)
     {
         if (column == null)
             return "object";
-
-        // Extract the base type (e.g., "nvarchar" from "nvarchar(length)")
-        string baseType = column.DataType.Split('(')[0].ToLower();
-        string nullable = column.NotNull == "Y" ? "" : "?";
-
-        switch (baseType)
-        {
-            case "int":
-                return "int" + nullable;
-            case "decimal":
-            case "money":
-            case "smallmoney":
-                return "decimal" + nullable;
-            case "nvarchar":
-            case "varchar":
-            case "text":
-            case "nchar":
-            case "char":
-            case "xml":
-                return "string";
-            case "bit":
-                return "bool" + nullable;
-            case "datetime":
-            case "date":
-            case "datetime2":
-            case "smalldatetime":
-                return "DateTime" + nullable;
-            case "time":
-                return "TimeSpan" + nullable;
-            case "float":
-                return "double" + nullable;
-            case "real":
-                return "float" + nullable;
-            case "uniqueidentifier":
-                return "Guid" + nullable;
-            case "smallint":
-                return "short" + nullable;
-            case "tinyint":
-                return "byte" + nullable;
-            case "bigint":
-                return "long" + nullable;
-            case "binary":
-            case "varbinary":
-            case "image":
-                return "byte[]";
-            default:
-                return "object"; // Default to object if the type is unknown
-        }
+        return _connector.MapDataTypeToCSharp(column);
     }
 
     /// <summary>
@@ -238,63 +122,20 @@ END;";
     /// </summary>
     public void SetColumn()
     {
+        var query = _connector.GetColumnQuery();
+
         for (int i = 0; i < Schema.Tables.Count; i++)
         {
-            var query = @"
-SELECT DISTINCT sc.column_id AS [Sort]
-	,sc.name AS [ColumnName]
-	,ic.DATA_TYPE + CASE 
-		WHEN ISNULL(ic.CHARACTER_MAXIMUM_LENGTH, '') = ''
-			THEN ''
-		ELSE '(' + CAST(ic.CHARACTER_MAXIMUM_LENGTH AS VARCHAR) + ')'
-		END AS [DataType]
-	,ISNULL(ic.COLUMN_DEFAULT, '') AS [DefaultValue]
-	,CASE sc.is_identity
-		WHEN 1
-			THEN 'Y'
-		ELSE ''
-		END AS [Identity]
-	,CASE 
-		WHEN ISNULL(ik.TABLE_NAME, '') <> ''
-			THEN 'Y'
-		ELSE ''
-		END AS [PrimaryKey]
-	,ISNULL(sep.value, '') AS [ColumnDescription]
-	,CASE 
-		WHEN sc.is_nullable = 0
-			THEN 'Y'
-		ELSE ''
-		END AS [NotNull]
-	,ic.CHARACTER_MAXIMUM_LENGTH AS [Length]
-	,ic.NUMERIC_PRECISION AS [Precision]
-	,ic.NUMERIC_SCALE AS [Scale]
-	,st.name AS [TableName]
-FROM sys.tables st
-INNER JOIN sys.columns sc ON st.object_id = sc.object_id
-    AND st.name = @TableName --check table
-INNER JOIN INFORMATION_SCHEMA.COLUMNS ic ON ic.TABLE_NAME = st.name
-	AND ic.COLUMN_NAME = sc.name
-LEFT JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE ik ON ik.TABLE_NAME = ic.TABLE_NAME
-	AND ik.COLUMN_NAME = ic.COLUMN_NAME
-LEFT JOIN sys.extended_properties sep ON st.object_id = sep.major_id
-	AND sc.column_id = sep.minor_id
-	AND sep.name = 'MS_Description'
-LEFT JOIN sys.extended_properties p ON p.major_id = st.object_id
-	AND p.minor_id = 0
-	AND p.name = 'MS_Description'
-ORDER BY st.name
-	,sc.column_id
-	,sc.name;
-";
-
-            using SqlConnection con = new SqlConnection(ConnString);
-            using SqlCommand cmd = new SqlCommand(query, con);
+            using var con = _connector.CreateConnection(ConnString);
+            using var cmd = con.CreateCommand();
+            cmd.CommandText = query;
             con.Open();
-            cmd.Parameters.AddWithValue("@TableName", Schema.Tables[i].TableName);
-            using SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            DataTable dataTable = new DataTable();
-            adapter.Fill(dataTable);
-            con.Close();
+
+            AddParameter(cmd, "@TableName", Schema.Tables[i].TableName);
+
+            using var reader = cmd.ExecuteReader();
+            var dataTable = new DataTable();
+            dataTable.Load(reader);
 
             foreach (DataRow row in dataTable.Rows)
             {
@@ -322,36 +163,22 @@ ORDER BY st.name
     /// </summary>
     public void SetTable()
     {
-        var query = @"
-SELECT st.name AS TableName,
-       ISNULL(p.value, '') AS TableDescription
-FROM sys.tables st
---JOIN INFORMATION_SCHEMA.TABLES ist
---     ON st.name = ist.TABLE_NAME
-LEFT JOIN sys.extended_properties p 
-       ON p.major_id = st.object_id
-       AND p.minor_id = 0
-       AND p.name = 'MS_Description'
-WHERE st.name != 'sysdiagrams' 
-    AND st.name !='dtproperties'
-	--AND ist.TABLE_TYPE = 'BASE TABLE'  
-ORDER BY st.name";
+        var query = _connector.GetTableQuery();
 
-        using SqlConnection con = new SqlConnection(ConnString);
-        using SqlCommand cmd = new SqlCommand(query, con);
+        using var con = _connector.CreateConnection(ConnString);
+        using var cmd = con.CreateCommand();
+        cmd.CommandText = query;
         con.Open();
 
-        using SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-        DataTable dataTable = new DataTable();
-        adapter.Fill(dataTable);
-        con.Close();
+        using var reader = cmd.ExecuteReader();
+        var dataTable = new DataTable();
+        dataTable.Load(reader);
 
         foreach (DataRow row in dataTable.Rows)
         {
             string tableName = row["TableName"]?.ToString();
             string tableDescription = row["TableDescription"]?.ToString();
 
-            // Create a new Table instance
             Table table = new Table
             {
                 TableName = tableName,
@@ -359,5 +186,16 @@ ORDER BY st.name";
             };
             Schema.Tables?.Add(table);
         }
+    }
+
+    /// <summary>
+    /// 統一處理參數新增（跨資料庫相容）
+    /// </summary>
+    private void AddParameter(IDbCommand cmd, string name, object value)
+    {
+        var param = cmd.CreateParameter();
+        param.ParameterName = name;
+        param.Value = value ?? DBNull.Value;
+        cmd.Parameters.Add(param);
     }
 }

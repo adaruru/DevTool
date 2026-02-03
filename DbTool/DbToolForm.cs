@@ -1,4 +1,4 @@
-﻿// DevTool 1.1 
+// DevTool 1.1 
 // Copyright (C) 2024, Adaruru
 
 using System.Diagnostics;
@@ -52,10 +52,9 @@ public partial class DbToolForm : Form
     {
         try
         {
-            Conn = new ConnService(connStrBox.Text, SchemaName);
+            Conn = new ConnService(connStrBox.Text, SchemaName, (DbTypeEnum)Settings.Default.dbType);
             var Schema = Conn.Schema;
-            var query = "select DB_NAME()";
-            var result = Conn.GetValueStr(query);
+            var result = Conn.TestConnection();
             if (!string.IsNullOrEmpty(result))
             {
                 errorTextBox.Text = result + "資料庫順利連線";
@@ -249,7 +248,7 @@ public partial class DbToolForm : Form
                 throw new Exception("請輸入連線字串");
             }
 
-            Conn = new ConnService(connStrBox.Text, SchemaName);
+            Conn = new ConnService(connStrBox.Text, SchemaName, (DbTypeEnum)Settings.Default.dbType);
             Conn.SetTable();
             Conn.SetColumn();
             if (isForImportTemplate)
@@ -281,7 +280,7 @@ public partial class DbToolForm : Form
             {
                 throw new Exception("請輸入連線字串");
             }
-            Conn = new ConnService(connStrBox.Text, SchemaName);
+            Conn = new ConnService(connStrBox.Text, SchemaName, (DbTypeEnum)Settings.Default.dbType);
             Conn.SetTable();
             Conn.SetColumn();
 
@@ -528,7 +527,7 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
     {
         try
         {
-            Conn = new ConnService(connStrBox.Text, SchemaName);
+            Conn = new ConnService(connStrBox.Text, SchemaName, (DbTypeEnum)Settings.Default.dbType);
             Conn.SetTable();
         }
         catch (Exception es)
