@@ -1,4 +1,4 @@
-// DevTool 2.1 
+﻿// DevTool 2.1 
 // Copyright (C) 2024, Adaruru
 
 using System.Data;
@@ -59,46 +59,71 @@ public class PostgreSqlConnector : IDbConnector
 
     public string GetTableQuery()
     {
+        // PostgreSQL 未加引號的別名會被轉成小寫
         return @"
-SELECT 
-    t.table_name AS TableName,
-    COALESCE(obj_description((quote_ident(t.table_schema) || '.' || quote_ident(t.table_name))::regclass), '') AS TableDescription
-FROM information_schema.tables t
-WHERE t.table_schema = 'public'
-    AND t.table_type = 'BASE TABLE'
-ORDER BY t.table_name";
+select
+    t.table_name as ""TableName"",
+    coalesce(
+        obj_description(
+            (quote_ident(t.table_schema) || '.' || quote_ident(t.table_name))::regclass
+        ),
+        ''
+    ) as ""TableDescription""
+from information_schema.tables t
+where 1=1
+  and t.table_schema = 'dbo'
+  and t.table_type = 'BASE TABLE'
+order by
+    t.table_name;";
     }
 
     public string GetColumnQuery()
     {
         return @"
-SELECT 
-    c.ordinal_position AS Sort,
-    c.column_name AS ColumnName,
-    CASE 
-        WHEN c.character_maximum_length IS NOT NULL 
-        THEN c.data_type || '(' || c.character_maximum_length || ')'
-        ELSE c.data_type
-    END AS DataType,
-    COALESCE(c.column_default, '') AS DefaultValue,
-    CASE WHEN c.column_default LIKE 'nextval%' THEN 'Y' ELSE '' END AS Identity,
-    CASE WHEN pk.column_name IS NOT NULL THEN 'Y' ELSE '' END AS PrimaryKey,
-    COALESCE(col_description((quote_ident(c.table_schema) || '.' || quote_ident(c.table_name))::regclass, c.ordinal_position), '') AS ColumnDescription,
-    CASE WHEN c.is_nullable = 'NO' THEN 'Y' ELSE '' END AS NotNull,
-    c.character_maximum_length AS Length,
-    c.numeric_precision AS Precision,
-    c.numeric_scale AS Scale,
-    c.table_name AS TableName
-FROM information_schema.columns c
-LEFT JOIN (
-    SELECT kcu.column_name, kcu.table_name
-    FROM information_schema.table_constraints tc
-    JOIN information_schema.key_column_usage kcu ON tc.constraint_name = kcu.constraint_name
-    WHERE tc.constraint_type = 'PRIMARY KEY'
-) pk ON c.table_name = pk.table_name AND c.column_name = pk.column_name
-WHERE c.table_schema = 'public'
-    AND c.table_name = @TableName
-ORDER BY c.ordinal_position";
+select
+    c.ordinal_position as ""Sort"",
+    c.column_name as ""ColumnName"",
+    case
+        when c.character_maximum_length is not null
+        then c.data_type || '(' || c.character_maximum_length || ')'
+        else c.data_type
+    end as ""DataType"",
+    coalesce(c.column_default, '') as ""DefaultValue"",
+    case when c.column_default like 'nextval%' then 'Y' else '' end as ""Identity"",
+    case when pk.column_name is not null then 'Y' else '' end as ""PrimaryKey"",
+    coalesce(
+        col_description(
+            (quote_ident(c.table_schema) || '.' || quote_ident(c.table_name))::regclass,
+            c.ordinal_position
+        ),
+        ''
+    ) as ""ColumnDescription"",
+    case when c.is_nullable = 'NO' then 'Y' else '' end as ""NotNull"",
+    c.character_maximum_length as ""Length"",
+    c.numeric_precision as ""Precision"",
+    c.numeric_scale as ""Scale"",
+    c.table_name as ""TableName""
+from information_schema.columns c
+left join (
+    select
+        kcu.table_schema,
+        kcu.table_name,
+        kcu.column_name
+    from information_schema.table_constraints tc
+    join information_schema.key_column_usage kcu
+        on tc.constraint_name = kcu.constraint_name
+       and tc.table_schema = kcu.table_schema
+    where 1=1
+      and tc.constraint_type = 'PRIMARY KEY'
+) pk
+    on c.table_schema = pk.table_schema
+   and c.table_name = pk.table_name
+   and c.column_name = pk.column_name
+where 1=1
+  and c.table_schema = 'dbo'
+  and c.table_name =  @TableName
+order by
+    c.ordinal_position;";
     }
 
     public string GetUpsertTableDescriptionQuery()
