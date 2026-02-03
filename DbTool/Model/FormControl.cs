@@ -1,6 +1,12 @@
 ﻿// DevTool 1.1 
 // Copyright (C) 2024, Adaruru
 
+/// <summary>
+/// 所有工具運行中，會需要持續監控的 state
+/// 資料範圍與 Settings.Default 重疊
+/// 但在全部 Service 改讀取 Settings.Default 之前，必須保留
+/// FormControl 理應只保留，重開 reset 也無所謂的 state( 不須持久化的設定 )
+/// </summary>
 public static class FormControl
 {
     /// <summary>

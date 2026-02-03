@@ -74,6 +74,7 @@ public partial class DbToolForm : Form
     {
         ThemeBinding();
         LanguageBinding();
+        DbTypeBinding();
         LoadConnHiatory();
         LoadSettings();
     }
@@ -127,6 +128,24 @@ public partial class DbToolForm : Form
         languageSelect.ValueMember = "Value";
         languageSelect.DataSource = new BindingSource(languages, null);
     }
+    /// <summary>
+    /// ThemeBinding();
+    /// LanguageBinding();
+    /// DbTypeBinding();
+    /// LoadConnHiatory();
+    /// LoadSettings();
+    /// </summary>
+    private void DbTypeBinding()
+    {
+        var dbTypes = Enum.GetValues(typeof(DbTypeEnum))
+              .Cast<DbTypeEnum>()
+              .ToDictionary(e => Convert.ToInt32(e), e => e.ToString());
+        dbTypeSelect.DisplayMember = "Value";
+        dbTypeSelect.ValueMember = "Key";
+        dbTypeSelect.DataSource = new BindingSource(dbTypes, null);
+        dbTypeSelect.SelectedValue = Settings.Default.dbType;
+        dbTypeSelect.SelectedIndexChanged += dbTypeSelectChanged;//必須寫入設定值在加入事件，否則設定會被事件預設洗掉
+    }
     private void LoadSettings()
     {
         //處理所有預設值
@@ -164,6 +183,10 @@ public partial class DbToolForm : Form
         #region  ==genWorld用==
         isWordWithToc.Checked = Settings.Default.isWordWithToc; //true 產製word規格是否有目錄
         #endregion  ==genWorld用==
+
+        #region  ==連線設定==
+        dbTypeSelect.SelectedValue = Settings.Default.dbType;
+        #endregion  ==連線設定==
     }
     private void demoCommBtnEvent(object sender, EventArgs e)
     {
@@ -795,6 +818,20 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
         if (connHiatorySelect.SelectedValue != null)
         {
             connStrBox.Text = connHiatorySelect.SelectedValue?.ToString() ?? string.Empty;
+        }
+    }
+
+    /// <summary>
+    /// 修改連線類型
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void dbTypeSelectChanged(object sender, EventArgs e)
+    {
+        if (dbTypeSelect.SelectedValue != null)
+        {
+            Settings.Default.dbType = (int)dbTypeSelect.SelectedValue;
+            Settings.Default.Save();
         }
     }
 }

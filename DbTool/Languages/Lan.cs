@@ -81,7 +81,7 @@ public class LanguageObj
     public string PleaseEnter { get; set; }
     public string NamespaceLabel { get; set; }
     public string ScriptGenTab { get; set; }
-    public string GenScriptFromDllBtn { get; set; } 
+    public string GenScriptFromDllBtn { get; set; }
     public string UpDataDBSchemaBtn { get; set; }
     public string DalDllLabel { get; set; }
     public string SourceDbConnStrLabel { get; set; }
@@ -90,5 +90,4 @@ public class LanguageObj
     public string clearConnHistoryBtn { get; set; }
 
     public string DbTypeLabel { get; set; }
-
-    }
+}
