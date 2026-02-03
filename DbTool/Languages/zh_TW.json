@@ -56,5 +56,6 @@
   "DalDllLabel": "DAL.dll 路徑",
   "SourceDbConnStrLabel": "來源 DB 連線字串",
   "connHistoryLabel": "連線歷程",
-  "clearConnHistoryBtn": "清空連線歷程"
+  "clearConnHistoryBtn": "清空連線歷程",
+  "DbTypeLabel": "資料庫類別"
 }

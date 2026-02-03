@@ -586,7 +586,6 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
         settingTab.Text = Lan.currentLan.SettingsTab;
         downloadExcelStyleTemplateBtn.Text = Lan.currentLan.DownloadExcelStyleTemplate;
         languageTab.Text = Lan.currentLan.LanguageTab;
-        customThemelabel.Text = Lan.currentLan.CustomExcelStyle;
         modelGenBtnSettingLabel.Text = Lan.currentLan.ModelGenSettings;
         connSettingLabel.Text = Lan.currentLan.ConnSettingsLabel;
 
@@ -603,6 +602,9 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
         isColumnDescriptionShow.Text = Lan.currentLan.ColumnDescription;
         isTableNameAsLink.Text = Lan.currentLan.TableNameAsLink;
         isTableDescriptionShow.Text = Lan.currentLan.TableDescription;
+
+        customThemelabel.Text = Lan.currentLan.CustomExcelStyle;
+        dbTypeLabel.Text = Lan.currentLan.DbTypeLabel;
 
         isSummary.Text = Lan.currentLan.Summary;
         isDisplay.Text = Lan.currentLan.Display;

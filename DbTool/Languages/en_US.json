@@ -56,5 +56,6 @@
   "DalDllLabel": "DAL.dll path",
   "SourceDbConnStrLabel": "Source DB Conn String",
   "connHistoryLabel": "Conn History",
-  "clearConnHistoryBtn": "Clear Conn History"
+  "clearConnHistoryBtn": "Clear Conn History",
+  "DbTypeLabel": "Db Type"
 }

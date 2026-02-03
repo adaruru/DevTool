@@ -88,4 +88,7 @@ public class LanguageObj
     public string TableNameAsLink { get; set; }
     public string connHistoryLabel { get; set; }
     public string clearConnHistoryBtn { get; set; }
-}
+
+    public string DbTypeLabel { get; set; }
+
+    }
