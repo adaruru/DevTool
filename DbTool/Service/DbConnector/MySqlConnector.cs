@@ -54,18 +54,24 @@ WHERE c.TABLE_SCHEMA = DATABASE()
 ORDER BY c.ORDINAL_POSITION";
     }
 
-    public string GetUpsertTableDescriptionQuery()
+    public string GetUpsertTableDescriptionQuery(IDbCommand cmd)
     {
-        return @"
-ALTER TABLE @TableName COMMENT = @TableDescription";
+        var tableName = cmd.GetParamValue("@TableName");
+        var description = cmd.GetParamValue("@TableDescription");
+        cmd.Parameters.Clear();
+        cmd.AddParam("@TableDescription", description);
+        return $"ALTER TABLE {QuoteIdentifier(tableName)} COMMENT = @TableDescription";
     }
 
-    public string GetUpsertColumnDescriptionQuery()
+    public string GetUpsertColumnDescriptionQuery(IDbCommand cmd)
     {
         // MySQL 需要重新定義欄位來更新 COMMENT，這比較複雜
         // 暫時返回空字串，需要另外處理
         return "";
     }
+
+    private static string QuoteIdentifier(string identifier)
+        => "`" + identifier.Replace("`", "``") + "`";
 
     public string MapDataTypeToCSharp(Column column)
     {

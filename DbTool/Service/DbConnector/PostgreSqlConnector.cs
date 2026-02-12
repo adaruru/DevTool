@@ -126,15 +126,28 @@ order by
     c.ordinal_position;";
     }
 
-    public string GetUpsertTableDescriptionQuery()
+    public string GetUpsertTableDescriptionQuery(IDbCommand cmd)
     {
-        return "COMMENT ON TABLE @TableName IS @TableDescription";
+        var tableName = cmd.GetParamValue("@TableName");
+        var description = cmd.GetParamValue("@TableDescription");
+        cmd.Parameters.Clear();
+        return $"COMMENT ON TABLE dbo.{QuoteIdentifier(tableName)} IS {QuoteLiteral(description)}";
     }
 
-    public string GetUpsertColumnDescriptionQuery()
+    public string GetUpsertColumnDescriptionQuery(IDbCommand cmd)
     {
-        return "COMMENT ON COLUMN @TableName.@ColumnName IS @ColumnDescription";
+        var tableName = cmd.GetParamValue("@TableName");
+        var columnName = cmd.GetParamValue("@ColumnName");
+        var description = cmd.GetParamValue("@ColumnDescription");
+        cmd.Parameters.Clear();
+        return $"COMMENT ON COLUMN dbo.{QuoteIdentifier(tableName)}.{QuoteIdentifier(columnName)} IS {QuoteLiteral(description)}";
     }
+
+    private static string QuoteIdentifier(string identifier)
+        => "\"" + identifier.Replace("\"", "\"\"") + "\"";
+
+    private static string QuoteLiteral(string value)
+        => "'" + value.Replace("'", "''") + "'";
 
     public string MapDataTypeToCSharp(Column column)
     {

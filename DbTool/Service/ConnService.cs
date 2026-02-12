@@ -1,4 +1,4 @@
-// DevTool 2.1 
+﻿// DevTool 2.1 
 // Copyright (C) 2024, Adaruru
 
 using System.Data;
@@ -59,25 +59,17 @@ public class ConnService
     /// </summary>
     public void InsertColumnDescription(Schema schema)
     {
-        var queryTemplate = _connector.GetUpsertColumnDescriptionQuery();
-        if (string.IsNullOrEmpty(queryTemplate))
-        {
-            throw new NotSupportedException("此資料庫類型不支援更新欄位描述");
-        }
-
         for (int i = 0; i < schema.Tables.Count; i++)
         {
             for (int c = 0; c < schema.Tables[i].Columns.Count; c++)
             {
                 using var con = _connector.CreateConnection(ConnString);
                 using var cmd = con.CreateCommand();
-                cmd.CommandText = queryTemplate;
                 con.Open();
-
                 AddParameter(cmd, "@TableName", schema.Tables[i].TableName);
                 AddParameter(cmd, "@ColumnName", schema.Tables[i].Columns[c].ColumnName);
                 AddParameter(cmd, "@ColumnDescription", schema.Tables[i].Columns[c].ColumnDescription);
-
+                cmd.CommandText = _connector.GetUpsertColumnDescriptionQuery(cmd);
                 cmd.ExecuteNonQuery();
             }
         }
@@ -88,20 +80,17 @@ public class ConnService
     /// </summary>
     public void InsertTableDescription(Schema schema)
     {
-        var queryTemplate = _connector.GetUpsertTableDescriptionQuery();
-
         for (int i = 0; i < schema.Tables.Count; i++)
         {
             if (!string.IsNullOrEmpty(schema.Tables[i].TableDescription))
             {
                 using var con = _connector.CreateConnection(ConnString);
                 using var cmd = con.CreateCommand();
-                cmd.CommandText = queryTemplate;
                 con.Open();
 
                 AddParameter(cmd, "@TableName", schema.Tables[i].TableName);
                 AddParameter(cmd, "@TableDescription", schema.Tables[i].TableDescription);
-
+                cmd.CommandText = _connector.GetUpsertTableDescriptionQuery(cmd);
                 cmd.ExecuteNonQuery();
             }
         }
@@ -118,7 +107,7 @@ public class ConnService
     }
 
     /// <summary>
-    /// Schema Tables 寫入 Column
+    /// 取出 db table columns 寫入 Schema.Tables.Columns
     /// </summary>
     public void SetColumn()
     {
@@ -159,7 +148,7 @@ public class ConnService
     }
 
     /// <summary>
-    /// Schema 寫入 Tables
+    /// 取出 db table columns 寫入 Schema.Tables
     /// </summary>
     public void SetTable()
     {

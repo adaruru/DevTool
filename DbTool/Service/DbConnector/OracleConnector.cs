@@ -61,15 +61,28 @@ WHERE c.TABLE_NAME = :TableName
 ORDER BY c.COLUMN_ID";
     }
 
-    public string GetUpsertTableDescriptionQuery()
+    public string GetUpsertTableDescriptionQuery(IDbCommand cmd)
     {
-        return "COMMENT ON TABLE @TableName IS @TableDescription";
+        var tableName = cmd.GetParamValue("@TableName");
+        var description = cmd.GetParamValue("@TableDescription");
+        cmd.Parameters.Clear();
+        return $"COMMENT ON TABLE {QuoteIdentifier(tableName)} IS {QuoteLiteral(description)}";
     }
 
-    public string GetUpsertColumnDescriptionQuery()
+    public string GetUpsertColumnDescriptionQuery(IDbCommand cmd)
     {
-        return "COMMENT ON COLUMN @TableName.@ColumnName IS @ColumnDescription";
+        var tableName = cmd.GetParamValue("@TableName");
+        var columnName = cmd.GetParamValue("@ColumnName");
+        var description = cmd.GetParamValue("@ColumnDescription");
+        cmd.Parameters.Clear();
+        return $"COMMENT ON COLUMN {QuoteIdentifier(tableName)}.{QuoteIdentifier(columnName)} IS {QuoteLiteral(description)}";
     }
+
+    private static string QuoteIdentifier(string identifier)
+        => "\"" + identifier.Replace("\"", "\"\"") + "\"";
+
+    private static string QuoteLiteral(string value)
+        => "'" + value.Replace("'", "''") + "'";
 
     public string MapDataTypeToCSharp(Column column)
     {

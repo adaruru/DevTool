@@ -1,4 +1,4 @@
-// DevTool 2.1 
+﻿// DevTool 2.1 
 // Copyright (C) 2024, Adaruru
 
 using System.Data;
@@ -80,7 +80,7 @@ ORDER BY st.name
     ,sc.name";
     }
 
-    public string GetUpsertTableDescriptionQuery()
+    public string GetUpsertTableDescriptionQuery(IDbCommand cmd)
     {
         return @"
 IF EXISTS (
@@ -107,7 +107,7 @@ BEGIN
 END;";
     }
 
-    public string GetUpsertColumnDescriptionQuery()
+    public string GetUpsertColumnDescriptionQuery(IDbCommand cmd)
     {
         return @"
 IF EXISTS (

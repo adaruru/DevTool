@@ -28,12 +28,12 @@ public interface IDbConnector
     /// <summary>
     /// 取得新增/更新資料表描述的查詢語句
     /// </summary>
-    string GetUpsertTableDescriptionQuery();
+    string GetUpsertTableDescriptionQuery(IDbCommand cmd);
 
     /// <summary>
     /// 取得新增/更新欄位描述的查詢語句
     /// </summary>
-    string GetUpsertColumnDescriptionQuery();
+    string GetUpsertColumnDescriptionQuery(IDbCommand cmd);
 
     /// <summary>
     /// 資料庫型別轉換為 C# 型別
