@@ -6,6 +6,7 @@ using Npgsql;
 
 public class PostgreSqlConnector : IDbConnector
 {
+    private readonly string _schema = "public";
     public IDbConnection CreateConnection(string connString)
     {
         var npgsqlConnStr = ToNpgsqlConnectionString(connString);
@@ -60,7 +61,7 @@ public class PostgreSqlConnector : IDbConnector
     public string GetTableQuery()
     {
         // PostgreSQL 未加引號的別名會被轉成小寫
-        return @"
+        return $@"
 select
     t.table_name as ""TableName"",
     coalesce(
@@ -71,7 +72,7 @@ select
     ) as ""TableDescription""
 from information_schema.tables t
 where 1=1
-  and t.table_schema = 'dbo'
+  and t.table_schema = '{_schema}'
   and t.table_type = 'BASE TABLE'
 order by
     t.table_name;";
@@ -79,7 +80,7 @@ order by
 
     public string GetColumnQuery()
     {
-        return @"
+        return $@"
 select
     c.ordinal_position as ""Sort"",
     c.column_name as ""ColumnName"",
@@ -120,7 +121,7 @@ left join (
    and c.table_name = pk.table_name
    and c.column_name = pk.column_name
 where 1=1
-  and c.table_schema = 'dbo'
+  and c.table_schema = '{_schema}'
   and c.table_name =  @TableName
 order by
     c.ordinal_position;";
@@ -131,7 +132,7 @@ order by
         var tableName = cmd.GetParamValue("@TableName");
         var description = cmd.GetParamValue("@TableDescription");
         cmd.Parameters.Clear();
-        return $"COMMENT ON TABLE dbo.{QuoteIdentifier(tableName)} IS {QuoteLiteral(description)}";
+        return $"COMMENT ON TABLE {_schema}.{QuoteIdentifier(tableName)} IS {QuoteLiteral(description)}";
     }
 
     public string GetUpsertColumnDescriptionQuery(IDbCommand cmd)
@@ -140,7 +141,7 @@ order by
         var columnName = cmd.GetParamValue("@ColumnName");
         var description = cmd.GetParamValue("@ColumnDescription");
         cmd.Parameters.Clear();
-        return $"COMMENT ON COLUMN dbo.{QuoteIdentifier(tableName)}.{QuoteIdentifier(columnName)} IS {QuoteLiteral(description)}";
+        return $"COMMENT ON COLUMN {_schema}.{QuoteIdentifier(tableName)}.{QuoteIdentifier(columnName)} IS {QuoteLiteral(description)}";
     }
 
     private static string QuoteIdentifier(string identifier)
