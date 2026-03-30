@@ -1,4 +1,4 @@
-// DevTool 1.1 
+﻿// DevTool 1.1 
 // Copyright (C) 2024, Adaruru
 
 using System.Diagnostics;
@@ -589,6 +589,7 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
 
         schmaToolTab.Text = Lan.currentLan.DatabaseSpecTab;
         downloadSchemaBtn.Text = Lan.currentLan.DownloadDatabaseSpecExcel;
+        downloadSchemaMdBtn.Text = Lan.currentLan.DownloadDatabaseSpecMd;
         downloadSchemaWordBtn.Text = Lan.currentLan.DownloadDatabaseSpecWord;
         downloadSchemaWordPerTableBtn.Text = Lan.currentLan.DownloadDatabaseSpecWordPerTable;
         importDescriptionBtn.Text = Lan.currentLan.ImportDescription;

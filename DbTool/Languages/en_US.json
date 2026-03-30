@@ -8,6 +8,7 @@
   "ConnectionTest": "Test Connection",
   "DatabaseConnectionTab": "Database Connection",
   "DatabaseSpecTab": "Database Specification",
+  "DownloadDatabaseSpecMd": "Download Database Spec Markdown",
   "DownloadDatabaseSpecWord": "Download Database Spec Word",
   "DownloadDatabaseSpecWordPerTable": "Download Database Spec Word (One File Per Table)",
   "ImportDescription": "Import Description (Must use template above)",

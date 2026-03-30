@@ -49,6 +49,7 @@ public class LanguageObj
     public string DefaultValue { get; set; }
     public string Display { get; set; }
     public string DownloadDatabaseSpecExcel { get; set; }
+    public string DownloadDatabaseSpecMd { get; set; }
     public string DownloadDatabaseSpecWord { get; set; }
     public string DownloadDatabaseSpecWordPerTable { get; set; }
     public string DownloadExcelStyleTemplate { get; set; }

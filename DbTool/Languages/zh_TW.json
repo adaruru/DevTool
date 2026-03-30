@@ -8,6 +8,7 @@
   "ConnectionTest": "連線測試",
   "DatabaseConnectionTab": "資料庫連線",
   "DatabaseSpecTab": "資料庫規格",
+  "DownloadDatabaseSpecMd": "下載資料庫規格 Markdown",
   "DownloadDatabaseSpecWord": "下載資料庫規格 Word",
   "DownloadDatabaseSpecWordPerTable": "下載資料庫規格 Word (一表一檔)",
   "ImportDescription": "匯入描述(必須來自上方範本下載)",
