@@ -68,6 +68,7 @@ public class LanguageObj
     public string NotNull { get; set; }
     public string Precision { get; set; }
     public string PrimaryKey { get; set; }
+    public string ForeignKeyTable { get; set; }
     public string Required { get; set; }
     public string ResetSettings { get; set; }
     public string Scale { get; set; }

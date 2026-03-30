@@ -244,6 +244,10 @@ public class ExportWordService
         {
             cells.Add(GetCellFont10FilledColor("PrimaryKey"));
         }
+        if (true)
+        {
+            cells.Add(GetCellFont10FilledColor("ForeignKeyTable"));
+        }
         if (FormControl.IsNotNullShow)
         {
             cells.Add(GetCellFont10FilledColor("NotNull"));
@@ -295,6 +299,10 @@ public class ExportWordService
         if (FormControl.IsPrimaryKeyShow)
         {
             cells.Add(GetCellFont10(column.PrimaryKey));
+        }
+        if (true)
+        {
+            cells.Add(GetCellFont10(column.ForeignKeyTable));
         }
         if (FormControl.IsNotNullShow)
         {

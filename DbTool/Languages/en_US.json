@@ -28,6 +28,7 @@
   "Length": "Length",
   "NotNull": "Required",
   "PrimaryKey": "Primary Key",
+  "ForeignKeyTable": "Foreign Key Table",
   "Identity": "Identity",
   "DefaultValue": "Default Value",
   "DataType": "Data Type",

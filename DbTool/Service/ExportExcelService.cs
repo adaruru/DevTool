@@ -217,6 +217,12 @@ public class ExportExcelService
                     columnSheet.Cells[2, column].Value = Lan.currentLan.PrimaryKey;
                     columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].PrimaryKey;
                 }
+                if (true) // todo: 外鍵表預設顯示，之後可改為 FormControl.IsForeignKeyTableShow
+                {
+                    column++;
+                    columnSheet.Cells[2, column].Value = Lan.currentLan.ForeignKeyTable;
+                    columnSheet.Cells[r + 3, column].Value = Schema.Tables[i].Columns[r].ForeignKeyTable;
+                }
                 if (FormControl.IsNotNullShow)
                 {
                     column++;

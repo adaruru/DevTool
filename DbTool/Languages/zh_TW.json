@@ -28,6 +28,7 @@
   "Length": "長度",
   "NotNull": "必填",
   "PrimaryKey": "主鍵",
+  "ForeignKeyTable": "外鍵表",
   "Identity": "識別",
   "DefaultValue": "預設值",
   "DataType": "資料型別",

@@ -12,6 +12,7 @@ public class Column
     public string NotNull { get; set; } = "";
     public string Precision { get; set; } = "";
     public string PrimaryKey { get; set; } = "";
+    public string ForeignKeyTable { get; set; } = "";
     public string Scale { get; set; } = "";
     public string Sort { get; set; } = "";
 }
