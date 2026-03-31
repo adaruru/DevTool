@@ -858,4 +858,9 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
             Settings.Default.Save();
         }
     }
+
+    private void IsForeignKeyTableShowChanged(object sender, EventArgs e)
+    {
+
+    }
 }

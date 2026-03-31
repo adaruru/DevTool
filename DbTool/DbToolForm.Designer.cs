@@ -90,6 +90,7 @@ partial class DbToolForm
         languageTab = new TabPage();
         languageSelect = new ComboBox();
         errorTextBox = new TextBox();
+        IsForeignKeyTableShow = new CheckBox();
         tabControl1.SuspendLayout();
         connToolTab.SuspendLayout();
         schmaToolTab.SuspendLayout();
@@ -233,7 +234,7 @@ partial class DbToolForm
         downloadSchemaMdBtn.Text = "downloadSchemaMdBtn";
         downloadSchemaMdBtn.UseVisualStyleBackColor = true;
         downloadSchemaMdBtn.Click += exportSchemaMdBtnClick;
-        //
+        // 
         // downloadTemplateBtn
         // 
         downloadTemplateBtn.Location = new Point(18, 170);
@@ -437,6 +438,7 @@ partial class DbToolForm
         // 
         // settingTab
         // 
+        settingTab.Controls.Add(IsForeignKeyTableShow);
         settingTab.Controls.Add(dbTypeSelect);
         settingTab.Controls.Add(dbTypeLabel);
         settingTab.Controls.Add(clearConnHistoryBtn);
@@ -569,6 +571,20 @@ partial class DbToolForm
         isWordWithToc.UseVisualStyleBackColor = true;
         isWordWithToc.CheckedChanged += isWordWithTocChanged;
         // 
+        // IsForeignKeyTableShow
+        // 
+        IsForeignKeyTableShow.AutoSize = true;
+        IsForeignKeyTableShow.Checked = true;
+        IsForeignKeyTableShow.CheckState = CheckState.Checked;
+        IsForeignKeyTableShow.Location = new Point(157, 120);
+        IsForeignKeyTableShow.Margin = new Padding(2, 3, 2, 3);
+        IsForeignKeyTableShow.Name = "IsForeignKeyTableShow";
+        IsForeignKeyTableShow.Size = new Size(98, 24);
+        IsForeignKeyTableShow.TabIndex = 26;
+        IsForeignKeyTableShow.Text = "IsForeignKeyTableShow";
+        IsForeignKeyTableShow.UseVisualStyleBackColor = true;
+        IsForeignKeyTableShow.CheckedChanged += IsForeignKeyTableShowChanged;
+        // 
         // isScaleShow
         // 
         isScaleShow.AutoSize = true;
@@ -624,7 +640,7 @@ partial class DbToolForm
         isPrimaryKeyShow.AutoSize = true;
         isPrimaryKeyShow.Checked = true;
         isPrimaryKeyShow.CheckState = CheckState.Checked;
-        isPrimaryKeyShow.Location = new Point(402, 63);
+        isPrimaryKeyShow.Location = new Point(435, 63);
         isPrimaryKeyShow.Margin = new Padding(2, 3, 2, 3);
         isPrimaryKeyShow.Name = "isPrimaryKeyShow";
         isPrimaryKeyShow.Size = new Size(148, 24);
@@ -908,4 +924,5 @@ partial class DbToolForm
     private Label dbTypeLabel;
     private ComboBox dbTypeSelect;
     private Button downloadSchemaMdBtn;
+    private CheckBox IsForeignKeyTableShow;
 }
