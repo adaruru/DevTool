@@ -179,6 +179,7 @@ public partial class DbToolForm : Form
         isPrecisionShow.Checked = Settings.Default.IsPrecisionShow; // false 精度
         isScaleShow.Checked = Settings.Default.IsScaleShow; // false 小位數
         isColumnDescriptionShow.Checked = Settings.Default.IsColumnDescriptionShow; // true 欄描述
+        isForeignKeyTableShow.Checked = Settings.Default.IsForeignKeyTableShow; // false 外鍵表
         #endregion  ==genWorld/Excel用==
 
         #region  ==genWorld用==
@@ -861,6 +862,8 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
 
     private void IsForeignKeyTableShowChanged(object sender, EventArgs e)
     {
-
+        Settings.Default.IsForeignKeyTableShow = isForeignKeyTableShow.Checked;
+        FormControl.IsForeignKeyTableShow = isForeignKeyTableShow.Checked;
+        Settings.Default.Save();
     }
 }

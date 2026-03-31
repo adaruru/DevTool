@@ -65,6 +65,11 @@ public static class FormControl
     public static bool IsScaleShow { get; set; } = false;
 
     /// <summary>
+    /// 外鍵表
+    /// </summary>
+    public static bool IsForeignKeyTableShow { get; set; } = false;
+
+    /// <summary>
     ///  排序
     /// </summary>
     public static bool IsSortShow { get; set; } = true;

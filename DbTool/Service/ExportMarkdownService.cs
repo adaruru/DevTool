@@ -34,7 +34,7 @@ public class ExportMarkdownService
             if (FormControl.IsDefaultValueShow) headers.Add("DefaultValue");
             if (FormControl.IsIdentityShow) headers.Add("Identity");
             if (FormControl.IsPrimaryKeyShow) headers.Add("PrimaryKey");
-            headers.Add("ForeignKeyTable");
+            if (FormControl.IsForeignKeyTableShow) headers.Add("ForeignKeyTable");
             if (FormControl.IsNotNullShow) headers.Add("NotNull");
             if (FormControl.IsLengthShow) headers.Add("Length");
             if (FormControl.IsPrecisionShow) headers.Add("Precision");
@@ -55,7 +55,7 @@ public class ExportMarkdownService
                 if (FormControl.IsDefaultValueShow) values.Add(Escape(col.DefaultValue));
                 if (FormControl.IsIdentityShow) values.Add(Escape(col.Identity));
                 if (FormControl.IsPrimaryKeyShow) values.Add(Escape(col.PrimaryKey));
-                values.Add(Escape(col.ForeignKeyTable));
+                if (FormControl.IsForeignKeyTableShow) values.Add(Escape(col.ForeignKeyTable));
                 if (FormControl.IsNotNullShow) values.Add(Escape(col.NotNull));
                 if (FormControl.IsLengthShow) values.Add(Escape(col.Length));
                 if (FormControl.IsPrecisionShow) values.Add(Escape(col.Precision));

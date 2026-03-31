@@ -217,6 +217,18 @@ namespace DbTool.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsForeignKeyTableShow {
+            get {
+                return ((bool)(this["IsForeignKeyTableShow"]));
+            }
+            set {
+                this["IsForeignKeyTableShow"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool isWordWithToc {
             get {
