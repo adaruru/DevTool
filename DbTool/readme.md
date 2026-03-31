@@ -179,3 +179,7 @@ key 的顯示會受限於 欄位名稱 是否是TableName+id 或者是 tableName
 就會回到預設值，僅勾選大部分情況會需要的欄位顯示
 
 ![image-20250526114418994](.attach/.readme/image-20250526114418994.png)
+
+參考 Service/ExportWordService、ExportExcelService 建立一個 ExportMarkdownService
+參考 downloadSchemaWordBtn 編輯 downloadSchemaMdBtn 
+最終目標 downloadSchemaMdBtn click 要可以在目標位置看到 md file 檔名邏輯 參考 downloadSchemaBtn

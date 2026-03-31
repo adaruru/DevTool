@@ -232,7 +232,8 @@ partial class DbToolForm
         downloadSchemaMdBtn.TabIndex = 18;
         downloadSchemaMdBtn.Text = "downloadSchemaMdBtn";
         downloadSchemaMdBtn.UseVisualStyleBackColor = true;
-        // 
+        downloadSchemaMdBtn.Click += exportSchemaMdBtnClick;
+        //
         // downloadTemplateBtn
         // 
         downloadTemplateBtn.Location = new Point(18, 170);

@@ -19,6 +19,8 @@ public partial class DbToolForm : Form
 
     private readonly ExportWordService _exportWordService = new ExportWordService();
 
+    private readonly ExportMarkdownService _exportMarkdownService = new ExportMarkdownService();
+
     private Schema _schemaForImportDescription = new Schema();
 
     public DbToolForm()
@@ -289,6 +291,28 @@ public partial class DbToolForm : Form
             { destinationPath = _exportWordService.ExportWordSchemaPerTable(Conn.Schema, connStrBox.Text); }
             else
             { destinationPath = _exportWordService.ExportWordSchema(Conn.Schema, connStrBox.Text); }
+            errorTextBox.Text = $"{Lan.currentLan.FileGenerationCompleted}{destinationPath}";
+        }
+        catch (Exception es)
+        {
+            errorTextBox.Text = $"出現其他異常錯誤:{es.Message}";
+        }
+    }
+
+    private void exportSchemaMdBtnClick(object sender, EventArgs e)
+    {
+        try
+        {
+            errorTextBox.Text = "檔案產製中請稍後";
+            if (string.IsNullOrEmpty(connStrBox.Text))
+            {
+                throw new Exception("請輸入連線字串");
+            }
+            Conn = new ConnService(connStrBox.Text, SchemaName, (DbTypeEnum)Settings.Default.dbType);
+            Conn.SetTable();
+            Conn.SetColumn();
+
+            var destinationPath = _exportMarkdownService.ExportMarkdownSchema(Conn.Schema, connStrBox.Text);
             errorTextBox.Text = $"{Lan.currentLan.FileGenerationCompleted}{destinationPath}";
         }
         catch (Exception es)
