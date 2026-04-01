@@ -90,7 +90,7 @@ partial class DbToolForm
         languageTab = new TabPage();
         languageSelect = new ComboBox();
         errorTextBox = new TextBox();
-        IsForeignKeyTableShow = new CheckBox();
+        isForeignKeyTableShow = new CheckBox();
         tabControl1.SuspendLayout();
         connToolTab.SuspendLayout();
         schmaToolTab.SuspendLayout();
@@ -438,7 +438,7 @@ partial class DbToolForm
         // 
         // settingTab
         // 
-        settingTab.Controls.Add(IsForeignKeyTableShow);
+        settingTab.Controls.Add(isForeignKeyTableShow);
         settingTab.Controls.Add(dbTypeSelect);
         settingTab.Controls.Add(dbTypeLabel);
         settingTab.Controls.Add(clearConnHistoryBtn);
@@ -573,17 +573,17 @@ partial class DbToolForm
         // 
         // IsForeignKeyTableShow
         // 
-        IsForeignKeyTableShow.AutoSize = true;
-        IsForeignKeyTableShow.Checked = true;
-        IsForeignKeyTableShow.CheckState = CheckState.Checked;
-        IsForeignKeyTableShow.Location = new Point(157, 120);
-        IsForeignKeyTableShow.Margin = new Padding(2, 3, 2, 3);
-        IsForeignKeyTableShow.Name = "IsForeignKeyTableShow";
-        IsForeignKeyTableShow.Size = new Size(98, 24);
-        IsForeignKeyTableShow.TabIndex = 26;
-        IsForeignKeyTableShow.Text = "IsForeignKeyTableShow";
-        IsForeignKeyTableShow.UseVisualStyleBackColor = true;
-        IsForeignKeyTableShow.CheckedChanged += IsForeignKeyTableShowChanged;
+        isForeignKeyTableShow.AutoSize = true;
+        isForeignKeyTableShow.Checked = true;
+        isForeignKeyTableShow.CheckState = CheckState.Checked;
+        isForeignKeyTableShow.Location = new Point(157, 120);
+        isForeignKeyTableShow.Margin = new Padding(2, 3, 2, 3);
+        isForeignKeyTableShow.Name = "IsForeignKeyTableShow";
+        isForeignKeyTableShow.Size = new Size(98, 24);
+        isForeignKeyTableShow.TabIndex = 26;
+        isForeignKeyTableShow.Text = "IsForeignKeyTableShow";
+        isForeignKeyTableShow.UseVisualStyleBackColor = true;
+        isForeignKeyTableShow.CheckedChanged += IsForeignKeyTableShowChanged;
         // 
         // isScaleShow
         // 
@@ -924,5 +924,5 @@ partial class DbToolForm
     private Label dbTypeLabel;
     private ComboBox dbTypeSelect;
     private Button downloadSchemaMdBtn;
-    private CheckBox IsForeignKeyTableShow;
+    private CheckBox isForeignKeyTableShow;
 }
