@@ -186,9 +186,33 @@ public partial class DbToolForm : Form
         isWordWithToc.Checked = Settings.Default.isWordWithToc; //true 產製word規格是否有目錄
         #endregion  ==genWorld用==
 
+        LocalUserSettingSyncFormControl();
+
         #region  ==連線設定==
         dbTypeSelect.SelectedValue = Settings.Default.dbType;
         #endregion  ==連線設定==
+    }
+
+    /// <summary>
+    /// 工具重開的時候，記憶本地使用者調整的設定
+    /// </summary>
+    private void LocalUserSettingSyncFormControl()
+    {
+        FormControl.IsTableDescriptionShow = Settings.Default.IsTableDescriptionShow;
+        FormControl.isTableNameAsLink = Settings.Default.isTableNameAsLink;
+        FormControl.IsSortShow = Settings.Default.IsSortShow;
+        FormControl.IsDataTypeShow = Settings.Default.IsDataTypeShow;
+        FormControl.IsDefaultValueShow = Settings.Default.IsDefaultValueShow;
+        FormControl.IsIdentityShow = Settings.Default.IsIdentityShow;
+        FormControl.IsPrimaryKeyShow = Settings.Default.IsPrimaryKeyShow;
+        FormControl.IsNotNullShow = Settings.Default.IsNotNullShow;
+        FormControl.IsLengthShow = Settings.Default.IsLengthShow;
+        FormControl.IsPrecisionShow = Settings.Default.IsPrecisionShow;
+        FormControl.IsScaleShow = Settings.Default.IsScaleShow;
+        FormControl.IsColumnDescriptionShow = Settings.Default.IsColumnDescriptionShow;
+        FormControl.IsForeignKeyTableShow = Settings.Default.IsForeignKeyTableShow;
+        FormControl.isWordWithToc = Settings.Default.isWordWithToc;
+        FormControl.namespaceModel = Settings.Default.namespaceModel;
     }
     private void demoCommBtnEvent(object sender, EventArgs e)
     {
@@ -648,6 +672,7 @@ public {csharpType} {Schema?.Tables[i].Columns[j].ColumnName} {{ get; set; }} {d
         isDataTypeShow.Text = Lan.currentLan.DataType;
         isSortShow.Text = Lan.currentLan.Sort;
         isColumnDescriptionShow.Text = Lan.currentLan.ColumnDescription;
+        isForeignKeyTableShow.Text = Lan.currentLan.ForeignKeyTable;
         isTableNameAsLink.Text = Lan.currentLan.TableNameAsLink;
         isTableDescriptionShow.Text = Lan.currentLan.TableDescription;
 
