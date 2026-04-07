@@ -103,7 +103,8 @@ select
     c.character_maximum_length as ""Length"",
     c.numeric_precision as ""Precision"",
     c.numeric_scale as ""Scale"",
-    c.table_name as ""TableName""
+    c.table_name as ""TableName"",
+    coalesce(fk.foreign_table_name, '') as ""ForeignKeyTable""
 from information_schema.columns c
 left join (
     select
@@ -112,14 +113,33 @@ left join (
         kcu.column_name
     from information_schema.table_constraints tc
     join information_schema.key_column_usage kcu
-        on tc.constraint_name = kcu.constraint_name
-       and tc.table_schema = kcu.table_schema
+        on tc.constraint_schema = kcu.constraint_schema
+       and tc.constraint_name = kcu.constraint_name
     where 1=1
       and tc.constraint_type = 'PRIMARY KEY'
 ) pk
     on c.table_schema = pk.table_schema
    and c.table_name = pk.table_name
    and c.column_name = pk.column_name
+left join (
+    select
+        kcu.table_schema,
+        kcu.table_name,
+        kcu.column_name,
+        ccu.table_name || '.' || ccu.column_name as foreign_table_name
+    from information_schema.table_constraints tc
+    join information_schema.key_column_usage kcu
+        on tc.constraint_schema = kcu.constraint_schema
+       and tc.constraint_name = kcu.constraint_name
+    join information_schema.constraint_column_usage ccu
+        on tc.constraint_schema = ccu.constraint_schema
+       and tc.constraint_name = ccu.constraint_name
+    where 1=1
+      and tc.constraint_type = 'FOREIGN KEY'
+) fk
+    on c.table_schema = fk.table_schema
+   and c.table_name = fk.table_name
+   and c.column_name = fk.column_name
 where 1=1
   and c.table_schema = '{_schema}'
   and c.table_name =  @TableName

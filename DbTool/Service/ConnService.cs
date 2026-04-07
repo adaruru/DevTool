@@ -137,6 +137,7 @@ public class ConnService
                     Identity = row["Identity"]?.ToString(),
                     PrimaryKey = row["PrimaryKey"]?.ToString(),
                     ColumnDescription = row["ColumnDescription"]?.ToString(),
+                    ForeignKeyTable = row["ForeignKeyTable"]?.ToString(),
                     NotNull = row["NotNull"]?.ToString(),
                     Length = row["Length"]?.ToString(),
                     Precision = row["Precision"]?.ToString(),
